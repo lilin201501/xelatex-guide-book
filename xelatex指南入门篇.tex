@@ -1,0 +1,2700 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline printendnotes 
+%新加入的环境如下：common-format  fig scalefig 
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt} 
+\newif\ifphone
+\phonefalse
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+
+\begin{document}
+\frontmatter   
+
+\titlea{\XeLaTeX }
+\titleb{指南入门篇}
+\titlec{在Ubuntu下排版专业的pdf文章}
+\author{万泽}
+\authorinfo{作者：万泽，湖南常德人氏。}
+\editor{万泽}
+\email{a358003542@gmail.com}
+\editorinfo{编者：万泽，}
+\version{1.1}
+\mytitle
+
+\addchtoc{前言}
+\chapter*{前言}
+\begin{common-format}
+我试图收集整理各方面来的xelatex相关的信息，包括自己的实践经验总结，作为后学者的指南手册。本文只专注于入门内容，其他中级的高级的知识比如数学领域，幻灯片制作，绘图等等将另外作为专题来写。
+
+\end{common-format}
+
+%\addtolength{\parskip}{8pt}
+\listoffigures 
+\listoftables  
+\addchtoc{目錄}
+\setcounter{tocdepth}{1}    
+\tableofcontents
+
+\begin{common-format}
+\mainmatter 
+\chapter{ubuntu知识}
+\section{通过U盘安装ubuntu}
+\begin{enumerate}
+\item  在安装之前请先把硬盘中的资料做一些调整，空出一个大于20G的硬盘做将来要安装 ubuntu根目录的地方。然后还需要一个大约为你内存两倍的硬盘分区等下要作为linux系统的swap交换分区。
+\item 到ubuntu的官网上下载系统的光盘映像。
+\item 用ultroiso软件（其他具有类似功能的软件也行）（注意ultroiso最好选择最新的版本，ubuntu10.10之后的一定要用9.3版本之上的）将该光盘映像写入到你的U盘中去。
+\item 重启计算机，BIOS稍作改动使计算机变成从U盘启动。
+\item 进入安装过程，其他过程都比较直观，就是硬盘分区设置上我们选择高级手动，然后将你分出来的那个20G硬盘作为／的加载点，并设置格式化成ext4日志系统（其他文件系统如ext3等也行）。然后设置交换分区，安装完成。
+\end{enumerate}
+
+
+\section{初入ubuntu}
+\begin{itemize}
+\item 设置ubuntu的root用户，这个以后可能会有用。按住ctrl+alt+t弹出终端，然后输入：\\ sudo passwd \\设置好密码之后，以后输入：\\ su\\就可以进入root账户了。
+\item 安装一个有用的工具：\\sudo apt-get install nautilus-open-terminal\\这个工具可以让你在视窗背景下鼠标右键之后打开当前目录下的终端，有时还是很快捷的，尤其是遇到一些怪怪的文件名的时候。
+\item 系统安装好之后第一件要做的事是选一个好的源，然后安装更新。我的ubuntu版本是12.04，在右上角的哪里，软件更新，软件源设置，在下载自的哪里就是软件源的服务商，你最好还是自己搜索一个速度最快的源。然后在终端中执行以下命令来升级系统软件包：\\sudo apt-get update  （更新源）\\sudo apt-get upgrade   （更新源下已经安装了的软件）\footnote{如果有很多软件需要升级的时候推荐使用命令：sudo apt-get dist-upgrade 这样不容易出错些。}
+\item 一些闭源的有用的东西：\\sudo apt-get install ubuntu-restricted-extras\\这个安装到adoubeflashplugin的时候会有点卡住，最好还是耐心点吧。或者在ubuntu软件中心（Ubuntu 额外的版权受限程序）中安装也是可以的。
+\item ubuntu系统清理，运行以下两个命令即可：\\sudo apt-get autoremove （清理软件残余）\\sudo apt-get autoclean  （清理缓存）。
+\item 删除通过apt-get安装的软件：\\sudo apt-get remove 要删除的软件名\\删除相应的软件配置文件：\\sudo apt-get purge 软件名
+\item 长按super键或者说是win键会弹出一些ubuntu桌面常用的快捷键，比如说ctrl+win+d是显示桌面，按住win+f搜索文件，win+a搜索程序等。
+\end{itemize}
+
+\section{linux最基本的命令介绍}
+\begin{description}
+\item[ \${} 和\~{}] 当我们打开终端的时候，看到一个美元\$ 符号，如果我们输入su命令，然后进入root账户，看到开头有一个\#{} 符号，其中\$ 表示普通用户，\#{} 表示现在是超级用户。然后我们看到一个波浪号$\sim$  ,这个波浪号的意思就是当前用户的个人主文件夹，比如现在我这里$\sim$ 的意思就表示目录／home／wanze 。
+\item[ cd] 一般dir或者ls之后列出该目录所包含的文件夹或者文件，然后执行如下命令:\\cd 某个文件夹名 \\ 就进入这个文件夹了。如果cd一个文件就会报错。然后特殊的有：\\ cd $\sim$ 回到个人主文件夹\\cd . 其中点表示当前目录\\cd .. 表示返回上一级目录\\cd 某个目录 ，比如cd ／etc 那么就直接跳到系统的／etc目录下了。
+\item[ cp] 复制文件命令:\\ cp~~~要复制的文件~~~目标文件目录 
+\item[ which] 查看系统某个命令的位置
+\item[ touch] 创建某个文件或者对已存在的文件更新时间戳
+\item[ rm ]删除某个文件,一些具体选项我就不罗嗦了，如果有不明了的请自己用 -{}- help来查看帮助信息。比如这里的-r选项就可以强制删除一个目录下所有的文件。
+\item[ mkdir] 创建文件夹
+\item[ rmdir] 删除文件夹
+\item[ mv ]移动某个文件或者重命名某个文件
+\end{description}
+
+\section{通过ppa安装软件}
+ppa也就是软件源，一般推荐ppa安装软件即该软件还处于活跃开发期中，所以推荐尽快更新到官方最新的版本。过程就是添加ppa源，然后用前面讲的apt -get upgrade来更新源下的软件。添加ppa源的格式如下：\\
+sudo add-apt-repository ppa:后面就是什么官方源地址了\\
+然后更新源下的软件列表：\\
+sudo apt-get update\\
+接下来就是通过apt-get  install 来安装该软件了。upgrade是更新源下已经安装了的软件，所以第一次装还是要用install命令。
+\footnote{\href{http://linuxers.org/howto/how-install-any-software-ubuntu-ppa}{how-install-any-software-ubuntu-ppa}}
+
+\section{ubuntu软件推荐}
+以下编号：Ⓐ 表示可以从ubutnu软件中下载到，Ⓑ 表示可以从终端apt-get命令中下载到，Ⓒ 表示推荐从ppa安装。
+\begin{description}
+\item[新立得软件包管理器] 这个有时安装一套软件组合很有用的。Ⓐ
+\item[chromium] 不清楚和google-chrome的区别。它的插件很方便，有的时候网页显示相比较于firefox不会出错些。Ⓐ\\
+chromium插件推荐：
+
+\begin{description}
+\item[Daum Equation Editor]  本文不会讨论数学公式的输入问题，这里有个简单的解决方案，就是在这个插件里面编辑公式，下面就有对应的\LaTeX 的代码。
+\item[代理助手] 好吧，我讲这个完全是因为天朝的防火墙，不学会翻墙严重干扰我们搜索信息。具体设置是http代理填写相关地址，china list这个选项也勾上吧。下面还有详细说明。
+\end{description}
+
+\item[翻墙软件] 要搜东西真的要用google，在天朝你懂的，因为要跑防火墙慢死了。轮子的自由门还可以。\footnote{\href{http://115.com/lb/5lbdvqz2o9i}{下载freegate的链接}}翻完墙之后到弹出来的那个网站或者voa网站哪里多下几个类似的翻墙软件吧，有备无患。freegate在ubuntu下需要使用wine模拟，在模拟前先用winetricks装好mfc42.dll，然后就行了。freegate进去之后在通道哪里选择经典模式。google-chrome那边的设置在代理助手哪里，就是使用freegate提供的那个http地址加上端口号即可——在内容那一页。一般代理助手就点系统自动连接吧，毕竟是免费代理，别想质量有多好。
+\item[texmaker] 写\LaTeX 非常好的界面环境，和windows下的texstudio类似，但是感觉界面更加的漂亮。Ⓐ
+\item[shutter] 一个非常好的截图软件。ubuntu系统自带的截图软件截完图不能拖动改变大小，这个可以。Ⓐ
+\item[ubuntuone] 在ubuntu系统下很好的文档同步软件，在手机上安装之后可以方便进行某些文档的传输。Ⓐ
+\item[wine] 虽然wine软件一直在更新，但是老实说总感觉不是十分令人满意。这里提到wine是因为前面谈到的翻墙软件需要用wine来模拟。wine的安装不同于其他软件，尽量下载最新版本的吧。到官网上查看最新的稳定版本号，比如wine1.6。然后在终端上通过ppa来安装，ppa地址见脚注。Ⓒ\footnote{ppa:ubuntu-wine/ppa}
+\item[workrave] 人们对久坐的危害总是低估了，这个软件帮助提醒人们做一段时间之后最好起来活动活动。Ⓐ 
+\item[Gcolor2] 这个小软件取色，RGB转换等很有用。Ⓐ
+\item[wps for linux] 目前写毕业论文不得已还是要用doc格式，而在ubuntu下我试过很多解决方案，比如wine，libreoffice，或者网上的在线编辑。结果都不尽如人意。因为我需要的是最好完完全全兼容microoffice2003的格式。金山公司的这个wps for linux 目前还在开发中，但是效果还是可以了。下载地址见脚注。Ⓓ\footnote{\href{http://linux.wps.cn/}{wps for linux}}
+\end{description} 
+其他还有很多有用的软件看官自己探索吧。
+
+
+\section{ubuntu下好的输入法}
+更多信息请参考rime官方wiki\endnote{\href{https://code.google.com/p/rimeime/w/list}{rime官方wiki}}。
+还有一种ppa安装方法，ppa地址见尾注\endnote{ppa地址是：[ppa:lotem/rime] }。
+\begin{enumerate}
+\item 安装ibus-rime:\\ sudo apt-get install ibus-rime
+\item ibus输入框不见了：\\ ibus-daemon  ~~~  -drx
+\item 重啓ibus：有时ibus会出现一些奇怪的问题，在终端运行下面命令重啓ibus也许会解决：\\ killall ~~ibus-daemon\\
+             ibus-daemon ~~~ -d
+\item Rime输入法的其他设置：在输入框调到Rime的状态的时候，按一下F4，就弹出一些设置选项。
+\item 用Rime输入常见的特殊符号：比如我要输入*，按下shift和数字8按键，就出来一些选项供你选择。其他很多符号类似，具体请参考官网上的说明。
+\item Rime输入法是架构在ibus框架之上的，所以在系统输入法首选项哪里，可以设置Rime候选项是横着显示或者竖着显示，还有下面可以自定义显示的字体和字体大小。推荐用sans-serif字体。然后字体大小要比你输出之后的效果稍微大一点，这样醒目些。
+\end{enumerate}
+
+\section{rime输入法的备份和还原}
+输入法用久了，你的自造词还有你输入相关词的词频这些信息是非常有用的，能够极大地提高你的工作效率。rime备份的核心词是命令：\emph{rime\_{}dict\_{}manager}。你需要在rime的用户配置文件夹里面打开终端，然后输入这个命令，你就可以看到提示信息了。
+
+首先输入-l选项，你可以看到现在已经有的词典，比如luna\_{}pinyin。然后用-s同步，这样你就会看到一个sync文件夹，里面放着快照文件。-b是选择性是备份某一个词典。-r是还原快照文件。-e，-i是txt格式操作，txt保存数据会有点损失。将用户rime配置文件夹整个复制到同步盘即可。
+
+\section{把QQ拼音上你的词库导入rime}
+\begin{enumerate}
+\item 在windows下在QQ拼音设置里面找到那个导出词库的命令。就是一个txt文件。
+\item 将这个txt文件另存为utf-8编码
+\item 进入linux（以下windows用户原理类似）找个在线的简繁转换网站，如果你使用的是简体略过这步。然后转换成为繁体，由于词库比较大，建议你耐心点，推荐笨笨网站简繁转换，不容易卡死。实在不行就只好下载软件了。我的一万多条还是能够转换出来。
+\item 打开libreoffice ，将前面的txt文件，复制，粘贴。然后会弹出一个选项，分隔符注意勾选空格。
+\item 前三列有用，后面的意义不大，统统删除。
+\item 按ctrl+f，下面弹出查找于替换。输入，  后面输入空格   全部替换。输入'     后面输入空格   全部替换。
+\item 将第一列第二列位置互换，就是剪切粘贴操作。
+\item 全部选择前三列，复制，粘贴到文本。
+\item rime\_dict\_manager  -i luna\_pinyin   上面谈及的你创建的文本命令。
+\item 注意上面要在rime 用户目录下操作  即.config/ibus/rime。
+\item 查看   dict\_manager -b luna\_pinyin  
+\end{enumerate}
+
+
+\section{定制rime输出特殊符号}
+\begin{fancycolorbox}
+我希望通过rime输入法能够快速地将Unicode中的符号打出来。本文主要关注这个问题，其他定制请参阅官网wiki。
+\end{fancycolorbox}
+
+
+\subsection{rime基本情况说明}
+Rime的ubuntu版本叫做中州韵，不管这么多，一般称作ibus-rime，下面简称rime。下面的讨论只使用于ubuntu，我目前的版本是13.04，12.10试过没有问题。
+
+rime的程序在哪里我不关心，在ubuntu下所有程序的配置是用户配置优先级高于程序自带的配置，所以我们在rime的用户文件夹里面DIY就是了。rime的用户资料夹在：\\
+$ \sim $/.config/ibus/rime
+
+
+进入这个文件夹之后，我们可以点击看以下里面的内容，这些文件情况说明如下：
+\begin{description}
+\item[cangjie5.schema.yaml] 仓颉五代配置文件。我用的是朙(míng)月拼音，这个文件就不管了。
+\item[default.yaml] 这个文件存放着输入法的一些全局设定，重新部署rime时会重新生成。
+\item[installation.yaml] 这个文件存放着rime的安装信息，不用管它。
+\item[luna\_{}pinyin.schema.yaml] 这个是默认的朙月拼音的配置文件，要仔细看看。
+\item[luna\_{}pinyin\_{}fluency.schema.yaml] 这个是朙月拼音语句流的配置文件，我不关心。
+\item[luna\_{}pinyin\_{}simp.schema.yaml] 这个是明月拼音简化字的配置文件，也就是输入法切换到简体字输入之后起作用的。
+\item[luna\_{}pinyin\_{}tw.schema.yaml] 这个是朙月拼音台湾正体的配置文件，没用过。
+\item[symbols.yaml] 这个是rime自带的一个输出symbol的配置文件，但是奇怪的是刚开始并没有配置好。
+\item[user.yaml] 这个是用户状态信息。
+\end{description}
+
+\subsection{开始DIY}
+其中官网wiki中讲了一些default.custom.yaml的定制，那些我似乎都没有需要，然后略过。现在主要讨论lunna\_{}pinyin.custom.yaml的配置问题。
+具体配置如下：   
+\begin{verbatim}  
+patch:
+    punctuator:
+        import_preset: symbols
+    recognizer:
+        import_preset: default
+        patterns:
+        reverse_lookup: "`[a-z]*'?$"
+        punct: "^/[a-z\\[\\]]*$"  
+\end{verbatim}
+
+我想你已经看到了这些配置文件都是.yaml后缀，它们是用一种什么yaml数据描述语言写的，类似于XML的标记语言。然后里面还有一些正则表达式的东西。关于这些内容我是能够略过就略过吧。
+
+刚开始我写这个patch的时候总是不成功，然后看到佛振的那个帖子，链接到另外一个源码上。\href{https://github.com/lotem/brise/blob/master/preset/luna_pinyin_fluency.schema.yaml#L103}{请参看这个网站}。然后直接修改luna\_{}pinyin.schema.yaml文件，就是把default改成symbols，也就是指向那个symbols.yaml文件，然后将patterns的punct:那一行复制过去。就发现可以了。
+
+现在patch可以正常工作了，原因是之前我的缩进不正确，由于我对yaml语言不清楚，就此打住。
+
+其中punct那一行涉及到的正则表达式知识有符号\^{}表示匹配开始，\$表示匹配结束，[]和里面的内容一起表示一个字符，这个字符可能是a-z所有的小写字母，然后我想加上符号[和]，因为我想新建一个命令/[]就能输入很多形式的括号。最后发现这个问题还有点小麻烦，\href{http://www.infoq.com/cn/news/2011/01/regular-expressions-1}{请参看这个网站}。他解释了最好前面加上两个\textbackslash ，然后才能更好的工作。最后那个*表示重复零次h或者更多次。
+\endnote{你可以到这个网站继续学习正则表达式：\href{http://deerchao.net/tutorials/regex/regex.htm}{正则表达式30分钟入门教程}}
+
+\subsection{symbols.yaml文件的说明}
+我在github网站上新建了\href{https://github.com/a358003542/rime-symbols-yaml}{一个项目}。里面有我编辑的symbols.yaml文件。现在将我所做的修改工作简单说明如下：
+
+前面是全角和半角部分，如果你有需要可以自己定制下，这里我略过。然后看到symbols:哪里，开始自己定制命令。前面那个代码我们看到了匹配是以/开始的，所以下面所有的命令都要以符号/开始，如果你想有其他模式修改正则表达式就可以了，比如说可以换成命令以符号\textbackslash 开始。
+
+yaml的缩进表达我不太清楚，实际上我不太喜欢那种缩进的语法。yaml还提供了另外一种语法形式。就是一个系列可以用一个方括号明确标识出来。\footnote{\href{http://www.dev.idv.tw/mediawiki/index.php/YAML}{请参看这个网站}}在这里格式很简单，就是建立了很多符号调出命令，对应的后选词选项用方括号包围起来。
+
+然后还需要一提的就是yaml语言支持锚点，意思就是某一个变量，跟着\& 任意的名字，后面就可以用* 那个名字来表示那个词条了，这个有点类似于取别名的意思。anyway，用这样的方法可以给你建立的命令取几个别名。
+
+\subsection{重新部署rime}
+最后将上面两个文件放入用户rime配置文件夹哪里，然后删除default.yaml文件，然后运行\verb+ibus-daemon   -drx+。等着rime重新部署完毕即可。
+
+\subsection{具体输入符号的命令}
+现在我在rime下输入/gcs，就会弹出很多符号。类似的还有很多，就不一一介绍了。
+
+\section{配置\LaTeX 编写环境}
+\begin{enumerate}
+\item sudo apt-get install texlive   (下载安装ubuntu下有名的texlive）
+\item sudo apt-get install texlive-full   （下载安装texlive的各个包）
+\item 在ubuntu软件中心中下载安装texmaker软件。
+\item ibus似乎在这里面有点小问题，有点不稳定。在终端中运行\\sudo apt-get install ibus-qt4\\则问题解决。
+\item 在texmaker的选项和配置texmaker里面，设置快速构建，点上用户自定义那一栏，然后输入如下命令：\\
+xelatex -interaction=nonstopmode \%.tex| \\
+这是使用xelatex来对目标tex文件进行编译，而不是传统的latex或者pdflatex方式，之所以这样是因为多方对比之后，觉得其在字体处理方面是未来的趋势。
+\end{enumerate}
+
+
+\section{ubuntu下\LaTeX 新宏包的安装}
+安装texlive-full之后，如果还遇到没有的宏包，可以先到CTAN官网上下载到这个宏包之后，然后将这个宏包解压到系统目录：\\
+/usr/share/texmf/tex/latex 里面即可。
+
+当然你也可以在另外一个文件夹里面，这里必须是你的主文件夹下，新建一个文件夹texmf，然后里面新建一个tex，然后再新建一个目录latex，然后在这个latex里面放着你下载下来的宏包。具体比如说有一个宏包名字叫做config，那么latex下面就是config文件夹，然后里面就是config.sty文件。你自己写的宏包扔进去一样有效。
+唯一要额外做的操作就是在texmf目录之下运行命令：\\
+sudo texhash  \\
+让texlive把这个目录也加入搜索范围。
+
+
+\section{texmaker技巧}
+\subsection{自动补全命令}
+在菜单里找到用户自定义的customize completion 也就是自动完成，里面加入你想要的命令。比如:\\
+\textbackslash textbackslash 然后点击add，这样以后想输入显示命令前面的那个斜线的时候会方便点。如果括号里面加入@符号，那么就会出现类似系统自带命令\textbackslash section\{•\}的那个黑点•。
+
+\subsection{自定义命令}
+在菜单哪里用户自定义，你看到可以用户自定义命令，填好之后就是快速构建下面那些备用的1:2:3:哪里将成为有意义的命令。
+
+\subsection{保存你的设置文件}
+在选项哪里有保存设置文件的功能，主要是自定义命令，自动补全命令等可以保存下来。
+
+\section{用rime快速输出\LaTeX 命令}
+具体效果就是我按下/tex等命令，就会弹出很多\LaTeX 命令，这个也是修改symbols.yaml文件来达到的，也是在我新建的那个\href{https://github.com/a358003542/rime-symbols-yaml}{github项目}里面，我做了很多优化工作，有兴趣的可以研究下。
+\endnote{在rime中文模式下，直接按enter键输出的也是英文，所以一些简单地命令直接输入也是很快捷的。}
+
+
+\section[其他\TeX 编辑器评测]{其他\TeX 编辑器评测\footnote{虽然texmaker软件也有些小缺陷，但综合起来我觉得是最棒的。}}
+\begin{description}
+\item[emacs] 安装emacs24之后，用package manager安装auctex宏包。然后一些基本的latex编辑器功能都有了。稍微熟悉下就行了。唯一遗憾的是没有那种左侧很方便的目录导航功能。然后emacs的各种快捷键让我压力好大。
+\item[winefish latex] 太高端了，刚进去一片空白？
+\item[gedit] gedit安装好latex的插件之后也很好。因为latexila编辑器在编译大文件的时候速度好慢，而gedit是直接调用终端模式所以没有损伤的。值得一提的是latexila编辑器的一些功能在gedit里面可以通过外部工具这个插件自己编写终端命令来实现。
+\item[texworks] 没怎么评测。
+\item[kile] 没怎么评测。
+\item[texstudio] 我刚进去什么都没动，它好像中毒一样到处乱操作。。
+\item[gummi] 打开tex文档或者做些小的测试还是可以的，但是似乎不支持include文档。
+\item[latexila] 这个软件刚进去我就感觉设计理念非常的简洁，和gedit一样。然后我特别在意的文档结构图显示，语法染色都有。\endnote{latexila编辑器使用xelatex引擎生成文档，一样要自己编写一个生成命令，在创建→首选项那里→标签就写xelatex，写其他的也可以。扩展名写.tex，然后命令和texmaker一样写上这个：xelatex -interaction=nonstopmode  \$filename 。}
+\end{description}
+
+
+\section{gedit的一些技巧简要说明}
+在编辑→首选项那里请安装好latex插件和外部工具插件，恩，代码注释插件和文件浏览器插件推荐。
+
+我在这里重点介绍一下外部工具插件的用法。看到工具→外部工具。
+请选择最下面的那个管理外部工具，看到在此处打开终端，gnome-terminal后面去除掉，然后就能正常工作了。\endnote{本信息来自ubuntu13.04，gedit版本号为3.6.2。}
+
+现在我们新建一个命令，名字叫做xelatex，具体内容如下：
+\begin{verbatim}
+#!/bin/sh
+filename=$GEDIT_CURRENT_DOCUMENT_NAME
+shortname=`echo $filename | sed 's/\(.*\)\.tex$/\1/'`
+xelatex -interaction batchmode -src $filename
+\end{verbatim}
+那么这个小工具就实现xelatex编译功能了。
+
+然后我们也可以再新建一个小工具，名字叫清理：
+\begin{verbatim}
+#!/bin/sh
+filename=$GEDIT_CURRENT_DOCUMENT_NAME
+shortname=`echo $filename | sed 's/\(.*\)\.tex$/\1/'`
+rm -f  $shortname.aux $shortname.ent  $shortname.out 
+$shortname.lot $shortname.idx $shortname.lof 
+$shortname.ilg $shortname.ind $shortname.log 
+$shortname.toc $shortname.bbl $shortname.blg
+\end{verbatim}
+这样运行它就可以清理临时文件了。
+
+
+\section{结合github进行项目管理}
+以下主要参考\href{http://rogerdudler.github.io/git-guide/index.zh.html}{这个网站}\endnote{在项目网站右下角settings哪里进去有很多项目管理内容，其中最下面有删除项目的功能，请慎重使用。}
+到github上注册，创建新的项目,还有安装git软件（ubuntu12.10自带的有）都很简单的，我就不多说了。下面就git命令使用的基本流程说明如下：
+\subsection{基本命令}
+\paragraph{远程仓库文件到本地}
+网上创建项目之后，你需要将网上的存档下载到本地，在你希望下载的地点，打开终端：\\
+git ~~clone ~~https://github.com/a358003542/xelatex-guide-book.git\footnote{后面的这个链接地址在你创建的项目的右下角哪里，写着HTTPS clone URL}
+
+git init 命令用于本地创建的文件夹上传到远程仓库，我估计git clone 下来的仓库文件已经索引了，但git init 命令要不要用还不确定。这里认为不需要用。\endnote{参考了\href{http://www.cnblogs.com/findingsea/archive/2012/08/27/2654549.html}{这个网站}}
+\paragraph{本地仓库文件进入索引}
+下载下来的本地仓库文件进入git的索引，该文件夹内的所有文件都进入索引则在终端中输入如下命令：\\
+git ~~add ~~.  \\
+因为我们在github创建项目的时候已经创建了一个配置文件，比如我选择的是latex语言，然后它自动会处理将某些文件不上传。
+
+\paragraph{将索引中改动的文件提交到head}
+不太清楚这个索引，head具体是什么意思，anyway，过程就是这样的。\\
+git ~~commit ~~-m ~~'2013-08-25:19:00' \\
+后面的文字串等下在github网站中会看到的，表示这个文件的标示符吧，你也可以取其他的名字。我就喜欢取当时的日期和时间了。
+
+\paragraph{将head中改动的文件更新到远程仓库}
+第一次你需要给你的远程服务器取个简单点的名字：\\
+git ~~remote ~~add ~~origin ~~https://github.com/a358003542/xelatex-guide-book.git\footnote{这里的地址和前面的一样}
+
+然后以后都可以用这个简单的命令来更新了：\\
+git~~ push~~ origin~~ master\footnote{这里的origin的意思前面说了，master是远程仓库默认的一个分支，后面会讲到你可以创建其他的分支。}
+
+\paragraph{远程仓库的改动更新到本地}
+需要说的是git对文件的操作是合并式的，也就是只是替换最新改动的文件。\\
+git ~~pull~~origin~~master
+
+\subsection{日常改动提交流程}
+一般情况下就用前面讲的的三步，add .~~ commit ~~-m~~ 然后push。这是基本的日常维护提交流程。
+
+如果你在网站上对远程仓库做了一些修改，记得先用pull命令将远程仓库的改动更新到本地。
+
+
+\section{安装字体}
+\label{sec:安装字体} 
+\subsection{找字体文件}
+如果你装了windows系统，那么你可以到windows下copy这些字体文件。比如windows常用的宋体，times new roman等，在C盘的windows的fonts文件夹里面。本文用的就是adobe中文系列：adobe 宋体 std， adobe 黑体 std ， adobe 楷体 std 。很奇怪，在pdf上我觉得这几个字体感觉很好，但是在屏幕上就觉得不太好了。
+
+\subsection{放置字体文件}
+推荐都放在ubuntu的主目录的.fonts文件夹里面\footnote{这是一个隐藏目录}，如果没有请新建一个。这是通常默认用户新加字体放置的目录。当然你也可以放在其他目录里面，比如你的同步盘里面，然后用font-manager安装字体也是可以的。\footnote{这是本文推荐的方式，安装卸载字体都方便些。}
+
+\subsection{命令行安装字体}
+运行命令：\\
+fc-cache ~~ -f ~~ -v  
+
+字体就安装好了，如果你要看现在你的系统上有那些可用的中文字体，在终端运行命令\footnote{|表示linux命令中的通道，第一个命令的输出信息流会流向sort命令，排序之后重定向到ziti.txt文件里面。然后终端的数据就保存在这个文件里面了。}：\\
+fc-list :lang=zh | sort >ziti.txt 
+
+打开ziti.txt，里面就是你的可用中文字体的信息，比如：\\
+/home/wanze/.fonts/simsun.ttc: \\宋体,SimSun:style=Regular \\
+其中第一个是字体文件所在的目录，第二列信息是可以调用的名字，有宋体和SimSun。
+
+\subsection{通过fontmanager安装字体}
+你可以安装其他软件来安装和管理字体，比如fontmanager：\\
+sudo  apt-get install font-manager  \\
+这个软件查看安装卸载或者禁用某些字体都很方便的，需要提醒的是这个软件占用了默认的用户配置文件.fonts.conf。然后你的字体DIY需要到～/.config/font-manager/local.conf哪里去设置。这个下面会讲到。
+
+\section{ubuntu系统字体的配置}
+不是特别难看的情况就没必要改动系统字体，因为我们不要低估了人眼的适应能力。这里的配置主要是指由于系统升级带来的字体的改变，特别是中文字体的改变，手动配置将其固定下来。\endnote{这个代码主要参考了\href{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}{这个网站}}
+\begin{verbatim}
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+<match target="font">
+	<edit name="rgba" mode="assign"><const>rgb</const></edit>
+</match>
+
+<match>
+	<test name="lang" compare="contains"><string>zh</string></test>
+	<test name="family"><string>serif</string></test>
+	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
+</match>
+
+<match>
+	<test name="lang" compare="contains"><string>zh</string></test>
+	<test name="family"><string>sans-serif</string></test>
+	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
+</match>
+
+<match>
+	<test name="lang" compare="contains"><string>zh</string></test>
+	<test name="family"><string>monospace</string></test>
+	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
+</match>	
+
+</fontconfig>
+\end{verbatim}
+有很多内容没有深究，第一个是打开rgba模式，优化液晶显示的。然后下面就是对三大字族设置，如果是zh中文的话那么就prepend也就是插入微软雅黑，也就是在搜索队列中微软雅黑优先级最高。这个可以通过fc-match  -s  serif等来查看。然后其他字体设置不想涉及了，只希望他们能够稳定下来。感觉设置雅黑字体了，系统的主题换为Radiance更好看些。然后用font-manager针对微软雅黑高级设置加上AA和AH。一个是反锯齿一个是自动粗细设置吧。就这样了。
+\endnote{chromium字体也都设置成为微软雅黑吧，然后我感觉页面稍微放大点更好看。}
+
+
+\section[ubuntu的备份和还原]{ubuntu的备份和还原\footnote{以下主要参考了\href{http://www.matthartley.com/how-to-backup-your-ubuntu-software/}{这个网站}}}
+首先是利用系统自带的备份软件将home文件夹里面的一些内容备份好，注意配置文件夹排除法则。
+
+备份步骤简介如下：
+\begin{enumerate}
+\item 备份你的PPA，也就是你通过PPA装的软件。有的可能都没有通过PPA装过软件，那么这一步和下面的备份PPA的key都可以省略。命令如下：\\
+sudo~~cp~~-r ~~/etc/apt/sources.list.d~ ～/Nutstore/ubuntu-config
+\item 备份你的PPA的key:\\
+sudo~~apt-key~~exportall~>~~～/Nutstore/ubuntu-config/myppakey
+\item 通过新力得软件包管理器生成你安装的所有软件包的列表：选择文件F→将标记的项目另存为A→然后下面保存全部状态，不仅仅是变更选项勾上→然后选择一个地址取一个有意义的名字。
+\end{enumerate}
+
+如果重装系统了，还原步骤相当于前面备份步骤的反向操作吧:
+\begin{enumerate}
+\item 还原你的PPA:这里就不写命令了，和上面类似也是cp   -r，不同的是现在将你保存的PPA还原到新系统的etc的apt目录下。
+\item 还原你的PPA key，假设对照上面的情况，我们有命令:\\
+\verb+sudo    apt-key    add    ~/Nutstore/ubuntu-config/myppakey+
+\item 通过新力得软件包全部安装你之前保存的软件包列表 ：选择文件F→读取标记的项目R→然后类似正常的通过新力得安装软件包的步骤，点击应用即可。
+\item 通过上面的步骤，你的新系统的所有软件全新安装好了，至于其他配置文件前面说了一些你在意的配置保存，然后选择相应的位置，一般在.config文件夹里面，复制进去就行了。
+\end{enumerate}
+
+
+\printendnotes
+
+\chapter{XeLaTeX基础}
+\section{背景知识}
+\subsection{TeX}
+以下完全按照wikibook中的latex翻译的。\href{http://en.wikibooks.org/wiki/LaTeX/Introduction}{wikibook-latex}
+
+Tex是一个底层的标记式的编程语言，Donald Knuth发明的排版系统，可以用来排版出很漂亮的文章。当初Knuth看到自己的文章和书籍被排版的丑陋不堪，于是在1977年开发了这个排版引擎，这个引擎深深地改变了出版业，大力扩展了数字打印设备的潜能。1989年Tex支持了8位字符，然后Tex的开发就被冻结了，只限bug的修复。Tex作为一种编程语言，是支持if-else结构的：你能够在里面执行数学运算（他们在编译文件的时候被执行），等等。。不过你会发现要做其他的还是很困难的除了排版文字。Tex对于文章的结构和格式提供了良好的解决方案，使得它成为一个强大的神器。Tex是出了名的稳定，可以运行在各种计算机上，几乎没有bug。Tex的版本是按照$\pi$的序列扩展的，目前到了3.1415926。
+
+\subsection{关于Knuth教授}
+摘自台湾同胞良心作品latex123。\href{http://cle.linux.org.tw/~edt1023/tex/latex123/node2.html}{latex123}
+\begin{itemize}
+\item 1938.01.10	诞生。Milwaukee, Wisconsin; U.S. citizen。
+\item 1956	进入凯思工学院（Case Institute of Technology）学习物理。
+\item 1960	毕业后进入加州理工学院（California Institute of Technology）研究所，此时转向数学领域的研究方向。
+\item 1961.06.24	和 Nancy Jill Carter 结婚。他的中文名字是高德纳，他老婆名叫高精兰，老婆小他一岁。两个小孩，一男一女。中文名字是 1977 去中国大陆时取的。
+\item 1963	拿到 Ph.D.，并留校任教。
+\item 1968	开始任教于 Stanford 大学，信息科学系(Computer Science)。同年开始撰写名闻遐迩的 TAOCP(The Art of Computer Programming)。有人曾说，看了这部书，往后对写程序的话题都会变得谦虚。:)
+\item 1977	不满意书商所印出的 TAOCP，因此，自行开发 TeX 排版系统，这可就影响了往后的排版、出版界，至今不坠。但也因此拖延了 TAOCP 第四册的完成时间。
+\item 1986	荣获 ACM 软件系统奖。
+\end{itemize}
+他可说是著作等身，书籍、论文都有，他的任何著作有个奇怪的『副作用』，那就是任何人发现书上的错误，都可以向他举发，并领取 \$2.56（美金）！想试试看「手气」吗？台湾就有人领过。:-) 为什么是 \$2.56？Knuth 教授的答案是：
+
+``256 pennies is one hexadecimal dollar."发现 TeX 系统的臭虫也是一样，这个奖金每年倍数增加，直至 \$655.36($ 2^{16}$ pennies) 为止。
+
+他也很推崇自由软件基金会 (Free Software Foundation)及 GNU/Linux，把一些希望都寄托于 GNU/Linux，尤其是 Unicode 环境，他希望 GNU/Linux 很快就能在网页上显示他的中文名字，而不必使用图档。其实是可以做到了，只是 Unicode 环境还不算普及罢了。他曾在 1996 年接受 Dr. Dobb's Journal 访问时英雄惜英雄的公开表示，创导自由软件 (Free Software)的 Richard M. Stallman 是他心目中的英雄之一，他认为自由软件基金会这些人所做的贡献很不错，虽然和他的方式不一定一样，但许多贡献是互有认同的。
+
+在发展 TeX 时就同时思考 WEB（这个词比目前使用的 WWW Web 还早使用），那是一种 literate programming 的程序方法。他认为目前已成熟的可以提出含有文件的程序方法，使写程序就像写文学作品（小说？）一般的艺术表现。后来也把他由 C 改写（和 Silvio Levy 合作），名为 CWEB。TeX 就是由 WEB 写成的，WEB 可视为 Pascal 语言的一个子集。
+
+一个 literate 程序师可被视为文学作家、评论写作者、随笔作者 $ \cdots\cdots$，程序的表现不仅仅是搬弄符号，而是展现自己的风格，当然也是指达成目的的风格、甚至程序中变量运用的风格。
+
+这样一来就可以展现让人类较能理解的程序码。使用形式及非形式的融合，而且两者间相辅相成，目的达成了，也让阅读的人就好像读文学作品般的去抓住作者的心，使程序创作提升至更高的（文学）艺术境界，而不再是死板板的 code 了。
+
+Knuth 大师已于 1992 年自大学退休，但仍在 Stanford/Oxford 等大学有授课。目前正处于隐居的生活，他这么早退休的原因，就是因为 TAOCP 这部书，他估计大约要花 20 年来完成，因此目前的重点工作是完成他的 TAOCP（分成好几册，目前真正出版的只有三大册）。他认为 email会影响他的思路，因此，宁愿留住址，要和他联络就只好写信，传真。给他的秘书的 email，是最后有时间才会去看，他曾公开的表明，这部书是他这一生中最重要的工作。
+
+虽然 Knuth 教授写了许多严肃艰深的书籍、论文，但是他也是有风趣的一面，在 1996 年，Mathematisch Centrum (MC, 为庆祝五十周年庆改称为 Centrum voor Wiskunde en Informatica, CWI) 曾邀请他演讲，并知会荷兰的 TeX User Group(NTG)，NTG 见机会难得，就邀请 Knuth 教授另开个 TeX 及 Metafont 讨论会，并接受大家的提问，他说：『不对，我也是可以问你们问题的！』。而且，他还说：『这种问答的内容，很可能在不同场合重复过，所以，如果我对同一个问题，曾有过两种答案的话，你们必需取其平均值。』他的妙语如珠，在许多类似的场合常常引起哄堂大笑，但实际的内容却绝非泛泛之言。:-)
+
+\subsection{LaTeX}
+LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的专业页面设置,从而得以高质量地排版和打印他们的作品。LaTeX 最早是由 Leslie Lamport编写的,并使用 TEX 作为其排版系统引擎。\footnote{again，form the lshort}
+
+\subsection{XeLaTeX}
+关于XeLaTeX第一是文档是UTF-8编码的，第二是它对各种字体多语言输出文章的解决方案是最完美的，第三是LaTeX里面能够用的命令它一般都能用，第四是编译生成pdf文件使用的命令是xelatex什么什么tex文件，第五是需要知道它内置引擎现在一般是xdvipdfmx。
+
+
+\section{基本情况说明}
+
+这一段内容参考了有名的不太短的LaTeX手册。\href{http://www.ctan.org/pkg/lshort-zh-cn}{lshort-cn}
+
+在\LaTeX 的代码中最重要的是理解各种各样的命令的功能，正是这些各种各样的命令让你输入的文字显得与众不同。比如说我现在在打很长的一段文字，\LaTeX 会自动换行的，而我在这里按下Enter键
+，实际上并没有换行的效果。理解这一点很重要，\LaTeX 不同于微软的word软件或者其他openoffice之类，不是采用的所见即所得模式，我在这里打的是奇奇怪怪的东西，但是最后显示出来的却可能是很美观的东西。\LaTeX 的一个设计理念就是所想即所得，它甚至有点偏执地要求你组织好你自己的文章的结构，而这正是\LaTeX 的爱好者所推崇的。
+
+同样在代码中你空 一个格或者空      很多个格都是没有区别的，都是一个空格。
+
+在\LaTeX 中空一行和空很多行的效果是一样的，都是空一行，表示另起一段。
+
+\LaTeX 的命令用到了一些特殊的符号，所以你就不能按照常规用到它们了，这些符号如下：\\
+\#~~\$~~\%~~\^~~\_~~\&~~\{~~\}~~\~~~\textbackslash \\
+更详细的说明请参见后面的特殊符号\ref{sec:symbols}
+
+\LaTeX 的命令是case~sensitive的。也就是命令是区分大小写的。
+
+现在我把最基本的代码说明一下，\LaTeX 的代码的通用格式是这样的，\textbackslash 开头，然后跟上命令符号，然后跟上[]，方括号中放的是该命令的可选参数，然后跟上\{\},花括号里面跟的是该命令的必填参数。具体如下：\\
+\textbackslash command [optional parameters]\{parameters\}
+
+前面第一行代码是：\\
+\textbackslash documentclass [12pt,oneside]\{book\},意思是描述文章模板的类型为book，也就是一本书，除此之外还有article，report，slide类型等，更详细的讨论参见documentclass说明\ref{sec:documentclass}
+
+然后我们看到第二行代码：
+
+\textbackslash usepackage\{什么宏包\}
+
+这个usepackage命令后面跟上你想加载的库文件，等你使用\LaTeX 久了，就会接触到更多的宏包的。
+
+后面的代码：
+
+\textbackslash begin\{document\}
+
+文章内容
+
+\textbackslash end\{document\}
+
+描述文档开始，文档结束。在文档结束命令之后，你写的任何东西都会被\LaTeX 忽略掉。文档环境里面就写着你的文章的内容。
+
+\section{查看宏包帮助文档}
+这个我先讲了，实际上沉下心来阅读文档是最好的学习\LaTeX 的方法了。
+比如我要查看xeCJK文档，就在终端中输入：\\
+texdoc xeCJK
+
+在texmaker的帮助菜单下面有个功能类似的小插件。
+
+\section{从documentclass说起}
+\label{sec:documentclass}
+
+文档刚开始是preamble区域，放着文档的一些配置，从begin\{document\}开始进入正文区，出了end\{document\}这句话之后后面写的什么程序都不管了。document是一个环境，后面我们会接触很多的环境的。
+
+documentclass命令的必选参量有article，report，book，slides，beamer等，一般了解这几个就够用了。他们之间有很多细微的差别，这个后面慢慢了解。
+
+分节命令带星号表示该分节不进入目录，也不编号。
+
+文档的章节分级结构如下：\\
+\textbackslash part \{partname\}\\
+\textbackslash chapter \{chaptername\}\\
+\textbackslash section \{sectionname\}\\
+\textbackslash subsection \{subsectionname\}\\
+\textbackslash subsubsection \{subsubsectionname\}\\
+\textbackslash paragraph \{paragraphname\}\\
+\textbackslash subparagraph \{subparagraphname\}\\
+
+一般paragraph和subparagraph分节不怎么使用，就在文档中一行一行空出来即可。还有subsubsection这个分节也不常使用，因为section之下有subsection已经很好地满足了思想的分级结构，再加上一个subsubsection只会让人们更加困惑罢了。
+\endnote{paragraph命令可以构建出类似description环境的效果，不同的是后面不缩进，装载内容容量更大。}
+
+所以结合前面book，article分类我在这里为了简单起见约定如下:文档中一个小段落就是subparagraph不需要用命令再标识一次，几个段落构成一个paragraph，这从原则上就是某一个问题的阐述，也就是一个section级别，当我们对某一个课题反复思考之后，积累的资料越来越多，然后我们发现某几个section可以合并起来，这样出现了section和subsection两个级别。目录只需要显示section，这样目录才不至于过于庞大反而失去了实用性。这所有的section潜在的一个大的分类是chapter，但是这里不需要写出来，因为这个时候整个文档的级别是article。也就是通常所见的小容量的书小册子，某一个专门课题的讨论就按照article来处理。如果上升到某一个学科不同课题的讨论，那么上面article隐藏的chapter写出来，然后将他们合并为book类，这个时候这个book潜藏的最高级别为part。如果是不同学科的合并书籍那么级别就上升到part了。目录在book类的时候有part写上part，然后chapter和section都显示出来，结构也不会太复杂的。
+
+当然以上讨论只是泛泛而论，你需要根据自己的实际情况来，但总的原则是自己心里应该有一个划分标准，毕竟一本书最有价值的部分就是目录了，如果一本书的目录结构是乱七八糟的那么这本书不值一看。
+
+
+\subsection{可选项讨论}
+\begin{table}[h]
+\begin{tabular}{@{}p{0.2\linewidth}p{0.8\linewidth}@{}}
+\toprule
+可选项  &   说明  \\  \midrule
+10pt，11pt，12pt   &   设置文档所使用字体的大小，默认是10pt。\\
+a4paper ，letterpaper...   &   定义纸张的大小，此外还有a5paper，b5paper，executivepaper，legalpaper等。\\
+fleqn    &   设置该选项将使数学公式左对齐，而不是中间对齐。\\
+leqno    &   设置该选项将使数学公式的编号放置于左侧而不是右侧。\\
+titlepage, notitlepage    &   指定是否在文档标题后开始新一页，article文档类不开始新页，report和book开始。\\
+onecolumn, twocolumn    &   指定LaTeX以单栏或双栏方式排版文档。\\
+twoside, oneside    &   指定LaTeX排版文档为双面或单面格式，article和report默认为单面，book默认为双面。\\
+openright, openany   &    定义chapter开始时仅在奇数页或者随意，book类默认openright，report默认openany，article没有chapter。\\ \bottomrule
+\end{tabular}
+\label{tab:documentclass可选项}
+\caption{documentclass可选项}
+\end{table}
+
+
+\section{书籍的通用结构}
+通常一本书是由好几部份构成的，包括封面、扉页、书名页、目次、序、内文、补充或参考资料、版权页。
+
+出版的书籍的封面和扉页这里我们不考虑。电子书籍就从书名页开始说起。也就是我们的maketitle命令。这个时候也可以认为书名页作为了通常意义上的封面。maketitle可以生成多页，你可以考虑把版权页也算在里面，因为出版的书籍那个版权页刚好在背面，而电子书籍我觉得版权页还是放到最后面合适一些，当然多页封面你还可以自己加点名言警句页，这个看自己喜好了。
+
+然后接下来是序言部分，自序或者他序都可以。自己编的电子书籍就是自序了，自序内容不宜过长，确保不超过一页，相当于论文的摘要部分，用最简短的话让别人对这本书有一个大概的印象。
+
+接下来如果有listoftables和listoffigures的就放到这里。
+
+然后是tableofcontents,目录。
+
+然后是正文部分，包括引言，前言等。
+
+然后是appendix，附录部分：载于一书后面之文字或图表，是用来提示一些与内容有关而不便载于正文里的资料。
+
+然后是参考资料部分。
+
+然后是索引：是针对这本书中重要资料如人名、地名、概念等的查检。将本文的重要概念列出，并注明出现在文中的页次。它是依一定的方法排列，通常中文是按字体的笔划多寡决先后顺序，西文则按字母的顺序排列，以便检查。 通常附录是直接资料，索引则是提供查询资料的线索。
+
+
+\subsection{页码}
+\label{sec:页码}
+frontmatter命令跟在begin document后面，接下来页码为罗马数字。\\
+mainmatter命令放在正文开始的前面，表示页码的阿拉伯数字开始计数。\\ 
+appendix命令表示附录开始,后面各章节改为字母标记。页码没有变化\\
+backmatter命令放在参考文献或者索引的前面。章节编号关掉，页码没有变化。\footnote{backmatter不能在appendix前面，请参考\href{http://tex.stackexchange.com/questions/20538/what-is-the-right-order-when-using-frontmatter-tableofcontents-mainmatter}{这个网站}。}
+
+
+\section{页面布局}
+页面布局最好用\emph{geometry}宏包调节。
+
+\subsection{geometry宏包详细讨论}
+页面布局尺寸由geometry宏包指定，页面布局包含很多参量也就是geometry的可选项，请看下图\ref{fig:geometry选项1}：
+
+\begin{fig}{geometry选项1}   %简单的插入图片环境，后面的必填项既是图片标签的名字，也是图片caption。
+	\label{fig:geometry选项1}
+\end{fig}
+
+geometry提供的纸张类型很多，从a0paper一直到a6paper都有，还有b1paper到b6paper系列等等。纸张类型指定了后面的paperwidth和paperheight就都确定了。
+
+我们先来看横向参量，paperwidth是纸张的宽度，textwidth是正文宽度，parginparsep指旁注和正文之间的间距，marginparwidth指旁注宽度，left指左边空白宽度，right指右边空白宽度。如果book类型是twoside的，那么left最好命名为inner，也就是类似出版书籍靠里面的那段空白宽度，类似的right最好命名为outer，靠外面的那段空白宽度。其中默认情况下width=textwidth，如果加入选项\\includemp=true，那么:\\width=textwidth+marginparsep+marginparwidth。然后还有:\\paperwidth=left+width+right。
+
+再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文见的一段小空白headsep，bottom包含页脚高度footskip，所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}:
+
+\begin{scalefig}[0.6]{geometry选项2}  
+	\label{fig:geometry选项2}
+\end{scalefig}
+
+如果加上includehead=true选项，那么就和上图右边描述的类似，页眉部分计入height，类似的有includefoot=true,那么页脚部分也计入height。
+
+geometry的机制是以上讨论的横向或者竖向参量指定足够的数量之后，剩下的可以自动计算得到。没有明确指定的参量虽然可以通过计算得到，但是在后面似乎是不能够作为变量使用的？
+
+
+\subsection{临时改变页面布局}
+临时改变页面布局前面讲的geometry宏包也有一种实现机制，但是不太好用而且会把后面的段落格式打乱。这里推荐使用changepage宏包。
+
+进入adjustwidth环境就可以调整旁注宽度了。比如这里我新建一个widetext环境代码如下：
+
+\begin{verbatim}   
+\newenvironment{widetext}  
+	{\begin{adjustwidth}{}{-70mm}}%marginparwidth+marginparsep
+	{\end{adjustwidth}}
+\end{verbatim}
+
+新建环境请看\ref{sec:自建环境}。我们在这里建立了一个widetext环境，主要是adjustwidth环境操作，我们看到后面有两个花括号，第一个指左margin，第二个指右margin。注意这里不要和前面geometry宏包里面设置的includemp弄混了。\footnote{geometry宏包里面设置includemp=true让marginpar部分进入width，也就是right margin并不包含旁注部分了，但是只适用于geometry宏包。}这里左margin就是前面设置的left，右margin是前面设置的right+marginparwidth+marginparsep。所以可以考虑geometry宏包不要设置includemp，我前面只是为了理解简单才如此设置的，当然这里理解这个概念了就没有什么问题了。
+
+然后正数表示margin宽度增大，负数表示margin部分宽度减小。这里设置-70mm即右边marginparwidth+marginparsep的宽度。然后自己注意进入这个环境了就不要使用marginpar或者其他旁注的命令了，这是显而易见的。不设置数值即表示不改变，出了adjustwidth环境，一切复原。
+
+还有一个adjustwidth*环境，意思表示margin改变随着页面奇偶数变化而定，这个宏包的页面奇偶数设定及相关讨论后面都略过了，因为本文只关注于oneside模式，毕竟电子书籍设置成为oneside更好一些。
+
+changepage宏包还有changetext和changepage命令，有兴趣的可以看下，感觉并不太好用。
+
+
+\section{多栏环境}
+多栏环境推荐使用\emph{multicol}宏包。\endnote{在beamer类下有一种看上去不错的多栏环境，就是使用的columns环境，不过只适用于beamer类的frame框架下。}
+这个宏包很厉害，支持两栏到十栏的环境。就作为通用的一般形式如下：
+\begin{verbatim}
+\begin{multicols}{3}
+   blabla。
+   \columnbreak
+   blablablabla。
+   \columnbreak
+   blabla
+\end{multicols}
+\end{verbatim}
+以上代码运行在widetext环境下如下：
+\newpage
+\begin{multicols}{3}
+   在这里每一栏的宽度表示为linewidth，这个可以用来控制放进去的图片宽度。
+   \columnbreak
+   这里用columnbreak命令手动调整栏的跳转。你也可以不用columnbreak命令，而让\TeX 自动计算栏的高度和分布等。我喜欢用columnbreak命令，因为一般使用多栏环境都是为了对照然后做什么的，如果纯粹只是为了多栏而让文字多走几个拐意义不太大。不过似乎用columnbreak只能近似控制，并不是那种完全严格的跳转命令。
+   \columnbreak
+   这是最基本的应用，请参看多张图片并列显示这一小节。\ref{sec:多张图片并列显示}
+\end{multicols}
+
+
+\begin{multicols}{2}
+\setlength{\columnseprule}{0.4pt}
+如果你希望整个文档都分为两栏，那么在前面documentclass命令可选项里面加上twocolumn即可。这里的分栏环境是分两栏，然后加入的分栏线。就是在分栏环境中用setlength调整长度量columnseprule为0.4pt\footnote{参考了\href{http://texblog.org/tag/columnseprule/}{这个网站}}。觉得这个命令应该重新修改下，直接\textbackslash columnseprule就是加分栏线，然后后面跟个可选参数表示线的宽度。
+
+还有一个长度量columnsep表示栏之间的间距宽度，一样用setlength调节。一般没啥好调整的。分栏环境就这样简单说下吧。
+\end{multicols}
+
+
+\section{字体}
+我们知道xelatex的机制可以调用系统内的任意字体，当然系统没有的字体就要自己安装了，请看\ref{sec:安装字体}。
+
+\subsection{字体的五种属性}
+\LaTeX 的字体有五种属性，这五种属性是：字型编码，字族，字型系列，字形，字号,即：encoding,family,series,shape and size。
+
+\paragraph{字型编码}
+字型编码即各个个别的字在一个字型里头的排列顺序以及安排方式。原始的\TeX 字型编码我们就称为OT1(Old TEX text encoding),这是预设的,如果都不指定字型编码,那所使用的就是OT1编码。在目前新一代的字型编码里头,字的安排方式及内容和OT1不一样,例如T1等。
+
+
+\paragraph{字族}
+字族分为三大类，roman or serif（rm），sans serif（sf） 和 monospace。（tt）\endnote{下面参考了\href{http://wiki.ubuntu-tw.org/index.php?title=HowtoCustomFontswithFontconfig}{这个网站}}
+
+
+\begin{description}
+\item[serif] Serif中文译为「有衬线字体」，衬线即是印刷字体在每个笔划起始与终止处，加上短线或三角突起等，以便于快速辨认字符，利于阅读，为印刷专用字体。旧版Windows与较旧的Linux发行版以此为预设显示字体，而英文新版则改为Sans-Serif，中文新版则是：当字体大于某一程度时，则将 Serif的明体或宋体，以Sans的黑体取代。
+
+Serif字体著名的有：Times New Roman、DejaVu Serif、宋体、明体。
+
+\item[sans-serif] Sans-Serif中文译为「无衬线字体」，专用于荧幕、简报、艺术字体、展示等，较美观，但不适于长时间阅读。多数英文语系的作业系统多以此为预设字体，而采用此种字体为预设的中文作业系统，以Mac系统最为著名。
+
+Sans-Serif 字体著名的有：Arial、DejaVu Sans、Helvetica、Verdana、楷体、圆体、黑体、ubuntu logo 体。
+
+\item[monospace] Mono意思是「单一的」，space 意思是「空间」，中文翻为「等宽字体」。等宽字是打字机时代下的遗产，每个英文字母皆设计为同一宽度，以便于排版；现代为节省不必要空间的浪费，依字母形状分配其宽度，如m与i其宽度便不相同，不相信可以拿尺来量看看。Monospace 现多用于终端机显示、程序码表示等。
+
+Monospace字体著名的有：Andale Mono、DejaVu Sans Mono、Courier、AR PL New Sung Mono。
+\end{description}
+
+
+\paragraph{字型系列}
+正常用的是medium，\textbf{m}。粗体是bold，\textbf{b}。然后还有Bold extended，\textbf{bx}。还有Semi-bold，\textbf{sb}。。和Condensed，\textbf{c}
+
+
+\paragraph{字形}
+字形有正常的normal，\textbf{n}。还有意大利斜体Italic，\textbf{it}。斜体Slanted，\textbf{sl}。和Small Caps，\textbf{sc}。
+
+
+\paragraph{字号}
+比如说本文设置的就是12pt。
+
+
+\subsection{调整字型编码}
+\XeLaTeX 只处理UTF-8编码，那个调整字体编码的inputenc和fontenc宏包都不要用了。
+
+
+\subsection{调整字族}
+有两种方法设置，一种是命令式的，一种是环境式的。roman font family是默认的字族，一般不需要明确设置。
+\begin{table}[h]
+\label{tab:调整字族}
+\begin{tabular}{|c|c|c|}
+\hline
+命令式 & 环境式 & 描述 \\
+\hline
+\verb+ \textrm{text...}+ & \verb+ {\rmfamily  text...}+  & roman字族 \\[5pt]  
+\verb+ \textsf{text...}+ & \verb+ {\sffamily  text...}+  & sans-serif字族 \\[5pt]
+\verb+ \texttt{text...}+ & \verb+ {\ttfamily  text...}+  & monospace字族 \\
+\hline
+\end{tabular}
+\caption{调整字族}
+\end{table}
+
+\subsection{调整字型系列}
+默认的medium，一般不需要设置，然后还有一个bold，即字体加粗。
+\begin{table}[h]
+\label{tab:调整字型系列}
+\begin{tabular}{|c|c|c|}
+\hline
+命令式 & 环境式 & 描述 \\
+\hline
+\verb+ \textmd{text...}+ & \verb+ {\mdseries  text...}+  & 正常字体粗细 \\  
+\verb+ \textbf{text...}+ & \verb+ {\bfseries  text...}+  & bold 粗体 \\
+\hline
+\end{tabular}
+\caption{调整字型系列}
+\end{table}
+
+
+\subsection{调整字形}
+默认是upright shape，常用的字形如下：
+\begin{table}[h]
+\label{tab:调整字形}
+\begin{tabular}{|c|c|c|}
+\hline
+命令式 & 环境式 & 描述 \\
+\hline
+\verb+ \textup{text...}+ & \verb+ {\upshape  text...}+  & 正常字形 \\  
+\verb+ \textit{text...}+ & \verb+ {\itshape  text...}+  & 意大利斜体 \\
+\verb+ \textsl{text...}+ & \verb+ {\slshape  text...}+  & 斜体 \\
+\verb+ \textsc{text...}+ & \verb+ {\scshape  text...}+  & small caps \\
+\hline
+\end{tabular}
+\caption{调整字形}
+\end{table}
+
+
+\subsection{调整字号}
+
+\subsubsection{相对字号调整}
+\LaTeX 里面自带的调整相对字号命令如下：
+\begin{table}[h]
+\label{tab:调整字体大小命令}
+\begin{tabular}{|l|l|}
+\hline
+命令 & 输出\\
+\hline
+\verb+{\tiny  test line}+ & {\tiny  test line}\\
+\verb+{\scriptsize  test line}+ & {\scriptsize  test line}\\
+\verb+{\footnotesize  test line}+ & {\footnotesize  test line}\\
+\verb+{\small  test line}+ & {\small test line}\\
+\verb+{\normalsize  test line}+ & {\normalsize  test line}\\
+\verb+{\large  test line}+ & {\large  test line}\\
+\verb+{\Large  test line}+ & {\Large  test line}\\
+\verb+{\LARGE  test line}+ & {\LARGE  test line}\\
+\verb+{\huge  test line}+ & {\huge  test line}\\
+\verb+{\Huge  test line}+ & {\Huge  test line}\\
+\hline
+\end{tabular}
+\caption{调整字体大小命令}
+\end{table}
+
+本文默认字体大小是12pt，我注意到这里huge和Huge是一样的\footnote{well，本来应该是一样的，不过因为这里我使用了moresize宏包所以区分开来了。}，然后我们看下图，不同情况下这些命令确切的大小：
+
+\begin{table}[h]
+\begin{tabular}{@{}llll@{}}
+\toprule 
+size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
+\textbackslash tiny         & 5pt            & 6pt         & 6pt         \\
+\textbackslash scriptsize   & 7pt            & 8pt         & 8pt         \\
+\textbackslash footnotesize & 8pt            & 9pt         & 10pt        \\
+\textbackslash small        & 9pt            & 10pt        & 11pt        \\
+\textbackslash normalsize   & 10pt           & 11pt        & 12pt        \\
+\textbackslash large        & 12pt           & 12pt        & 14pt        \\
+\textbackslash Large        & 14pt           & 14pt        & 17pt        \\
+\textbackslash LARGE        & 17pt           & 17pt        & 20pt        \\
+\textbackslash huge         & 20pt           & 20pt        & 25pt        \\
+\textbackslash Huge         & 25pt           & 25pt        & 25pt        \\ \bottomrule
+\end{tabular}
+\label{tab:字体具体大小}
+\caption{字体具体大小}
+\end{table}
+
+
+\subsubsection{绝对字号调整}
+上面的命令基本上够用了，并不鼓励使用绝对字号。不过有的时候还是有用的，比如旁注环境需要同时调整字体大小和行距，使用这个命令注意不要对文本中某一小段文字使用，否则会造成行距的不一致。
+比如这个旁注使用的命令是：
+\begin{verbatim}
+\newcommand{\sidenote}[1]{\marginpar{  
+ 	\fontsize{10pt}{20pt}\selectfont #1}}
+\end{verbatim}
+其中fontsize就是调整字号的命令，第一个参量是字体的大小，第二个参量是行距。然后后面\textbackslash selectfont 必须写上，就理解为表示对后面的字体进行操作吧。类似的还有fontencoding，fontfamily，fontseries，fontshape命令，这些本文略过。
+
+
+\section{本文字体配置}
+本文字体配置代码如下，后面有相关介绍：
+\begin{verbatim}
+\usepackage{xltxtra,fontspec,xunicode} %必备三件套
+\usepackage[CJKnumber=true]{xeCJK} %中文环境宏
+\xeCJKsetup{PunctStyle=plain}
+\defaultCJKfontfeatures{Scale=1.2}   %中文字应该稍微高于英文字
+\renewcommand\CJKglue{\hskip 0pt plus 0.12\baselineskip} 
+\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
+    {Adobe 宋体 Std}%影响rmfamily字体
+\setCJKsansfont{Adobe 黑体 Std}%影响sffamily字体
+\setCJKmonofont{Adobe 楷体 Std}%影响ttfamily字体
+ %设置英文字体
+\setmainfont[Mapping=tex-text]{DejaVu Serif} 
+\setsansfont[Mapping=tex-text]{DejaVu Sans}
+\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+\end{verbatim}
+
+上面代码第一行就是xelatex必备的三件套，其中xltxtra宏包是专门处理\XeLaTeX 的一些问题的，它会自动加载后面的fontspec和xunicode宏包。xunicode是处理某些特殊字符的。上面代码的具体解释详见下面的fontspec宏包和xeCJK宏包详解。
+
+
+\section{fontspec宏包详解}
+当然来自fontspec宏包的帮助文档。后面关于宏包的相关信息来源于自身帮助文档我就不说明了。fontspec宏包主要用于英文字体的设置，中文字体的设置建议用xeCJK宏包来管理。\emph{\XeLaTeX 只能使用opentype和truetype字体。}
+
+\subsection{基本的命令}
+fontspec宏包最基本的应用就是用setmainfont来设置文档的默认roman字族字体的，setmainfont原来的名字叫setromanfont。\footnote{\href{http://tex.stackexchange.com/questions/70413/problem-with-xetex-latex-and-system-fonts}{参考了这个网站}}setsansfonts是设置文档默认sans-serif字族字体的，setmonofont是设置monospace字族字体的。然后我们看到前面都有一个可选项Mapping=tex-text，这个说是什么让\XeTeX 文字分布更好的，可能和正确断行有关系，不大确切。
+
+fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常的基本，大约相当于引擎的入门口，我估计前面三个命令实际上是建构在fontspec命令之上的。fontspec命令的作用不光临时改变字体。还可以加上很多可选项，比如字体尺寸，颜色等等。总之fontspec命令的优先级要高于前面的三大默认字体设置命令。请看下面的例子：\\
+\verb+{\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} +\\
+{\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} 
+
+另外还有一个有用的命令就是newfontfamily，这个命令相当于把fontspec命令包起来再新建一个命令。新建的那些字体命令就像\verb+\sffamily+之类的命令一样使用。，在后面讲到引入特殊符号的时候我们还会接触到这个命令。\\　
+\verb+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}+
+
+以上基本命令总结如下:
+\newpage
+\begin{verbatim}
+\fontspec [ font features ] { font name }
+\setmainfont [ font features ] { font name }
+\setsansfont [ font features ] { font name }
+\setmonofont [ font features ] { font name }
+\newfontfamily{ cmd }[ font features ] { font name }
+\end{verbatim}
+上面的font name在安装字体的时候说明清楚了，比如说用fc-list命令调出来的『宋体,SimSun:style=Regular』中字体名字就是宋体或者SimSun。而在fontmanager里面比如第一行显示『Comic Sans MS Regular』，字体名就是Comic Sans Ms。接下来主要讨论font features的内容，所讨论的内容以上几个基本命令都适用。由于xeCJK的fontfeatures可选项是继承自fontspec，所以下面的讨论也适用于xeCJK宏包。
+
+\subsection{font features的讨论}
+\paragraph{字形}
+一个字体的字族之下还分为不同的字形，默认的字形设置可能并不能满足你的要求。有一些字体甚至没有粗体或者意大利体这样的字形。一般的玩家就选用默认字形设置足有了，最多在mainfont哪里设置下boldfont和italicfont。见上面例子的第4，5行。\\
+BoldFont = font name\\
+ItalicFont = font name\\
+BoldItalicFont = font name\\
+SlantedFont = font name\\
+BoldSlantedFont = font name\\
+SmallCapsFont = font name
+
+\paragraph{Color}
+前面的例子我们看到了Color属性的定制，在这里推荐适用xcolor宏包。\XeLaTeX 默认使用的是xdvipdfm，不支持透明颜色。然后xcolor宏包对于颜色的讨论请参看颜色一节\ref{sec:颜色}
+
+\paragraph{字体大小}
+\endnote{我查看了log文件，Scale=1.2之后的pt值就是原pt值乘以1.2。}
+在前面的那个例子也用到了Scale选项，选个数字来整体调整这个字体的尺寸大小。还有两个常量值，一个是MatchLowercase，一个是MatchUppercase。就是变成小写字母一样的或者大写字母一样的大小。
+
+\paragraph{词间距——WordSpace}
+觉得默认的设置更有弹性吧，一般的玩家没必要动它。
+
+\paragraph{标点后间距——PunctuationSpace}
+从零开始可以加点距离。
+
+\paragraph{断字符号——HyphenChar}
+就是要换行了选择从哪里断字的符号，比如设置HyphenChar＝{+}，那么标明+，就从哪里断字。默认的是\textbackslash － ，对英文的断字还不怎么关心。
+
+\paragraph{字母之间的距离——LetterSpace}
+从零开始加点距离，而且只适用于小写字母，感觉很累赘。而且这个feature\emph{只适用于\XeTeX} 。
+
+
+\subsection{最后两个命令}
+最后还有两个命令defaultfontfeatures和addfontfeatures。有什么优先级：\\ addfontfeatures>fontspec>defaultfontfeatures。觉得太花哨了暂时应该用不到。
+
+
+\subsection{设置数学字体}
+本文不深究数学领域排版知识的讨论。
+\begin{verbatim}
+\setmathrm [ font features ] { font name }
+\setmathsf [ font features ] { font name }
+\setmathtt [ font features ] { font name }
+\setboldmathrm [ font features ] { font name }
+\end{verbatim}
+
+
+\section{xeCJK宏包详解}
+xeCJK宏包只处理CJK字符在这里指中文字，也就是英文字还是用前面的fontspec宏包来处理。
+
+\subsection{只能在加载宏包时填入的选项}
+CJKnumber = <true | false> \\
+默认是false，如果设置为true，那么可以适用CJKnumber命令。比如这个命令\verb+\CJKnumber{1}+的输出结果是：\CJKnumber{1}。还有一个命令比如\verb+\CJKdigits{1545}+的输出结果是：\CJKdigits{1545}。
+
+indentfirst = <true | false>\\
+章节下面第一段首行缩进不缩进，默认是true，缩进。这个没啥好修改的，一般都统一缩进吧，如果有某个段落你不想缩进加上noindent命令就是了。
+
+\subsection{可以在xeCJKsetup命令中设置的选项}
+CJKmath = <true | false>\\
+默认是false，如果设置为true，那么可以在数学模式下输入CJK字符。
+
+PunctStyle = {⟨quanjiao|…………|plain⟩}\\
+其他选项请参看文档， 这个是设置标点处理格式的。在本文字体配置第3行那里你可以看到我设置为plain，也就是是什么就是什么，不做处理。默认是quanjiao。
+
+\subsection{xeCJK宏包的一些命令}
+现在对照fontspec宏包对xeCJK新建的只针对CJK字符处理的命令说明如下，其中各个命令的用法和fontfeatures都是类似的。
+\begin{description}
+\item[setCJKmainfont] 类似于setmainfont。
+\item[setCJKsansfont] 类似于setsansfont。
+\item[setCJKmonofont] 类似于setmonofont。
+\item[CJKfontspec] 类似于fontspec。
+\item[newCJKfontfamily] 类似于newfontfamily。
+\item[defaultCJKfontfeatures] 类似于defaultfontfeatures。
+\item[addCJKfontfeatures] 类似于addfontfeatures。
+\item[setCJKmathfont] 估计应该类似于setmathrm。
+\end{description}
+
+\subsection{设置CJK字符大小}
+在本文字体配置中第4行，我将CJK字体都放大了1.2倍，为的是让中文字比英文字稍微大一点，这样更好看一点。具体原来为12pt，放大后为14.4pt。
+
+\subsection{设置CJK字符字间距}
+请看到上面本文字体设置的第5行，这里有一个全局的变量，重命名它即可。本文稍微加大了点距离。不过保持原来的默认值应该差别也不大。\endnote{这里参看了\href{http://cle.linux.org.tw/~edt1023/tex/mycjk/node6.html}{这个网站}}
+
+
+\section{UTF-8编码}
+texmaker软件并没有这个问题，不管怎么样，加上这样一行代码没什么害处喽。确保文档以utf-8编码打开和保存
+在文档开头加上如下代码：\\
+\% !Mode:: "TeX:UTF-8" \\
+本文只关注于UTF-8编码。
+
+
+\section{特殊的符号}
+\label{sec:symbols}
+值得一提的是命令如果后面跟上一个花括号，后面的字符紧跟花括号，那么命令显示的符号和后面的字符就没有空格了。
+\subsection{\textbackslash}
+\textbackslash ，我们知道命令的开头表示就用它，所以在文档中是不能直接使用的，如果需要显示\textbackslash ，需要输入\textbackslash textbackslash来显示。
+
+\subsection{\{和\}}
+\{和\},同上，作为命令的格式。如要显示前面加上\textbackslash 符号。
+
+\subsection{\%}
+\% ,我们知道这个符号在文档是用来标记注释信息的开始的，所以在文档也不能直接使用。在前面加个\textbackslash 即可。
+
+\subsection{\~{}}
+\~ ,这个符号在文档中产生一格空白，如要显示在前面加上\textbackslash 符号。这样显示的波浪号有点小。还可以进入数学模式下输入\textbackslash sim，在texmaker左边的关系符号一栏中也可以找到。所以为了美观的话就用数学模式吧。然后在Rime输入法里面我们看到还有一种符号是全角下的波浪号～。我比较了下这个和前面两个都不相同，简单起见用这个全角的波浪号也是可以的。
+
+\subsection{\$}
+\$ ,美元符号之所以不可以用是因为它标记了数学模式的开始和结束。比如说我要输入字母$\pi$,就是在两个美元符号中间输入\textbackslash pi即可。理论上输入\textbackslash pi 就可以显示$\pi$了，但是和中文字混合处理的时候会出错，而英文字混合输入会引起字体不协调的问题，而进入数学模式之后就不会。同样还有一种希腊字母的符号π，这个可以正常显示，只是没有前面数学模式下的美观。我查了一下，数学模式下的那个$\pi$也是unicode区域里面的那个希腊字母，我想只是字体问题了。\footnote{\href{http://www.johndcook.com/unicode_latex.html}{这个网站}用来查找unicode和\LaTeX 命令的对应关系}
+
+\subsection{\#}
+\# ,这个符号没怎么接触，latex123说是定义巨集的，前面加上\textbackslash 即可。
+
+\subsection{\^{}和\_{}}
+\^和\_{}，这两个符号表示进入数学模式之后进入上标和进入下标。这两个符号在文本中后面还要跟一对花括号，否则显示会出问题。
+
+\subsection{\&}
+\& ,这个符号表示表格中的分隔符。要显示前面加上\textbackslash 即可。
+
+\subsection{单引号和双引号}
+你可以用\textbackslash textquotedblleft来表示左双引号，用\textbackslash textquotedblright 来表示右双引号。用\textbackslash textquoteleft来表示左单引号，用\textbackslash textquoteright来表示右单引号。
+
+然后还有敲键盘的方法，要左边和右边区别对待，比如说左单引号就是点击ESC下面那个键，右单引号是点击分号右边那个键；而左双引号是点两次ESC下面那个键，右双引号是按住shift，然后点击分号右边那个键。
+
+\subsection{破折号和连字号}
+连字号就是一个这个- ，可以直接在键盘上输入。\\
+短破折号就是两个-连续输入 $ \Longrightarrow $  --\\
+长破折号就是三个-连续输入 $ \Longrightarrow $  ---\\
+负号就是数学模式下的-  $ \Longrightarrow $ $ -1 $  如果有时嫌麻烦就直接-1应该可以接受把。
+
+\subsection{温度的度}
+在texmaker左边的关系负号哪里我们可以看到一个小圆圈，输入命令是\textbackslash circ，当然需要在数学模式下。现在就需要让这个小圆圈位于上标即可。前面的符号介绍我们提及\^{},就是进入上标显示，上标的内容在\^{}后面的那个花括号内，于是我们就知道三十度怎么画了。$ 30^{\circ} $ ，注意texmaker左边有快捷键。点起来很方便的。具体代码是：\$ 30\^{}\{\textbackslash circ\} \$。当然你可以直接用rime输入法打出这个温度的度：°，℃。在输出\%候选项哪里。
+
+最后八一句，不明白全角形式的百分号怎么在\LaTeX 文档里面也是注释作用？我确认是全角的unicode。
+
+\subsection{省略号}
+this...   that\ldots   \\
+三个点...   ldots命令\ldots  \\
+老实说没看出什么区别，所以省略号就跟着点三个点也是可以的，别用中文句号就行了。
+
+
+
+\section{更多特殊符号}
+{\fontsize{50pt}{10pt}\selectfont \color[HTML]{DE4815}  }
+
+上面是Ubuntu的图标符号，可不是一张图片哦，是一个字符。这个图标符号只在Ubuntu字体里面才有。现在让我们将思路先理清一下。首先是Unicode码，这个只是一个理论上的编码规则，具体的实现是字体。但是每一个字体都只专注于某一个领域，并没有把Unicode所有的码都画出字形来，那么系统是如何显示字体的呢？系统是安装了很多字体，如果一个字体并不包含它要显示的Unicode，它就搜索打开下一个字体文件，找相关的Unicode的字形。只有从字体文件中具体找了这个Unicode的字形，才有办法将其显示出来。
+\endnote{主要参考了\href{http://tex.stackexchange.com/questions/41130/getting-xelatex-to-display-accents-and-characters-not-included-with-the-font}{这个网站}}
+
+我的加入新符号的配置代码如下：
+\begin{verbatim}
+\newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
+\usepackage{newunicodechar}
+\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
+\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
+\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}} 
+\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
+\newunicodechar{}{{\ubuntu{}}}
+\end{verbatim}
+
+值得提醒的是目前系统的文档里面那个Ubuntu图标都不能正确显示出来，而我们在pdf中却能显示出来。我们来看看代码。\endnote{如果你输入了某个Unicode的字形你目前的pdf字体并不包括，那么将会产生这样的一个错误信息：WARNING invalid CMap mapping entry.然后你编译pdf之后发现某个字符没有正常显示出来只是一个方框那么可能是目前字体不包括这个字形。}
+
+首先第1，2行前面以及谈及了，主要是看这个新引入的宏包newunicodechar。好吧，这个宏包就只有一个命令，这个命令就是这个宏包的名字。其实我们能够猜到，这个命令的作用就是将这个字符变成类似\TeX 命令的东西，然后体换为后面的那一串，而后面的那一串单独提出来也是能够正常显示的。如{\ubuntu{}}。
+
+\begin{fancycolorbox}
+所以过程还是很简单的，但是整个过程让人紧张，如果一篇文章有很多这样的特殊符号，那不要写上长长的这样一串？我想到的第一个解决方案就是最好有这么一个字体包含所有的Unicode的字形，然后我试着用fontforge将一些字形复制粘贴调大小混到一起，然后发现这个方案既满足不了美观的要求也满足不了效率的要求。后来认识到也许我多虑了，如果一个符号经常出现，那么那个字体设计者肯定会优先考虑把它加进去的。
+\end{fancycolorbox}
+
+这里插播一段广告……\\
+这里有一段代码生成该字体所有已有的字形\ref{sec:字体已有字形}。当然你可以直接在字符映射表里面选择只显示已有字形查看，不过有时并不方便。生成那个pdf查看之后可以复制粘贴，到那个字符映射表里面搜索，还是很方便的。
+
+
+\section{初步中文化}
+主要是些原\LaTeX 常量是英文单词，然后改成中文字即可。看看代码就清楚了。
+\begin{verbatim}
+\renewcommand\contentsname{目~录}
+\newcommand\econtentsname{Contents}
+\renewcommand\listfigurename{插图目录}
+\renewcommand\listtablename{表格目录}
+\renewcommand\bibname{参~考~文~献}
+\renewcommand\indexname{索~引}
+\renewcommand\figurename{图}
+\renewcommand\tablename{表}
+\renewcommand\partname{部分}
+\renewcommand\appendixname{附录}
+\renewcommand{\abstractname}{摘~要}
+\renewcommand\today{\number\year~年~\number\month~月~\number\day~日}
+\end{verbatim}
+
+
+\section{颜色}
+\label{sec:颜色}
+
+\subsection{本文颜色的配置}
+\begin{verbatim}
+\usepackage{xcolor}  
+%===========在网上找的配黑色文字比较好的背景色=============%
+\definecolor{bgcolor-co}{RGB}{255,255,255}  %引用cite  observe
+\definecolor{bgcolor-dd}{RGB}{255,255,200}  %怀疑  doubt desire 
+\definecolor{bgcolor-tp}{RGB}{215,255,240}  %理论  theory 实践  practice
+\definecolor{bgcolor-bf}{RGB}{240,218,210}  %believe %faith
+
+\definecolor{defaultbgcolor-0}{RGB}{199,237,204}  %for eye
+\definecolor{defaultbgcolor-1}{RGB}{240,240,240}  %gray25  recommend
+
+\pagecolor{defaultbgcolor-0}
+\end{verbatim}
+
+\subsection{颜色的心理学}
+颜色心理学是一门学问，这里不会深究，只是在文档里面字体或者背景使用什么颜色是一门大学问。这里主要参照\href{http://www.jb51.net/article/8216.htm}{这个网站}简单说下。本文定义的几个颜色也是参考的这个网站。
+
+\begin{description}
+\item[红色] 一种激奋的色彩。刺激效果，能使人产生冲动，愤怒，热情，活力的感觉。
+\item[绿色] 介于冷暖两中色彩的中间，显得和睦，宁静，健康，安全的感觉。 它和金黄，淡白搭配，可以产生优雅，舒适的气氛。
+\item[橙色] 也是一种激奋的色彩，具有轻快，欢欣，热烈，温馨，时尚的效果。
+\item[黄色] 具有快乐，希望，智慧和轻快的个性，它的明度最高。 
+\item[蓝色] 是最具凉爽，清新，专业的色彩。它和白色混合，能体现柔顺，淡雅，浪漫的气氛(像天空的色彩:) 
+\item[白色] 具有洁白，明快，纯真，清洁的感受。 
+\item[黑色] 具有深沉，神秘，寂静，悲哀，压抑的感受。 
+\item[灰色] 具有中庸，平凡，温和，谦让，中立和高雅的感觉。 　　
+\end{description}
+关于具体选择什么颜色，我也纠结了很久，但最后无果而终，可选择的颜色太多了，我说不上什么意见。
+
+\subsection{有关颜色的基本命令讨论}
+首先推荐使用xcolor宏包。\endnote{在\href{http://tex.stackexchange.com/questions/89763/when-to-use-the-xcolor-package-instead-of-the-color-package}{这个网页}里，谈到原color宏包的所有特性基本上xcolor都支持，同时又加了很多新特性，相当于扩充集吧。}
+
+\paragraph{定义新的颜色}
+前面谈及本文颜色配置的代码中有很多definecolor命令就是定义新的颜色的，然后在后面要用到颜色的地方使用你这里定义的新的颜色名字就可以了。第一个花括号就填着你定义的新颜色的名字。第二个花括号填着你要定义的颜色的模式，比如RGB，rgb，HTML，cmyk等。最后就是填着对应的模式的对应的数值。其中HTML模式不要\#号。
+
+\paragraph{用软件查看颜色}
+你可以用手机照相，或者某个在某个网页某个文档上截图。然后用Gcolor2软件来捕捉某个点的颜色。
+
+\paragraph{改变文章的背景颜色}
+上面代码第11行pagecolor命令就是，我试着在minipage模式下使用也会改变整个文章的背景颜色。
+
+\paragraph{改变字体的颜色}
+有两个命令，textcolor和color命令。\\
+\verb+\textcolor{colorname}{some text}+\\
+\verb+{\color{colorname}  some text...}+\\
+我更喜欢color命令。
+
+\subsection{xcolor宏包}   
+xcolor宏包虽然是color宏包的扩展集，但对于我这个颜色知识盲来说多少有点不知所云，可能专业弄颜色的对那些颜色模式的增加还有颜色混合的表达扩展觉得很感动吧。如果你对颜色有更高级的需求，请详细阅读xcolor宏包文档，这里不赘述了。
+
+就一般用户还是用definecolor命令吧，支持的模式有gray，rgb，RGB，HTML，cmyk。其中只要加载xcolor宏包就能使用的颜色名字如下：
+\begin{table}[h]
+\begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
+\toprule
+颜色        & 效果  & 颜色       & 效果\\ \midrule
+black     &  \cellcolor{black}  & olive     &    \cellcolor{olive} \\
+blue      &   \cellcolor{blue} & orange    &   \cellcolor{orange}\\
+brown     &  \cellcolor{brown}  & pink      &   \cellcolor{pink}\\
+cyan      &   \cellcolor{cyan} & purple    &   \cellcolor{purple}\\
+darkgray  &  \cellcolor{darkgray} &red       &   \cellcolor{red}  \\
+gray      &   \cellcolor{gray} & teal      &    \cellcolor{teal}\\
+green     &   \cellcolor{green} & violet    &   \cellcolor{violet}\\
+lightgray &  \cellcolor{lightgray} &white     &   \cellcolor{white} \\
+lime      &    \cellcolor{lime} & magenta   &   \cellcolor{magenta} \\
+yellow    &    \cellcolor{yellow}\\ \bottomrule
+\end{tabular}
+\label{tab:直接可以使用的颜色名字}
+\caption{直接可以使用的颜色名字}
+\end{table}
+这个表格里面的小格子涂上颜色是使用的xcolor宏包里面的cellcolor命令，就是在表格相应的格子位置使用这个命令就可以了。上面表格类似的一行我写出来吧：\\
+\verb+yellow & \cellcolor{yellow}\\ \bottomrule+
+
+虽然颜色混合我弄不大明白，不过单个颜色调百分比\footnote{不清楚和谁调？白色？}还是很有用的。比如gray灰色后面跟个!20，就表示20\%的灰，那种淡淡的灰色做背景颜色挺好的。请看下面不同百分比的灰色。
+\begin{table}[h]
+\begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
+\toprule
+灰色百分比        & 效果  & 灰色百分比       & 效果\\ \midrule
+gray     &  \cellcolor{gray}  & gray!90     &    \cellcolor{gray!90} \\
+gray!80      &   \cellcolor{gray!80} & gray!70    &   \cellcolor{gray!70}\\
+gray!60     &  \cellcolor{gray!60}  & gray!50      &   \cellcolor{gray!50}\\
+gray!40      &   \cellcolor{gray!40} & gray!30    &   \cellcolor{gray!30}\\
+gray!20  &  \cellcolor{gray!20} &gray!10       &   \cellcolor{gray!10}  \\
+gray!0    &    \cellcolor{gray!0}\\ \bottomrule
+\end{tabular}
+\label{tab:不同百分比的灰色}
+\caption{不同百分比的灰色}
+\end{table}
+这个表格最后一行是：\\
+\verb+gray!0 & \cellcolor{gray!0}\\ \bottomrule+\\
+
+值得一提的是xcolor宏包还支持一种表格颜色交替模式，看上去不错。请看带颜色的表格这一小节\ref{sec:带颜色的表格}。
+
+
+\section{段落}
+\subsection{本文中段落相关代码}
+\begin{verbatim}
+\newenvironment{common-format}{ %不知怎么经过目录会出错。
+	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落间距
+	\setlength{\baselineskip}{22pt}%基础行间距
+	\setlength{\parindent}{\baselineskip * \real{0.12} + \textpt * \real{2.4}}}  
+    {}
+\end{verbatim}
+在这里我新建了一个标准格式命令，然后在适当的时候引用。
+
+\subsection{换行和分段}
+一个意思写一个段落，意思没说完就不要分段，在文章中一个段落的书写就是直接写就是了，\LaTeX 会自动处理好一切的。简单的分段的做法就是空一行。这样分段首行缩进仍然存在，表示不同的段落。
+
+如果你只是想换行而不分段，那么用命令：\\
+\textbackslash \textbackslash \\
+可以满足你的要求。
+
+\textbackslash \textbackslash 命令还有一个用法，比如后面跟上[10pt],表示在原有行距的基础上再加上额外的空白距离，参数也可以是负数。
+
+\subsection[段落中的行距]{段落中的行距\endnote{参考了\href{http://www.complang.tuwien.ac.at/anton/latex/baselineskip.html}{这个网站}}}
+在上面的代码中第3行就是设置行间距的。一行一行之间的间距也是一个glue，我们知道glue有基本的space和伸缩量。行距的基本space由命令baselineskip控制，伸缩量由baselinestretch命令。\footnote{实际上这个多少有点揣测的意思。}
+
+本文目前控制段落行距模板采用的方案是使用宏包setspace。因为这个宏包使用双倍行距选项之后尾注部分行距也有调整，更加好看些：\\
+\verb+\RequirePackage[doublespacing]{setspace}+
+
+\paragraph{baselineskip} 
+盒子堆栈起来上下间距\footnote{一行一行就是横向的盒子，行间距就是横向的盒子之间的上下间距。}由三个命令控制：baselineskip，lineskip和lineskiplimit。简单的说明就是首先间距是baselineskip，但是如果上面的盒子伸的太下或者下面的盒子伸的太高，那么他们就可能会碰到一起。lineskiplimit控制的就是盒子之间最小间距，比如0pt。当baselineskip减去上面的盒子的深度depth再减去下面盒子的高度height然后得到的值比lineskiplimit小，那么跳转方案就会选择lineskip模式。也就是上面盒子最低的点和下面盒子最高的点之间的距离是lineskip那么多。\endnote{参看了a beginner's book of \TeX 的spacing between boxes一节。在google book哪里可以看到这一段，不过似乎这本书网上并不能自由下载。}
+
+我感觉自己设置一个baselineskip已经很满足要求了，尤其个别字用Huge命令的时候效果也还行。
+
+\paragraph{baselinestretch}\footnote{参看的\href{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=linespread}{这个网站}}
+baselinestretch量相当于行间距glue的伸缩量，也就是对前面的baselineskip做一定的伸缩。这个命令要使用的话格式如下：\\
+\verb+\renewcommand{\baselinestretch}{伸缩量}+\\
+这个命令等价于：\\
+\verb+\linespread{伸缩量}+\\
+不过这不是故事的全部。完整的设置格式如下：\\
+\verb+{\linespread{伸缩量}\selectfont  sometext}+\\
+其中伸缩量人们说设为1.3就是1.5倍行距，1.6就是双倍行距。放在导言区里面才有效果，不能在文档中临时改变行间距。有需要的请参考setspace宏包，这里就不讨论了。
+
+
+\subsection{段落间距}
+段落间距也就是一段和一段之间的空白距离。前面本文段落代码中第2行就是设置段落间距的。parskip是一个length量。其中距离设置设置一个固定量和一个加量还有一个减量，wikibook中说很有用，不太清楚。
+
+\subsection{段首缩进}
+\subsubsection{段首缩进量调整}
+上面代码第三行就是设置段首缩进量的，其中parindent是一个length量。具体设置我用了一个算法，需要加载calc宏包\footnote{注意乘法乘以小数的时候需要用real命令处理。}。也就是希望设置的距离更加相对化。其中textpt是我新建的一个长度量：\\
+\verb+\newlength{\textpt}+\\
+\verb+\setlength{\textpt}{12pt}+\\ 
+本文的默认字体大小值是12pt，然后传递到了textpt这里。这里textpt乘以2.4的意思是之前我放大CJK字符1.2倍了，再乘以2相当于乘以2.4即两个字的距离。然后我在字体设置哪里中文字之间间距为0.12个baselineskip。由于glue有点波动，所以在这设置0.12个baselineskip，即一个间隙。因为我设置为0.18的时候距离过大了，总之大概在30pt左右，在这里用公式表示就是为了距离表达更加相对化。
+
+\subsubsection{缩进还是不缩进}
+在xeCJK宏包加载的时候默认章节下面第一段缩进打开了，然后后面基本上都段段有缩进，也没怎么管了。如果你希望某一段不缩进就用noindent命令吧，类似的有indent命令。如果你希望都不缩进，我觉得简单点的办法就是把缩进量设置为0吧。
+
+\subsection{段落对齐}
+flushleft环境为左对齐环境，flashright环境为右对齐环境，center为居中环境。类似的命令样式有raggedleft，raggedright和centering。这些命令还可以控制表格图片(也许是一切盒子?)的位置。简单示例如下：
+\begin{verbatim}
+\begin{flushright}
+\fbox{右边才是王道。}
+\end{flushright}
+\end{verbatim}
+\begin{flushright}
+\fbox{右边才是王道。}
+\end{flushright}
+
+
+\section{页眉页脚设计}
+页眉页脚设计推荐用\emph{fancyhdr}宏包。
+\subsection{观察}
+我什么都没设置，生成的文档有章名的那一页中间有页码，其他页右上角有页码。有章名的那一节可能样式是plain，其他页可能是默认的myheadings样式。
+
+\subsection{全部信息归零}
+\subsubsection{plain样式重置}
+fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新的页眉页脚样式。现在我将plain样式所有信息全部清除，宁愿没有也不愿出现其他别样的信息。
+\begin{verbatim}
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+\end{verbatim}
+该代码第一行是提出要重新定义plain样式，然后里面包含新的定义。第二行是所有的页眉页脚信息换为空值，第三行是将页眉那条线宽度设为0pt，也就是不显示了，第四行类似是页脚那根线不显示了。
+
+\subsubsection{选择默认样式为empty}
+使用命令：\\
+\verb+\pagestyle{empty}+\\
+也就是明确指定页眉页脚样式为已经有的样式empty，即什么都没有。现在文章所有的页眉页脚信息都被清除了。现在摆在我们面前有两条路，一条是继续DIY plain样式，然后全部页面设置为plain样式。一条是plain继续归零，然后自己DIY一个新的样式并使用这个样式。我在这里选择第一条道路了。
+
+\subsection{继续定制plain样式}
+我不太喜欢那一条横线，有需要的请自己将前面的什么rulewidht命令横线宽度设为0.4pt左右。
+
+我是一个喜欢简单的人，fancyhdr宏包里面还有很多命令：
+\begin{verbatim}
+\lhead[<even output>]{<odd output>}
+\chead[<even output>]{<odd output>}
+\rhead[<even output>]{<odd output>}
+\lfoot[<even output>]{<odd output>}
+\cfoot[<even output>]{<odd output>}
+\rfoot[<even output>]{<odd output>}
+\fancyhead[selectors]{output you want}
+\fancyfoot[selectors]{output you want}
+\end{verbatim}
+这些命令都可以用fancyhf命令来达到，所以我不做介绍了，有需要的请参考fancyhdr宏包文档。
+
+\subsubsection{fancyhf命令的可选项}
+\begin{table}[h]
+\begin{tabular}{@{}ll@{}}
+\toprule
+字母 & 意义  \\ \midrule
+H  & 页眉(head)  \\
+F  & 页脚(foot)  \\
+L  & 左边(left)  \\
+C  & 中间(center)  \\
+R  & 右边(right)  \\
+E  & 偶数页(even) \\
+O  & 奇数页(odd) \\ \bottomrule
+\end{tabular}
+\label{tab:fancyhf可选项字母意义}
+\caption{fancyhf可选项字母意义}
+\end{table}
+比如偶数页的页眉左边就是OHL，本文没有区分偶数页和奇数页，而且也不想有过多的信息，比如就想页眉左边和页脚右边有点内容，那么可选项为HL和FR。
+
+\subsubsection{fancyhf必填项定制}
+必填项就是在那个位置要输出的内容，可以是一段简单的文字比如书名。而FR也就是右边页脚处哪里简单填上\textbackslash thepage即表示当前页码。具体格式不用设置，请参看页码这一小节\ref{sec:页码}。
+
+显然直接写上书名没多大意思，现在决定定制如下，页眉左边用ttfamily字体，字体大小是footnotesize，左边写上章名，右边写上节名。
+
+\subsection{本文页眉页脚配置代码}
+\begin{verbatim}
+\RequirePackage{fancyhdr}   %頁眉頁腳
+\pagestyle{fancy}
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+    \renewcommand{\chaptermark}[1]
+        {\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}} 
+     \renewcommand{\sectionmark}[1]
+         {\markright{第\CJKnumber{\arabic{section}}節~~#1}{}} 
+%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
+    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
+    \fancyhf[FR]{\thepage}
+    \fancyhfoffset[R]{\marginparwidth+\marginparsep}
+    }
+\pagestyle{plain} 
+\end{verbatim}
+\subsubsection{一些基础情况说明}
+请看到第11行，设置的是页眉左边的格式，然后设置为ttfamily字族和footnotesize，这个大家都清楚。然后后面是一个命令leftmark，要使用这个命令，前面必须先加上fancy样式。\footnote{似乎可以理解为这个命令继承自fancy样式。}
+
+leftmark就是目前的章名，rightmark就是目前的节名。而重新定义则需要通过chaptermark和sectionmark，不太清楚为什么。我们再看上面对chaptermark和sectionmark的重定义。其中chaptermark影响leftmark，他的参数就是具体的章名。而他使用的是markboth，sectionmark使用的是markright，具体意义也不大清楚。
+
+我起初试图如下重新定义chaptername和sectionname，然后重新定义thechapter和thesection也就是当前章节编号。在这里先将编号用arabic命令转化为1,2,3...的形式，然后用CJKnumber命令转化为一,二,三...的形式。可是目录形式也跟着改变了，还有图片编号。影响范围太大了，所以就直接用上面代码的形式组合了。
+\begin{verbatim}
+ \renewcommand{\thechapter}{\CJKnumber{\arabic{chapter}}}
+ \renewcommand{\thesection}{\CJKnumber{\arabic{section}}}
+ \renewcommand{\chaptername}{第\thechapter章}
+ \renewcommand{\sectionname}{第\thesection节}
+\end{verbatim}
+
+\subsubsection{页眉页脚宽度}
+如果你文章旁注比较宽，你会注意到下面的页码并不是在最右边。如果你希望页码移到最右边可以通过命令fancyhfoffset来调节。同时相应页眉页脚那条线也会加长。代码类似于：
+\verb|\fancyhfoffset[R]{\marginparwidth+\marginparsep}|
+
+
+\section{章节标题设计}
+推荐使用\emph{titlesec}宏包进行章节标题设计，当然还有其他的宏包可以设计出更加花哨的章节标题这里忽略。
+
+\subsection{本文章节标题设计}
+\begin{verbatim}
+\usepackage{titlesec}
+\titleformat{\part}{\huge\sffamily}{}{0em}{} 
+\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{} 
+\titleformat{\section}{\Large\sffamily}{}{0em}{}
+\titleformat{\subsection}{\large\sffamily}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
+\end{verbatim}
+本文章节标题设计非常简单，几乎就是titleformat命令各个选项的空值。
+
+\subsection{titleformat命令说明}
+titlesec宏包还提供了其他一些命令，不过一切设置都可以通过titleformat命令来获得：
+\begin{verbatim}
+\titleformat{\chapter}[shape]{格式}{label}{sep}{before-code}[after-code]
+\end{verbatim}
+第一个花括号是选择你要修改的目标，也就是是章啊，还是节啊，还是小节。从part到subparagraph都可以的。
+
+后面是shape，一个可选项，没看懂要干嘛的。估计也不太重要吧。
+
+第二个花括号是重点，里面放着格式命令，比如设置字体字族，字体大小，颜色等都可以的。这个格式影响后面要讲的label标签还有标题文本。\footnote{这里对齐命令，vspace命令等都是可以用的??}
+
+第三个花括号是标签，空着就是没有标签。你也可以──比如说section标题──填上\verb+\thesection+表示节的编号。
+
+第四个花括号是标签和后面标题文字之间的空隙，这里因为没有label所以设为0了，如果有label还是加点距离。
+
+第五个花括号和后面的可选项是什么标题盒子之前和之后的代码，这里忽略。有兴趣请参看文档。
+
+
+\subsection{章节编号数值修改}
+part，chapter，section等这些都是counter量，通过setcounter命令直接修改──比如说section──为2，那么接下来counter自动计数是从2开始，下一个section编号是3。
+
+\subsection{章节编号深度修改}
+通过设置secnumdepth这个counter的量可以设置章节编号深度。\\
+\verb+\setcounter{secnumdepth}{1} +\\
+默认是2，编号到subsection，你可以设置为3，subsubsection都有编号，或者设置为1，section有编号。我想设置为0的话section也没有编号了。
+
+\subsection{章节编号形式修改}
+thepart，thechapter，thesection，thesubsection等你可以称他们为标签吧，也就是通常我们看到的编号那部分内容。通过对这些命令重定义就可以对他们进行修改了。\\
+\verb+\renewcommand{\thesection}{\arabic{section}.}+\\
+那么就会有1. 的形式。
+
+
+\section{目录设计}
+一般在封面之后插入目录，用tableofcontents命令即可。本文没有对目录做太多的修改，默认的目录格式挺好的。唯一使用的技巧是新建一个comman-format环境，用这个将除了目录和封面之外所有的其他内容都包括进去。
+\begin{verbatim}
+\newenvironment{common-format}{ %
+	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  
+    {}
+\end{verbatim}
+
+\subsection{目录深度控制}
+\verb+\setcounter{tocdepth}{1} +
+tocdepth是一个counter量，默认是2，显示到subsection。这里为了是目录更加简洁，设置为了1即显示到section。0显示到chapter，-1显示part,-2就什么都没有了。
+
+\subsection{前言加入目录}
+本文定义了两个命令为了做到这点：
+\begin{verbatim}
+\newcommand{\addchtoc}[1]{  %目录中加入新章节
+	\cleardoublepage   
+	\phantomsection    
+	\addcontentsline{toc}{chapter}{#1}}
+\newcommand{\addsectoc}[1]{ %目录中加入新的section
+	\phantomsection    
+	\addcontentsline{toc}{section}{#1}}	
+\end{verbatim}
+两个命令大致类似吧，一个是针对chapter的，一个是针对section的。其中chapter的需要加上一个cleardoublepage命令，其具体解释参看\href{http://www.personal.ceu.hu/tex/breaking.htm#clrdblpage}{这个网站}。意思是首先结束本页，然后将所有图片和表格都显示出来。在两面twoside模式里，要确保下一页从奇数页开始，必要时插入空白页。
+
+后面的phantomsection命令\footnote{这个命令名字真不好记。。}是由hyperref宏包提供的，需要加上它使链接有效。     
+\endnote{参看了\href{http://www.forkosh.com/latex/ltx-171.html}{这个网页}}
+
+然后addcontentsline命令就是将目前章节加入目录，第一个花括号里面的选项有：toc，lof，lot。也就是目录，图目录和表目录。第二个花括号里面如果是toc的话就是part，chapter之类的，如果是lof，好吧，一般加入label就可以了，还没接触这种情况，说不上什么。最后那个花括号里面放着要在目录上面显示的文字。
+
+本文目录的前面加入如下命令即可：\\
+\verb+\addchtoc{目录}+
+
+同理，参考文献处理情况类似。值得提醒的是section的时候注意换命令。然后part，section之类的命令带个星号*表示不编号不进入目录，这个前面说过的。
+
+\subsection{目录行间距拉大}
+我试图建立一个通用的格式环境横跨目录的时候会失效，只好将其分开。不过这样做带来一个好处，那就是你在目录前面设置一些格式只对目录起作用。比如：\\
+\verb+\addtolength{\parskip}{8pt}+\\
+这里对段落之间的间距增加了一点宽度，这个会影响一条条目录之间的行间距。
+
+\subsection{titletoc宏包}
+titletoc宏包可以自己DIY目录格式，这里忽略。
+
+
+\section{封面设计}
+基础的封面就是用title输入题目，用author输入作者，用date命令输入日期，默认是输出当时编辑的日期的。author里面可以用and命令连接几个作者或者用\textbackslash \textbackslash 命令换行。然后用maketitle命令插入一个封面即可。
+
+要做出好看的封面大概是很费心思的事情，本文使用了这样的策略，新建了一个模板文件mytitle.sty文件，然后里面内容如下。
+\subsection{mytitle.sty}
+\begin{verbatim}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mytitle}
+
+
+\def\titlea#1{\gdef\@titlea{#1}}
+\def\@titlea{\@latex@warning@no@line{No \noexpand\titlea given}}
+\def\titleb#1{\gdef\@titleb{#1}}
+\def\@titleb{\@latex@warning@no@line{No \noexpand\titleb given}}
+\def\titlec#1{\gdef\@titlec{#1}}
+\def\@titlec{\@latex@warning@no@line{No \noexpand\titlec given}}
+
+\def\authorinfo#1{\gdef\@authorinfo{#1}}
+\def\@authorinfo{\@latex@warning@no@line{No \noexpand\authorinfo given}}
+\def\email#1{\gdef\@email{#1}}
+\def\@email{\@latex@warning@no@line{No \noexpand\email given}}
+\def\editorinfo#1{\gdef\@editorinfo{#1邮箱：\href{mailto: \@email}{\@email}。}}
+\def\@editorinfo{\@latex@warning@no@line{No \noexpand\editorinfo given}}
+
+\def\editor#1{\gdef\@editor{#1}}
+\def\@editor{\@latex@warning@no@line{No \noexpand\editor given}}
+\def\version#1{\gdef\@version{#1}}
+\def\@version{\@latex@warning@no@line{No \noexpand\version given}}
+
+
+%默认的title样式  继续添加的有mytitlea,mytitleb，mytitlec。。。
+\newcommand{\mytitle}{
+	\begin{titlepage}
+	\begin{flushleft}	
+	 \vspace*{\stretch{2}}
+{\HUGE\bfseries \@titlea}\\[\stretch{1}]
+{\Huge\bfseries \@titleb}\\[\stretch{1}]
+{\LARGE\itshape \@titlec}\\[\stretch{2}]
+{\Large \@author\footnote{\@authorinfo}}\quad\rule{0.8pt}{3ex}\quad
+{\large \@editor\footnote{\@editorinfo}}\\[\stretch{2}]
+\vfill
+{\ttfamily 版本: \@version}
+\end{flushleft}
+\end{titlepage}
+}
+
+\endinput
+\end{verbatim}
+\subsection{一个简单的封面}
+这个代码牵涉到的内容较多，为了说明基本知识我将使用本文早期的一个简单的封面作为例子讲解。
+\begin{verbatim}
+%===============%封面設計==========%
+\makeatletter
+\renewcommand\title[1]{\def\@title{#1}}
+\renewcommand\author[1]{\def\@author{#1}}
+\newcommand\email[1]{\def\@email{#1}}
+\newcommand\version[1]{\def\@version{#1}}
+\newcommand\editor[1]{\def\@editor{#1}}
+
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+	\begin{flushleft}
+	
+	 \vspace*{\stretch{1}}
+    {\Huge\sffamily \@title}\\[10pt]
+    {\sffamily\large 作者: \@author}\\
+    	
+	\vspace{\stretch{1}}
+	{\sffamily 編者: \@editor}\\[10pt]
+	{\sffamily 郵箱: \href{mailto: \@email}{\@email}}\\
+	
+	\vspace{\stretch{1}}
+	{\large\ttfamily 版本號: \@version}\\[10pt]
+	{\large\ttfamily  完成日期: \today}\\
+	
+	\end{flushleft}
+	\end{titlepage}
+}
+\makeatother
+\end{verbatim}
+这个代码一些小的细节我就不说明了，现在就主要内容说明一下。这个封面主要是通过重新定义maketitle命令来完成的，然后前面还加上了一些新的输入命令。其中makeatletter和makeatother一前一后表示他们夹著的内容@这个符号就是一个符号，这样‘@abc’和‘abc’是不同的。
+
+def命令是\TeX 的原始定义命令，比如说：\\
+\verb+\newcommand\email[1]{\def\@email{#1}}+\\
+就是定义@email命令，然后这个命令的输出就是输出\#{}1。\#{}1也就是第一个参数。也就是email命令接受到的参数。
+
+然后封面设计就是进入titlepage环境进行一些排版操作即可。这里涉及到的居左对齐，vspace等命令就不多说了。值得一提的是好的封面设计需要大量的\LaTeX 的高级排版知识。
+
+
+\section{引用}
+\subsection{文章内部引用}
+某一个特别的章节图片或者表格等需要被引用时，你就在它哪里加上label命令。然后就可以用ref命令在文章内部建立链接引用他们了。值得一提的是texmaker的提示功能非常好。建立label的时候方便你管理，section部分前面就加一个sec:前缀，图片加一个fig:前缀，表格加个tab:前缀等。然后labe中文英文都是可以的，方便自己管理最好写的很明晰。
+
+比如在这里我插入了一个参考文献的引用，是用的是cite命令。\verb+ \cite{lshort}+请参见文献\cite{lshort}
+
+还有一个pageref命令和ref命令差不多，文档上写法都类似，不同的是在文章上显示的是页码。简单起见用ref也够用了。
+
+
+\subsection{如何插入超链接}
+这里插入一个超链接到google，\href{https://www.google.com/}{google}\\
+首先要在前面加载hyperref库文件\\
+\textbackslash usepackage \{hyperref\}\\
+然后在你想要插入超链接的地方使用命令：\\
+\textbackslash href \{https://www.google.com/\} \{google\}\\
+
+\subsection{hyperref宏包}
+\begin{verbatim}
+%==============超链接===============%
+\usepackage[colorlinks=true,linkcolor=blue,ulrcolor=red,citecolor=blue]{hyperref} 
+%设置书签和目录链接等
+%for ebook 目录蓝色，对外链接红色，还可以有更多颜色设置   
+ %linkcolor 影响目录颜色和脚注和内部引用，ulrcolor影响对外链接
+%，citecolor影响对文献的链接。anchorcolor 超链接源码
+\end{verbatim}
+hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己研究文档。
+
+\section{脚注}
+加入脚注还是很有用的\footnote{这就是一个脚注}。具体方法就是：\\
+\textbackslash footnote\{这就是一个脚注\} 
+
+
+\section{旁注}
+本文\footnote{早期版本。。}旁注新建了一个命令endnote，对字体和行距做了一下调整，然后使用的是\LaTeX 自带的marginpar命令，我也接触过另外一个宏包的marginnote命令，虽然多了一个可选项可以调整旁注竖向位移，但是带来的麻烦更多，有时候页尾的旁注会向下越界，如果我想写了一个旁注，又在下面继续写一个旁注命令也会出现重叠出错。而marginpar就没有这样的问题。写了一个marginpar，后面可以继续再开一条marginpar命令。至于竖向位移的问题，在endnote里面使用vspace命令即可。
+\begin{verbatim}
+\newcommand{\endnote}[1]{\marginpar{  
+ 	\fontsize{10pt}{20pt}\selectfont #1}}
+\end{verbatim}
+
+在maginpar命令里面进行各种\LaTeX 命令都是可以的，比如改变字体大小，字体颜色，插入图片等等。
+
+
+\section{文字强调}
+\subsection{emph命令}
+emph命令一般是英文换成斜体，中文换成楷体(也就是前面设置的意大利字形的字体)。不过不同字族会有不同的表现。如果在强调环境之内有强调（一般没有这种情况把。）那么文字又会换成常规形态。
+emph命令是\LaTeX 自带的最基本的用于文字强调的方法。
+
+
+\subsection{重新定义emph}
+本文档中的emph命令被重新定义了：\\
+\verb+\renewcommand\emshape{\color{red}}+\\
+比如：\emph{我觉得字体设为红色更加起到强调作用}
+
+\subsection{underline命令}
+这个也是\LaTeX 自带的命令，就是加上下划线，不过在中文中并不能正确换行。所以往下看。
+
+\subsection{ulem宏包}
+下面的内容来自ulem宏包。\footnote{现在ulem中文可以正确换行了。}
+
+ulem宏包提供如下命令：uline，uuline，uwave，sout，xout，dashline，dotuline。主要用于文字的强调，其中uline是下划线，dotuline是加点强调，uwave是波浪线。其他命令请参看ulem宏包文档。
+
+\uline{这是一段很长的测试文字，主要用于说明中文情况下加入下划线并且能够正确的换行。用的是uline命令。}
+
+\dotuline{注意如果单纯加载ulem宏包，原有的emph命令也会成为类似uline命令的效果，也就是加下划线。可以后面跟上命令\textbackslash normalem，也就是emph命令还是原来的处理效果。}
+
+\subsection{reduline命令}
+\begin{verbatim}
+\newcommand\reduline{\bgroup\markoverwith
+	{\textcolor{red}{\rule[-0.5ex]{1em}{0.4pt}}}
+	\ULon}
+\end{verbatim}
+
+\reduline{这个命令来自ulem文档，其中除了reduline命令名字可以自己diy之外，你能改动的就是第二行了。rule部分简单说明下，第一个可选项是竖向位移，第一个参量是线条横向宽度，我为了好理解就设置成了1em，似乎这个值设置成其他的值影响也不大。第二个参量是线条竖向高度。}
+
+\subsection{reddotuline命令}
+我结合ulem宏包中的代码，然后修改自造一个命令如下：
+\begin{verbatim}
+\makeatletter
+\def\reddotuline{\bgroup 
+  \UL@setULdepth
+  \markoverwith{\begingroup
+     \advance\ULdepth0.168ex 
+     \lower\ULdepth\hbox
+     {\kern.168em \textcolor{red}{.} \kern.168em}%
+     \endgroup}%
+  \ULon}
+\makeatother
+\end{verbatim}
+
+我对\TeX 原生命令不太熟悉，就这样借用原代码简单地修改了下凑合着用吧。就是将原来代码中的小点改变了颜色，然后两边kern的距离稍微拉大了点。其实我心目中是希望每个中文字刚好最下面加个红点，先就这样吧。
+
+
+\section{插入列表}
+itemize和enumerate环境其实也支持item后面跟上可选项的形式，只是从格式上他们常常出界，不建议使用。
+\subsection{itemize环境}
+\begin{verbatim}
+\begin{itemize}
+\item 这是一个列表
+\item 这又是一个列表
+\end{itemize}
+\end{verbatim}
+
+\begin{itemize}
+\item 这是一个列表
+\item 这又是一个列表
+\end{itemize}
+
+\subsection{enumerate环境}
+\begin{verbatim}
+\begin{enumerate}
+\item 这是一个列表
+\item 这又是一个列表
+\end{enumerate}
+\end{verbatim}
+
+\begin{enumerate}
+\item 这是一个列表
+\item 这又是一个列表
+\end{enumerate}
+
+\subsection{description环境}
+\begin{verbatim}
+\begin{description}
+\item[鸭子]是一种动物
+\item[苹果]是红色的
+\end{description}
+\end{verbatim}
+
+\begin{description}
+\item[鸭子]是一种动物
+\item[苹果]是红色的
+\end{description}
+
+
+\section{插入图片}
+要插入一个图片，\LaTeX 文档开头那里要加载库文件：\\
+\textbackslash usepackage[dvips]\{graphicx\}\\
+然后在你想要插入图片的地方输入如下命令：\\
+\textbackslash includegraphics [scale=1]\{图像名字\}\\
+插入图片有很多参数可以设置，这里就最有用的宽度和高度设置说明一下：\\
+具体就是height表示高度，width表示宽度。然后等于多少in，英寸。参数放在可选参数那里。不过我觉得下面这个参数设置挺实用的，如下:\\
+\textbackslash includegraphics[width=\textbackslash textwidth, keepaspectratio]\{texstudio.png\}\\
+其中\textbackslash textwidth 表示让图片和文字一般宽，然后keepaspectratio参数意思是缩放的时候保持宽高比不变。\\
+
+
+\subsection{本文插入图片的一些DIY}
+\begin{verbatim}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\newenvironment{fig}[1]
+	{\begin{figure}[h]
+	\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
+	\caption{#1}
+	\end{figure}}
+	{}	
+\newenvironment{scalefig}[2][0.4]
+	{\begin{figure}[h]
+	\includegraphics[scale=#1]{#2}
+	\caption{#2}
+	\end{figure}}
+	{}	
+\end{verbatim}
+本文新建了两个新的图片环境命令，第一个fig环境适合那些较大的图片，让其完全填充linewidth宽度，然后保持缩放比，然后通过第一个参数结束图片文件名，这个参数传递给caption命令作为输出标题。这样我要插入一个图片代码如下：
+\begin{verbatim}
+\begin{fig}{geometry选项1}   
+	\label{fig:geometry选项1}
+\end{fig}
+\end{verbatim}
+这样插入图片代码就很简洁了。然后第二个插入图片环境命令主要针对那些稍微小点的图片，给它设计了一个可选参数\footnote{记住可选参数在参数中是排前面的}缩放比。这样方便调整图片大小。
+
+\section{插入表格}
+\subsection{基本情况的讨论}
+一般情况下一些小的表格就用tabular环境处理即可。
+下面看这个例子：
+\begin{verbatim}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+l & l表示该列格子左对齐 \\
+\hline
+c & c表示该列格子居中 \\
+\hline
+r & r表示该列格子右对齐 \\
+\hline
+\end{tabular}
+\caption{tabular参数}
+\label{tab:tabular参数}
+\end{table}
+\end{verbatim}
+
+例子显示如下：
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline 
+l & l表示该列格子内容左对齐 \\
+\hline
+c & c表示该列格子内容居中 \\  
+\hline
+r & r表示该列格子内容右对齐 \\ 
+\hline
+\end{tabular}
+\caption{tabular参数}
+\label{tab:tabular参数}
+\end{table}
+在table环境那里我加了一个可选参数h，意思是在这里就在这里。这个表格还有图片环境都是什么浮动体。我们看到他们可以加上caption命令从而有一个标题，然后table和figure后面有个可选参数来控制这个浮动体的位置。默认是tbp。不过我喜欢用h，也就是在这里如果可能。有的时候h的表现效果可能不太让你满意。那么你可以尝试float宏包，它提供了H参数，会更加强制地控制浮动体，H的意思是一定要在这里。
+
+这段代码中centering命令是让表格居中，类似的命令还有raggedleft和raggedright。
+
+caption命令是加上标题，label命令是方便引用。
+
+最重要的就是tabular环境，前面｜符号表示画一个竖线，也就是每一列刚开始画一条竖线，你也可以不画表示每一列开始不画竖线。然后是字母c，表示每一列第一个格子居中对齐，类似的还有字母l(left)和r(right)。还有一种格式p{width}，表示该格子具有width的宽度，然后里面的文字自动断行。
+
+hline命令表示画一条横线。\& 这个特殊符号表示进入下一列。\textbackslash \textbackslash 表示进入下一行，后面跟上可选项距离，那么下一行的高度将拉高。
+
+\subsection{booktabs宏包}
+如果你只是想要一个简洁明了的表格，目前大家公认的好的表格标准就是三线表式，你也可以称之为booktabs风格吧。简单来说有以下规则：①不要垂直线； ②不要双横线；③每一行的各个格子都有足够的空间；④一律左对齐；⑤三线，toprule，midrule，bottomrule。
+\endnote{按照Markus Püschel的small guide to making nice tables里面的介绍。}
+
+在这里我们还有个捷径，不一定要手工将表格代码全部敲出来。首先我们找一个表格软件，libreoffice的或者gnumeric(recommend)都行。然后将数据输入进去保存好。然后我们将数据选择复制，打开网站：\href{http://www.tablesgenerator.com/}{http://www.tablesgenerator.com/}。在那个网站的表格的开头哪里按下Ctrl+v。这个网站还有一些设置可以调整，稍微摸索下就知道了。唯一要说的是那个activate/deactivate custom grid edit选项，可以选择绘制某几根线框显示。在这里不做调整，直接选择最右边的booktabs table style。然后把多余的行或者列删除掉，就可以点击下面的generate了。生成的代码如下：
+\begin{verbatim}
+% Booktabs require to add \usepackage{booktabs} to your document preamble
+\begin{table}[h]
+\begin{tabular}{@{}ll@{}}
+\toprule
+参数       & 描述       \\ \midrule
+l        & 左对齐      \\
+c        & 居中       \\
+r        & 右对齐      \\
+p{width} & 一定宽度自动换行 \\ \bottomrule
+\end{tabular}
+\end{table}
+\end{verbatim}
+表格的显示效果初步如下：
+\endnote{你注意到这里有@\{\}，意思是每一列前面有一段空白，可以被花括号中的字符填充，这里是完全取消掉那点空白。booktabs的风格是开头那点空白和最后一列最后那点空白全部取消掉。}
+\begin{table}[h]
+\begin{tabular}{@{}ll@{}}
+\toprule
+参数       & 描述       \\ \midrule
+l        & 左对齐      \\
+c        & 居中       \\
+r        & 右对齐      \\
+p{width} & 一定宽度自动换行 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+接下来就是微调整了，比如说上面的花括号没有正常显示，还有想要居中，开头加上centering命令，还有caption标题命令，还有label。修改之后结果如下：
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule[1.2pt]
+参数       & 描述       \\ \midrule
+l        & 左对齐      \\
+c        & 居中       \\
+r        & 右对齐      \\
+p\{width\} & 一定宽度自动换行 \\ \bottomrule[1.2pt]
+\end{tabular}
+\caption{tabular参数-2}
+\label{tab:tabular参数-2}
+\end{table}
+
+\subsection{booktabs宏包详解}
+上面已经算是一个booktabs风格的表格了，为了进一步深度定制这里对booktabs宏包做一些说明。
+
+\paragraph{线条粗细}
+前面我们看到了booktabs宏包新加了三个命令toprule，midrule和bottomrule。这三个命令后面都可以跟个可选项调整线条粗细。后面跟的参数1pt就表示线条粗1pt，没有加法的意思。上面的例子中toprule和bottomrule设置为1.2pt，比原来的稍微粗了一点。嫌麻烦不改动也可以，觉得原来的也还好。
+
+\paragraph{cmidline命令}
+cmidline类似于原来的cline命令，简单来说就是你希望第几个到第几个格子画一条线。这个命令后面一样可以跟个描述粗细的可选项。请看下面的例子：
+
+\begin{verbatim}
+\begin{table}[h]
+\begin{tabular}{@{}lll@{}}
+\toprule
+slices      & \multicolumn{2}{l}{abs.error(slices)} \\ \cmidrule(l){2-3} 
+            & avg.              & max               \\ \midrule
+<5000       & 116               & 625               \\
+5000-10000  & 209               & 1807              \\
+10000-15000 & 297               & 2133              \\
+>15000      & 317               & 1609              \\ \bottomrule
+\end{tabular}
+\end{table}
+\end{verbatim}
+
+显示效果如下：
+\begin{table}[h]
+\begin{tabular}{@{}lll@{}}
+\toprule
+slices      & \multicolumn{2}{l}{abs.error(slices)} \\ \cmidrule(l){2-3} 
+            & avg.              & max               \\ \midrule
+<5000       & 116               & 625               \\
+5000-10000  & 209               & 1807              \\
+10000-15000 & 297               & 2133              \\
+>15000      & 317               & 1609              \\ \bottomrule
+\end{tabular}
+\caption{cmidrule例子}
+\label{tab:cmidrule例子}
+\end{table}
+
+我觉得没必要折腾成居中，还有也没必要调整页面布局，和图片一样会自动越界。其实完全没必要列这个大的一个例子，cmidrule也很好理解，就是转行从几个格子上面画到第几个格子。主要是这种表头分线的例子还是画一个出来更直观些。
+
+\subsection{拉宽一行行的距离}
+\verb+\renewcommand{\arraystretch}{1.3}+\\
+通过上面这个命令，就在导言区整体设置就行了。文章的表格一行行距离稍微拉宽了一点，看上去更加美观了些。
+
+
+\subsection[带颜色的表格]{带颜色的表格\endnote{本小节除了参看wikibook之外还参看了\href{http://texblog.org/tag/definecolor/}{这个网站}。}}
+\label{sec:带颜色的表格}
+xcolor宏包提供了一种颜色交替的表格模式，还挺好看的。好吧，我对颜色搭配不太擅长。首先需要在加载xcolor宏包时填上table可选项，即\verb+\usepackage[table]{xcolor}+。
+\begin{table}[h]
+\rowcolors{2}{}{lightgray!50}
+
+\centering
+\begin{tabular}{@{}ll@{}}
+\rowcolor{lightgray!20}
+实现本表步骤        &     备注         \\ 
+table环境下加上rowcolors命令        & 让整个表格交替显色           \\
+rowscolors第一个选项              & 决定颜色从那一行开始显示              \\
+rowscolors第二个选项            & 奇数列的颜色  \\
+第三个选项  & 偶数列的颜色 \\
+本表具体代码    & \verb+\rowcolors{2}{}{lightgray!50}+     \\
+第一行用rowcolor命令控制       & 在表头行上面           
+\end{tabular}
+\caption{带颜色的表格}
+\label{tab:带颜色的表格}
+
+\end{table}
+\reduline{这样形式的表格建议不用三线表式了，反倒是纯颜色样式不带线条更美观。}
+
+
+\section{插入代码}
+\subsection{小代码}
+有的时候一行之内的小代码就不需要大动干戈用verbatim环境，用\verb| \verb+ 这里放着小代码 + |，这里的+号可以换成其他任何的符号表示小代码开始和结束，除了*和空格不行。带星号的verb有其他用途，在里面空格以符号显示出来了，比如：\\
+\verb*| this is a test . | \\感觉好丑陋，应该没啥用处。
+\endnote{在verbatim环境或者verb命令之内，字体是ttfamily。}
+
+\subsection{稍微大点的程序代码}
+在环境verbatim之间的任何文本是什么就是什么，不执行任何\LaTeX 命令，包括所有的空白和断行，如下：
+\begin{verbatim}
+(defmacro with-gensyms (syms &rest body)
+  `(let ,(mapcar #'(lambda (s)
+     `(,s (gensym)))
+           syms)
+         ,@body))
+\end{verbatim}
+
+\subsection{对verbatim环境的美化}
+这里有点欺骗的嫌疑，其实并不是verbatim环境。而是用的fancyvrb宏包的Verbatim环境。它有一个重定义Verbatim环境的功能，然后我将重定义的名字改成了verbatim，也就是覆盖默认的verbatim环境了。
+
+之所以要用这个小技巧，也是迫不得已：一是listing宏包虽然对语法加颜色功能很好看，但是内部的Unicode符号显示存在很多问题。而Verbatim环境并没有这个问题；二是命令其他的名字几乎各大主流编辑器都会出现语法染色失常，因为自定义的代码环境都不识别。所以只好用这种小技巧了。
+\begin{verbatim}
+\usepackage{fancyvrb} 
+\DefineVerbatimEnvironment%
+	{verbatim}{Verbatim}
+	{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+	xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}  	
+	
+	
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+	\FV@AddToHook{\FV@ListParameterHook}
+	{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+\setlength{\fancyvrbtopsep}{-15pt}   %代碼環境之上空白高度
+\setlength{\fancyvrbpartopsep}{0pt}  %段落之上空白高度
+\end{verbatim}
+这里的配置代码分为两部分，下面那部分是优化代码环境上下空白的，这里不做说明。
+
+具体设置请参见fancyvrb宏包文档，这里只就涉及到的简单谈谈：
+\begin{table}[h]
+\begin{tabular}{@{}ll@{}}
+\toprule
+numbers=left                         & 左边显示数字     \\ \midrule
+frame=lines                          & 框框是两条线     \\
+tabsize=4                            & tab符号是四个空格 \\
+baselinestretch=2                    & 行间距拉伸      \\
+xleftmargin=6pt                      & 左边间距6pt    \\
+fontsize=\textbackslash footnotesize & 字体大小设置     \\  
+numbersep=2pt                        & 数字和框框间距 \\   \bottomrule
+\end{tabular}
+\caption{Verbatim环境一些设置}
+\label{tab:Verbatim环境一些设置}
+\end{table}
+
+\section{尾注}
+尾注也就是每一章后面的注释部分，这种排版形式显得更加专业。而且如果尾注写的好参考文献一章或者其他附录部分都可以不用写了。
+
+本文尾注代码如下：
+\begin{verbatim}
+%=============插入注释=========%
+\RequirePackage{endnotes}
+\RequirePackage{hyperendnotes}
+\renewcommand\makeenmark{（\theenmark）}
+\renewcommand\notesname {注释和参考资料}
+\newcommand{\printendnotes}
+    {\theendnotes}
+\end{verbatim}
+\begin{fancycolorbox}
+本来我是希望每一章重新编号的，也就是重新建立一个printendnotes命令，先用theendnotes命令插入注释，然后用setcounter将endnote这个计数器归零。可惜由于网上的hyperendnotes宏包设计的不够好，超链接会出现覆写现象。我试著解决这个问题无果，只好放弃了。如果你不在乎文章中的超链接，比如你打算纸质印刷，那么是可以重新编号的。
+\end{fancycolorbox}
+
+这里notesname命令就是章节后面显示的名字，makeenmark是每一条注释前面那个标签，这里设计成了（1）这样的形式。其中theenmark命令表示该注释的编号。
+
+well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修改了下开头和结尾，让它更加符合规范，主体部分没动，我不懂这些。
+
+\begin{verbatim}
+% hyperendnotes.sty
+% for endnotes hyperlink
+% 
+% LPPL LaTeX Public Project License
+%  
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{hyperendnotes}
+
+\newif\ifenotelinks
+\newcounter{Hendnote}
+% Redefining portions of endnotes-package:
+\let\savedhref\href
+\let\savedurl\url
+\def\endnotemark{%
+\@ifnextchar[\@xendnotemark{%
+\stepcounter{endnote}%
+\protected@xdef\@theenmark{\theendnote}%
+\protected@xdef\@theenvalue{\number\c@endnote}%
+\@endnotemark
+}%
+}%
+\def\@xendnotemark[#1]{%
+\begingroup\c@endnote#1\relax
+\unrestored@protected@xdef\@theenmark{\theendnote}%
+\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+\endgroup
+\@endnotemark
+}%
+\def\endnotetext{%
+\@ifnextchar[\@xendnotenext{%
+\protected@xdef\@theenmark{\theendnote}%
+\protected@xdef\@theenvalue{\number\c@endnote}%
+\@endnotetext
+}%
+}%
+\def\@xendnotenext[#1]{%
+\begingroup
+\c@endnote=#1\relax
+\unrestored@protected@xdef\@theenmark{\theendnote}%
+\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+\endgroup
+\@endnotetext
+}%
+\def\endnote{%
+\@ifnextchar[\@xendnote{%
+\stepcounter{endnote}%
+\protected@xdef\@theenmark{\theendnote}%
+\protected@xdef\@theenvalue{\number\c@endnote}%
+\@endnotemark\@endnotetext
+}%
+}%
+\def\@xendnote[#1]{%
+\begingroup
+\c@endnote=#1\relax
+\unrestored@protected@xdef\@theenmark{\theendnote}%
+\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
+\show\@theenvalue
+\endgroup
+\@endnotemark\@endnotetext
+}%
+\def\@endnotemark{%
+\leavevmode
+\ifhmode
+\edef\@x@sf{\the\spacefactor}\nobreak
+\fi
+\ifenotelinks
+\expandafter\@firstofone
+\else
+\expandafter\@gobble
+\fi
+{%
+\Hy@raisedlink{%
+\hyper@@anchor{Hendnotepage.\@theenvalue}{\empty}%
+}%
+}%
+\hyper@linkstart{link}{Hendnote.\@theenvalue}%
+\makeenmark
+\hyper@linkend
+\ifhmode
+\spacefactor\@x@sf
+\fi
+\relax
+}%
+\long\def\@endnotetext#1{%
+\if@enotesopen
+\else
+\@openenotes
+\fi
+\immediate\write\@enotes{%
+\@doanenote{\@theenmark}{\@theenvalue}%
+}%
+\begingroup
+\def\next{#1}%
+\newlinechar='40
+\immediate\write\@enotes{\meaning\next}%
+\endgroup
+\immediate\write\@enotes{%
+\@endanenote
+}%
+}%
+\def\theendnotes{%
+\immediate\closeout\@enotes
+\global\@enotesopenfalse
+\begingroup
+\makeatletter
+\edef\@tempa{`\string>}%
+\ifnum\catcode\@tempa=12
+\let\@ResetGT\relax
+\else
+\edef\@ResetGT{\noexpand\catcode\@tempa=\the\catcode\@tempa}%
+\@makeother\>%
+\fi
+\def\@doanenote##1##2##3>{%
+\def\@theenmark{##1}%
+\def\@theenvalue{##2}%
+\par
+\smallskip %<-small vertical gap between endnotes
+\begingroup
+\def\href{\expandafter\savedhref}%
+\def\url{\expandafter\savedurl}%
+\@ResetGT
+\edef\@currentlabel{\csname p@endnote\endcsname\@theenmark}%
+\enoteformat
+}%
+\def\@endanenote{%
+\par\endgroup
+}%
+% Redefine, how numbers are formatted in the endnotes-section:
+\renewcommand*\@makeenmark{%
+\hbox{\normalfont\@theenmark~}%
+}%
+% header of endnotes-section
+\enoteheading
+% font-size of endnotes
+\enotesize
+\input{\jobname.ent}%
+\endgroup
+}%
+\def\enoteformat{%
+\rightskip\z@
+\leftskip1.8em
+\parindent\z@
+\leavevmode\llap{%
+\setcounter{Hendnote}{\@theenvalue}%
+\addtocounter{Hendnote}{-1}%
+\refstepcounter{Hendnote}%
+\ifenotelinks
+\expandafter\@secondoftwo
+\else
+\expandafter\@firstoftwo
+\fi
+{\@firstofone}%
+{\hyperlink{Hendnotepage.\@theenvalue}}%
+{\makeenmark}%
+}%
+}%
+
+
+% endnote-section:
+\enotelinkstrue
+%\enotelinksfalse
+
+
+\endinput
+\end{verbatim}
+\section{参考文献}
+首先设置thebibliography环境，然后用bibitem命令插入文献，这里99的意思是编号宽度不超过99.在你想要引用的地方用cite命令。如下所示:\\
+\begin{verbatim}
+\begin{thebibliography}{99}
+\bibitem{1} Bachmann W , 1973.
+ Verallgemeinerung and Anwendung der Rayleighschen Theorie der Schallstreuung.
+ Acustica,28 (4)：223-228
+\end{thebibliography}
+\end{verbatim}
+
+
+\printendnotes
+
+\chapter{其他问题的讨论}
+\section{自建环境或修改原环境}
+\label{sec:自建环境}
+
+用如下命令格式来新建一个环境\\
+\textbackslash begin \{environmentname\}\\
+text\\
+\textbackslash end \{environmentname\}\\
+新建环境有很多用途，这里就最直接的插入图片来说明，比如说上面那个图片我用：\\
+\textbackslash begin\{figure\}\\
+什么什么\\
+\textbackslash end\{figure\}\\
+给包围起来，然后加入:\\
+\textbackslash caption \{这是用于\textbackslash LaTeX 的一个编辑器界面\}\\
+caption命令加入图片标题。然后如果你想在文章中引用这个图片的话，加入如下命令：\\
+\textbackslash label \{figure1\}
+
+还有很多高级知识这里能够略过就略过了。
+
+\section{盒子和glue}
+\label{sec:盒子和glue}
+\begin{fancycolorbox}
+这里参考了Knuth的The Texbook，但是我并没有将其写入参考文献，因为只是觉得关于box和glue的概念最好参考原初定义，但是并不推荐读者阅读这本书，现在已经是\LaTeX 时代了，不推荐读者使用原始的\TeX 命令，一是不太实用，二是兼容性可能不太好。除非你是宏包编写者，但就作为一般的使用者真的没有必要接触那些原始命令了。还参考了\cite{boxes}
+\end{fancycolorbox}
+\endnote{\begin{fancycolorbox}
+在这里box翻译为盒子没什么问题，就是这个glue翻译为胶水或者橡皮都让我不太满意。在后面我都使用的术语是距离或者间距或者干脆用英文glue。从某种意义上讲glue的直译确实应该译为胶或者胶水，不过觉得距离这个词汇更能够让人们有感觉些：\TeX 排版就是不同的盒子编写和彼此之间距离的设置问题。
+\end{fancycolorbox}}
+\subsection{基本知识}
+最小的盒子就是基于Unicode的字符，这些字符然后组成更大的盒子──单词，然后单词组成更大的盒子──行等等。行是一个盒子，段落也是一个盒子，图片是一个盒子，表格也是一个盒子。而这些盒子按照Knuth的描述都是用glue胶水粘合起来的，或者我们称之为这些盒子之间都存在着空间胶合层。下面就是一个盒子的详细参数：
+
+\begin{fig}{box参数}
+\label{fig:box参数}
+\end{fig}
+
+盒子就是这么一个长方形的区域，如上图所示，它有参数：height，width，depth。baseline和reference point在后面讲的hbox和vbox中会用到。在\TeX 看来，从字体而来的Unicode 字符就是一个最简单的盒子。字体的设计者已经决定了这个字符的高度，宽度和深度以及它在这个盒子里面看起来如何。\TeX 就是用这些维度将盒子黏合到一起，并最终决定所有字符的reference point 参考点在页面上的位置。
+
+\TeX 的盒子如果全部涂上颜色，一般是黑色，那么就成了一个黑盒子。这样的黑盒子还有一个名字叫做rule box。也就是线条。这个在后面会谈论到的。
+
+不管是字符盒子还是黑盒子，他们要某是水平排列要某是垂直排列。水平排列要做的就是让这些盒子的参考点在一条水平线上。类似的垂直排列要做的就是让这些盒子的参考点在一条垂直线上。
+
+好吧，介绍两个\TeX 命令：hbox和vbox。hbox命令就是让所有的盒子在一条水平线上，而vbox命令就是把一些hbox命令垂直排列，比如下面的代码：\\
+\verb+\vbox{\hbox{恭}\hbox{喜} \hbox{发}\hbox{财}}+
+
+\vbox{\hbox{恭}\hbox{喜} \hbox{发}\hbox{财}}
+
+glue也就是各个盒子之间的间距。下图是glue的具体图示：
+\begin{fig}{glue说明}
+\label{fig:glue说明}
+\end{fig}
+前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3*\Large{\frac { 6 }{ 9 }} $。这样第一个间距的总长度就是$9+3*\Large{\frac { 6 }{ 9 }} =11$。
+
+经过计算所有的glue间距都确定下来了，那么整个页面布局就确定了。我在这里就戛然而止了，毕竟这里只是对box和glue的基本概念的阐明。
+
+\subsection{盒子in \LaTeX}
+前面稍微介绍了点\TeX 的原初命令hbox和vbox。我们就能够感受到靠着这两个命令已经能够干很多事情了。比如我想写一幅对联。
+
+\begin{verbatim}
+{\CJKfontspec[Scale=3,Color=red]{方正魏碑_GBK}
+\vbox {
+\centerline{呵呵}
+    \hbox to \hsize {恭大}
+    \hbox to \hsize {喜吉}
+    \hbox to \hsize {发大}
+    \hbox to \hsize {财利}}}
+\end{verbatim}
+
+\vspace{30pt}
+{\CJKfontspec[Scale=3,Color=red]{方正魏碑_GBK}
+\vbox {
+\centerline{呵呵}
+    \hbox to \hsize {恭大}
+    \hbox to \hsize {喜吉}
+    \hbox to \hsize {发大}
+    \hbox to \hsize {财利}}}
+
+其中hbox和vbox都支持这样的to 多少尺寸和 spread 增加多少尺寸的形式，这里的hsize相当于linewidth吧。然后我用这个例子主要说明用hbox和vbox能够做很多排版工作了。而我们在\LaTeX 里面则用makebox替代了hbox，raisebox替代了vbox。并且排版思路变成了主要是一行一行排版，然后才考虑raisebox微调。
+
+
+\section{带颜色或者线框的盒子}
+\subsection{colorbox}
+colorbox
+\verb+\colorbox{yellow}{this is a test line.}+\\
+\colorbox{yellow}{this is a test line.}
+
+
+\section{fancycolorbox}
+本文定义了一个fancycolorbox命令，具体代码如下：\\
+\begin{fancycolorbox}
+为什么是这么复杂的一个代码？这个需要说明一下。首先系统自带的colorbox命令不能换行，必须colorbox里面加上minipage环境才行，9,10行是minipage环境的格式优化，然后整个构成一个新环境我还想传递颜色，就成这个样子了。主要参考的\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
+\end{fancycolorbox}
+\vspace{20pt}
+\begin{verbatim}
+\definecolor{bgcolor-0}{HTML}{CCFFCC} 
+
+\newsavebox{\tempbox}
+\newenvironment{fancycolorbox}[1][bgcolor-0]
+ {\noindent%%
+  \renewcommand{\tempcolor}{#1}
+  \begin{lrbox}{\tempbox}%
+  \begin{minipage}{\linewidth-10pt}
+  	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  	
+ {\ignorespacesafterend%
+  \end{minipage}%
+  \end{lrbox}%
+  \colorbox{\tempcolor}{\usebox{\tempbox}}}  
+\end{verbatim}
+fancycolorbox环境的效果前面你应该已经看过了。这里就不做演示了。
+
+
+\section{语录，引用和诗歌环境}
+quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。下面是quote语录环境：
+\begin{quote}
+“When the winds of change blow, some people build walls and others build windmills.”
+\end{quote}
+
+
+\section{插入摘要}
+使用的环境就是abstract，\endnote{\reduline{book类不能使用摘要环境，只有article和report才有。}}命令如下：\\
+\begin{verbatim}
+\begin{abstract}
+这是一段摘要文字。
+\end{abstract}
+\end{verbatim}
+
+\section{文本中的上标还有下标}
+上标使用命令textsuperscript命令，下标感觉自己缩小点就差不多了吧。示例如下：\\
+上标\textsuperscript{上标}下标{\scriptsize 下标}
+
+更常见的是化学分子式里面的上标和下标，推荐使用mhchem宏包，至于数学模式里的上标和下标自不必说了。
+
+
+\section{多张图片并列显示}
+\label{sec:多张图片并列显示}
+
+\begin{figure}[h]
+
+\label{fig:四栏图片}
+\begin{multicols}{4}
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+i want  some test to show there is a text and not to column break.\\
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+
+\end{multicols}
+\caption{denosie fig}
+
+\end{figure}
+
+具体代码如下：
+\begin{verbatim}
+\begin{figure}[h]
+
+\label{fig:四栏图片}
+\begin{multicols}{4}
+\includegraphics[width=\linewidth ,totalheight=\textheight , 
+        keepaspectratio]{temp.jpg}
+i want  some test to show there is a text and not to column break.\\
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight , 
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\end{multicols}
+\caption{denosie fig}
+
+\end{figure}
+\end{verbatim}
+这段代码的分栏还有插入图片知识都已经介绍了，值得一提的就是widetext环境，也就是有changepage宏包而来的临时改变页面布局环境和浮动体环境figure以及table不兼容。比如放入浮动体环境内才能起作用。然后caption命令似乎只是默认的linewidth居中。所以如果想要图片和表格在扩大的文本布局中居中对齐，那么需要在浮动体环境内部使用改变页面布局命令，然后使用居中命令。
+
+\section[生成字体所有已有的字形]{生成字体所有已有的字形\endnote{主要参照了\href{http://tex.stackexchange.com/questions/23863/generating-a-table-of-glyphs-with-xetex}{这个网站}}}
+\label{sec:字体已有字形}
+\begin{verbatim}
+\documentclass[landscape]{article}
+\usepackage{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans}
+\usepackage{multicol}
+\setlength{\columnseprule}{0.4pt}
+\usepackage{multido}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{LARGE}
+\begin{multicols}{5}
+\multido{\i=0+1}{"196607"}{% from U+0000 to U+2FFFF
+%后面的还会继续扩展，目前一般还没使用。
+  \iffontchar\font\i
+    \makebox[4em][l]{\i}%
+    \symbol{\i}\endgraf
+  \fi
+}
+\end{multicols}
+\end{LARGE}
+\end{document}
+\end{verbatim}
+
+
+\section{方便手机上观看的pdf}
+原文档内容都不需要修改，只需要修改geometry的设置就可以满足要求，然后在手机上看的时候选择adobe pdf软件的连续观看功能会有更好的体验。具体配置如下：
+\endnote{主要参考了\href{http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。}
+\begin{verbatim}
+\ifphone
+%for phone
+\RequirePackage[
+  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
+  paperheight=190mm,%太長了縮短點，
+  bindingoffset=0mm,%裝訂線
+  top=15mm,  %上邊距 包括頁眉
+  bottom=15mm,%下邊距 包括頁腳
+  left=5mm,  %左邊距or inner
+  right=5mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  footskip=10mm,%頁腳
+  includemp=true,% 旁註寬度計入width
+  marginparsep=0mm, %沒有旁註
+  marginparwidth=0mm,  %沒有旁註
+  ]{geometry}
+\else
+
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=45mm,  %上邊距 包括頁眉
+  bottom=40mm,%下邊距 包括頁腳
+  left=35mm,  %左邊距or inner
+  right=40mm,  %右邊距or  outer
+  headheight=25mm,%頁眉
+  footskip=25mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm,  %旁註寬度
+  ]{geometry}
+\fi
+\end{verbatim}
+这里使用了一个条件命令。在加载myconfig.sty宏包的时候已经新建了一个条件变量：\\
+\verb+\newif\ifphone+\\
+\verb+\phonefalse+
+ifphone就是一个条件判断命令，这里涉及到的命令我也不大懂，总之，如果我改成：\\
+\verb+\phonetrue+\\
+就会自动生成适合在手机上观看的pdf。
+
+\printendnotes
+
+\chapter{后面的珍宝}
+\begin{quotation}
+"The opera ain't over until the fat lady sings."
+
+好戏还在后头，等著瞧吧。
+\end{quotation}
+
+我在Ubuntu的模板文件夹里面新建了一个tex.tex文件。方便我用鼠标右键快速创建模板。
+
+第一个模板我打算使用一个通用的配置，写一个myconfig宏包，用于加载这个通用配置。还有一个mytitle宏包用于加载封面。然后整个模板就专注于写作，很简洁的样子。
+
+然后我在Ubuntu的home文件目录或者称之为主文件夹下面新建了一个文件夹texmf，然后里面新建了一个文件夹tex，然后里面新建了一个文件夹latex，然后在里面新建了一个文件夹myconfig。myconfig.sty文件就放在里面。然后在终端上运行命令：\verb+sudo~ texhash+即可。mytitle宏包的安装类似。
+
+myconfig宏包的内容是我以前之前的XeLaTeX指南的精华部分，很多冗余删除了。关于myconfig和mytitle宏包的编写，我参考了\href{http://tex.stackexchange.com/questions/70166/create-a-function-that-generates-a-title-page}{这个网站}。
+
+三个文件的代码在本文后面列出。现在就一些必要的信息说明如下：
+
+首先sty文档里面@符号不需要用makeatletter这个命令了，@在里面已经默认就是一个符号。
+其次文档的基本结构
+\begin{verbatim}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mytitle}
+…
+\endinput
+\end{verbatim}
+这个不用多说。
+
+然后就是sty文档里面所有usepackage都换成RequirePackage。这样sty文档兼容性更好，前面没有documentclass也行。
+
+myconfig宏包的详细讨论我在XeLaTeX指南一书中会详细讨论。
+mytitle宏包前面那部分是定义新的输入命令，第二行是用于处理可能出现错误的反应。就照这个模式写。然后gdef命令后面就跟著新定义的命令的形式，gdef和def命令的不同是他定义的是global的，我估计之前我那种写法不行可能就是没有gdef。
+后面就是基本的封面设计了。
+
+特别提醒在Ubuntu下右键新建之后，是未命名 然后空格 然后tex，这种文件名XeTeX处理似乎不很好。建议改成没有空格的文件名。
+
+\section{tex.tex代码}
+\begin{verbatim}
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline printendnotes 
+%新加入的环境如下：common-format  fig scalefig 
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt} 
+\newif\ifphone
+\phonefalse
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+
+\begin{document}
+\frontmatter   
+
+\titlea{书籍}
+\titleb{使用\LaTeX排版}
+\titlec{一种良好的风格}
+\author{作者}
+\authorinfo{作者：}
+\editor{编者}
+\email{a358003542@gmail.com}
+\editorinfo{编者：}
+\version{1.0}
+\mytitle
+
+\addchtoc{开头说的话}
+\chapter*{开头说的话}
+\begin{common-format}
+开头说的话
+
+%这里空一行。
+
+\end{common-format}
+
+
+\addchtoc{目錄}
+\setcounter{tocdepth}{1}    
+\tableofcontents
+
+\begin{common-format}
+\mainmatter 
+
+\chapter{章节开始}
+
+开始写作。。。
+
+
+
+
+%这里空一行
+
+\end{common-format}  
+\end{document}
+
+
+
+
+\end{verbatim}
+
+
+\section{myconfig.sty}
+\begin{verbatim}
+% 一种书籍的风格，对中文处理较好。
+% 
+% by wanze
+% LPPL LaTeX Public Project License
+%  
+%
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{myconfig}
+
+%\def\hi{Hello, this is my own package}
+%\let\myDate\date
+%\newcommand\GoodBye[1][\bfseries]{{#1Good Bye}}
+
+\RequirePackage{calc,float,multicol,moresize} 
+\RequirePackage[doublespacing]{setspace}
+\newcommand{\addchtoc}[1]{ 
+	\cleardoublepage   
+	\phantomsection    
+	\addcontentsline{toc}{chapter}{#1}}
+	
+\newcommand{\addsectoc}[1]{ 
+	\phantomsection    
+	\addcontentsline{toc}{section}{#1}}
+
+\newenvironment{common-format}{ %
+	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  
+    {}
+
+
+\ifphone
+%for phone
+\RequirePackage[
+  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
+  paperheight=190mm,%太長了縮短點，
+  bindingoffset=0mm,%裝訂線
+  top=15mm,  %上邊距 包括頁眉
+  bottom=15mm,%下邊距 包括頁腳
+  left=5mm,  %左邊距or inner
+  right=5mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  footskip=10mm,%頁腳
+  includemp=true,% 旁註寬度計入width
+  marginparsep=0mm, %沒有旁註
+  marginparwidth=0mm,  %沒有旁註
+  ]{geometry}
+\else
+
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=45mm,  %上邊距 包括頁眉
+  bottom=40mm,%下邊距 包括頁腳
+  left=35mm,  %左邊距or inner
+  right=40mm,  %右邊距or  outer
+  headheight=25mm,%頁眉
+  footskip=25mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm,  %旁註寬度
+  ]{geometry}
+\fi
+
+\RequirePackage[table]{xcolor}  
+\definecolor{bgcolor-0}{HTML}{CCFFCC} 
+
+\newsavebox{\tempbox}
+\newenvironment{fancycolorbox}[1][bgcolor-0]
+ {\noindent%%
+  \renewcommand{\tempcolor}{#1}
+  \begin{lrbox}{\tempbox}%
+  \begin{minipage}{\linewidth-10pt}
+  	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  	
+ {\ignorespacesafterend%
+  \end{minipage}%
+  \end{lrbox}%
+  \colorbox{\tempcolor}{\usebox{\tempbox}}}  
+
+
+%================字體================%
+\RequirePackage{xltxtra,fontspec,xunicode} %必備三件套
+\RequirePackage[CJKnumber=true]{xeCJK} %中文環境宏
+\xeCJKsetup{PunctStyle=plain}
+\defaultCJKfontfeatures{Scale=1.2}   %放大全局CJK字體。中文字應該稍微高於英文字
+\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
+    {Adobe 宋体 Std}%影響rmfamily字體
+\setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
+\setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
+ %設置英文字體
+\setmainfont[Mapping=tex-text]{DejaVu Serif} 
+\setsansfont[Mapping=tex-text]{DejaVu Sans}
+\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+%=============新的字符===========%
+\newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
+\RequirePackage{newunicodechar}
+\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
+\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
+\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}} 
+\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
+\newunicodechar{①}{{\libertine{①}}}
+\newunicodechar{②}{{\libertine{②}}}
+\newunicodechar{③}{{\libertine{③}}}
+\newunicodechar{④}{{\libertine{④}}}
+\newunicodechar{⑤}{{\libertine{⑤}}}
+\newunicodechar{}{{\ubuntu{}}}
+
+%%===============中文化=========%
+\renewcommand\contentsname{目~录}
+\renewcommand\listfigurename{插图目录}
+\renewcommand\listtablename{表格目录}
+\renewcommand\bibname{参~考~文~献}
+\renewcommand\indexname{索~引}
+\renewcommand\figurename{图}
+\renewcommand\tablename{表}
+\renewcommand\partname{部分}
+\renewcommand\appendixname{附录}
+\renewcommand\today{\number\year年\number\month月\number\day日}
+
+\RequirePackage{fancyhdr}   %頁眉頁腳
+\pagestyle{fancy}
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+    \renewcommand{\chaptermark}[1]{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}} 
+     \renewcommand{\sectionmark}[1]{\markright{第\CJKnumber{\arabic{section}}節~~#1}{}} 
+%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
+    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
+    \fancyhf[FR]{\thepage}
+    \fancyhfoffset[R]{\marginparwidth+\marginparsep}
+    }
+\pagestyle{plain} 
+
+%=========章節標題設計=========%
+\RequirePackage{titlesec}
+%修改part
+\titleformat{\part}{\huge\sffamily}{}{0em}{} 
+%修改chapter
+\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{} 
+%修改section
+\titleformat{\section}{\Large\sffamily}{}{0em}{}
+%修改subsection
+\titleformat{\subsection}{\large\sffamily}{}{0em}{}
+%修改subsubsection
+\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
+
+
+%================目录===============%
+\RequirePackage{titletoc}
+
+%==============超鏈接===============%
+\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
+
+%=================文字強調=========%
+\RequirePackage{ulem} %下劃線,加點
+\normalem
+
+\newcommand\reduline{\bgroup\markoverwith
+{\textcolor{red}{\rule[-0.8ex]{1em}{0.4pt}}}\ULon}
+\renewcommand\emshape{\color{red}}
+
+%==================插入圖片=======%
+\RequirePackage{graphicx}
+\graphicspath{{figures/}}
+\newenvironment{fig}[1]
+	{\begin{figure}[h]
+	\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
+	\caption{#1}
+	\end{figure}}
+	{}	
+\newenvironment{scalefig}[2][0.4]
+	{\begin{figure}[h]
+	\includegraphics[scale=#1]{#2}
+	\caption{#2}
+	\end{figure}}
+	{}	
+
+%==============插入表格========%
+\RequirePackage{booktabs}
+\renewcommand{\arraystretch}{1.3}
+
+%============插入代码============%
+\RequirePackage{fancyvrb} 
+\DefineVerbatimEnvironment%
+	{verbatim}{Verbatim}
+	{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+	xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}  	
+	
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\makeatletter
+	\FV@AddToHook{\FV@ListParameterHook}
+	{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\makeatother
+\setlength{\fancyvrbtopsep}{-15pt}   %代碼環境之上空白高度
+\setlength{\fancyvrbpartopsep}{0pt}  %段落之上空白高度
+
+%=============插入注释=========%
+\RequirePackage{endnotes}
+\RequirePackage{hyperendnotes}
+\renewcommand\makeenmark{（\theenmark）}
+\renewcommand\notesname {注释和参考资料}
+\newcommand{\printendnotes}
+    {\theendnotes}
+
+
+
+
+
+
+\endinput
+
+\end{verbatim}
+
+
+\section{mytitle.sty}
+\begin{verbatim}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mytitle}
+
+
+\def\titlea#1{\gdef\@titlea{#1}}
+\def\@titlea{\@latex@warning@no@line{No \noexpand\titlea given}}
+\def\titleb#1{\gdef\@titleb{#1}}
+\def\@titleb{\@latex@warning@no@line{No \noexpand\titleb given}}
+\def\titlec#1{\gdef\@titlec{#1}}
+\def\@titlec{\@latex@warning@no@line{No \noexpand\titlec given}}
+
+\def\authorinfo#1{\gdef\@authorinfo{#1}}
+\def\@authorinfo{\@latex@warning@no@line{No \noexpand\authorinfo given}}
+\def\email#1{\gdef\@email{#1}}
+\def\@email{\@latex@warning@no@line{No \noexpand\email given}}
+\def\editorinfo#1{\gdef\@editorinfo{#1邮箱：\href{mailto: \@email}{\@email}。}}
+\def\@editorinfo{\@latex@warning@no@line{No \noexpand\editorinfo given}}
+
+\def\editor#1{\gdef\@editor{#1}}
+\def\@editor{\@latex@warning@no@line{No \noexpand\editor given}}
+\def\version#1{\gdef\@version{#1}}
+\def\@version{\@latex@warning@no@line{No \noexpand\version given}}
+
+
+%默认的title样式  继续添加的有mytitlea,mytitleb，mytitlec。。。
+\newcommand{\mytitle}{
+	\begin{titlepage}
+	\begin{flushleft}	
+	 \vspace*{\stretch{2}}
+{\HUGE\bfseries \@titlea}\\[\stretch{1}]
+{\Huge\bfseries \@titleb}\\[\stretch{1}]
+{\LARGE\itshape \@titlec}\\[\stretch{2}]
+{\Large \@author\footnote{\@authorinfo}}\quad\rule{0.8pt}{3ex}\quad
+{\large \@editor\footnote{\@editorinfo}}\\[\stretch{2}]
+\vfill
+{\ttfamily 版本: \@version}
+\end{flushleft}
+\end{titlepage}
+}
+
+
+\endinput
+
+\end{verbatim}
+
+\chapter{源码和参考资料打包下载地址}
+
+
+\backmatter
+\addchtoc{参考文献}
+原谅我，我对参考文献的格式美化比较困惑。
+\begin{thebibliography}{9}
+\bibitem{lshort} 有名的《一份不太简短的\LaTeX2e 介绍》,原版作者：Tobias Oetiker,Hubert Partl,Irene Hyna等，版本：2001-08-09，中文翻译：CTeX用户小组,版本：2002-05，pdf下载链接：\href{http://www.ctan.org/tex-archive/info/lshort/chinese}{http://www.ctan.org/tex-archive/info/lshort/chinese}。
+\bibitem{latex123} 台湾同胞良心作品 《大家来学\LaTeX 》,原版作者：李果正，版本：2004-03-08，网站链接：\href{http://edt1023.sayya.org/tex/latex123/}{http://edt1023.sayya.org/tex/latex123/}。
+\bibitem{wikibook-latex} 维基图书latex篇英文版，版本：2013-08，网站链接：\href{http://en.wikibooks.org/wiki/LaTeX}{http://en.wikibooks.org/wiki/LaTeX}。\emph{这本书甚至都没有cite它一下，因为不知道插在哪里，几乎到处都有对它的引用，谢谢所有wikibook的编写者。}
+\bibitem{boxes} using boxes and glue in \TeX{} and \LaTeX ，原版作者：Nelson H. F. Beebe，版本：2009-03-28，pdf下载链接：链接地址不好复制，请google搜索书名之。
+\bibitem{latex-companion}  The Latex Companion 
+\end{thebibliography}
+
+
+\end{common-format}  
+\end{document}
+
+
+

@@ -1,0 +1,33 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mytitle}
+
+\def\editor#1{\gdef\@editor{#1}}
+\def\@editor{\@latex@warning@no@line{No \noexpand\editor given}}
+\def\email#1{\gdef\@email{#1}}
+\def\@email{\@latex@warning@no@line{No \noexpand\email given}}
+\def\version#1{\gdef\@version{#1}}
+\def\@version{\@latex@warning@no@line{No \noexpand\version given}}
+
+
+
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+	\begin{flushleft}	
+	 \vspace*{\stretch{1}}
+    {\Huge\sffamily \@title}\\[10pt]
+    {\sffamily\large 作者: \@author}\\
+    	
+	\vspace{\stretch{1}}
+	{\sffamily 編者: \@editor}\\[10pt]
+	{\sffamily 郵箱: \href{mailto: \@email}{\@email}}\\
+	
+	\vspace{\stretch{1}}
+	{\large\ttfamily 版本號: \@version}\\[10pt]
+	{\large\ttfamily  完成日期: \today}\\
+	
+	\end{flushleft}
+	\end{titlepage}
+}
+
+
+\endinput

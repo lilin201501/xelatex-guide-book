@@ -1,0 +1,38 @@
+\@doanenote {1}{1}
+macro:->\href
+{https://code.google.com/p/rimeime/w/list}{rime官方wiki}
+\@endanenote 
+\@doanenote {2}{2}
+macro:->ppa地址是：[ppa:lotem/rime]
+
+\@endanenote 
+\@doanenote {3}{3}
+macro:->你可以到这个网站继续学习正则表达式：\href
+{http://deerchao.net/tutorials/regex/regex.htm}{正则表达式30分钟入门教程}
+\@endanenote 
+\@doanenote {4}{4}
+macro:->在rime中文模式下，直接按enter键输出的也是英文，所以一些简单地命令直接输入也是很快捷的。
+\@endanenote 
+\@doanenote {5}{5}
+macro:->latexila编辑器使用xelatex引擎生成文档，一样要自己编写一个生成命令，在创建→首选项那里→标签就写xelatex，写其他的也可以。扩展名写.tex，然后命令和texmaker一样写上这个：xelatex
+-interaction=nonstopmode
+\$filename
+。
+\@endanenote 
+\@doanenote {6}{6}
+macro:->本信息来自ubuntu13.04，gedit版本号为3.6.2。
+\@endanenote 
+\@doanenote {7}{7}
+macro:->在项目网站右下角settings哪里进去有很多项目管理内容，其中最下面有删除项目的功能，请慎重使用。
+\@endanenote 
+\@doanenote {8}{8}
+macro:->参考了\href
+{http://www.cnblogs.com/findingsea/archive/2012/08/27/2654549.html}{这个网站}
+\@endanenote 
+\@doanenote {9}{9}
+macro:->这个代码主要参考了\href
+{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}{这个网站}
+\@endanenote 
+\@doanenote {10}{10}
+macro:->chromium字体也都设置成为微软雅黑吧，然后我感觉页面稍微放大点更好看。
+\@endanenote 

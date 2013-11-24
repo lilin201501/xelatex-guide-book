@@ -1,0 +1,152 @@
+\part{其他问题的讨论}
+
+\section{语录，引用和诗歌环境}
+quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。下面是quote语录环境：
+\begin{quote}
+“When the winds of change blow, some people build walls and others build windmills.”
+\end{quote}
+
+
+\section{插入摘要}
+使用的环境就是abstract，\endnote{\reduline{book类不能使用摘要环境，只有article和report才有。}}命令如下：\\
+\begin{verbatim}
+\begin{abstract}
+这是一段摘要文字。
+\end{abstract}
+\end{verbatim}
+
+\section{文本中的上标还有下标}
+上标使用命令textsuperscript命令，下标感觉自己缩小点就差不多了吧。示例如下：\\
+上标\textsuperscript{上标}下标{\scriptsize 下标}
+
+更常见的是化学分子式里面的上标和下标，推荐使用mhchem宏包，至于数学模式里的上标和下标自不必说了。
+
+
+\section{多张图片并列显示}
+\label{sec:多张图片并列显示}
+
+\begin{figure}[h]
+
+\label{fig:四栏图片}
+\begin{multicols}{4}
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+i want  some test to show there is a text and not to column break.\\
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+
+\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
+\centerline{test}
+
+\end{multicols}
+\caption{denosie fig}
+
+\end{figure}
+
+具体代码如下：
+\begin{verbatim}
+\begin{figure}[h]
+
+\label{fig:四栏图片}
+\begin{multicols}{4}
+\includegraphics[width=\linewidth ,totalheight=\textheight , 
+        keepaspectratio]{temp.jpg}
+i want  some test to show there is a text and not to column break.\\
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight , 
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\end{multicols}
+\caption{denosie fig}
+
+\end{figure}
+\end{verbatim}
+这段代码的分栏还有插入图片知识都已经介绍了，值得一提的就是widetext环境，也就是有changepage宏包而来的临时改变页面布局环境和浮动体环境figure以及table不兼容。比如放入浮动体环境内才能起作用。然后caption命令似乎只是默认的linewidth居中。所以如果想要图片和表格在扩大的文本布局中居中对齐，那么需要在浮动体环境内部使用改变页面布局命令，然后使用居中命令。
+
+\section[生成字体所有已有的字形]{生成字体所有已有的字形\endnote{主要参照了\href{http://tex.stackexchange.com/questions/23863/generating-a-table-of-glyphs-with-xetex}{这个网站}}}
+\label{sec:字体已有字形}
+\begin{verbatim}
+\documentclass[landscape]{article}
+\usepackage{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans}
+\usepackage{multicol}
+\setlength{\columnseprule}{0.4pt}
+\usepackage{multido}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{LARGE}
+\begin{multicols}{5}
+\multido{\i=0+1}{"196607"}{% from U+0000 to U+2FFFF
+%后面的还会继续扩展，目前一般还没使用。
+  \iffontchar\font\i
+    \makebox[4em][l]{\i}%
+    \symbol{\i}\endgraf
+  \fi
+}
+\end{multicols}
+\end{LARGE}
+\end{document}
+\end{verbatim}
+
+
+\section{方便手机上观看的pdf}
+原文档内容都不需要修改，只需要修改geometry的设置就可以满足要求，然后在手机上看的时候选择adobe pdf软件的连续观看功能会有更好的体验。具体配置如下：
+\endnote{主要参考了\href{http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。}
+\begin{verbatim}
+\ifphone
+%for phone
+\RequirePackage[
+  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
+  paperheight=190mm,%太長了縮短點，
+  bindingoffset=0mm,%裝訂線
+  top=15mm,  %上邊距 包括頁眉
+  bottom=15mm,%下邊距 包括頁腳
+  left=5mm,  %左邊距or inner
+  right=5mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  footskip=10mm,%頁腳
+  includemp=true,% 旁註寬度計入width
+  marginparsep=0mm, %沒有旁註
+  marginparwidth=0mm,  %沒有旁註
+  ]{geometry}
+\else
+
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=45mm,  %上邊距 包括頁眉
+  bottom=40mm,%下邊距 包括頁腳
+  left=35mm,  %左邊距or inner
+  right=40mm,  %右邊距or  outer
+  headheight=25mm,%頁眉
+  footskip=25mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm,  %旁註寬度
+  ]{geometry}
+\fi
+\end{verbatim}
+这里使用了一个条件命令。在加载myconfig.sty宏包的时候已经新建了一个条件变量：\\
+\verb+\newif\ifphone+\\
+\verb+\phonefalse+
+ifphone就是一个条件判断命令，这里涉及到的命令我也不大懂，总之，如果我改成：\\
+\verb+\phonetrue+\\
+就会自动生成适合在手机上观看的pdf。
+
+\printendnotes

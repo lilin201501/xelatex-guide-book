@@ -1,0 +1,104 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline printendnotes 
+%新加入的环境如下：common-format  fig scalefig 
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt} 
+\newif\ifphone
+\phonefalse
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+
+\includeonly{parts/ubuntu知识}
+
+\begin{document}
+\frontmatter   
+
+\titlea{\XeLaTeX 指南}
+\titleb{在Ubuntu下排版专业的pdf文章}
+\author{万泽}
+\authorinfo{作者：万泽，湖南常德人氏。}
+\editor{万泽}
+\email{a358003542@gmail.com}
+\editorinfo{编者：万泽，}
+\version{1.11}
+\titleLTB
+
+\addchtoc{前言}
+\chapter*{前言}
+\begin{common-format}
+我试图收集整理各方面来的xelatex相关的信息，包括自己的实践经验总结，作为后学者的指南手册。
+
+一切在尊重版权的基础上出于爱好兴趣和相信自由分享的价值原则上进行。
+
+全书主要分为五大块：
+\begin{description}
+\item[1. ubuntu知识] \hfill \\
+主要是一些最基本的ubuntu知识或者和本文其他内容相关的知识。当然有时出于全面性考虑会加入一点其他的linux知识进来，不过这部分需要做到不过分扩充内容。
+\item[2.xelatex基础] \hfill \\
+这部分内容会就xelatex或者latex的基础知识内容做全面的整理归类排版，争取做到言简意赅并面面俱到和实用性很强的手册性质。
+\item[3.latex高级篇] \hfill \\
+这部分内容会就latex的一些较高级的知识做出说明，有时会就tex的一些命令做出说明。这部分内容主要以各个不同的专题议题的形式展开，不求全，但求就某一个实用的问题解释清楚。
+\item[4.其他问题的讨论] \hfill \\
+这部分如标题所言，是我根据实际需要接触到的很有用的技巧，以问题的形式展开。这部分内容能够做到分解成为前面三部分内容的将会分解，觉得不好分解的就放到这里，这部分内容不应过分扩充。
+\item[5.后面的珍宝] \hfill \\
+这部分会将本书涉及到的有用的资源收集起来给出下载链接或者打印出来。
+\end{description}
+
+\end{common-format}
+
+
+
+
+\addchtoc{目录}
+\setcounter{tocdepth}{2}    
+\tableofcontents
+
+
+
+\begin{common-format}
+\mainmatter 
+
+\include{parts/ubuntu知识}
+
+\include{parts/xelatex基础}
+
+\include{parts/latex高级篇}
+
+\include{parts/其他问题的讨论}
+
+
+
+
+
+
+\include{parts/后面的珍宝}
+
+
+
+
+\addchtoc{插图目录}
+\listoffigures 
+
+\addchtoc{表格目录}
+\listoftables  
+
+\backmatter
+\addchtoc{参考文献}
+原谅我，我对参考文献的格式美化比较困惑。
+\begin{thebibliography}{9}
+\bibitem{lshort} 有名的《一份不太简短的\LaTeX2e 介绍》,原版作者：Tobias Oetiker,Hubert Partl,Irene Hyna等，版本：2001-08-09，中文翻译：CTeX用户小组,版本：2002-05，pdf下载链接：\href{http://www.ctan.org/tex-archive/info/lshort/chinese}{http://www.ctan.org/tex-archive/info/lshort/chinese}。
+\bibitem{latex123}  《大家来学\LaTeX 》,原版作者：李果正，版本：2004-03-08，网站链接：\href{http://edt1023.sayya.org/tex/latex123/}{http://edt1023.sayya.org/tex/latex123/}。
+\bibitem{wikibook-latex} 维基图书latex篇英文版，版本：2013-08，网站链接：\href{http://en.wikibooks.org/wiki/LaTeX}{http://en.wikibooks.org/wiki/LaTeX}。\emph{这本书甚至都没有cite它一下，因为不知道插在哪里，几乎到处都有对它的引用，谢谢所有wikibook的编写者。}
+\bibitem{boxes} using boxes and glue in \TeX{} and \LaTeX ，原版作者：Nelson H. F. Beebe，版本：2009-03-28，pdf下载链接：链接地址不好复制，请google搜索书名之。
+\bibitem{latex-companion}  The Latex Companion 
+\end{thebibliography}
+
+
+\end{common-format}  
+\end{document}
+
+
+

@@ -1,0 +1,5 @@
+(defmacro with\PYZhy{}gensyms (syms \PY{n+nb}{\PYZam{}}rest body)
+  `(let ,(mapcar \PYZsh{}\PYZsq{}(lambda (s)
+     `(,s (gensym)))
+           syms)
+         ,@body))

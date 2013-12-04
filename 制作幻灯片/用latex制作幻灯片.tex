@@ -1,0 +1,115 @@
+% !Mode:: "TeX:UTF-8"%确保文档utf-8编码
+%commands:
+%environments:  
+\documentclass[xetex,aspectratio=169]{mybeamer}
+
+\usetheme{Berkeley}
+%theme list:
+%Antibes    Bergen    Berkeley    Berlin    Copenhagen    Darmstadt    Dresden    Frankfurt    Goettingen
+%Hannover    Ilmenau    JuanLesPins    Luebeck    Madrid    Malmoe    Marburg    Montpellier
+%PaloAlto    Pittsburgh    Rochester    Singapore    Szeged    Warsaw    boxes    default 
+\title{用制作幻灯片}
+\subtitle{主要讨论beamer class}
+\author{万泽}
+
+\begin{document}
+
+
+
+\maketitle
+
+
+
+%\begin{frame}
+%  \tableofcontents
+%\end{frame}
+
+
+
+%\section{基本情况说明}
+%\subsection{基本命令}
+%\section{beamer class一般讨论}
+%\section{全屏}
+%\section{目录和封面}
+%\section{标题}
+%\section{建议废弃的功能}
+%\section{表格}
+%
+%\subsection{页眉页脚}
+%\subsection{旁注}
+%\section{脚注}
+%\section{文字强调}
+%
+%
+%\section{delay}
+%
+%\section{插入图片}
+%\section{theme}
+%\section{color theme}
+%\section{页面布局}
+%\section{参考文献}
+
+
+\begin{frame}
+\frametitle{基本情况说明}
+本文讨论基於\XeLaTeX 指南一书的讨论，并由此而来。首先是documentclass使用了beamer class。然後前面的可选项加上xetex，其他可选项後面再慢慢讨论。 
+
+本幻灯片的中文字显示所用代码完全参考\XeLaTeX 指南一书中的字体处理部分，还额外将中文化的一些命令复制进来了。
+\end{frame}
+
+\section{插入代码}
+\begin{frame}[fragile]
+\frametitle{基本命令}
+\begin{xverbatim}{txt}
+test＼＼\
+\end{xverbatim}
+\end{frame}
+
+\section{列表}
+\begin{frame}
+\frametitle{Overlays with {\tt pause}}
+\setbeamercovered{invisible}
+Practical \TeX\ 2005\\  \pause
+Practical \TeX\ 2005\\ \pause
+Practical \TeX\ 2005
+这里放着第一张幻灯片的内容。 beamer automatically loads xcolor
+\end{frame}
+
+  \begin{frame}
+    \frametitle{This is the first slide}
+    %Content goes here
+  \end{frame}
+  \begin{frame}
+    \frametitle{This is the second slide}
+    \framesubtitle{A bit more information about this}
+    %More content goes here
+  \end{frame}
+  
+  \begin{frame}
+  The usual environments (itemize, enumerate, equation, etc.) may be used.
+  
+  Inside frames, you can use environments like block, theorem, proof, ... Also, maketitle is possible to create the frontpage, if title and author are set.
+  Trick: Instead of using begin{frame}...end{frame}, you can also use frame{...}.
+  
+  \end{frame}
+
+
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Weiterf¸hrende Literatur}    
+  \begin{thebibliography}{10}    
+  \beamertemplatebookbibitems
+  \bibitem{Autor1990}
+    A.~Autor.
+    \newblock {\em Einf¸hrung in das Pr‰sentationswesen}.
+    \newblock Klein-Verlag, 1990.
+  \beamertemplatearticlebibitems
+  \bibitem{Jemand2000}
+    S.~Jemand.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100, 2000.
+  \end{thebibliography}
+\end{frame}
+
+
+\end{document}

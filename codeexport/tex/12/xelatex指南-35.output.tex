@@ -1,0 +1,15 @@
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}fancyvrb\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}DefineVerbatimEnvironment}\PY{c}{\PYZpc{}}
+\PY{n+nb}{\PYZob{}}verbatim\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}Verbatim\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+xleftmargin=6pt, fontsize=\PY{k}{\PYZbs{}footnotesize} , numbersep=2pt\PY{n+nb}{\PYZcb{}}
+
+
+\PY{k}{\PYZbs{}newlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}makeatletter}
+\PY{k}{\PYZbs{}FV}@AddToHook\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}FV}@ListParameterHook\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}topsep}=\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{k}{\PYZbs{}partopsep}=\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}makeatother}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZhy{}15pt\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}代碼環境之上空白高度}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}  \PY{c}{\PYZpc{}段落之上空白高度}

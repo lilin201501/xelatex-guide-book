@@ -1,0 +1,30 @@
+
+%===============%封面設計==========%
+\makeatletter
+\renewcommand\title[1]{\def\@title{#1}}
+\renewcommand\author[1]{\def\@author{#1}}
+\newcommand\email[1]{\def\@email{#1}}
+\newcommand\version[1]{\def\@version{#1}}
+\newcommand\editor[1]{\def\@editor{#1}}
+
+\renewcommand{\maketitle}{
+\begin{titlepage}
+\begin{flushleft}
+
+ \vspace*{\stretch{1}}
+    {\Huge\sffamily \@title}\\[10pt]
+    {\sffamily\large 作者: \@author}\\
+
+\vspace{\stretch{1}}
+{\sffamily 編者: \@editor}\\[10pt]
+{\sffamily 郵箱: \href{mailto: \@email}{\@email}}\\
+
+\vspace{\stretch{1}}
+{\large\ttfamily 版本號: \@version}\\[10pt]
+{\large\ttfamily  完成日期: \today}\\
+
+\end{flushleft}
+\end{titlepage}
+}
+\makeatother
+

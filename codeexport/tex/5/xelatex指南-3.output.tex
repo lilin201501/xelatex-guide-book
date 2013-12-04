@@ -1,0 +1,214 @@
+\PY{c}{\PYZpc{} 一种书籍的风格，对中文处理较好。}
+\PY{c}{\PYZpc{}}
+\PY{c}{\PYZpc{} by wanze}
+\PY{c}{\PYZpc{} LPPL LaTeX Public Project License}
+\PY{c}{\PYZpc{}}
+\PY{c}{\PYZpc{}}
+
+\PY{k}{\PYZbs{}NeedsTeXFormat}\PY{n+nb}{\PYZob{}}LaTeX2e\PY{n+nb}{\PYZcb{}}[1994/06/01]
+\PY{k}{\PYZbs{}ProvidesPackage}\PY{n+nb}{\PYZob{}}myconfig\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}\PYZbs{}def\PYZbs{}hi\PYZob{}Hello, this is my own package\PYZcb{}}
+\PY{c}{\PYZpc{}\PYZbs{}let\PYZbs{}myDate\PYZbs{}date}
+\PY{c}{\PYZpc{}\PYZbs{}newcommand\PYZbs{}GoodBye[1][\PYZbs{}bfseries]\PYZob{}\PYZob{}\PYZsh{}1Good Bye\PYZcb{}\PYZcb{}}
+
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}calc,float,multicol,moresize\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+na}{[doublespacing]}\PY{n+nb}{\PYZob{}}setspace\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}addchtoc}\PY{n+nb}{\PYZcb{}}[1]\PY{n+nb}{\PYZob{}}
+\PY{k}{\PYZbs{}cleardoublepage}
+\PY{k}{\PYZbs{}phantomsection}
+\PY{k}{\PYZbs{}addcontentsline}\PY{n+nb}{\PYZob{}}toc\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}chapter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}newcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}addsectoc}\PY{n+nb}{\PYZcb{}}[1]\PY{n+nb}{\PYZob{}}
+\PY{k}{\PYZbs{}phantomsection}
+\PY{k}{\PYZbs{}addcontentsline}\PY{n+nb}{\PYZob{}}toc\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}section\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}newenvironment}\PY{n+nb}{\PYZob{}}common\PYZhy{}format\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}} \PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parskip}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}1.6ex plus 0.2ex minus 0.2ex\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}段落間距}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parindent}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}baselineskip} * \PY{k}{\PYZbs{}real}\PY{n+nb}{\PYZob{}}0.06\PY{n+nb}{\PYZcb{}} + \PY{k}{\PYZbs{}textpt} * \PY{k}{\PYZbs{}real}\PY{n+nb}{\PYZob{}}2.4\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+    \PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+
+
+\PY{k}{\PYZbs{}ifphone}
+\PY{c}{\PYZpc{}for phone}
+\PY{k}{\PYZbs{}RequirePackage}[
+  paperwidth=105mm, \PY{c}{\PYZpc{}除去旁註其他沒變,115,再稍微小點}
+  paperheight=190mm,\PY{c}{\PYZpc{}太長了縮短點，}
+  bindingoffset=0mm,\PY{c}{\PYZpc{}裝訂線}
+  top=15mm,  \PY{c}{\PYZpc{}上邊距 包括頁眉}
+  bottom=15mm,\PY{c}{\PYZpc{}下邊距 包括頁腳}
+  left=5mm,  \PY{c}{\PYZpc{}左邊距or inner}
+  right=5mm,  \PY{c}{\PYZpc{}右邊距or  outer}
+  headheight=10mm,\PY{c}{\PYZpc{}頁眉}
+  footskip=10mm,\PY{c}{\PYZpc{}頁腳}
+  includemp=true,\PY{c}{\PYZpc{} 旁註寬度計入width}
+  marginparsep=0mm, \PY{c}{\PYZpc{}沒有旁註}
+  marginparwidth=0mm,  \PY{c}{\PYZpc{}沒有旁註}
+  ]\PY{n+nb}{\PYZob{}}geometry\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}else}
+
+\PY{k}{\PYZbs{}RequirePackage}[a4paper, \PY{c}{\PYZpc{}a4paper size 297:210 mm}
+  bindingoffset=0mm,\PY{c}{\PYZpc{}裝訂線}
+  top=45mm,  \PY{c}{\PYZpc{}上邊距 包括頁眉}
+  bottom=40mm,\PY{c}{\PYZpc{}下邊距 包括頁腳}
+  left=35mm,  \PY{c}{\PYZpc{}左邊距or inner}
+  right=40mm,  \PY{c}{\PYZpc{}右邊距or  outer}
+  headheight=25mm,\PY{c}{\PYZpc{}頁眉}
+  footskip=25mm,\PY{c}{\PYZpc{}頁腳}
+ includemp=true,\PY{c}{\PYZpc{} 旁註寬度計入width}
+ marginparsep=0mm, \PY{c}{\PYZpc{}旁註與正文間距}
+marginparwidth=0mm,  \PY{c}{\PYZpc{}旁註寬度}
+  ]\PY{n+nb}{\PYZob{}}geometry\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}fi}
+
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+na}{[table]}\PY{n+nb}{\PYZob{}}xcolor\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}definecolor}\PY{n+nb}{\PYZob{}}bgcolor\PYZhy{}0\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}HTML\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}CCFFCC\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}newsavebox}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}tempbox}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newenvironment}\PY{n+nb}{\PYZob{}}fancycolorbox\PY{n+nb}{\PYZcb{}}[1][bgcolor\PYZhy{}0]
+ \PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}noindent}\PY{c}{\PYZpc{}\PYZpc{}}
+  \PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}tempcolor}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}
+  \PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}lrbox\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}tempbox}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+  \PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}minipage\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}linewidth}\PYZhy{}10pt\PY{n+nb}{\PYZcb{}}
+   \PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parskip}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}1.6ex plus 0.2ex minus 0.2ex\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}段落間距}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parindent}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}baselineskip} * \PY{k}{\PYZbs{}real}\PY{n+nb}{\PYZob{}}0.06\PY{n+nb}{\PYZcb{}} + \PY{k}{\PYZbs{}textpt} * \PY{k}{\PYZbs{}real}\PY{n+nb}{\PYZob{}}2.4\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+ \PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}ignorespacesafterend}\PY{c}{\PYZpc{}}
+  \PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}minipage\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+  \PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}lrbox\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+  \PY{k}{\PYZbs{}colorbox}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}tempcolor}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}usebox}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}tempbox}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+
+
+\PY{c}{\PYZpc{}================字體================\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}xltxtra,fontspec,xunicode\PY{n+nb}{\PYZcb{}} \PY{c}{\PYZpc{}必備三件套}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+na}{[CJKnumber=true]}\PY{n+nb}{\PYZob{}}xeCJK\PY{n+nb}{\PYZcb{}} \PY{c}{\PYZpc{}中文環境宏}
+\PY{k}{\PYZbs{}xeCJKsetup}\PY{n+nb}{\PYZob{}}PunctStyle=plain\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}defaultCJKfontfeatures}\PY{n+nb}{\PYZob{}}Scale=1.2\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}放大全局CJK字體。中文字應該稍微高於英文字}
+\PY{k}{\PYZbs{}setCJKmainfont}\PY{n+na}{[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]}
+    \PY{n+nb}{\PYZob{}}Adobe 宋体 Std\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}影響rmfamily字體}
+\PY{k}{\PYZbs{}setCJKsansfont}\PY{n+nb}{\PYZob{}}Adobe 黑体 Std\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}影響sffamily字體}
+\PY{k}{\PYZbs{}setCJKmonofont}\PY{n+nb}{\PYZob{}}Adobe 楷体 Std\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}影響ttfamily字體}
+ \PY{c}{\PYZpc{}設置英文字體}
+\PY{k}{\PYZbs{}setmainfont}\PY{n+na}{[Mapping=tex\PYZhy{}text]}\PY{n+nb}{\PYZob{}}DejaVu Serif\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setsansfont}\PY{n+na}{[Mapping=tex\PYZhy{}text]}\PY{n+nb}{\PYZob{}}DejaVu Sans\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setmonofont}\PY{n+na}{[Mapping=tex\PYZhy{}text]}\PY{n+nb}{\PYZob{}}DejaVu Sans Mono\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}=============新的字符===========\PYZpc{}}
+\PY{k}{\PYZbs{}newfontfamily}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZcb{}}[Scale=1.5]\PY{n+nb}{\PYZob{}}Linux Libertine O\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newfontfamily}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}ubuntu}\PY{n+nb}{\PYZcb{}}[Scale=3]\PY{n+nb}{\PYZob{}}Ubuntu\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}newunicodechar\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}Ⓐ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}Ⓐ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}Ⓑ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}Ⓑ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}Ⓒ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}Ⓒ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}Ⓓ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}Ⓓ\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}①\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}①\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}②\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}②\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}③\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}③\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}④\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}④\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}⑤\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}libertine}\PY{n+nb}{\PYZob{}}⑤\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newunicodechar}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}ubuntu}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}\PYZpc{}===============中文化=========\PYZpc{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}contentsname}\PY{n+nb}{\PYZob{}}目\PYZti{}录\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}listfigurename}\PY{n+nb}{\PYZob{}}插图目录\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}listtablename}\PY{n+nb}{\PYZob{}}表格目录\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}bibname}\PY{n+nb}{\PYZob{}}参\PYZti{}考\PYZti{}文\PYZti{}献\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}indexname}\PY{n+nb}{\PYZob{}}索\PYZti{}引\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}figurename}\PY{n+nb}{\PYZob{}}图\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}tablename}\PY{n+nb}{\PYZob{}}表\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}partname}\PY{n+nb}{\PYZob{}}部分\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}appendixname}\PY{n+nb}{\PYZob{}}附录\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}today}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}number}\PY{k}{\PYZbs{}year}年\PY{k}{\PYZbs{}number}\PY{k}{\PYZbs{}month}月\PY{k}{\PYZbs{}number}\PY{k}{\PYZbs{}day}日\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}fancyhdr\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}頁眉頁腳}
+\PY{k}{\PYZbs{}pagestyle}\PY{n+nb}{\PYZob{}}fancy\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}fancypagestyle}\PY{n+nb}{\PYZob{}}plain\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}
+    \PY{k}{\PYZbs{}fancyhf}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+    \PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}headrulewidth}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}
+    \PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}footrulewidth}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}
+    \PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}chaptermark}\PY{n+nb}{\PYZcb{}}[1]\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}markboth}\PY{n+nb}{\PYZob{}}第\PY{k}{\PYZbs{}CJKnumber}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}chapter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}章\PYZti{}\PYZti{}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+     \PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}sectionmark}\PY{n+nb}{\PYZcb{}}[1]\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}markright}\PY{n+nb}{\PYZob{}}第\PY{k}{\PYZbs{}CJKnumber}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}section\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}節\PYZti{}\PYZti{}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}    \PYZbs{}fancyhf[HL]\PYZob{}\PYZbs{}ttfamily \PYZbs{}footnotesize \PYZbs{}leftmark \PYZcb{}}
+    \PY{k}{\PYZbs{}fancyhf}\PY{n+na}{[HR]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}ttfamily} \PY{k}{\PYZbs{}footnotesize} \PY{k}{\PYZbs{}rightmark} \PY{n+nb}{\PYZcb{}}
+    \PY{k}{\PYZbs{}fancyhf}\PY{n+na}{[FR]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}thepage}\PY{n+nb}{\PYZcb{}}
+    \PY{k}{\PYZbs{}fancyhfoffset}\PY{n+na}{[R]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}marginparwidth}+\PY{k}{\PYZbs{}marginparsep}\PY{n+nb}{\PYZcb{}}
+    \PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}pagestyle}\PY{n+nb}{\PYZob{}}plain\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}=========章節標題設計=========\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}titlesec\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}修改part}
+\PY{k}{\PYZbs{}titleformat}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}part}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}huge}\PY{k}{\PYZbs{}sffamily}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}修改chapter}
+\PY{k}{\PYZbs{}titleformat}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}chapter}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}LARGE}\PY{k}{\PYZbs{}sffamily}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}修改section}
+\PY{k}{\PYZbs{}titleformat}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}section}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}Large}\PY{k}{\PYZbs{}sffamily}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}修改subsection}
+\PY{k}{\PYZbs{}titleformat}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}subsection}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}large}\PY{k}{\PYZbs{}sffamily}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+\PY{c}{\PYZpc{}修改subsubsection}
+\PY{k}{\PYZbs{}titleformat}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}subsubsection}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}normalsize}\PY{k}{\PYZbs{}sffamily}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+
+
+\PY{c}{\PYZpc{}================目录===============\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}titletoc\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}==============超鏈接===============\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+na}{[colorlinks=true,linkcolor=blue,citecolor=blue]}\PY{n+nb}{\PYZob{}}hyperref\PY{n+nb}{\PYZcb{}} \PY{c}{\PYZpc{}設置書簽和目錄鏈接等}
+
+\PY{c}{\PYZpc{}=================文字強調=========\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}ulem\PY{n+nb}{\PYZcb{}} \PY{c}{\PYZpc{}下劃線,加點}
+\PY{k}{\PYZbs{}normalem}
+
+\PY{k}{\PYZbs{}newcommand}\PY{k}{\PYZbs{}reduline}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}bgroup}\PY{k}{\PYZbs{}markoverwith}
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}textcolor}\PY{n+nb}{\PYZob{}}red\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}rule}\PY{n+na}{[\PYZhy{}0.8ex]}\PY{n+nb}{\PYZob{}}1em\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0.4pt\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{k}{\PYZbs{}ULon}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}emshape}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}color}\PY{n+nb}{\PYZob{}}red\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}==================插入圖片=======\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}graphicx\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}graphicspath}\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZob{}}figures/\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newenvironment}\PY{n+nb}{\PYZob{}}fig\PY{n+nb}{\PYZcb{}}[1]
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}[h]
+\PY{k}{\PYZbs{}includegraphics}\PY{n+na}{[width=\PYZbs{}linewidth ,totalheight=\PYZbs{}textheight , keepaspectratio]}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}caption}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newenvironment}\PY{n+nb}{\PYZob{}}scalefig\PY{n+nb}{\PYZcb{}}[2][0.4]
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}[h]
+\PY{k}{\PYZbs{}includegraphics}\PY{n+na}{[scale=\PYZsh{}1]}\PY{n+nb}{\PYZob{}}\PYZsh{}2\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}caption}\PY{n+nb}{\PYZob{}}\PYZsh{}2\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}==============插入表格========\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}booktabs\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}arraystretch}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}1.3\PY{n+nb}{\PYZcb{}}
+
+\PY{c}{\PYZpc{}============插入代码============\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}fancyvrb\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}DefineVerbatimEnvironment}\PY{c}{\PYZpc{}}
+\PY{n+nb}{\PYZob{}}verbatim\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}Verbatim\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+xleftmargin=6pt, fontsize=\PY{k}{\PYZbs{}footnotesize} , numbersep=2pt\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}newlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}makeatletter}
+\PY{k}{\PYZbs{}FV}@AddToHook\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}FV}@ListParameterHook\PY{n+nb}{\PYZcb{}}
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}topsep}=\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{k}{\PYZbs{}partopsep}=\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}makeatother}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbtopsep}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZhy{}15pt\PY{n+nb}{\PYZcb{}}   \PY{c}{\PYZpc{}代碼環境之上空白高度}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}fancyvrbpartopsep}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}  \PY{c}{\PYZpc{}段落之上空白高度}
+
+\PY{c}{\PYZpc{}=============插入注释=========\PYZpc{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}endnotes\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}hyperendnotes\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}makeenmark}\PY{n+nb}{\PYZob{}}（\PY{k}{\PYZbs{}theenmark}）\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}renewcommand}\PY{k}{\PYZbs{}notesname} \PY{n+nb}{\PYZob{}}注释和参考资料\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}newcommand}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}printendnotes}\PY{n+nb}{\PYZcb{}}
+    \PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}theendnotes}\PY{n+nb}{\PYZcb{}}
+
+
+
+
+
+
+\PY{k}{\PYZbs{}endinput}

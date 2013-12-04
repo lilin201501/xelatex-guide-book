@@ -1,0 +1,4 @@
+\PY{c}{\PYZsh{}!/bin/sh}
+\PY{n+nv}{filename}\PY{o}{=}\PY{n+nv}{\PYZdl{}GEDIT\PYZus{}CURRENT\PYZus{}DOCUMENT\PYZus{}NAME}
+\PY{n+nv}{shortname}\PY{o}{=}\PY{l+s+sb}{`}\PY{n+nb}{echo} \PY{n+nv}{\PYZdl{}filename} | sed \PY{l+s+s1}{\PYZsq{}s/\PYZbs{}(.*\PYZbs{})\PYZbs{}.tex\PYZdl{}/\PYZbs{}1/\PYZsq{}}\PY{l+s+sb}{`}
+xelatex \PYZhy{}interaction batchmode \PYZhy{}src \PY{n+nv}{\PYZdl{}filename}

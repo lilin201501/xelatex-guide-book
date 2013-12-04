@@ -1,0 +1,16 @@
+
+\definecolor{bgcolor-0}{HTML}{CCFFCC}
+
+\newsavebox{\tempbox}
+\newenvironment{fancycolorbox}[1][bgcolor-0]
+ {\noindent%%
+  \renewcommand{\tempcolor}{#1}
+  \begin{lrbox}{\tempbox}%
+  \begin{minipage}{\linewidth-10pt}
+   \setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}
+ {\ignorespacesafterend%
+  \end{minipage}%
+  \end{lrbox}%
+  \colorbox{\tempcolor}{\usebox{\tempbox}}}
+

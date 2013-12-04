@@ -1,0 +1,12 @@
+
+\makeatletter
+\def\reddotuline{\bgroup
+  \UL@setULdepth
+  \markoverwith{\begingroup
+     \advance\ULdepth0.168ex
+     \lower\ULdepth\hbox
+     {\kern.168em \textcolor{red}{.} \kern.168em}%
+     \endgroup}%
+  \ULon}
+\makeatother
+

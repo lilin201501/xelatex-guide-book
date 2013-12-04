@@ -1,0 +1,10 @@
+
+patch:
+    punctuator:
+        import_preset: symbols
+    recognizer:
+        import_preset: default
+        patterns:
+        reverse_lookup: "`[a-z]*'?$"
+        punct: "^/[a-z\\[\\]]*$"
+

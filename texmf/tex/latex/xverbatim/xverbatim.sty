@@ -30,16 +30,6 @@
 %                                -- James Brotchie <brotchie@gmail.com>
 %
 %modified by wanze   2013-11-21
-%1.all output file into pyexport file folder
-%2.output change to verbatiminput so it can change the line
-%3.three mode
-%mode0  not display sourcecode and note execute ,just not type the optional parameter
-%mode1 display sourcecode(1) and not execute
-%mode12  display sourcecode and use python2 execute(2)
-%mode124 display sourcecode and use python2 execute and show result(4)
-%mode13  display sourcecode and use python3 execute(3)
-%mode134 display sourcecode and use python3 execute and show result(4)
-%mode14 display sourcecode  and show result(4) please make use you already execute before
 
 
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
@@ -236,7 +226,7 @@
   \immediate\closeout\@codeout
 
 
-\ifnum \@modestatus = 0   
+\ifnum \@modestatus = 0
 \else   \ifnum \@modestatus = 1    \@showcode
 \else   \ifnum \@modestatus = 2    \@executecode \@writefeedback
 \else   \ifnum \@modestatus = 9    \@showresult
@@ -249,5 +239,11 @@
 
 
 }
+
+
+
+%Verbatim environment a little diy
+\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
 
 \endinput

@@ -1,13 +1,7 @@
 
-% Booktabs require to add \usepackage{booktabs} to your document preamble
-\begin{table}[h]
-\begin{tabular}{@{}ll@{}}
-\toprule
-参数       & 描述       \\ \midrule
-l        & 左对齐      \\
-c        & 居中       \\
-r        & 右对齐      \\
-p{width} & 一定宽度自动换行 \\ \bottomrule
-\end{tabular}
-\end{table}
+(defmacro with-gensyms (syms &rest body)
+  `(let ,(mapcar #'(lambda (s)
+     `(,s (gensym)))
+           syms)
+         ,@body))
 

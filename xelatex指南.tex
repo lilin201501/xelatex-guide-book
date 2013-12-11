@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
 %新加入的命令如下：addchtoc addsectoc reduline showendnotes  devideentby
-%新加入的环境如下：common-format  fig scalefig 
+%新加入的环境如下：common-format  fig
 
 \documentclass[11pt,oneside]{book}
 \newlength{\textpt}
@@ -11,9 +11,7 @@
 \usepackage{myconfig}
 \usepackage{mytitle}
 %
-\makeatletter
-\@addtoreset{@EndnoteCounter}{chapter}
-\makeatother
+
 
 
 
@@ -637,9 +635,9 @@ backmatter命令放在参考文献或者索引的前面。章节编号关掉，�
 \subsection{geometry宏包详细讨论}
 页面布局尺寸由geometry宏包指定，页面布局包含很多参量也就是geometry的可选项，请看下图\ref{fig:geometry选项1}：
 
-\begin{fig}{geometry选项1}   %简单的插入图片环境，后面的必填项既是图片标签的名字，也是图片caption。
+\begin{linefig}{geometry选项1}   %简单的插入图片环境，后面的必填项既是图片标签的名字，也是图片caption。
 	\label{fig:geometry选项1}
-\end{fig}
+\end{linefig}
 
 geometry提供的纸张类型很多，从a0paper一直到a6paper都有，还有b1paper到b6paper系列等等。纸张类型指定了后面的paperwidth和paperheight就都确定了。
 
@@ -647,9 +645,9 @@ geometry提供的纸张类型很多，从a0paper一直到a6paper都有，还有b
 
 再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文见的一段小空白headsep，bottom包含页脚高度footskip，所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}:
 
-\begin{scalefig}[0.6]{geometry选项2}  
+\begin{linefig}{geometry选项2}  
 	\label{fig:geometry选项2}
-\end{scalefig}
+\end{linefig}
 
 如果加上includehead=true选项，那么就和上图右边描述的类似，页眉部分计入height，类似的有includefoot=true,那么页脚部分也计入height。
 
@@ -1395,9 +1393,15 @@ part，chapter，section等这些都是counter量，通过setcounter命令直接
 默认是2，编号到subsection，你可以设置为3，subsubsection都有编号，或者设置为1，section有编号。我想设置为0的话section也没有编号了。
 
 \subsection{章节编号形式修改}
+\label{sec:章节编号形式修改}
 thepart，thechapter，thesection，thesubsection等你可以称他们为标签吧，也就是通常我们看到的编号那部分内容。通过对这些命令重定义就可以对他们进行修改了。\\
 \verb+\renewcommand{\thesection}{\arabic{section}.}+\\
 那么就会有1. 的形式。
+
+\subsection{章节标题上插入脚注}
+一般使用章节标题命令就是\verb+\section{text}+，前面还是可以加个可选项的，这个可选项的文本将作为目录中实际显示的文本，而后面则是实际执行的文本。比如：\\
+\verb+\subsection[text]{{\color{red}    text}\footnote{脚注}}+
+\subsection[text]{{\color{red}    text}\footnote{脚注}}
 
 
 \section{目录设计}
@@ -1414,6 +1418,7 @@ thepart，thechapter，thesection，thesubsection等你可以称他们为标签�
 tocdepth是一个counter量，默认是2，显示到subsection。这里为了是目录更加简洁，设置为了1即显示到section。0显示到chapter，-1显示part,-2就什么都没有了。
 
 \subsection{前言加入目录}
+\label{sec:前言加入目录}
 本文定义了两个命令为了做到这点：
 \begin{xverbatim}{tex}
 \newcommand{\addchtoc}[1]{  %目录中加入新章节
@@ -1440,6 +1445,10 @@ tocdepth是一个counter量，默认是2，显示到subsection。这里为了是
 我试图建立一个通用的格式环境横跨目录的时候会失效，只好将其分开。不过这样做带来一个好处，那就是你在目录前面设置一些格式只对目录起作用。比如：\\
 \verb+\addtolength{\parskip}{8pt}+\\
 这里对段落之间的间距增加了一点宽度，这个会影响一条条目录之间的行间距。
+
+
+\subsection{目录数字和标题间距调整}
+
 
 \subsection{titletoc宏包}
 titletoc宏包可以自己DIY目录格式，这里忽略。
@@ -1540,26 +1549,39 @@ def命令是\TeX 的原始定义命令，比如说：\\
 
 比如在这里我插入了一个参考文献的引用，是用的是cite命令。\verb+ \cite{lshort}+请参见文献\cite{lshort}
 
-还有一个pageref命令和ref命令差不多，文档上写法都类似，不同的是在文章上显示的是页码。简单起见用ref也够用了。
+还有一个pageref命令和ref命令差不多，文档上写法都类似，不同的是在文章上显示的是页码。
+
+\subsection{hlabel命令}
+\verb+\newcommand{\hlabel}[1]{\phantomsection \label{#1}}+
+本文定义了一个hlabel命令，就是在前面加上了hyperref宏包提供的精确定位命令phantomsecton\footnote{对这个命令具体作用还不太清楚。}。一般ref图片或者section或者subsection等文档片段都不需要这么做。就是比如有时一大段section里面有十几个段落，占了几页的篇幅，那时你如果直接用label命令建立链接，这几个小段的链接都会挂在section开头那里。如果使用这个hlabel命令那么就会精确定位到你想要的位置。
+
+\subsection{flabel命令}
+我在写endnotes宏包的时候新建了一个命令，还不清楚在外面能不能用。一般为了省心不怎么使用吧。flabel命令有两个必填参数，第一个参数是真实建立的label标签，第二个参数影响你后面用ref命令引用这个标签显示的文字。
+\begin{Verbatim}
+\DeclareRobustCommand*{\flabel}[2]
+{\phantomsection \def\@currentlabel{#2}
+\label{#1}}%label styel customization
+\end{Verbatim}
 
 
-\subsection{如何插入超链接}
+\subsection{hyperref宏包简介}
+\subsubsection{如何插入超链接}
 这里插入一个超链接到google，\href{https://www.google.com/}{google}\\
 首先要在前面加载hyperref库文件\\
 \textbackslash usepackage \{hyperref\}\\
 然后在你想要插入超链接的地方使用命令：\\
 \textbackslash href \{https://www.google.com/\} \{google\}\\
 
-\subsection{hyperref宏包}
+\subsubsection{链接字体颜色控制}
 \begin{xverbatim}{tex}
-%==============超链接===============%
 \usepackage[colorlinks=true,linkcolor=blue,ulrcolor=red,citecolor=blue]{hyperref} 
-%设置书签和目录链接等
-%for ebook 目录蓝色，对外链接红色，还可以有更多颜色设置   
- %linkcolor 影响目录颜色和脚注和内部引用，ulrcolor影响对外链接
-%，citecolor影响对文献的链接。anchorcolor 超链接源码
 \end{xverbatim}
+%\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
+设置书签和目录链接等
+for ebook 目录蓝色，对外链接红色，还可以有更多颜色设置    linkcolor 影响目录颜色和脚注和内部引用，ulrcolor影响对外链接，citecolor影响对文献的链接。anchorcolor 超链接源码
 hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己研究文档。
+
+
 
 \section{脚注}
 加入脚注还是很有用的\footnote{这就是一个脚注}。具体方法就是：\\
@@ -1678,30 +1700,84 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 \textbackslash includegraphics[width=\textbackslash textwidth, keepaspectratio]\{texstudio.png\}\\
 其中\textbackslash textwidth 表示让图片和文字一般宽，然后keepaspectratio参数意思是缩放的时候保持宽高比不变。\\
 
+\subsection{图片标题的修改}
+\label{sec:图片标题的修改}
+本文的图片环境标题通过输入caption\{text\}即实现如下形式的图片标题：图 1-1: text  。
+其中图这个字是通过重定义figurename命令来完成的。\\
+\verb+\renewcommand\figurename{图}+
+
+而后面本来默认的是1.1这样的形式，但是常见的都是1-1这样的形式，通过重定义thefigure命令即可达到目的。\\
+\verb+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}+
+
+\subsection{设置图片寻找文件夹}
+\verb+\graphicspath{{figures/}}+
+
+
+\subsection{图片格式的讨论}
+\subsubsection{支持的图片文件格式}
+使用xelatex和graphicx宏包，目前我测试支持的图片格式有：eps，png，jpg，pdf。
+
+\subsubsection{搜索图片后缀名控制}
+经测试上面的eps，png，jpg，pdf格式的图片后缀名默认都支持，也就是只要写上前面的文件名即可。
+
+
+\subsubsection{eps图片格式}
+如果你使用矢量绘图软件画的图片，推荐用eps或者pdf格式。下面给出一个eps图片，是pyx宏包画出来的，然后用inkscape软件用300dpi另存为pdf格式，并用inkscape软件用300dpi另存为png格式。
+\begin{linefig}{line.eps}
+\label{fig:line.eps}
+\end{linefig}
+\begin{linefig}{line.pdf}
+\label{fig:line.pdf}
+\end{linefig}
+\begin{linefig}{line.png}
+\label{fig:line.png}
+\end{linefig}
+其中pdf和png格式文件要比原来的eps格式（300字节）文件大600字节，可以看出来如果选择png格式图片将会变得很模糊，而选择pdf虽然图片一样清晰但是图片文件更大了。
+
+\subsubsection{svg图片格式}
+有时在网上另存为出来的图片格式是svg图片格式，是一种什么可缩放矢量图形。下面是一个小测试，原svg图片是一个很小的文字，然后放大。其中pdf和png都是inkscape软件用300dpi导出的，可以看出pdf格式明显更胜一筹。
+\begin{multicols}{2}
+\begin{linefig}{svg图片测试.pdf}
+\label{fig:svg图片测试.pdf}
+\end{linefig}
+\begin{linefig}{svg图片测试.png}
+\label{fig:svg图片测试.png}
+\end{linefig}
+\end{multicols}
+
+\subsubsection{jpg图片格式}
+他们说相片最好用jpg格式，一般相片什么的都较大，所以也不存在缩放问题。
+
+\subsection{图片格式选择总结}
+结论是如果图片本来很大不存在缩放问题，那么能够使用的就直接使用，其他不支持的图片格式考虑生成png图片，记得dpi至少设到300以上，一般到1200dpi是绝对够用了。如果源图片很小，需要缩放，那么eps和pdf文件格式不用做进一步处理，其他文件格式优先考虑pdf文件格式，导出的时候我们看到300dpi已经绰绰有余了。
+
+\subsection{导入pdf页面}
+这里要讲的是使用pdfpages宏包来实现多个pdf页面的导入。
 
 \subsection{本文插入图片的一些DIY}
-\begin{xverbatim}{tex}
-\usepackage{graphicx}
-\graphicspath{{figures/}}
-\newenvironment{fig}[1]
-	{\begin{figure}[h]
-	\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
-	\caption{#1}
-	\end{figure}}
-	{}	
-\newenvironment{scalefig}[2][0.4]
-	{\begin{figure}[h]
-	\includegraphics[scale=#1]{#2}
-	\caption{#2}
-	\end{figure}}
-	{}	
-\end{xverbatim}
-本文新建了两个新的图片环境命令，第一个fig环境适合那些较大的图片，让其完全填充linewidth宽度，然后保持缩放比，然后通过第一个参数结束图片文件名，这个参数传递给caption命令作为输出标题。这样我要插入一个图片代码如下：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
+\newenvironment{fig}[2][1]
+        {\begin{figure}[H]
+        \centering
+        \includegraphics[scale=#1 , keepaspectratio]{#2}
+        \caption{#2}}
+        {\end{figure}}
+\newenvironment{linefig}[2][1]
+        {\begin{figure}[H]
+        \centering
+        \includegraphics[width=#1\linewidth ,totalheight=\textheight , keepaspectratio]{#2}
+        \caption{#2}}
+        {\end{figure}}
+\end{Verbatim}
+
+本文新建了两个新的图片环境命令，第一个fig环境默认使用scale=1，也就是那些较小的图片的居中对齐效果较好，如果图片较大可以考虑linefig环境，这个环境会让图片宽度对齐到linewidth（之所以选择linewidth是因为在多栏环境下也会自动适应到那个栏的宽度。）。
+
+然后通过第一个参数结束图片文件名，这个参数传递给caption命令作为输出标题。这样我要插入一个图片代码如下：
+\begin{Verbatim}
 \begin{fig}{geometry选项1}   
 	\label{fig:geometry选项1}
 \end{fig}
-\end{xverbatim}
+\end{Verbatim}
 这样插入图片代码就很简洁了。然后第二个插入图片环境命令主要针对那些稍微小点的图片，给它设计了一个可选参数\footnote{记住可选参数在参数中是排前面的}缩放比。这样方便调整图片大小。
 
 \section{插入表格}
@@ -2123,6 +2199,54 @@ well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修�
 
 
 \chapter{\LaTeX 高级篇}
+
+\section{计数器}
+计数器（counter）之前也接触过一些了，现在基于wikibook和\href{http://texblog.org/2007/07/25/counters-in-latex/}{这篇博文}做一些整理工作。
+
+
+\subsection{latex默认的计数器}
+\begin{itemize}
+\item \textbf{part chapter section subsection subsubsection paragraph subparagraph} 这些计数器我们在前面的章节编号形式修改那一小节中有所接触，\ref{sec:章节编号形式修改}。
+\item \textbf{equation figure table} 这三个是浮动体环境的计数器，其中figure我们在前面的图片标题的修改那一小节有所接触，\ref{sec:图片标题的修改}。
+\item \textbf{page footnote mpfootnote} page看得出来是页面的计数器，还没怎么接触。footnote是脚注的计数器，这个在DIY脚注的时候会接触到，mpfootnote是minipage下的脚注的计数器，这个知识点参看的\href{http://tex.stackexchange.com/questions/18499/how-to-change-symbol-for-footnote-in-minipage}{这个网站}。
+\end{itemize}
+
+\subsection{使用计数器}
+计数器并不可以直接使用，需要使用以下命令来获得某个特殊形式的值。
+\begin{description}
+\item[value] 将计数器转化为数值方便后面的计算，不能作为字符直接显示。
+\item[arabic] 将计数器转化为1 2 3...的形式，可以直接显示。
+\item[alph] 将计数器转化为a b c...的形式，可以直接显示。
+\item[Alph] 将计数器转化为A B C...的形式，可以直接显示。
+\item[roman] 将计数器转化为ⅰ ⅱ ⅲ... 的形式，可以直接显示。
+\item[Roman] 将计数器转化为Ⅰ Ⅱ Ⅲ...的形式，可以直接显示。
+\item[fnsymbol] 将计数器转化为一系列的特殊符号。
+\end{description}
+
+\subsection{定义自己的计数器}
+用newcounter命令来定义自己新的计数器。\\
+\verb+\newcounter{countername}+
+
+\subsection{修改计数器的值}
+系统默认的计数器都是默认设置初始值为0，如果你需要使用这个计数器，首先加一，然后使用这个计数器。
+\subsubsection{计数器设值}
+直接将计数器设为某个值用setcounter命令。\\
+\verb+\setcounter{countername}{number}+
+\subsubsection{计数器加一}
+将计数器数值加一使用stepcounter命令。\\
+\verb+\stepcounter{countername}+
+
+\subsubsection{计数器加多少}
+将计数器加上一个数值使用addtocounter命令。\\
+\verb+\addtocounter{countername}{number}+
+
+\subsection{计数器和其他计数器绑定}
+在使用newcounter命令定义新的计数器的时候可以后面跟个可选项，可选项里填著另外一个计数器的名字，每当这个计数器加一的时候你定义的新的计数器就会归为零。
+
+比如.....................................{\color{red}    尾注}。
+
+它的实现机制应该是使用了这个\verb+\@addtoreset{counter}{chapter}+命令。
+
 \section{自建环境或修改原环境}
 \label{sec:自建环境}
 
@@ -2433,336 +2557,7 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 
 特别提醒在Ubuntu下右键新建之后，是未命名 然后空格 然后tex，这种文件名XeTeX处理似乎不很好。建议改成没有空格的文件名。
 
-\section{tex.tex代码}
-\begin{xverbatim}{tex}
-% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
-%新加入的命令如下：addchtoc addsectoc reduline printendnotes 
-%新加入的环境如下：common-format  fig scalefig 
 
-\documentclass[11pt,oneside]{book}
-\newlength{\textpt}
-\setlength{\textpt}{11pt} 
-\newif\ifphone
-\phonefalse
-
-\usepackage{myconfig}
-\usepackage{mytitle}
-
-\begin{document}
-\frontmatter   
-
-\titlea{书籍}
-\titleb{使用\LaTeX排版}
-\titlec{一种良好的风格}
-\author{作者}
-\authorinfo{作者：}
-\editor{编者}
-\email{a358003542@gmail.com}
-\editorinfo{编者：}
-\version{1.0}
-\mytitle
-
-\addchtoc{开头说的话}
-\chapter*{开头说的话}
-\begin{common-format}
-开头说的话
-
-%这里空一行。
-
-\end{common-format}
-
-
-\addchtoc{目錄}
-\setcounter{tocdepth}{1}    
-\tableofcontents
-
-\begin{common-format}
-\mainmatter 
-
-\chapter{章节开始}
-
-开始写作。。。
-
-
-
-
-%这里空一行
-
-\end{common-format}  
-\end{document}
-
-
-
-
-\end{xverbatim}
-
-
-\section{myconfig.sty}
-\begin{xverbatim}{tex}
-% 一种书籍的风格，对中文处理较好。
-% 
-% by wanze
-% LPPL LaTeX Public Project License
-%  
-%
-
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{myconfig}
-
-%\def\hi{Hello, this is my own package}
-%\let\myDate\date
-%\newcommand\GoodBye[1][\bfseries]{{#1Good Bye}}
-
-\RequirePackage{calc,float,multicol,moresize} 
-\RequirePackage[doublespacing]{setspace}
-\newcommand{\addchtoc}[1]{ 
-	\cleardoublepage   
-	\phantomsection    
-	\addcontentsline{toc}{chapter}{#1}}
-	
-\newcommand{\addsectoc}[1]{ 
-	\phantomsection    
-	\addcontentsline{toc}{section}{#1}}
-
-\newenvironment{common-format}{ %
-	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  
-    {}
-
-
-\ifphone
-%for phone
-\RequirePackage[
-  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
-  paperheight=190mm,%太長了縮短點，
-  bindingoffset=0mm,%裝訂線
-  top=15mm,  %上邊距 包括頁眉
-  bottom=15mm,%下邊距 包括頁腳
-  left=5mm,  %左邊距or inner
-  right=5mm,  %右邊距or  outer
-  headheight=10mm,%頁眉
-  footskip=10mm,%頁腳
-  includemp=true,% 旁註寬度計入width
-  marginparsep=0mm, %沒有旁註
-  marginparwidth=0mm,  %沒有旁註
-  ]{geometry}
-\else
-
-\RequirePackage[a4paper, %a4paper size 297:210 mm
-  bindingoffset=0mm,%裝訂線
-  top=45mm,  %上邊距 包括頁眉
-  bottom=40mm,%下邊距 包括頁腳
-  left=35mm,  %左邊距or inner
-  right=40mm,  %右邊距or  outer
-  headheight=25mm,%頁眉
-  footskip=25mm,%頁腳
- includemp=true,% 旁註寬度計入width
- marginparsep=0mm, %旁註與正文間距
-marginparwidth=0mm,  %旁註寬度
-  ]{geometry}
-\fi
-
-\RequirePackage[table]{xcolor}  
-\definecolor{bgcolor-0}{HTML}{CCFFCC} 
-
-\newsavebox{\tempbox}
-\newenvironment{fancycolorbox}[1][bgcolor-0]
- {\noindent%%
-  \renewcommand{\tempcolor}{#1}
-  \begin{lrbox}{\tempbox}%
-  \begin{minipage}{\linewidth-10pt}
-  	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  	
- {\ignorespacesafterend%
-  \end{minipage}%
-  \end{lrbox}%
-  \colorbox{\tempcolor}{\usebox{\tempbox}}}  
-
-
-%================字體================%
-\RequirePackage{xltxtra,fontspec,xunicode} %必備三件套
-\RequirePackage[CJKnumber=true]{xeCJK} %中文環境宏
-\xeCJKsetup{PunctStyle=plain}
-\defaultCJKfontfeatures{Scale=1.2}   %放大全局CJK字體。中文字應該稍微高於英文字
-\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
-    {Adobe 宋体 Std}%影響rmfamily字體
-\setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
-\setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
- %設置英文字體
-\setmainfont[Mapping=tex-text]{DejaVu Serif} 
-\setsansfont[Mapping=tex-text]{DejaVu Sans}
-\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
-
-%=============新的字符===========%
-\newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
-\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
-\RequirePackage{newunicodechar}
-\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
-\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
-\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}} 
-\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
-\newunicodechar{①}{{\libertine{①}}}
-\newunicodechar{②}{{\libertine{②}}}
-\newunicodechar{③}{{\libertine{③}}}
-\newunicodechar{④}{{\libertine{④}}}
-\newunicodechar{⑤}{{\libertine{⑤}}}
-\newunicodechar{}{{\ubuntu{}}}
-
-%%===============中文化=========%
-\renewcommand\contentsname{目~录}
-\renewcommand\listfigurename{插图目录}
-\renewcommand\listtablename{表格目录}
-\renewcommand\bibname{参~考~文~献}
-\renewcommand\indexname{索~引}
-\renewcommand\figurename{图}
-\renewcommand\tablename{表}
-\renewcommand\partname{部分}
-\renewcommand\appendixname{附录}
-\renewcommand\today{\number\year年\number\month月\number\day日}
-
-\RequirePackage{fancyhdr}   %頁眉頁腳
-\pagestyle{fancy}
-\fancypagestyle{plain}{
-    \fancyhf{}
-    \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0pt}
-    \renewcommand{\chaptermark}[1]{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}} 
-     \renewcommand{\sectionmark}[1]{\markright{第\CJKnumber{\arabic{section}}節~~#1}{}} 
-%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
-    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
-    \fancyhf[FR]{\thepage}
-    \fancyhfoffset[R]{\marginparwidth+\marginparsep}
-    }
-\pagestyle{plain} 
-
-%=========章節標題設計=========%
-\RequirePackage{titlesec}
-%修改part
-\titleformat{\part}{\huge\sffamily}{}{0em}{} 
-%修改chapter
-\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{} 
-%修改section
-\titleformat{\section}{\Large\sffamily}{}{0em}{}
-%修改subsection
-\titleformat{\subsection}{\large\sffamily}{}{0em}{}
-%修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
-
-
-%================目录===============%
-\RequirePackage{titletoc}
-
-%==============超鏈接===============%
-\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
-
-%=================文字強調=========%
-\RequirePackage{ulem} %下劃線,加點
-\normalem
-
-\newcommand\reduline{\bgroup\markoverwith
-{\textcolor{red}{\rule[-0.8ex]{1em}{0.4pt}}}\ULon}
-\renewcommand\emshape{\color{red}}
-
-%==================插入圖片=======%
-\RequirePackage{graphicx}
-\graphicspath{{figures/}}
-\newenvironment{fig}[1]
-	{\begin{figure}[h]
-	\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
-	\caption{#1}
-	\end{figure}}
-	{}	
-\newenvironment{scalefig}[2][0.4]
-	{\begin{figure}[h]
-	\includegraphics[scale=#1]{#2}
-	\caption{#2}
-	\end{figure}}
-	{}	
-
-%==============插入表格========%
-\RequirePackage{booktabs}
-\renewcommand{\arraystretch}{1.3}
-
-%============插入代码============%
-\RequirePackage{fancyvrb} 
-\DefineVerbatimEnvironment%
-	{verbatim}{Verbatim}
-	{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-	xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}  	
-	
-\newlength{\fancyvrbtopsep}
-\newlength{\fancyvrbpartopsep}
-\makeatletter
-	\FV@AddToHook{\FV@ListParameterHook}
-	{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
-\makeatother
-\setlength{\fancyvrbtopsep}{-15pt}   %代碼環境之上空白高度
-\setlength{\fancyvrbpartopsep}{0pt}  %段落之上空白高度
-
-%=============插入注释=========%
-\RequirePackage{endnotes}
-\RequirePackage{hyperendnotes}
-\renewcommand\makeenmark{（\theenmark）}
-\renewcommand\notesname {注释和参考资料}
-\newcommand{\printendnotes}
-    {\theendnotes}
-
-
-
-
-
-
-\endinput
-
-\end{xverbatim}
-
-
-\section{mytitle.sty}
-\begin{xverbatim}{tex}
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mytitle}
-
-
-\def\titlea#1{\gdef\@titlea{#1}}
-\def\@titlea{\@latex@warning@no@line{No \noexpand\titlea given}}
-\def\titleb#1{\gdef\@titleb{#1}}
-\def\@titleb{\@latex@warning@no@line{No \noexpand\titleb given}}
-\def\titlec#1{\gdef\@titlec{#1}}
-\def\@titlec{\@latex@warning@no@line{No \noexpand\titlec given}}
-
-\def\authorinfo#1{\gdef\@authorinfo{#1}}
-\def\@authorinfo{\@latex@warning@no@line{No \noexpand\authorinfo given}}
-\def\email#1{\gdef\@email{#1}}
-\def\@email{\@latex@warning@no@line{No \noexpand\email given}}
-\def\editorinfo#1{\gdef\@editorinfo{#1邮箱：\href{mailto: \@email}{\@email}。}}
-\def\@editorinfo{\@latex@warning@no@line{No \noexpand\editorinfo given}}
-
-\def\editor#1{\gdef\@editor{#1}}
-\def\@editor{\@latex@warning@no@line{No \noexpand\editor given}}
-\def\version#1{\gdef\@version{#1}}
-\def\@version{\@latex@warning@no@line{No \noexpand\version given}}
-
-
-%默认的title样式  继续添加的有mytitlea,mytitleb，mytitlec。。。
-\newcommand{\mytitle}{
-	\begin{titlepage}
-	\begin{flushleft}	
-	 \vspace*{\stretch{2}}
-{\HUGE\bfseries \@titlea}\\[\stretch{1}]
-{\Huge\bfseries \@titleb}\\[\stretch{1}]
-{\LARGE\itshape \@titlec}\\[\stretch{2}]
-{\Large \@author\footnote{\@authorinfo}}\quad\rule{0.8pt}{3ex}\quad
-{\large \@editor\footnote{\@editorinfo}}\\[\stretch{2}]
-\vfill
-{\ttfamily 版本: \@version}
-\end{flushleft}
-\end{titlepage}
-}
-
-
-\endinput
-
-\end{xverbatim}
 
 \chapter{源码和参考资料打包下载地址}
 

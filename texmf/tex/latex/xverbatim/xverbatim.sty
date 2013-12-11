@@ -30,6 +30,16 @@
 %                                -- James Brotchie <brotchie@gmail.com>
 %
 %modified by wanze   2013-11-21
+%1.all output file into pyexport file folder
+%2.output change to verbatiminput so it can change the line
+%3.three mode
+%mode0  not display sourcecode and note execute ,just not type the optional parameter
+%mode1 display sourcecode(1) and not execute
+%mode12  display sourcecode and use python2 execute(2)
+%mode124 display sourcecode and use python2 execute and show result(4)
+%mode13  display sourcecode and use python3 execute(3)
+%mode134 display sourcecode and use python3 execute and show result(4)
+%mode14 display sourcecode  and show result(4) please make use you already execute before
 
 
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
@@ -39,6 +49,9 @@
 \RequirePackage{verbatim}
 \RequirePackage{color}
 
+%Verbatim environment a little diy
+\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
 
 %%%%%%%%%%%%%%%%%%%%%for pygmentize
 \def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
@@ -153,14 +166,12 @@
 \ifdefstring{\@codemode}{tex}
 {
  \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@codemode}
- \immediate\VerbatimInput[numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt,commandchars=\\\{\}]{\@outname.output.tex}
+ \immediate\input{\@outname.output.tex}
 }
 {
 \immediate\write18{pygmentize   -o \@outname.tex \@outname.\@codemode}
 %use fancyvrb VerbatimInput control the out
-\immediate\VerbatimInput[numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt,commandchars=\\\{\}]{\@outname.tex}
+\immediate\input{\@outname.tex}
 }
 }
 
@@ -185,7 +196,7 @@
 
 \DeclareRobustCommand*{\@executecode}{%
 \ifdefstring{\@codemode}{py}
-{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python3 > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {
 \ifdefstring{\@codemode}{c}
 { \immediate\write18{  gcc -o \@outname.\@codemode.cexe \@outname.\@codemode && ./\@outname.\@codemode.cexe > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
@@ -200,11 +211,20 @@
 { \immediate\write18{  xelatex -synctex=1 -interaction=nonstopmode -output-directory=codeexport/\@codemode/\thechapter/ \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {\errmessage{sorry this codemode doesnot executeable recently}
 }}}}}}
+%%for python3
+\DeclareRobustCommand*{\@executecodeb}{%
+\ifdefstring{\@codemode}{py}
+{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python3 > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+{\errmessage{sorry this codemode doesnot executeable recently}
+}}
 
 
 \DeclareRobustCommand*{\@showresult}{%
-\immediate\VerbatimInput[numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt]{\@outname.\@codemode.out}}
+\begingroup
+\obeylines
+\parindent=0pt
+\immediate\input{\@outname.\@codemode.out}
+\endgroup}
 
 
 %environment start
@@ -229,21 +249,19 @@
 \ifnum \@modestatus = 0
 \else   \ifnum \@modestatus = 1    \@showcode
 \else   \ifnum \@modestatus = 2    \@executecode \@writefeedback
+\else   \ifnum \@modestatus = 3    \@executecodeb \@writefeedback
 \else   \ifnum \@modestatus = 9    \@showresult
 \else   \ifnum \@modestatus = 12   \@showcode \@executecode \@writefeedback
 \else   \ifnum \@modestatus = 129    \@showcode \@executecode \@showresult \@writefeedback
+\else   \ifnum \@modestatus = 13   \@showcode \@executecodeb \@writefeedback
+\else   \ifnum \@modestatus = 139    \@showcode \@executecodeb \@writefeedback \@showresult
 \else   \ifnum \@modestatus = 19   \@showcode  \@showresult
 \else   \ifnum \@modestatus = 29   \@executecode  \@showresult \@writefeedback
-\else          \errmessage{you typed wrong optional parameter,the choice is  0 1 2 9 12 129 19 29 }
-\fi\fi\fi \fi \fi\fi\fi\fi
+\else   \ifnum \@modestatus = 39   \@executecodeb  \@writefeedback    \@showresult
+\else          \errmessage{you typed wrong optional parameter,the choice is  0 1 2 9 12 129 19 29 (3 13 139 目前只是为了python3的支持，为了简单以后考虑取消掉。) }
+\fi\fi\fi \fi \fi\fi\fi\fi\fi\fi\fi\fi
 
 
 }
-
-
-
-%Verbatim environment a little diy
-\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
 
 \endinput

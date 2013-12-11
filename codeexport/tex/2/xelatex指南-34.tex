@@ -1,7 +1,9 @@
 
-(defmacro with-gensyms (syms &rest body)
-  `(let ,(mapcar #'(lambda (s)
-     `(,s (gensym)))
-           syms)
-         ,@body))
+%=============插入注释=========%
+\RequirePackage{endnotes}
+\RequirePackage{hyperendnotes}
+\renewcommand\makeenmark{（\theenmark）}
+\renewcommand\notesname {注释和参考资料}
+\newcommand{\printendnotes}
+    {\theendnotes}
 

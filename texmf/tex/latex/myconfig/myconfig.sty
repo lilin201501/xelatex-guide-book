@@ -24,11 +24,6 @@
         \cleardoublepage
         \phantomsection
         \addcontentsline{toc}{chapter}{#1}}
-        
-\newcommand{\addparttoc}[1]{
-        \cleardoublepage
-        \phantomsection
-        \addcontentsline{toc}{part}{#1}}   
 
 \newcommand{\addsectoc}[1]{
         \phantomsection
@@ -94,18 +89,30 @@ marginparwidth=0mm,  %旁註寬度
 
 
 %================字體================%
-\RequirePackage{xltxtra,fontspec,xunicode} %必備三件套
-\RequirePackage[CJKnumber=true]{xeCJK} %中文環境宏
+%设置数学字体
+\RequirePackage{amssymb,amsmath}
+\RequirePackage{mathspec}
+%Digits Latin this is option i am not sure what is use for , just want enlarge the math font and make it more beautiful.
+\setmathsfont(Digits,Latin,Greek)[Scale=1.2,ItalicFont=Latin Modern Mono Slanted]{Latin Modern Math}%maybe enlarge the CJK font is not a good idea. but
+%i really think the CJK font  is bigger than the normal english font is more comfort
+%so now here is a rule , if the number or  the symbol is more important then please use it in the math mode
+%Latin Modern Math not have the italic shape
+
+ %設置英文字體
+\setmainfont[Mapping=tex-text]{DejaVu Serif}
+\setsansfont[Mapping=tex-text]{DejaVu Sans}
+\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+%中文環境
+\RequirePackage[CJKnumber=true]{xeCJK}
 \xeCJKsetup{PunctStyle=plain}
 \defaultCJKfontfeatures{Scale=1.2}   %放大全局CJK字體。中文字應該稍微高於英文字
 \setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
     {Adobe 宋体 Std}%影響rmfamily字體
 \setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
 \setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
- %設置英文字體
-\setmainfont[Mapping=tex-text]{DejaVu Serif}
-\setsansfont[Mapping=tex-text]{DejaVu Sans}
-\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+\RequirePackage{xltxtra} %put here to avoid some package option error. maybe this package is useless ?
 
 %=============新的字符===========%
 \newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
@@ -180,6 +187,10 @@ marginparwidth=0mm,  %旁註寬度
 \RequirePackage{ulem} %下劃線,加點
 \normalem
 
+\DeclareRobustCommand*{\uwave}%因为中文字放大，波浪线稍微下移点。
+{\bgroup \markoverwith{\lower5\p@\hbox{\sixly \char58}}\ULon}
+
+
 \newcommand\reduline{\bgroup\markoverwith
     {\textcolor{red}{\rule[-0.8ex]{1em}{0.4pt}}}\ULon}
 \renewcommand\emshape{\color{red}}
@@ -187,17 +198,19 @@ marginparwidth=0mm,  %旁註寬度
 %==================插入圖片=======%
 \RequirePackage{graphicx}
 \graphicspath{{figures/}}
+%change the caption style a little like 1-1
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 
-\newenvironment{fig}[1]
+\newenvironment{fig}[2][1]
         {\begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
-        \caption{#1}}
+        \includegraphics[scale=#1 , keepaspectratio]{#2}
+        \caption{#2}}
         {\end{figure}}
-\newenvironment{scalefig}[2][0.4]
+\newenvironment{linefig}[2][1]
         {\begin{figure}[H]
         \centering
-        \includegraphics[scale=#1]{#2}
+        \includegraphics[width=#1\linewidth ,totalheight=\textheight , keepaspectratio]{#2}
         \caption{#2}}
         {\end{figure}}
 

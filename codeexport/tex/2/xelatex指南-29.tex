@@ -1,16 +1,16 @@
 
-\usepackage{graphicx}
-\graphicspath{{figures/}}
-\newenvironment{fig}[1]
-{\begin{figure}[h]
-\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{#1}
-\caption{#1}
-\end{figure}}
-{}
-\newenvironment{scalefig}[2][0.4]
-{\begin{figure}[h]
-\includegraphics[scale=#1]{#2}
-\caption{#2}
-\end{figure}}
-{}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+l & l表示该列格子左对齐 \\
+\hline
+c & c表示该列格子居中 \\
+\hline
+r & r表示该列格子右对齐 \\
+\hline
+\end{tabular}
+\caption{tabular参数}
+\label{tab:tabular参数}
+\end{table}
 

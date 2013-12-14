@@ -1,26 +1,23 @@
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}[h]
-
-\PY{k}{\PYZbs{}label}\PY{n+nb}{\PYZob{}}fig:四栏图片\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}multicols\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}4\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}includegraphics}[width=\PY{k}{\PYZbs{}linewidth} ,totalheight=\PY{k}{\PYZbs{}textheight} ,
-        keepaspectratio]\PY{n+nb}{\PYZob{}}temp.jpg\PY{n+nb}{\PYZcb{}}
-i want  some test to show there is a text and not to column break.\PY{k}{\PYZbs{}\PYZbs{}}
-\PY{k}{\PYZbs{}centerline}\PY{n+nb}{\PYZob{}}test\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}columnbreak}
-\PY{k}{\PYZbs{}includegraphics}[width=\PY{k}{\PYZbs{}linewidth} ,totalheight=\PY{k}{\PYZbs{}textheight} ,
-         keepaspectratio]\PY{n+nb}{\PYZob{}}temp.jpg\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}centerline}\PY{n+nb}{\PYZob{}}test\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}columnbreak}
-\PY{k}{\PYZbs{}includegraphics}[width=\PY{k}{\PYZbs{}linewidth} ,totalheight=\PY{k}{\PYZbs{}textheight} ,
-         keepaspectratio]\PY{n+nb}{\PYZob{}}temp.jpg\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}centerline}\PY{n+nb}{\PYZob{}}test\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}columnbreak}
-\PY{k}{\PYZbs{}includegraphics}[width=\PY{k}{\PYZbs{}linewidth} ,totalheight=\PY{k}{\PYZbs{}textheight} ,
-         keepaspectratio]\PY{n+nb}{\PYZob{}}temp.jpg\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}centerline}\PY{n+nb}{\PYZob{}}test\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}documentclass}\PY{n+na}{[landscape]}\PY{n+nb}{\PYZob{}}article\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}geometry\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}fontspec\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setmainfont}\PY{n+nb}{\PYZob{}}DejaVu Sans\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}multicol\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}columnseprule}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0.4pt\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}multido\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parindent}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}document\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}LARGE\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}multicols\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}5\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}multido}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}=0+1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZdq{}196607\PYZdq{}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{c}{\PYZpc{} from U+0000 to U+2FFFF}
+\PY{c}{\PYZpc{}后面的还会继续扩展，目前一般还没使用。}
+  \PY{k}{\PYZbs{}iffontchar}\PY{k}{\PYZbs{}font}\PY{k}{\PYZbs{}i}
+    \PY{k}{\PYZbs{}makebox}\PY{n+na}{[4em]}\PY{n+na}{[l]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+    \PY{k}{\PYZbs{}symbol}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}\PY{n+nb}{\PYZcb{}}\PY{k}{\PYZbs{}endgraf}
+  \PY{k}{\PYZbs{}fi}
+\PY{n+nb}{\PYZcb{}}
 \PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}multicols\PY{n+nb}{\PYZcb{}}
-\PY{k}{\PYZbs{}caption}\PY{n+nb}{\PYZob{}}denosie fig\PY{n+nb}{\PYZcb{}}
-
-\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}figure\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}LARGE\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}document\PY{n+nb}{\PYZcb{}}
 \end{Verbatim}

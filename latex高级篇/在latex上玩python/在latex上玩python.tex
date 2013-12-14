@@ -89,8 +89,8 @@ plt.plot(t,t, 'r--' , t, t**2 , 'bs' , t ,t**3 , 'g^')
 plt.savefig('figures/第三个例子.png')
 \end{xverbatim}
 
-\begin{fig}{第三个例子}
-\end{fig}
+\begin{linefig}{第三个例子}
+\end{linefig}
 
 
 \chapter{sympy宏包}
@@ -100,8 +100,7 @@ from sympy import *
 x = symbols('x')
 a = Integral(x, (x, 1, 2))
 s = Eq(a, a.doit())
-print('$'+ latex(s) + '$')
-print('$'+ latex(s) + '$')
+print('$$'+ latex(s) + '$$')
 \end{xverbatim}
 test
 

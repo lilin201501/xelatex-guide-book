@@ -1,23 +1,33 @@
 
-\documentclass[landscape]{article}
-\usepackage{geometry}
-\usepackage{fontspec}
-\setmainfont{DejaVu Sans}
-\usepackage{multicol}
-\setlength{\columnseprule}{0.4pt}
-\usepackage{multido}
-\setlength{\parindent}{0pt}
-\begin{document}
-\begin{LARGE}
-\begin{multicols}{5}
-\multido{\i=0+1}{"196607"}{% from U+0000 to U+2FFFF
-%后面的还会继续扩展，目前一般还没使用。
-  \iffontchar\font\i
-    \makebox[4em][l]{\i}%
-    \symbol{\i}\endgraf
-  \fi
-}
-\end{multicols}
-\end{LARGE}
-\end{document}
+\ifphone
+%for phone
+\RequirePackage[
+  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
+  paperheight=190mm,%太長了縮短點，
+  bindingoffset=0mm,%裝訂線
+  top=15mm,  %上邊距 包括頁眉
+  bottom=15mm,%下邊距 包括頁腳
+  left=5mm,  %左邊距or inner
+  right=5mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  footskip=10mm,%頁腳
+  includemp=true,% 旁註寬度計入width
+  marginparsep=0mm, %沒有旁註
+  marginparwidth=0mm,  %沒有旁註
+  ]{geometry}
+\else
+
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=45mm,  %上邊距 包括頁眉
+  bottom=40mm,%下邊距 包括頁腳
+  left=35mm,  %左邊距or inner
+  right=40mm,  %右邊距or  outer
+  headheight=25mm,%頁眉
+  footskip=25mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm,  %旁註寬度
+  ]{geometry}
+\fi
 

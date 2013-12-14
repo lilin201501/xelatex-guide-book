@@ -1,5 +1,26 @@
 
-\begin{abstract}
-这是一段摘要文字。
-\end{abstract}
+\begin{figure}[h]
+
+\label{fig:四栏图片}
+\begin{multicols}{4}
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+        keepaspectratio]{temp.jpg}
+i want  some test to show there is a text and not to column break.\\
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\columnbreak
+\includegraphics[width=\linewidth ,totalheight=\textheight ,
+         keepaspectratio]{temp.jpg}
+\centerline{test}
+\end{multicols}
+\caption{denosie fig}
+
+\end{figure}
 

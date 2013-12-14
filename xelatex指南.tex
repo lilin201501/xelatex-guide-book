@@ -25,7 +25,7 @@
 \editor{万泽}
 \email{a358003542@gmail.com}
 \editorinfo{编者：万泽，}
-\version{1.13}
+\version{1.18}
 \titleLB
 
 \addchtoc{前言}
@@ -562,7 +562,7 @@ texdoc xeCJK
 \label{sec:documentclass}
 文档刚开始是preamble区域，放着文档的一些配置，从begin\{document\}开始进入正文区，出了end\{document\}这句话之后后面写的什么程序都不管了。document是一个环境，后面我们会接触很多的环境的。
 
-documentclass命令的必选参量有article，report，book，slides，beamer等，一般了解这几个就够用了。他们之间有很多细微的差别，这个后面慢慢了解。
+documentclass命令的必选参量有article，report，book，\linebreak slides，beamer等，一般了解这几个就够用了。他们之间有很多细微的差别，这个后面慢慢了解。
 
 分节命令带星号表示该分节不进入目录，也不编号。
 
@@ -573,7 +573,7 @@ documentclass命令的必选参量有article，report，book，slides，beamer�
 \textbackslash subsection \{subsectionname\}\\
 \textbackslash subsubsection \{subsubsectionname\}\\
 \textbackslash paragraph \{paragraphname\}\\
-\textbackslash subparagraph \{subparagraphname\}\\
+\textbackslash subparagraph \{subparagraphname\}
 
 一般paragraph和subparagraph分节不怎么使用，就在文档中一行一行空出来即可。还有subsubsection这个分节也不常使用，因为section之下有subsection已经很好地满足了思想的分级结构，再加上一个subsubsection只会让人们更加困惑罢了。
 \endnote{paragraph命令可以构建出类似description环境的效果，不同的是后面不缩进，装载内容容量更大。}
@@ -583,22 +583,23 @@ documentclass命令的必选参量有article，report，book，slides，beamer�
 当然以上讨论只是泛泛而论，你需要根据自己的实际情况来，但总的原则是自己心里应该有一个划分标准，毕竟一本书最有价值的部分就是目录了，如果一本书的目录结构是乱七八糟的那么这本书不值一看。
 
 \subsection{一般的可选项}
-\begin{table}[H]
-\begin{tabular}{@{}p{0.2\linewidth}p{0.8\linewidth}@{}}
-\toprule
-可选项  &   说明  \\  \midrule
-10pt，11pt，12pt   &   设置文档所使用字体的大小，默认是10pt。\\
-a4paper ，letterpaper...   &   定义纸张的大小，此外还有a5paper，b5paper，executivepaper，legalpaper等。\\
-fleqn    &   设置该选项将使数学公式左对齐，而不是中间对齐。\\
-leqno    &   设置该选项将使数学公式的编号放置于左侧而不是右侧。\\
-titlepage, notitlepage    &   指定是否在文档标题后开始新一页，article文档类不开始新页，report和book开始。\\
-onecolumn, twocolumn    &   指定LaTeX以单栏或双栏方式排版文档。\\
-twoside, oneside    &   指定LaTeX排版文档为双面或单面格式，article和report默认为单面，book默认为双面。\\
-openright, openany   &    定义chapter开始时仅在奇数页或者随意，book类默认openright，report默认openany，article没有chapter。\\ \bottomrule
-\end{tabular}
-\label{tab:documentclass可选项}
-\caption{documentclass可选项}
-\end{table}
+10pt，11pt，12pt      设置文档所使用字体的大小，默认是10pt。
+
+a4paper ，letterpaper...      定义纸张的大小，此外还有a5paper，b5paper，executivepaper，legalpaper等。
+
+fleqn       设置该选项将使数学公式左对齐，而不是中间对齐。
+
+leqno       设置该选项将使数学公式的编号放置于左侧而不是右侧。
+
+titlepage, notitlepage       指定是否在文档标题后开始新一页，article文档类不开始新页，report和book开始。
+
+onecolumn, twocolumn       指定LaTeX以单栏或双栏方式排版文档。
+
+twoside, oneside       指定LaTeX排版文档为双面或单面格式，article和report默认为单面，book默认为双面。
+
+openright, openany       定义chapter开始时仅在奇数页或者随意，book类默认openright，report默认openany，article没有chapter。
+
+
 
 
 \subsection{书籍的通用结构}
@@ -665,7 +666,7 @@ geometry的机制是以上讨论的横向或者竖向参量指定足够的数量
 	{\end{adjustwidth}}
 \end{xverbatim}
 
-新建环境请看\ref{sec:自建环境}。我们在这里建立了一个widetext环境，主要是adjustwidth环境操作，我们看到后面有两个花括号，第一个指左margin，第二个指右margin。注意这里不要和前面geometry宏包里面设置的includemp弄混了。\footnote{geometry宏包里面设置includemp=true让marginpar部分进入width，也就是right margin并不包含旁注部分了，但是只适用于geometry宏包。}这里左margin就是前面设置的left，右margin是前面设置的right+marginparwidth+marginparsep。所以可以考虑geometry宏包不要设置includemp，我前面只是为了理解简单才如此设置的，当然这里理解这个概念了就没有什么问题了。
+新建环境请看\ref{sec:新的环境}。我们在这里建立了一个widetext环境，主要是adjustwidth环境操作，我们看到后面有两个花括号，第一个指左margin，第二个指右margin。注意这里不要和前面geometry宏包里面设置的includemp弄混了。\footnote{geometry宏包里面设置includemp=true让marginpar部分进入width，也就是right margin并不包含旁注部分了，但是只适用于geometry宏包。}这里左margin就是前面设置的left，右margin是前面设置的right+marginparwidth+marginparsep。所以可以考虑geometry宏包不要设置includemp，我前面只是为了理解简单才如此设置的，当然这里理解这个概念了就没有什么问题了。
 
 然后正数表示margin宽度增大，负数表示margin部分宽度减小。这里设置-70mm即右边marginparwidth+marginparsep的宽度。然后自己注意进入这个环境了就不要使用marginpar或者其他旁注的命令了，这是显而易见的。不设置数值即表示不改变，出了adjustwidth环境，一切复原。
 
@@ -1030,8 +1031,12 @@ texmaker软件并没有这个问题，不管怎么样，加上这样一行代码
 长破折号就是三个-连续输入 $ \Longrightarrow $  ---\\
 负号就是数学模式下的-  $ \Longrightarrow $ $ -1 $  如果有时嫌麻烦就直接-1应该可以接受把。
 
-话说怎么输入终端的两个短连字号而不是一个短破折号这是个问题啊。
-
+%http://tex.stackexchange.com/questions/9813/how-can-i-stop-latex-from-converting-two-hyphens-to-a-single-hyphen-when-loading
+%A hyphen: \texttt{-}
+%
+%Two hyphens: \texttt{-{}-}
+%
+%Three hyphens: \texttt{-{}-{}-}
 \subsubsection{温度的度}
 在texmaker左边的关系负号哪里我们可以看到一个小圆圈，输入命令是\textbackslash circ，当然需要在数学模式下。现在就需要让这个小圆圈位于上标即可。前面的符号介绍我们提及\^{},就是进入上标显示，上标的内容在\^{}后面的那个花括号内，于是我们就知道三十度怎么画了。$ 30^{\circ} $ ，注意texmaker左边有快捷键。点起来很方便的。具体代码是：\$ 30\^{}\{\textbackslash circ\} \$。当然你可以直接用rime输入法打出这个温度的度：°，℃。在输出\%候选项哪里。
 
@@ -1710,8 +1715,8 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 \verb+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}+
 
 \subsection{设置图片寻找文件夹}
-\verb+\graphicspath{{figures/}}+
-
+\verb+\graphicspath{{figures/}}+\\
+可以设置多个文件夹。
 
 \subsection{图片格式的讨论}
 \subsubsection{支持的图片文件格式}
@@ -1719,7 +1724,7 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 
 \subsubsection{搜索图片后缀名控制}
 经测试上面的eps，png，jpg，pdf格式的图片后缀名默认都支持，也就是只要写上前面的文件名即可。
-
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
 
 \subsubsection{eps图片格式}
 如果你使用矢量绘图软件画的图片，推荐用eps或者pdf格式。下面给出一个eps图片，是pyx宏包画出来的，然后用inkscape软件用300dpi另存为pdf格式，并用inkscape软件用300dpi另存为png格式。
@@ -1752,7 +1757,9 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 结论是如果图片本来很大不存在缩放问题，那么能够使用的就直接使用，其他不支持的图片格式考虑生成png图片，记得dpi至少设到300以上，一般到1200dpi是绝对够用了。如果源图片很小，需要缩放，那么eps和pdf文件格式不用做进一步处理，其他文件格式优先考虑pdf文件格式，导出的时候我们看到300dpi已经绰绰有余了。
 
 \subsection{导入pdf页面}
-这里要讲的是使用pdfpages宏包来实现多个pdf页面的导入。
+这里要讲的是使用pdfpages宏包来实现多个pdf页面的导入。\\
+\verb+\usepackage[options]{pdfpages} +\\
+默认是插入所有pdf页面，
 
 \subsection{本文插入图片的一些DIY}
 \begin{Verbatim}
@@ -1948,16 +1955,16 @@ rowscolors第二个选项            & 奇数列的颜色  \\
 \endnote{在xverbatim环境或者verb命令之内，字体是ttfamily。}
 
 \subsection{稍微大点的程序代码}
-在环境xverbatim之间的任何文本是什么就是什么，不执行任何\LaTeX 命令，包括所有的空白和断行，如下：
-\begin{xverbatim}{tex}
+在环境verbatim之间的任何文本是什么就是什么，不执行任何\LaTeX 命令，包括所有的空白和断行，如下：
+\begin{verbatim}
 (defmacro with-gensyms (syms &rest body)
   `(let ,(mapcar #'(lambda (s)
      `(,s (gensym)))
            syms)
          ,@body))
-\end{xverbatim}
+\end{verbatim}
 
-\subsection{对xverbatim环境的美化}
+\subsection{Verbatim环境的美化}
 这里有点欺骗的嫌疑，其实并不是xverbatim环境。而是用的fancyvrb宏包的Verbatim环境。它有一个重定义Verbatim环境的功能，然后我将重定义的名字改成了verbatim，也就是覆盖默认的verbatim环境了。
 
 之所以要用这个小技巧，也是迫不得已：一是listing宏包虽然对语法加颜色功能很好看，但是内部的Unicode符号显示存在很多问题。而Verbatim环境并没有这个问题；二是命令其他的名字几乎各大主流编辑器都会出现语法染色失常，因为自定义的代码环境都不识别。所以只好用这种小技巧了。
@@ -1996,194 +2003,54 @@ numbersep=2pt                        & 数字和框框间距 \\   \bottomrule
 \label{tab:Verbatim环境一些设置}
 \end{table}
 
+\subsection{xverbatim宏包研究}
+
+
+
 \section{尾注}
 尾注也就是每一章后面的注释部分，这种排版形式显得更加专业。而且如果尾注写的好参考文献一章或者其他附录部分都可以不用写了。
 
-本文尾注代码如下：
+\subsection{endnotes宏包研究}
+
+
+%
+%本文尾注代码如下：
+%%\begin{xverbatim}{tex}
+%%\RequirePackage{endnotes}
+%%\RequirePackage{hyperendnotes}
+%%\renewcommand\makeenmark{（\theenmark）}
+%%\renewcommand\notesname {注释和参考资料}
+%%\newcommand{\printendnotes}
+%%    {\theendnotes}
+%%\end{xverbatim}
+%\begin{fancycolorbox}
+%本来我是希望每一章重新编号的，也就是重新建立一个printendnotes命令，先用theendnotes命令插入注释，然后用setcounter将endnote这个计数器归零。可惜由于网上的hyperendnotes宏包设计的不够好，超链接会出现覆写现象。我试著解决这个问题无果，只好放弃了。如果你不在乎文章中的超链接，比如你打算纸质印刷，那么是可以重新编号的。
+%\end{fancycolorbox}
+%
+%这里notesname命令就是章节后面显示的名字，makeenmark是每一条注释前面那个标签，这里设计成了（1）这样的形式。其中theenmark命令表示该注释的编号。
+%
+%well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修改了下开头和结尾，让它更加符合规范，主体部分没动，我不懂这些。
+
+
+
+
+
+\section{语录，引用和诗歌环境}
+quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。下面是quote语录环境：
+\begin{quote}
+“When the winds of change blow, some people build walls and others build windmills.”
+\end{quote}
+
+
+\section{插入摘要}
+%使用的环境就是abstract，\endnote{\reduline{book类不能使用摘要环境，只有article和report才有。}}命令如下：\\
 \begin{xverbatim}{tex}
-%=============插入注释=========%
-\RequirePackage{endnotes}
-\RequirePackage{hyperendnotes}
-\renewcommand\makeenmark{（\theenmark）}
-\renewcommand\notesname {注释和参考资料}
-\newcommand{\printendnotes}
-    {\theendnotes}
+\begin{abstract}
+这是一段摘要文字。
+\end{abstract}
 \end{xverbatim}
-\begin{fancycolorbox}
-本来我是希望每一章重新编号的，也就是重新建立一个printendnotes命令，先用theendnotes命令插入注释，然后用setcounter将endnote这个计数器归零。可惜由于网上的hyperendnotes宏包设计的不够好，超链接会出现覆写现象。我试著解决这个问题无果，只好放弃了。如果你不在乎文章中的超链接，比如你打算纸质印刷，那么是可以重新编号的。
-\end{fancycolorbox}
-
-这里notesname命令就是章节后面显示的名字，makeenmark是每一条注释前面那个标签，这里设计成了（1）这样的形式。其中theenmark命令表示该注释的编号。
-
-well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修改了下开头和结尾，让它更加符合规范，主体部分没动，我不懂这些。
-
-\begin{xverbatim}{tex}
-% hyperendnotes.sty
-% for endnotes hyperlink
-% 
-% LPPL LaTeX Public Project License
-%  
-
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{hyperendnotes}
-
-\newif\ifenotelinks
-\newcounter{Hendnote}
-% Redefining portions of endnotes-package:
-\let\savedhref\href
-\let\savedurl\url
-\def\endnotemark{%
-\@ifnextchar[\@xendnotemark{%
-\stepcounter{endnote}%
-\protected@xdef\@theenmark{\theendnote}%
-\protected@xdef\@theenvalue{\number\c@endnote}%
-\@endnotemark
-}%
-}%
-\def\@xendnotemark[#1]{%
-\begingroup\c@endnote#1\relax
-\unrestored@protected@xdef\@theenmark{\theendnote}%
-\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-\endgroup
-\@endnotemark
-}%
-\def\endnotetext{%
-\@ifnextchar[\@xendnotenext{%
-\protected@xdef\@theenmark{\theendnote}%
-\protected@xdef\@theenvalue{\number\c@endnote}%
-\@endnotetext
-}%
-}%
-\def\@xendnotenext[#1]{%
-\begingroup
-\c@endnote=#1\relax
-\unrestored@protected@xdef\@theenmark{\theendnote}%
-\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-\endgroup
-\@endnotetext
-}%
-\def\endnote{%
-\@ifnextchar[\@xendnote{%
-\stepcounter{endnote}%
-\protected@xdef\@theenmark{\theendnote}%
-\protected@xdef\@theenvalue{\number\c@endnote}%
-\@endnotemark\@endnotetext
-}%
-}%
-\def\@xendnote[#1]{%
-\begingroup
-\c@endnote=#1\relax
-\unrestored@protected@xdef\@theenmark{\theendnote}%
-\unrestored@protected@xdef\@theenvalue{\number\c@endnote}%
-\show\@theenvalue
-\endgroup
-\@endnotemark\@endnotetext
-}%
-\def\@endnotemark{%
-\leavevmode
-\ifhmode
-\edef\@x@sf{\the\spacefactor}\nobreak
-\fi
-\ifenotelinks
-\expandafter\@firstofone
-\else
-\expandafter\@gobble
-\fi
-{%
-\Hy@raisedlink{%
-\hyper@@anchor{Hendnotepage.\@theenvalue}{\empty}%
-}%
-}%
-\hyper@linkstart{link}{Hendnote.\@theenvalue}%
-\makeenmark
-\hyper@linkend
-\ifhmode
-\spacefactor\@x@sf
-\fi
-\relax
-}%
-\long\def\@endnotetext#1{%
-\if@enotesopen
-\else
-\@openenotes
-\fi
-\immediate\write\@enotes{%
-\@doanenote{\@theenmark}{\@theenvalue}%
-}%
-\begingroup
-\def\next{#1}%
-\newlinechar='40
-\immediate\write\@enotes{\meaning\next}%
-\endgroup
-\immediate\write\@enotes{%
-\@endanenote
-}%
-}%
-\def\theendnotes{%
-\immediate\closeout\@enotes
-\global\@enotesopenfalse
-\begingroup
-\makeatletter
-\edef\@tempa{`\string>}%
-\ifnum\catcode\@tempa=12
-\let\@ResetGT\relax
-\else
-\edef\@ResetGT{\noexpand\catcode\@tempa=\the\catcode\@tempa}%
-\@makeother\>%
-\fi
-\def\@doanenote##1##2##3>{%
-\def\@theenmark{##1}%
-\def\@theenvalue{##2}%
-\par
-\smallskip %<-small vertical gap between endnotes
-\begingroup
-\def\href{\expandafter\savedhref}%
-\def\url{\expandafter\savedurl}%
-\@ResetGT
-\edef\@currentlabel{\csname p@endnote\endcsname\@theenmark}%
-\enoteformat
-}%
-\def\@endanenote{%
-\par\endgroup
-}%
-% Redefine, how numbers are formatted in the endnotes-section:
-\renewcommand*\@makeenmark{%
-\hbox{\normalfont\@theenmark~}%
-}%
-% header of endnotes-section
-\enoteheading
-% font-size of endnotes
-\enotesize
-\input{\jobname.ent}%
-\endgroup
-}%
-\def\enoteformat{%
-\rightskip\z@
-\leftskip1.8em
-\parindent\z@
-\leavevmode\llap{%
-\setcounter{Hendnote}{\@theenvalue}%
-\addtocounter{Hendnote}{-1}%
-\refstepcounter{Hendnote}%
-\ifenotelinks
-\expandafter\@secondoftwo
-\else
-\expandafter\@firstoftwo
-\fi
-{\@firstofone}%
-{\hyperlink{Hendnotepage.\@theenvalue}}%
-{\makeenmark}%
-}%
-}%
 
 
-% endnote-section:
-\enotelinkstrue
-%\enotelinksfalse
-
-
-\endinput
-\end{xverbatim}
 \section{参考文献}
 首先设置thebibliography环境，然后用bibitem命令插入文献，这里99的意思是编号宽度不超过99.在你想要引用的地方用cite命令。如下所示:\\
 \begin{xverbatim}{tex}
@@ -2199,6 +2066,16 @@ well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修�
 
 
 \chapter{\LaTeX 高级篇}
+
+\section{长度量}
+\subsection{单位}
+
+\subsection{默认的长度量}
+\subsection{使用长度量}
+\subsection{定义自己的长度量}
+\subsection{修改长度量}
+
+
 
 \section{计数器}
 计数器（counter）之前也接触过一些了，现在基于wikibook和\href{http://texblog.org/2007/07/25/counters-in-latex/}{这篇博文}做一些整理工作。
@@ -2247,38 +2124,48 @@ well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修�
 
 它的实现机制应该是使用了这个\verb+\@addtoreset{counter}{chapter}+命令。
 
-\section{自建环境或修改原环境}
-\label{sec:自建环境}
 
-用如下命令格式来新建一个环境\\
-\textbackslash begin \{environmentname\}\\
-text\\
-\textbackslash end \{environmentname\}\\
-新建环境有很多用途，这里就最直接的插入图片来说明，比如说上面那个图片我用：\\
-\textbackslash begin\{figure\}\\
-什么什么\\
-\textbackslash end\{figure\}\\
-给包围起来，然后加入:\\
-\textbackslash caption \{这是用于\textbackslash LaTeX 的一个编辑器界面\}\\
-caption命令加入图片标题。然后如果你想在文章中引用这个图片的话，加入如下命令：\\
-\textbackslash label \{figure1\}
+\section{新的命令或环境}
 
-还有很多高级知识这里能够略过就略过了。
+\subsection{新的命令}
+新建命令一般就用newcommand命令\\
+\verb+\newcommand{name}[num]{definition}+\\
+用法都差不多，第一个必填选项是新建命令的名字，一般前面都加一个\textbackslash 符号。第二个可选选项是新建的这个命令接受的参数，比如你填一个2，那么表示这个命令接受两个参数，在后面definition中引用的时候\#{}1表示第一个参数，\#{}2表示第二个参数。后面还可以跟一个可选项表示这个命令的某个参数为可选参数并且可以给出默认值，这个可选参数默认对应后面的\#{}1。
+
+\LaTeX 的newcommand命令是由原\TeX 的def命令(还有edef gdef xdef 这里先不管。)而来的。作用原理有点类似于替换展开的功能。比如：\\
+\verb+\newcommand{\test}{this is a test line}+\\
+你定义了这个test命令，然后后面你输入\textbackslash test，系统遇到\textbackslash test之后就会进行替换操作，就成了后面的this is a test line了。理论上只是简单的文本替换，后面可是跟上随意的命令参数或者环境。不过这只是理论上，实际编写宏包命令的时候会遇到很多复杂的问题，主要是expand展开的控制。
+
+还有一个命令providecommand和newcommand差不多的，区别就是providecommand只是提供命令，如果这个命令已经定义了它就什么都不做。而def一定是完全不动声响的覆盖了。
+
+在编写宏包文件的时候推荐使用DeclareRobustCommand命令，但是有些任务似乎只有def或者edef才能完成，这个我也没弄明白。
+
+\subsection{新的环境}
+\label{sec:新的环境}
+新建环境命令格式如下：\\
+\verb+\newenvironment{name}[num]{before}{after}+\\
+和newcommand命令其他用法都差不多，区别就在于后面有两个宏替换。这里值得一提的是原\TeX 并没有新建环境这个命令，而是\LaTeX 新加进去的。
+
+我们假设我们要新建env这个环境，那么\LaTeX 的工作流程是，创建了两个命令，一个是\verb+\begin{env}+命令；一个是\verb+\endenv+命令。{\color{red}   ？？？}。所以简单的来看newenvironment命令就是把它看作开辟了一个group（原\TeX 里面的概念），然后首先执行了before中的命令，然后是环境中的内容，然后是after中的命令，然后退出环境。
+
+这里只是说明一下newenvironment命令的工作原理，具体我们新建环境还是用\LaTeX 的风格，即用newenironment命令，只有在不得已的情况下（通常很复杂的情况）才考虑用\TeX 里面的group概念，那个时候估计是要使用catcode命令。
+
+
 
 \section{盒子和glue}
 \label{sec:盒子和glue}
 \begin{fancycolorbox}
 这里参考了Knuth的The Texbook，但是我并没有将其写入参考文献，因为只是觉得关于box和glue的概念最好参考原初定义，但是并不推荐读者阅读这本书，现在已经是\LaTeX 时代了，不推荐读者使用原始的\TeX 命令，一是不太实用，二是兼容性可能不太好。除非你是宏包编写者，但就作为一般的使用者真的没有必要接触那些原始命令了。还参考了\cite{boxes}
 \end{fancycolorbox}
-%\endnote{\begin{fancycolorbox}
-%在这里box翻译为盒子没什么问题，就是这个glue翻译为胶水或者橡皮都让我不太满意。在后面我都使用的术语是距离或者间距或者干脆用英文glue。从某种意义上讲glue的直译确实应该译为胶或者胶水，不过觉得距离这个词汇更能够让人们有感觉些：\TeX 排版就是不同的盒子编写和彼此之间距离的设置问题。
-%\end{fancycolorbox}}
+\endnote{
+在这里box翻译为盒子没什么问题，就是这个glue翻译为胶水或者橡皮都让我不太满意。在后面我都使用的术语是距离或者间距或者干脆用英文glue。从某种意义上讲glue的直译确实应该译为胶或者胶水，不过觉得距离这个词汇更能够让人们有感觉些：\TeX 排版就是不同的盒子编写和彼此之间距离的设置问题。}
+
 \subsection{基本知识}
 最小的盒子就是基于Unicode的字符，这些字符然后组成更大的盒子──单词，然后单词组成更大的盒子──行等等。行是一个盒子，段落也是一个盒子，图片是一个盒子，表格也是一个盒子。而这些盒子按照Knuth的描述都是用glue胶水粘合起来的，或者我们称之为这些盒子之间都存在着空间胶合层。下面就是一个盒子的详细参数：
 
-\begin{fig}{box参数}
+\begin{linefig}{box参数}
 \label{fig:box参数}
-\end{fig}
+\end{linefig}
 
 盒子就是这么一个长方形的区域，如上图所示，它有参数：height，width，depth。baseline和reference point在后面讲的hbox和vbox中会用到。在\TeX 看来，从字体而来的Unicode 字符就是一个最简单的盒子。字体的设计者已经决定了这个字符的高度，宽度和深度以及它在这个盒子里面看起来如何。\TeX 就是用这些维度将盒子黏合到一起，并最终决定所有字符的reference point 参考点在页面上的位置。
 
@@ -2292,16 +2179,16 @@ caption命令加入图片标题。然后如果你想在文章中引用这个图�
 \vbox{\hbox{恭}\hbox{喜} \hbox{发}\hbox{财}}
 
 glue也就是各个盒子之间的间距。下图是glue的具体图示：
-\begin{fig}{glue说明}
+\begin{linefig}{glue说明}
 \label{fig:glue说明}
-\end{fig}
-前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3*\Large{\frac { 6 }{ 9 }} $。这样第一个间距的总长度就是$9+3*\Large{\frac { 6 }{ 9 }} =11$。
+\end{linefig}
+前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3*\frac { 6 }{ 9 } $。这样第一个间距的总长度就是$9+3*\frac { 6 }{ 9 } =11$。
 
 经过计算所有的glue间距都确定下来了，那么整个页面布局就确定了。我在这里就戛然而止了，毕竟这里只是对box和glue的基本概念的阐明。
 
-\subsection{盒子in \LaTeX}
-前面稍微介绍了点\TeX 的原初命令hbox和vbox。我们就能够感受到靠着这两个命令已经能够干很多事情了。比如我想写一幅对联。
-
+%\subsection{盒子in \TeX}
+%前面稍微介绍了点\TeX 的原初命令hbox和vbox。我们就能够感受到靠着这两个命令已经能够干很多事情了。比如我想写一幅对联。
+%
 %\begin{xverbatim}{tex}
 %{\CJKfontspec[Scale=3,Color=red]{方正魏碑_GBK}
 %\vbox {
@@ -2313,36 +2200,49 @@ glue也就是各个盒子之间的间距。下图是glue的具体图示：
 %\end{xverbatim}
 %
 %\vspace{30pt}
-%{\CJKfontspec[Scale=3,Color=red]{方正魏碑_GBK}
+%{\CJKfontspec[Scale=3,Color=red]{颜体}
 %\vbox {
 %\centerline{呵呵}
 %    \hbox to \hsize {恭大}
 %    \hbox to \hsize {喜吉}
 %    \hbox to \hsize {发大}
 %    \hbox to \hsize {财利}}}
+%
+%其中hbox和vbox都支持这样的to 多少尺寸和 spread 增加多少尺寸的形式，这里的hsize相当于linewidth吧。然后我用这个例子主要说明用hbox和vbox能够做很多排版工作了。而我们在\LaTeX 里面则用makebox替代了hbox，raisebox替代了vbox。并且排版思路变成了主要是一行一行排版，然后才考虑raisebox微调。
 
-其中hbox和vbox都支持这样的to 多少尺寸和 spread 增加多少尺寸的形式，这里的hsize相当于linewidth吧。然后我用这个例子主要说明用hbox和vbox能够做很多排版工作了。而我们在\LaTeX 里面则用makebox替代了hbox，raisebox替代了vbox。并且排版思路变成了主要是一行一行排版，然后才考虑raisebox微调。
-
-\section{box 命令介绍}
+\section{盒子命令介绍}
 \href{http://tex.stackexchange.com/questions/83930/what-are-the-different-kinds-of-boxes-in-latex}{参考了这个网站}
 
 \subsection{makebox}
 \verb+\makebox[width][allignment]{some text}+
-还有一个mbox，不过makebox命令更加全面，推荐使用。makebox就是制造一个水平的盒子，注意这个box里面的文本是不能换行的，也就是一行之内的盒子。第一个可选项width指这个盒子的长度，第二个可选项allignment是里面文本的对齐方式，有〖l c r s〗几个选项，\emph{l}表示左对齐；\emph{c}表示居中；\emph{r}表示right；\emph{s}表示两端对齐。
+还有一个mbox，不过makebox命令更加全面，推荐使用。makebox就是制造一个水平的盒子，注意这个box里面的文本是不能换行的，也就是一行之内的盒子。第一个可选项width指这个盒子的长度，第二个可选项allignment是里面文本的对齐方式，有【l c r s】几个选项，\emph{l}表示左对齐；\emph{c}表示居中；\emph{r}表示right；\emph{s}表示两端对齐。
 
 
 
-
+\subsection{raisebox}
+\subsection{parbox}
+\subsection{minipage}
+minipage
 
 
 \section{带颜色或者线框的盒子}
+\subsection{framebox}
+framebox和makebox命令类似，除了加上了一个线框。
+
+\verb+\setlength{\fboxsep}{10pt}+\\
+\verb+\setlength{\fboxrule}{5pt}+\\
+如上面描述的这里有两个长度量，fboxsep控制线框和文字之间的距离，fboxrule控制线框的宽度。
+
+
 \subsection{colorbox}
 colorbox
 \verb+\colorbox{yellow}{this is a test line.}+\\
 \colorbox{yellow}{this is a test line.}
 
+\subsection{fcolorbox}
+fcolorbox can also be tweaked with \textbackslash fboxsep and \textbackslash fboxrule这两个长度量。
 
-\section{fancycolorbox}
+\subsection{fancycolorbox}
 本文定义了一个fancycolorbox命令，具体代码如下：\\
 \begin{fancycolorbox}
 为什么是这么复杂的一个代码？这个需要说明一下。首先系统自带的colorbox命令不能换行，必须colorbox里面加上minipage环境才行，9,10行是minipage环境的格式优化，然后整个构成一个新环境我还想传递颜色，就成这个样子了。主要参考的\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
@@ -2366,24 +2266,27 @@ colorbox
 \end{xverbatim}
 fancycolorbox环境的效果前面你应该已经看过了。这里就不做演示了。
 
+\section{保存盒子}
+\subsection{savebox}
+
+
+\section{线条}
+\verb+\rule[depth]{width}{height}+
+这三个选项都要填长度量，第一个长度量是线条竖向偏移量，第二个长度量是线条横向长度，第三个长度量是线条竖向宽度。
+
+\section{大文档管理}
+
 
 
 \chapter{其他问题的讨论}
 
-\section{语录，引用和诗歌环境}
-quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。下面是quote语录环境：
-\begin{quote}
-“When the winds of change blow, some people build walls and others build windmills.”
-\end{quote}
+\section{plain TeX命令}
 
 
-\section{插入摘要}
-%使用的环境就是abstract，\endnote{\reduline{book类不能使用摘要环境，只有article和report才有。}}命令如下：\\
-\begin{xverbatim}{tex}
-\begin{abstract}
-这是一段摘要文字。
-\end{abstract}
-\end{xverbatim}
+\section{TeX中的程序结构}
+\subsection{TeX中的条件语句}
+
+
 
 \section{文本中的上标还有下标}
 上标使用命令textsuperscript命令，下标感觉自己缩小点就差不多了吧。示例如下：\\
@@ -2395,8 +2298,7 @@ quote为语录环境，quotation用于超过几段的引用环境，verse用于�
 \section{多张图片并列显示}
 \label{sec:多张图片并列显示}
 
-\begin{figure}[h]
-
+\begin{figure}[H]
 \label{fig:四栏图片}
 \begin{multicols}{4}
 \includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
@@ -2562,9 +2464,6 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 \chapter{源码和参考资料打包下载地址}
 
 
-
-
-
 \addchtoc{插图目录}
 \listoffigures 
 
@@ -2573,7 +2472,6 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 
 \backmatter
 \addchtoc{参考文献}
-原谅我，我对参考文献的格式美化比较困惑。
 \begin{thebibliography}{9}
 \bibitem{lshort} 有名的《一份不太简短的\LaTeX2e 介绍》,原版作者：Tobias Oetiker,Hubert Partl,Irene Hyna等，版本：2001-08-09，中文翻译：CTeX用户小组,版本：2002-05，pdf下载链接：\href{http://www.ctan.org/tex-archive/info/lshort/chinese}{http://www.ctan.org/tex-archive/info/lshort/chinese}。
 \bibitem{latex123}  《大家来学\LaTeX 》,原版作者：李果正，版本：2004-03-08，网站链接：\href{http://edt1023.sayya.org/tex/latex123/}{http://edt1023.sayya.org/tex/latex123/}。

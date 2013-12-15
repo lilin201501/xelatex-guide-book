@@ -1,0 +1,26 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{x} \PY{o}{=} \PY{n}{FirstClass}\PY{p}{(}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{FirstClass}\PY{p}{(}\PY{p}{)}
+\PY{n}{x}\PY{o}{.}\PY{n}{setdata}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{King Arthur}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{c}{\PYZsh{}self is x}
+\PY{n}{y}\PY{o}{.}\PY{n}{setdata}\PY{p}{(}\PY{l+m+mf}{3.1415926}\PY{p}{)}
+\PY{n}{x}\PY{o}{.}\PY{n}{display}\PY{p}{(}\PY{p}{)}
+\PY{n}{y}\PY{o}{.}\PY{n}{display}\PY{p}{(}\PY{p}{)}
+
+\PY{k}{class} \PY{n+nc}{SecondClass}\PY{p}{(}\PY{n}{FirstClass}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf}{display}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{print}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Current value = }\PY{l+s}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZsq{}}  \PY{o}{\PYZpc{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{p}{)}
+
+\PY{n}{z} \PY{o}{=} \PY{n}{SecondClass}\PY{p}{(}\PY{p}{)}
+\PY{n}{z}\PY{o}{.}\PY{n}{setdata}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{z}\PY{o}{.}\PY{n}{display}\PY{p}{(}\PY{p}{)}
+
+\PY{k}{class} \PY{n+nc}{ThirdClass}\PY{p}{(}\PY{n}{SecondClass}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{value}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{=}\PY{n}{value}
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}add\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{other}\PY{p}{)}\PY{p}{:}\PY{c}{\PYZsh{} self+ other}
+        \PY{k}{return} \PY{n}{ThirdClass}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{+}\PY{n}{other}\PY{p}{)}
+    \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}str\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}\PY{c}{\PYZsh{}print(self)}
+        \PY{k}{return} \PY{l+s}{\PYZsq{}}\PY{l+s}{[ThirdClass:}\PY{l+s+si}{\PYZpc{}s}\PY{l+s}{]}\PY{l+s}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{c}{\PYZsh{}ThirdClass}
+    \PY{k}{def} \PY{n+nf}{mul}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,}\PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data} \PY{o}{*}\PY{o}{=} \PY{n}{other}
+\end{Verbatim}

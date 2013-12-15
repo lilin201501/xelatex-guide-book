@@ -1,0 +1,9 @@
+
+
+a = ThirdClass('abc')
+a.display()
+b = a + 'xyz'
+b.display()
+
+#if __name__ == '__main__': #if run as script
+

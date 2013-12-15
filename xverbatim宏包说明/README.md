@@ -5,26 +5,15 @@ use the pygementize output the tex code and use the Verbatim environment to outp
 
 
 #note
-
-#1.  modify the pygments package ， 
-
-modify the pygements-1.6
-into the file folder pygments→formatters open the file latex.py
-comment 309 319 369 line
-
-and the internal course is use the pygmentize command out put a piece of source code in tex file and use the VerbatimInput command output it .
-
-python setup.py install
-
-#2.  modify the texmaker package so let the color is right.
+ modify the texmaker package so let the color is right.
 
 1. download the sourcecode
 2. edit the sourcecode file latexhighlighter.cpp
-3. 268 line insert 
+3. 268 line insert
                         poslab=buffer.indexOf("begin{xverbatim}");
                         if(poslab != -1) {state=StateVerbatim;for (k=poslab; k <i ; k++) {if (k>0 && k<text.length()) blockData->code[k]=1;}}
 
-4.763 line insert 
+4.763 line insert
                         pos=buffer.indexOf("\\end{xverbatim}");
                         if( pos!= -1)
                         {
@@ -39,7 +28,7 @@ python setup.py install
 6.install the popple in the synetic package manager just search it for qt5
 
 7.if you encounter the error what synctex ....file not found
-you may need to install 
+you may need to install
 sudo apt-get install zlib1g-dev
 
 8. sudo sh BUILD.sh

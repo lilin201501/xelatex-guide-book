@@ -14,12 +14,19 @@ xelatex  ubuntu  book template
 ##2.texmf 文件夹 整个复制到ubuntu主目录即可使用，里面包含了我定义的一些宏包，目前有：
 
 myconfig.sty
+基本配置
 
 mytitle.sty
+封面配置
 
 xverbatim.sty
+显示代码的宏包
 
 endnotes.sty
+显示尾注的宏包
+
+python.sty
+专门针对python3语言的宏包，选择dopython命令之后，之前所有的片段python代码都会合并成为一个py文件并执行。
 
 mybeamer.cls----还很不成熟
 

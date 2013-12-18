@@ -138,8 +138,6 @@
 }
 }
 
-
-
 %error and rc
 \DeclareRobustCommand*{\@writefeedback}{%
 % Read the return code
@@ -159,7 +157,7 @@
 
 \DeclareRobustCommand*{\@executecode}{%
 \ifdefstring{\@codemode}{py}
-{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python3 > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {
 \ifdefstring{\@codemode}{c}
 { \immediate\write18{  gcc -o \@outname.\@codemode.cexe \@outname.\@codemode && ./\@outname.\@codemode.cexe > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
@@ -174,12 +172,6 @@
 { \immediate\write18{  xelatex -synctex=1 -interaction=nonstopmode -output-directory=codeexport/\@codemode/\thechapter/ \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {\errmessage{sorry this codemode doesnot executeable recently}
 }}}}}}
-
-\DeclareRobustCommand*{\@executecodeb}{%
-\ifdefstring{\@codemode}{py}
-{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python3 > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
-{\errmessage{sorry this codemode doesnot executeable recently}
-}}
 
 
 \DeclareRobustCommand*{\@showresult}{%
@@ -212,18 +204,13 @@
 \ifnum \@modestatus = 0
 \else   \ifnum \@modestatus = 1    \@showcode
 \else   \ifnum \@modestatus = 2    \@executecode \@writefeedback
-\else   \ifnum \@modestatus = 3    \@executecodeb \@writefeedback
 \else   \ifnum \@modestatus = 9    \@showresult
 \else   \ifnum \@modestatus = 12   \@showcode \@executecode \@writefeedback
 \else   \ifnum \@modestatus = 129    \@showcode \@executecode \@showresult \@writefeedback
-\else   \ifnum \@modestatus = 13   \@showcode \@executecodeb \@writefeedback
-\else   \ifnum \@modestatus = 139    \@showcode \@executecodeb \@writefeedback \@showresult
 \else   \ifnum \@modestatus = 19   \@showcode  \@showresult
 \else   \ifnum \@modestatus = 29   \@executecode  \@showresult \@writefeedback
-\else   \ifnum \@modestatus = 39   \@executecodeb  \@writefeedback    \@showresult
-\else          \errmessage{you typed wrong optional parameter,the choice is  0 1 2 9 12 129 19 29 (3 13 139 目前只是为了python3的支持，为了简单以后考虑取消掉。) }
-\fi\fi\fi \fi \fi\fi\fi\fi\fi\fi\fi\fi
-
+\else          \errmessage{you typed wrong optional parameter,the choice is  0 1 2 9 12 129 19 29 .}
+\fi\fi\fi \fi \fi\fi\fi\fi
 
 }
 

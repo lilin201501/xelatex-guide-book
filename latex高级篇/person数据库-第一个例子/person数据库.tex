@@ -55,11 +55,27 @@
 \begin{common-format}
 \mainmatter
 
-\chapter{开始}
+\chapter{类}
+\section{Person}
+\begin{python}
+class Person:
+    def __init__(self, name, job=None, pay=0):
+        self.name = name
+        self.job = job
+        self.pay = pay
+\end{python}
+
+类名一般都大写。
+
+特殊的\verb+__init__+ 用于这个类具体创建instance实例的时候执行的动作。self表示创建的那个实例，self.name表示实例的名字，self.name ＝name表示接受的name将会传递值给self.name，同时创建的那个实例将会拥有一个自己的name属性。其他属性操作类似。
+
+和一般函数的做法一样，job=None，表示job这个参数是一个可选参数，它有一个默认值None。
 
 
 
-
+\chapter{输出结果}
+%\printpython
+\debugpython
 
 %这里空一行
 

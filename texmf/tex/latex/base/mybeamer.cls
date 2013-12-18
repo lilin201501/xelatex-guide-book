@@ -94,15 +94,6 @@
 \RequirePackage{booktabs}
 \renewcommand{\arraystretch}{1.3}
 
-%插入代码
-\RequirePackage{xverbatim}
-
-
-%=============插入尾注=========%
-%\RequirePackage{endnotes}
-
-
-
 
 
 \endinput

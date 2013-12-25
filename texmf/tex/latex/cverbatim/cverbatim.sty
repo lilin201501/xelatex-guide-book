@@ -1,0 +1,84 @@
+% based on xverbatim-sty
+%
+%modified by wanze   2013/12/15
+%用于连续几个片段代码合并的宏包
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{cverbatim}[2013/11/21 v0.51  extended code support mode in LaTeX]
+\RequirePackage{etoolbox}
+\RequirePackage{fancyvrb}
+\RequirePackage{verbatim}
+\RequirePackage{color}
+\RequirePackage{xstring}%\StrBefore{}{.}\StrBehind{}{.}
+
+%Verbatim environment a little diy
+\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newwrite\@cverbatimout
+
+% Put the  code in separate files.
+\newcounter{@cverbatimCounter}
+\setcounter{@cverbatimCounter}{0}
+
+\newcounter{@ProjectCounter}
+\setcounter{@ProjectCounter}{0}
+
+%here is hard to understand
+\begingroup \catcode `|=0 \catcode `[=1
+\catcode`]=2 \catcode `\{=12 \catcode `\}=12
+\catcode`\\=12
+|gdef|@cverbatim#1\end{cverbatim}[|immediate|write|@cverbatimout[#1]|end[cverbatim]]
+|endgroup
+
+
+\DeclareRobustCommand*{\@showcverbatim}{%
+%use the pygmentize
+\ifdefstring{\@cverbatimmode}{tex}
+{
+ \immediate\write18{pygmentize   -o \@cverbatimname.output.tex \@cverbatimname.\@cverbatimmode}
+ \immediate\input{\@cverbatimname.output.tex}
+}
+{
+\immediate\write18{pygmentize   -o \@cverbatimname.tex \@cverbatimname.\@cverbatimmode}
+%use fancyvrb VerbatimInput control the out
+\immediate\input{\@cverbatimname.tex}
+}
+}
+
+% open the file
+\def\@opencverbatim{%
+%modified the code file name%
+\def\@cverbatimname{temp/\ifnum\value{@cverbatimCounter}<10 0\fi\ifnum\value{@cverbatimCounter}<100 0\fi\arabic{@cverbatimCounter}}%
+\immediate\openout\@cverbatimout=\@cverbatimname.\@cverbatimmode%
+}%
+
+
+%environment start
+\newenvironment{cverbatim}[1]
+{
+\gdef\@cverbatimmode{#1}
+\immediate\stepcounter{@cverbatimCounter}
+%if the filefolder doesnot exist  then creat it
+\immediate\write18{if [  !  -d  temp/  ];  then mkdir -p temp/ ; fi}
+\@opencverbatim
+\newlinechar='15
+\begingroup \catcode`\^^M=12 %
+\let\do\@makeother\dospecials\obeyspaces%
+\@cverbatim}
+{\endgroup
+\immediate\closeout\@cverbatimout
+\@showcverbatim
+}
+
+
+\DeclareRobustCommand*\endcodefile[2][\arabic{@ProjectCounter}]{%#1 test.py  中的test
+\immediate\stepcounter{@ProjectCounter}
+\immediate\write18{if [  !  -d  codehome/#1  ];  then mkdir -p codehome/#1 ; fi}
+\immediate\write18{ cd temp  && cat *.\@cverbatimmode >  ../codehome/#1/#2.\@cverbatimmode  }
+\immediate\write18{ rm -rf temp    }%
+}
+
+
+
+\endinput

@@ -1,0 +1,515 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline showendnotes hlabel
+%新加入的环境如下：common-format  fig scalefig xverbatim
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt}
+\newif\ifphone
+\phonefalse
+
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+
+
+
+
+\begin{document}
+\frontmatter
+
+\titlea{书籍}
+\titleb{使用\LaTeX 排版}
+\titlec{一种良好的风格}
+\author{Jasmin Blanchette, Mark Summerfield }
+\authorinfo{翻译：于丁}
+\editor{万泽}
+\email{a358003542@gmail.com}
+\editorinfo{编者：万泽}
+\version{1.0}
+\titleLA
+
+\addchtoc{前言}
+\chapter*{前言}
+前言
+\begin{common-format}
+C++ GUI Programming with Qt 4 
+
+By Jasmin Blanchette, Mark Summerfield 
+
+............................................... 
+
+Publisher: Prentice Hall 
+
+Pub Date: June 21, 2006 
+
+作    者  于丁
+
+学习，使用Qt已经将近两年了，最开始的时候用Qt3，后来升级到Qt4.1，自认为对Qt的GUI编程部分还是很熟悉的。遗憾的是Qt的参考书少之又少，一般就是看文档和C++ GUI Programming with Qt 3，这本书是免费提供的，让我对Qt，Trolltech公司有了更多的了解。我这个人就是这样，学习什么都喜欢了解这个东东发展的历史，虽然对学习并没有太多帮助。
+
+升级到Qt4以后，API有了很多变化，苦盼一本系统的参考书，很久，C++ GUI Programming with Qt 4才得以面世，终于盼到后却遗憾的发现这本没有提供免费的电子版，今天，一个偶然的机会，得到Yimin网友的帮助，得到一份电子版，真是很谢谢他，他的bloghttp://liyimin.net/blog。
+
+C++ GUI Programming with Qt 4就是这样一本参考书，从易到难，从最经典的hello Qt开始，到构建复杂的程序。我从现在开始阅读学习，同时也把部分心得写出来，发到这里，也希望对Qt的学习者们有所帮助。这对我来说有点难度，懒人那，不过一定尽最大努力坚持写完我熟悉的部分。
+加油！
+
+%这里空一行。
+
+\end{common-format}
+
+
+\addchtoc{目录}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\begin{common-format}
+\mainmatter
+
+\chapter{qt发展小史}
+Qt的创建者Haarard Nord（Trolltech公司的CEO）和Eirik Chambe-Eng（Trolltech公司的总裁）是一家瑞典公司的同事。那时（1990）他们在做一个项目，这个项目需要在Unix，Macintosh，Windows上运行同一个GUI，象我们现在的开发人员一样，工作的很累，当时可是没有如今这么多的开发工具。一天他们工作之余去公园散步，晒太阳，喝咖啡。Haarard说：“We need an object-oriented display system。”这成为了后来Qt最重要的思想：提供面向对象的跨平台的GUI框架。看到这里小女我不仅感慨：什么时候我们的程序员们可以在工作的时候出来走走，只有在轻松愉快的环境中才会生产出出色的成果。在沉闷的办公室里，只是机械的堆砌代码而已。
+
+所做就做，Haarard开始写代码，Eirik负责设计，Qt在襁褓中逐渐成长，在开始蹒跚学步的时候（1993年），他们开始让Qt闯荡江湖，两个人开始了创业的艰辛历程。
+
+对这两个年轻人，1994年是非常艰难的一年，他们没有客户，没有钱，只有还没有完全实现的产品。关键时刻，他们的妻子帮他们渡过了难关。
+
+字母Q作为所有类的前缀，是因为Haarard手写这个字母看起来特别的漂亮，字母t代表“toolkit”，在Xt， X toolkit等中得到灵感。
+
+1995年开始出现转机，他们得到了一个合同。这一年，他们雇佣了Arnt Gulbrandsen，他在Trolltech工作了六年，他为Qt实现了优秀的文档系统。
+
+1995年5月，Qt 0.9发布，有商业和开源两个版本。96年9月，Qt1.0发布。
+
+1997年，Matthias Ettrich开始用Qt开发KDE，使Qt成为Linux上GUI开发的 事实上的标准。
+
+1999年，Qt 2 发布。
+
+2000年，Qtopia发布。支持linux嵌入式开发。
+
+2001年，Qt 3 发布。
+
+2005年， Qt 4 发布。
+
+十年来，Qt就是这样从不知名的一个产品，发展到现在拥有全世界范围内成千上万的客户。
+
+\section{从Hello Qt开始}
+差不多所有的程序教材都从Hello 开始，下面就是这个程序的qt版本。
+\begin{xverbatim}{hello.cpp}
+#include <QApplication>
+#include <QLabel>
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    QLabel *label = new QLabel("Hello Qt!");
+    label->show();
+    return app.exec();
+}
+\end{xverbatim}
+按行解析以上9行代码
+第一，二行：是代码中需要使用的类的头文件。在Qt4中，可以写成<QApplication>的格式，当然也可写成“QApplication.h”。
+
+第三行：是main函数的标准写法
+
+第五行：创建一个QApplication对象，管理应用程序的资源。
+
+第六行：QLabel对象，QLabel是一个Qt提供的小控件，显示一行文本。
+
+第七行：显示QLabel。
+
+第八行：QApplication.exec()，让程序进入消息循环。等待可能的菜单，工具条，鼠标等的输入，进行响应。
+
+将以上代码放到名为hello.cpp中，保存，编译过程如下：
+
+qmake -project，
+qmake命令创建hello.pro，是平台无关的工程文件。
+在hello.pro所在目录下，运行make（unix）或者nmake（windows）。
+
+用geany打开目标cpp文件，新建一个生成命令qmake-project，内容如下：\\
+\verb+qmake -project -o "%e.pro"+\\
+然后新建一个命令qmake，内容如下：\\
+\verb+qmake %e.pro+\\
+然后依次点击顺序如下：1.qmake-project；2.qmake；3.make；4.执行。
+
+第6行代码还可以如下替换：
+QLabel *label = new QLabel("<h2><i>Hello</i> "
+                           "<font color=red>Qt!</font></h2>");
+                           
+这里面包含了html文本，显示的字体，颜色会改变。 
+
+实际程序中，下面两行是比不可少的。
+QApplication app(argc, argv);
+return app.exec();
+
+\section{连接信号和响应函数}
+这个例子用来说明怎么响应信号，和hello程序的源代码相似，原来的Label用一个按钮代替，点击时退出程序。
+\begin{xverbatim}{quit.cpp}
+#include <QApplication>
+#include <QPushButton>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    QPushButton *button = new QPushButton("Quit");
+    QObject::connect(button, SIGNAL(clicked()),
+                     &app, SLOT(quit()));
+    button->show();
+    return app.exec();
+}
+\end{xverbatim}
+
+当有所动作或者状态改变，qt的控件会发出消息（signal），例如，当点击按钮时，按钮会发送clicked()消息，这个消息可以连接到一个函数上（这个函数在这里成为slot）。这样，当一个消息发送时，slot函数可以自动执行。在这个例子中，我们连接了按钮的clicked信号和QApplication的quit函数，语法如第七，八行所示。
+
+编译以上程序，将以上代码放在quit.cpp文件中，保存。
+
+依次运行
+
+qmake -project
+qmake quit.pro
+make(unix or linux) or nmake(windows)
+然后运行程序，点击Quit按钮，程序将会中止。 
+
+
+\section{控件的几何排列}
+
+
+%
+%
+%在这个小节中，我们说明在一个窗口中如何排列多个控件。学习利用signal和slot的方法使控件同步。程序要求用户通过spin box或者slider输入年龄。
+%程序中使用了三个控件：QSpinBox，QSlider和QWidget。QWidget是这个程序的主窗口。QSpinBox和QSlider被放在QWidget中；他们是QWidget的children。反过来，我们也可以称QWidget是QSpinBox和QSlider的parent。QWidget没有parent，因为它是程序的顶层窗口。在QWidget及其子类的构造函数中，都有一个QWidget*参数，用来指定它们的父控件。
+%源代码如下：
+% 1 #include <QApplication>
+% 2 #include <QHBoxLayout>
+% 3 #include <QSlider>
+% 4 #include <QSpinBox>
+% 5 int main(int argc, char *argv[])
+% 6 {
+% 7     QApplication app(argc, argv);
+% 8     QWidget *window = new QWidget;
+% 9     window->setWindowTitle("Enter Your Age");
+%10     QSpinBox *spinBox = new QSpinBox;
+%11     QSlider *slider = new QSlider(Qt::Horizontal);
+%12     spinBox->setRange(0, 130);
+%13     slider->setRange(0, 130);
+%14     QObject::connect(spinBox, SIGNAL(valueChanged(int)),
+%15                      slider, SLOT(setValue(int)));
+%16     QObject::connect(slider, SIGNAL(valueChanged(int)),
+%17                      spinBox, SLOT(setValue(int)));
+%18     spinBox->setValue(35);
+%19     QHBoxLayout *layout = new QHBoxLayout;
+%20     layout->addWidget(spinBox);
+%21     layout->addWidget(slider);
+%22     window->setLayout(layout);
+%23     window->show();
+%24     return app.exec();
+%25 }
+%    第8，9行建立程序的主窗口控件，设置标题。第10到13行创建主窗口的children，并设置允许值的范围。第14到第17行是spinBox和slider的连接，以使之同步显示同一个年龄值。不管那个控件的值发生变化，都会发出valueChanged(int)信号，另一个控件的setValue(int)函数就会为这个控件设置一个新值。
+%    第18行将spinBox的值设置为35，这时spinBox发出valueChanged(int)信号，int的参数值为35，这个参数传递给slider的setValue(int)函数，将slider的值也设置为35。同理，slider也会发出valueChanged(int)信号，触发spinBox的setValue(int)函数。这个时候，因为spinBox的当前值就是35，所以spinBox不会发送任何信号，不会引起死循环。
+%    在第19至22行，我们使用了一个布局管理器排列spinBox和slider控件。布局管理器能够根据需要确定控件的大小和位置。Qt有三个主要的布局管理器：
+%QHBoxLayout：水平排列控件。
+%QVBoxLayout：垂直排列控件。
+%QGridLayout：按矩阵方式排列控件
+%    第22行，QWidget::setLayout()把这个布局管理器放在window上。这个语句将spinBox和slider的“父”设为window，即布局管理器所在的控件。如果一个控件由布局管理器确定它的大小和位置，那个创建它的时候就不必指定一个明确的“父”控件。
+%现在，虽然我们还没有看见spinBox和slider控件的大小和位置，它们已经水平排列好了。QHBoxLayout能合理安排它们。我们不用在程序中考虑控件在屏幕上的大小和位置这些头疼的事情了，交给布局管理器就万事大吉。
+%    在Qt中建立用户界面就是这样简单灵活。程序员的任务就是实例化所需要的控件，按照需要设置它们的属性，把它们放到布局管理器中。界面中要完成任务由Qt的signal和slot完成。 
+%
+%第二章 创建对话框（Creating Dialogs）
+%在这章介绍如何创建Qt的对话框。对话框是程序和用户交互的桥梁，提供了程序和用户之间对话的一种方式。
+%    很多程序都是由一个主窗口，在这个主窗口中包含一个菜单条，多个工具条，和足够多的对话框。也有些程序本身就是一个对话框，直接相应用户的输入请求。
+%    本章中我们首先会用代码的方式创建我们的第一个对话框，然后用Qt Designer工具创建对话框。Qt Designer是一个可视化的工具，用它可以更快的创建，修改对话框。 
+%
+%2.1派生对话框类（Subclassing QDialog）
+%2.1派生对话框类（Subclassing QDialog）
+%第一个例子是一个用C++实现的查找对话框。我们把这个对话框实现为一个类，这样它就是一个独立的控件，并有自己的信号（signal）和slot函数
+%类的源代码分别放在finddialog.h和finddialog.cpp中。首先看finddialog.h的代码
+%1 #ifndef FINDDIALOG_H
+%2 #define FINDDIALOG_H
+%3 #include <QDialog>
+%4 class QCheckBox;
+%5 class QLabel;
+%6 class QLineEdit;
+%7 class QPushButton;
+% 8 class FindDialog : public QDialog
+% 9 {
+%10     Q_OBJECT
+%11 public:
+%12     FindDialog(QWidget *parent = 0);
+%13 signals:
+%14     void findNext(const QString &str, Qt::CaseSensitivity cs);
+%15     void findPrevious(const QString &str, Qt::CaseSensitivity cs);
+%16 private slots:
+%17     void findClicked();
+%18     void enableFindButton(const QString &text);
+%19 private:
+%20     QLabel *label;
+%21     QLineEdit *lineEdit;
+%22     QCheckBox *caseCheckBox;
+%23     QCheckBox *backwardCheckBox;
+%24     QPushButton *findButton;
+%25     QPushButton *closeButton;
+%26 };
+%27 #endif
+%一共27行，第1，2，27行是为了避免头文件被多次包含。
+%第3行包含QDialog头文件，这个类从QDialog继承，QDialog从QWidget继承。
+%    第4至7行是用到的Qt中类的前向声明。通过前向声明，编译器就知道这个类已经存在，而不用写出包含的头文件。这个问题稍后还要讲。
+%    第8至26行是类FindDialog的定义。
+%    第10行，Q_OBJECT是一个宏定义，如果类里面用到了signal或者slots，就要声明这个宏。
+%    第12行， FindDialog(QWidget *parent = 0);构造函数是Qt控件类的标准格式，默认的父参数为NULL，说明没有父控件。
+%    第13行，signal声明了这个对话框发出的两个信号，如果选择向前查找，那么对话框就发出findPrevious()信号，否则，发出findNext()信号。signal也是一个宏，在编译之前，C++预处理把它变成标准的c++代码。Qt::CaseSensitivity是一个枚举类型，有Qt::CaseSensitive和Qt::CaseInsensitive两个值。
+%在类的私有部分，声明有两个slot函数。为了实现这两个函数，需要用到对话框的其他控件的信息，所以保存了一些控件的指针。slot关键字和signal一样，也是一个宏。
+%对于私有成员变量，我们只是使用了它们的指针，没有对它们进行存取操作，编译器不需要知道它们的详细定义，所以只使用了这些类的前向声明。当然，也可以使用<QCheckBox>，<QLabel>等，但是，使用前向声明会让编译速度更快一些。
+%下面看一下finddialog.cpp源文件代码：
+%文件头和构造函数部分
+%1  #include <QtGui>
+%2  #include "finddialog.h"
+%3  FindDialog::FindDialog(QWidget *parent)
+%4      : QDialog(parent)
+%5  {
+%6      label = new QLabel(tr("Find &what:"));
+%7      lineEdit = new QLineEdit;
+%8      label->setBuddy(lineEdit);
+%9      caseCheckBox = new QCheckBox(tr("Match &case"));
+%10     backwardCheckBox = new QCheckBox(tr("Search &backward"));
+%11     findButton = new QPushButton(tr("&Find"));
+%12     findButton->setDefault(true);
+%13     findButton->setEnabled(false);
+%14     closeButton = new QPushButton(tr("Close"));
+%15     connect(lineEdit, SIGNAL(textChanged(const QString &)),
+%16             this, SLOT(enableFindButton(const QString &)));
+%17     connect(findButton, SIGNAL(clicked()),
+%18             this, SLOT(findClicked()));
+%19     connect(closeButton, SIGNAL(clicked()),
+%20             this, SLOT(close()));
+%21     QHBoxLayout *topLeftLayout = new QHBoxLayout;
+%22     topLeftLayout->addWidget(label);
+%23     topLeftLayout->addWidget(lineEdit);
+%24     QVBoxLayout *leftLayout = new QVBoxLayout;
+%25     leftLayout->addLayout(topLeftLayout);
+%26     leftLayout->addWidget(caseCheckBox);
+%27     leftLayout->addWidget(backwardCheckBox);
+%28     QVBoxLayout *rightLayout = new QVBoxLayout;
+%29     rightLayout->addWidget(findButton);
+%30     rightLayout->addWidget(closeButton);
+%31     rightLayout->addStretch();
+%32     QHBoxLayout *mainLayout = new QHBoxLayout;
+%33     mainLayout->addLayout(leftLayout);
+%34     mainLayout->addLayout(rightLayout);
+%35     setLayout(mainLayout);
+%36     setWindowTitle(tr("Find"));
+%37     setFixedHeight(sizeHint().height());
+%38 }
+%到这里FindDialog的构造函数就完成了。在传见控件和布局时我们使用了new，一般情况下，我们还需要写析构函数delete这些控件。
+%但是在Qt中这是不需要的，当父控件销毁时，Qt自动删除它所有的子控件和布局。 
+%下面是FindDialog类的两个slot函数：
+%39 void FindDialog::findClicked()
+%40 {
+%41     QString text = lineEdit->text();
+%42     Qt::CaseSensitivity cs =
+%43             caseCheckBox->isChecked() ? Qt::CaseSensitive
+%44                                       : Qt::CaseInsensitive;
+%45     if (backwardCheckBox->isChecked()) {
+%46         emit findPrevious(text, cs);
+%47     } else {
+%48         emit findNext(text, cs);
+%49     }
+%50 }
+%51 void FindDialog::enableFindButton(const QString &text)
+%52 {
+%53     findButton->setEnabled(!text.isEmpty());
+%54 }
+%    当用户点击findButton按钮，findClicked()就会调用，根据backwardCheckBox状态，他发出findPrevious()或者findNext()信号。emit也是一个Qt的宏。
+%当用户改变lineEdit中的文本，enableFindButton()slot函数就会调用。如果输入了文本，那么让findButton有效，否则就无效。
+%最后，创建main.cpp测试FindDialog对话框。
+%1 #include <QApplication>
+%2 #include "finddialog.h"
+%3 int main(int argc, char *argv[])
+%4 {
+%5     QApplication app(argc, argv);
+%6     FindDialog *dialog = new FindDialog;
+%7     dialog->show();
+%8     return app.exec();
+%9 }
+%    运行qmake编译程序。由于在FindDialog中包含了Q_OBJECT宏，由qmake生成的makefile会保换特殊的规则运行moc（Qt的原对象编译器）。
+%为了确保moc正确工作，类定义必须放在头文件而不能放在实现文件中。由moc生成的代码中包含这个头文件，并加入它自己实现的C++代码。
+%    使用了Q_OBJECT宏的类必须运行moc。如果使用qmake，那么makefile里自动包含相关的规则。如果忘记了运行moc，就会发生连接错误。不同的编译器给出的提示信息不同，有的会非常晦涩。GCC给出的错误信息如下：
+%   finddialog.o: In function 'FindDialog::tr(char const*, char const*)':
+%     /usr/lib/qt/src/corelib/global/qglobal.h:1430: undefined reference to
+%     'FindDialog::staticMetaObject'
+%     
+%Visual C++中的输出是这样:
+%     finddialog.obj : error LNK2001: unresolved external symbol
+%     "public:~virtual int __thiscall MyClass::qt_metacall(enum QMetaObject
+%     ::Call,int,void * *)"
+%    这时需要重新运行qmake，更新makefile，然后编译程序。
+%运行程序，如果看到了快键，测试ALT+W,ALT+C,ALT+B,ALT+F引发相应的处理程序。使用TAB键在将焦点改变到不同的控件上。默认的TAB键是控件创建的顺序。QWidget::setTabOrder()可以改变这个顺序。
+%    提供合适的tab顺序和快键可以让用户不用鼠标也可以运行程序，通过键盘可以快速控制程序。
+%
+%2.2深入信号和槽（Signals and Slots in Depth）
+%信号和槽是Qt编程的一个重要部分。这个机制可以在对象之间彼此并不了解的情况下将它们的行为联系起来。在前几个例程中，我们已经连接了信号和槽，声明了控件自己的信号和槽，并实现了槽函数，发送了信号。现在来更深入了解这个机制。
+%槽和普通的c++成员函数很像。它们可以是虚函数（virtual），也可被重载（overload），可以是公有的（public），保护的（protective），也可是私有的（private），它们可以象任何c++成员函数一样被调用，可以传递任何类型的参数。不同在于一个槽函数能和一个信号相连接，只要信号发出了，这个槽函数就会自动被调用。
+%connect函数语法如下：
+%connect(sender, SIGNAL(signal), receiver, SLOT(slot));
+%sender和receiver是QObject对象指针，signal和slot是不带参数的函数原型。SIGNALE()和SLOT()宏的作用是把他们转换成字符串。
+%在目前有的例子中，我们已经连接了不同的信号和槽。实际使用中还要考虑如下一些规则：
+%    1、一个信号可以连接到多个槽：
+%connect(slider, SIGNAL(valueChanged(int)),spinBox, SLOT(setValue(int)));
+%connect(slider, SIGNAL(valueChanged(int)),this, SLOT(updateStatusBarIndicator(int)));
+%当信号发出后，槽函数都会被调用，但是调用的顺序是随机的，不确定的。
+%2、多个信号可以连接到一个槽
+%connect(lcd, SIGNAL(overflow()), this, SLOT(handleMathError()));
+%connect(calculator, SIGNAL(divisionByZero()),this, SLOT(handleMathError()));
+%任何一个信号发出，槽函数都会执行。
+%3、一个信号可以和另一个信号相连
+%connect(lineEdit, SIGNAL(textChanged(const QString &)),
+%        this, SIGNAL(updateRecord(const QString &)))；
+% 第一个信号发出后，第二个信号也同时发送。除此之外，信号与信号连接上和信号和槽连接相同。
+% 
+%    4、连接可以被删除
+%disconnect(lcd, SIGNAL(overflow()),this, SLOT(handleMathError()));
+%这个函数很少使用，一个对象删除后，Qt自动删除这个对象的所有连接。
+%信号和槽函数必须有着相同的参数类型，这样信号和槽函数才能成功连接：
+%connect(ftp, SIGNAL(rawCommandReply(int, const QString &)),this, SLOT(processReply(int, const QString &)));
+%如果信号里的参数个数多于槽函数的参数，多余的参数被忽略：
+%connect(ftp, SIGNAL(rawCommandReply(int, const QString &)),this, SLOT(checkErrorCode(int)));
+%    如果参速类型不匹配，或者信号和槽不存在，在debug状态时，Qt会在运行期间给出警告。如果信号和槽连接时包含了参数的名字，Qt将会给出警告。
+%以前我们列举的例子中都是控件的信号和槽。但是信号和槽机制在QObject中就实现了，可以实现在任何从QObject继承的子类中。
+%class Employee : public QObject
+%{
+%    Q_OBJECT
+%public:
+%    Employee() { mySalary = 0; }
+%    int salary() const { return mySalary; }
+%public slots:
+%    void setSalary(int newSalary);
+%signals:
+%    void salaryChanged(int newSalary);
+%private:
+%    int mySalary;
+%};
+%void Employee::setSalary(int newSalary)
+%{
+%    if (newSalary != mySalary) {
+%        mySalary = newSalary;
+%        emit salaryChanged(mySalary);
+%    }
+%}
+%注意，只有newSalary != mySalary时才发出salary-Changed()信号，这样避免了死循环的出现。
+%×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
+%Qt的Meta-Object系统
+%    Qt的一个最主要的成功是对C++扩展，即把彼此独立的软件模块连接起来，而不需要模块间的任何细节。
+%    这个机制就是Meta-Object系统，它提供了两个关键的用途：信号和槽和introspection（内省）。introspection功能允许应用程序在运行时得到QObjec它子类的“meta-information”，这对实现信号和槽是很必要的，包括全部信号和槽的列表，和类的名字。这个机制还提供了属性（在Qt Designer中使用）和文本翻译（国际化）支持。它们构成了QSA（Qt Script for Application）的基础。
+%标准C++不提供Qt meta-object系统需要的动态meta-information。Qt提供了一个独立的工具moc，通过定义Q_OBJECT宏实现到C++函数的转变。moc是用纯c++实现的，因此可以使用在任何C++编译器中。
+%这个机制工作过程如下：
+%Q_OBJECT声明了一些QObject子类必须实现的内省函数：metaObject()，TR()，qt_metacall()等。
+%Qt的moc工具实现Q_OBJECT宏声明的函数和所有的信号。
+%QObject成员函数connect()和disconnect()使用这些内省函数实现信号和槽的连接。
+%以上这些是通过qmake，moc和QObject自动处理的，程序员通常不用考虑它们。如果你感到对此好奇，可以查看QMetaObject类文档和moc实现的c++代码。
+%
+%2.3快速设计对话框（Rapid Dialog Design）
+%2.3快速设计对话框
+%通常程序员们都是用c++源代码编写Qt应用程序，Qt也是很容易用来编写的。然而，许多程序员更喜欢用可视化的方法设计对话框，这样能更快速更容易对对话框进行修改。
+%Qt Designer满足了程序员的这一要求，提供了可视化设计对话框的方法。它可以给一个应用程序提供全部或者部分对话框。用Qt Designer设计的对话框和用c++代码写成的对话框是一样的，可以用做一个常用的工具，并不对编辑器产生影响。
+%    在这一节中，我们使用Qt Designer创建Go-to-Cell对话框，无论用编写代码的方式还是用Qt Designer，创建对话框都有如下基本的步骤：
+%1、创建和初始化子控件。
+%2、把子控件放到布局管理器中。
+%3、设置tab顺序。
+%4、创建信号和槽。
+%5、实现对话框的自己的槽函数。
+%   在windows平台Qt的安装目录的bin目录下，点击desinger.exe，或者在unix平台，在命令行上输入designer。当Qt Designer启动后，它会列出一个控件模板的列表，选择一个模板，进入设计。
+%**************************
+%    原文中对Qt Designer的介绍略去不想翻译了，只要稍有点界面编程基础的都可以轻松使用。如果确实需要，以后再补上。
+%    我个人不喜欢使用这个东东，因为要多一个文件要维护，当然如果要频繁修改所设计的对话框，那这种方法还是很方便的。但不管怎么样，最终都要修改源代码。所以我还是比较喜欢用源代码的方式把控件手工写出来。
+%    我想主要介绍把对话框设计好以后，保存为.ui文件后的处理。
+%**************************
+%    假如设计好的文件保存在gotocell目录中，命名为gotocelldialog.ui中，然后在同一个目录下创建一个main.cpp文件，编码如下：
+%#include <QApplication>
+%#include <QDialog>
+%#include "ui_gotocelldialog.h"
+%int main(int argc, char *argv[])
+%{
+%    QApplication app(argc, argv);
+%    Ui::GoToCellDialog ui;
+%    QDialog *dialog = new QDialog;
+%    ui.setupUi(dialog);
+%    dialog->show();
+%    return app.exec();
+%}
+%    保存后，在该目录下运行qmake，创建.pro文件，然后运行qmake -project生成makefile文件。qmake可以发现gotocelldialog.ui文件，然后就会调用uic（Qt的用户界面编译器），uic工具把gotocelldialog.ui转换成c++代码，保存在ui_gotocelldialog.h中。
+%    在ui_gotocelldialog.h中，包含了Ui::GoToCellDialog类的定义，这个类和gotocelldialog.ui等价。这个类声明成员变量存储对话框的子控件和布局管理器，setupUi()函数初始化对话框。
+%    这个类的定义看起来有点象下面这个样子：
+%class Ui::GoToCellDialog
+%{
+%public:
+%    QLabel *label;
+%    QLineEdit *lineEdit;
+%    QSpacerItem *spacerItem;
+%    QPushButton *okButton;
+%    QPushButton *cancelButton;
+%    ...
+%    void setupUi(QWidget *widget) {
+%        ...
+%    }
+%};
+%这个类没有父类。使用时创建一个QDialog，把它传递给setupUi()函数。
+%运行这个程序，对话框将会显示出来，但是有些功能它还不能实现：
+%1、Ok按钮是不可用状态的
+%2、Cancel按钮不作任何事情
+%3、编辑框除可以输入许可的字符或者数字外，还可以输入任何文本
+%    我们可以编写代码，让这个对话框变得有用起来。最直接的方法是创建一个新类，继承QDialog和Ui::GoToCell-Dialog，补上缺少的功能。（这说明任何软件问题可以通过添加一层间接包装来简单解决）。通常命名新类规则是把去掉uic生成的类名去掉Ui::前缀。
+%创建gotocelldialog.h头文件，写下如下代码：
+%#ifndef GOTOCELLDIALOG_H
+%#define GOTOCELLDIALOG_H
+%#include <QDialog>
+%#include "ui_gotocelldialog.h"
+%class GoToCellDialog : public QDialog, public Ui::GoToCellDialog
+%{
+%    Q_OBJECT
+%public:
+%    GoToCellDialog(QWidget *parent = 0);
+%private slots:
+%    void on_lineEdit_textChanged();
+%};
+%#endif
+%新建gotocelldialog.cpp源文件，实现这个类：
+%#include <QtGui>
+%#include "gotocelldialog.h"
+%GoToCellDialog::GoToCellDialog(QWidget *parent)
+%    : QDialog(parent)
+%{
+%    setupUi(this);
+%    QRegExp regExp("[A-Za-z][1-9][0-9]{0,2}");
+%    lineEdit->setValidator(new QRegExpValidator(regExp, this));
+%    connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
+%    connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+%}
+%void GoToCellDialog::on_lineEdit_textChanged()
+%{
+%    okButton->setEnabled(lineEdit->hasAcceptableInput());
+%}
+%    在构造函数中，我们调用setupUi()初始化这个对话框。由于多继承，我们可以直接使Ui::GoToCellDialog的成员。创建了用户界面以后，我们可以把子控件的信号和槽函数连接起来。
+%    在构造函数中，我们还创建一个许可器（validator）限制编辑框输入的范围。Qt提供了三个许可器类：QIntValidator，QDoubleValidator和QRegExpValidator。这里我们使用了QRegExpValidator，使用的表达式为“[A-Za-z][1-9][0-9]{0,2}”这个表达式的意思是第一个字符输入为大写或者小写字母，第二个字符为一个数字范围是1到9，第三个字符是一个数字范围为0到9。在QRegExpValidator的构造函数中，第二个参数为this，把当前类作为它的父控件，这样就可以不用删除它，父控件析构时可以被自动删除。
+%Qt的父子机制在QObject中实现的。当我们创建一个带有父的对象（如一个子控件，一个许可器，布局管理器等）时，父对象把子对象放到自己的子对象列表中。父对象被删除时，它查找自己的子对象并把每一个删除掉。这些子对象再把自己的子对象删除掉，如此递归，知道删除所有对象。
+%    这种父子对象的机制简化了内存管理，减少了内存泄漏的危险。需要程序员删除的对象就是我们使用new创建的没有父对象的对象。如果我们在父对象存在时删除了它的一个子对象，Qt将会在父列表中自动删除。（需要记住的是Qt只是删除有父的对象，父对象还是需要手动删除的，还有就是那些用new申请的没有指定父的内存，一般情况下，在对话框里的子控件，许可器和布局管理器由Qt自己管理，其他还要程序员小心删除）
+%对于控件来讲，父对象还有一个意义：子控件在父对象的显示区域内显示。当父控件删除后，子控件不但在内存中被删除，它也同时在屏幕上消失。
+%在构造函数的最后两行，把QDialog的accept()函数连接到OK按钮的点击信号，把Cancel按钮的点击信号连接到reject()函数。这两个槽函数都关闭这个对话框，但是accept()返回 QDialog::Accepted（值为1），reject()返回值为QDialog::Rejected（值为0）。不同的返回值可以判断用户点击了那个按钮。
+%    on_lineEdit_textChanged()槽函数控制Ok按钮的可用状态，通过编辑框中的输入字符，如果字符有效Ok按钮则有效，否则为不可用状态。QLineEdit::hasAcceptableInput()根据我们在构造函数中设置的许可器返回bool值。
+%    这就完成了这个对话框，现在重写这个main.cpp文件：
+%#include <QApplication>
+%#include "gotocelldialog.h"
+%int main(int argc, char *argv[])
+%{
+%    QApplication app(argc, argv);
+%    GoToCellDialog *dialog = new GoToCellDialog;
+%    dialog->show();
+%    return app.exec();
+%}
+%    编译这个程序（qmake -project； qmake gotocell.pro）然后运行。输入“A12”，Ok按钮变为可用。试着输入一行随意字符，观察许可器的反映。点击Cancel按钮关闭这个对话框。
+%使用qt Designer可以不改变源程序的情况下改变对话框的设计。如果对话框用C++代码编写，改变它将会很费力的。使用Qt Designer，uic自动重新生成源文件。不会浪费任何时间。
+% 
+
+
+
+
+%这里空一行
+
+\end{common-format}
+\end{document}
+
+
+

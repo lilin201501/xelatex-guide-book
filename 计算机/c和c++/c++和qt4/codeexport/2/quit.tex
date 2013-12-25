@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include \PYZlt{}QApplication\PYZgt{}}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include \PYZlt{}QPushButton\PYZgt{}}
+
+\PY{k+kt}{int} \PY{n+nf}{main}\PY{p}{(}\PY{k+kt}{int} \PY{n}{argc}\PY{p}{,} \PY{k+kt}{char} \PY{o}{*}\PY{n}{argv}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+\PY{p}{\PYZob{}}
+    \PY{n}{QApplication} \PY{n}{app}\PY{p}{(}\PY{n}{argc}\PY{p}{,} \PY{n}{argv}\PY{p}{)}\PY{p}{;}
+    \PY{n}{QPushButton} \PY{o}{*}\PY{n}{button} \PY{o}{=} \PY{k}{new} \PY{n}{QPushButton}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Quit}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+    \PY{n}{QObject}\PY{o}{:}\PY{o}{:}\PY{n}{connect}\PY{p}{(}\PY{n}{button}\PY{p}{,} \PY{n}{SIGNAL}\PY{p}{(}\PY{n}{clicked}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                     \PY{o}{\PYZam{}}\PY{n}{app}\PY{p}{,} \PY{n}{SLOT}\PY{p}{(}\PY{n}{quit}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{n}{button}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{show}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+    \PY{k}{return} \PY{n}{app}\PY{p}{.}\PY{n}{exec}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}

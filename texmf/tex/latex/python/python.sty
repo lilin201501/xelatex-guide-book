@@ -64,44 +64,18 @@
   \@showpy
 }
 
-%error and rc
-\DeclareRobustCommand*{\@writefeedback}{%
-\immediate\openin\@pyretcode=\jobname.rc
-\immediate\read\@pyretcode to \rc
-\immediate\closein\@pyretcode
 
-\ifnumequal{\rc}{0}{}{%
-    \begingroup
-        \color{red}
-        \verbatiminput{\jobname-\arabic{@ShowPythonCounter}.py.err}
-    \endgroup
-}}
-
-\DeclareRobustCommand*{\@showresult}{%
-\begingroup
-\obeylines
-\parindent=0pt
-\immediate\input{\jobname-\arabic{@ShowPythonCounter}.py.out}
-\endgroup}
-
-
-\DeclareRobustCommand*\printpython{% close the file
-\immediate\write18{ cd pyexport && cat *.pytemp >  \jobname-\arabic{@ShowPythonCounter}.py  && mv \jobname-\arabic{@ShowPythonCounter}.py .. }
-\immediate\write18{cat \jobname-\arabic{@ShowPythonCounter}.py |  /usr/bin/env python3 > \jobname-\arabic{@ShowPythonCounter}.py.out 2> \jobname-\arabic{@ShowPythonCounter}.py.err; echo -n $? > \jobname.rc}
-\@writefeedback
-\@showresult
-\stepcounter{@ShowPythonCounter}%
-\immediate\write18{  rm -f  \jobname.rc }
-\immediate\write18{ rm -fr pyexport      }
+\DeclareRobustCommand*\dopython[1]{%
+\immediate\write18{ cd pyexport && cat *.pytemp >  #1.py  && mv  -f #1.py .. }
+\immediate\write18{ gnome-terminal -e "python3 -i  #1.py"     }
+\immediate\write18{ rm -rf pyexport   }%
 }
 
-\DeclareRobustCommand*\debugpython{% close the file
-\immediate\write18{ cd pyexport && cat *.pytemp >  \jobname-\arabic{@ShowPythonCounter}.py  && mv \jobname-\arabic{@ShowPythonCounter}.py .. }
-\immediate\write18{ gnome-terminal -e "python3 -i  \jobname-\arabic{@ShowPythonCounter}.py"     }
-\stepcounter{@ShowPythonCounter}
-\immediate\write18{ rm -fr pyexport   }%
-}
 
+\DeclareRobustCommand*\notdopython[1]{%
+\immediate\write18{ cd pyexport && cat *.pytemp >  #1.py  && mv  -f #1.py .. }
+\immediate\write18{ rm -rf pyexport   }%
+}
 
 
 \endinput

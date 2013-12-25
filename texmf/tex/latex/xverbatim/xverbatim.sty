@@ -12,6 +12,7 @@
 \RequirePackage{fancyvrb}
 \RequirePackage{verbatim}
 \RequirePackage{color}
+\RequirePackage{xstring}%\StrBefore{}{.}\StrBehind{}{.}
 
 %Verbatim environment a little diy
 \fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
@@ -112,7 +113,7 @@
 \newwrite\@codeout
 \newread\@retcode
 % Put the  code in separate files.
-\newcounter{@EnvironmentCounter}[chapter]
+\newcounter{@EnvironmentCounter}
 \setcounter{@EnvironmentCounter}{0}
 %reset the EnvironmentCounter when it encounter the chapter
 
@@ -166,12 +167,15 @@
 { \immediate\write18{ cp  \@outname.bash \@outname.bash.bashexe &&  chmod +x \@outname.bash.bashexe  &&  ./\@outname.bash.bashexe  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {
 \ifdefstring{\@codemode}{lisp}
-{ \immediate\write18{cat \@outname.\@codemode |   /usr/bin/env sbcl --script > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+{ \immediate\write18{sbcl --script \@outname.\@codemode    > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+{
+\ifdefstring{\@codemode}{scm}
+{ \immediate\write18{ guile  \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {
 \ifdefstring{\@codemode}{tex}
 { \immediate\write18{  xelatex -synctex=1 -interaction=nonstopmode -output-directory=codeexport/\@codemode/\thechapter/ \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
 {\errmessage{sorry this codemode doesnot executeable recently}
-}}}}}}
+}}}}}}}
 
 
 \DeclareRobustCommand*{\@showresult}{%
@@ -183,34 +187,34 @@
 
 
 %environment start
-\newenvironment{xverbatim}[2][1]%
+\newenvironment{xverbatim}[2][1]%#1 optional 0 1 129 ... #2 is test.py
 {
 \immediate\stepcounter{@EnvironmentCounter}
 \def\@modestatus{#1}
-\def\@codemode{#2}
+\def\@codefilename{#2}
+\StrBefore{\@codefilename}{.}[\@codefile]
+\StrBehind{\@codefilename}{.}[\@codemode]
 %if the filefolder doesnot exist  then creat it
-\immediate\write18{if [  !  -d  codeexport/\@codemode/\thechapter{}   ];  then mkdir -p codeexport/\@codemode/\thechapter  ; fi}
+\immediate\write18{if [  !  -d  codeexport/\arabic{@EnvironmentCounter}   ];  then mkdir -p codeexport/\arabic{@EnvironmentCounter}  ; fi}
 %modified the code file name
-\newcommand{\@outname}{codeexport/\@codemode/\thechapter/\jobname-\arabic{@EnvironmentCounter}}
+\newcommand{\@outname}{codeexport/\arabic{@EnvironmentCounter}/\@codefile }
 \immediate\openout\@codeout=\@outname.\@codemode
 \newlinechar='15
 \begingroup \catcode`\^^M=12 %
 \let\do\@makeother\dospecials\obeyspaces%
 \@xverbatim}
-  {\endgroup
-  \immediate\closeout\@codeout
+{\endgroup
+
+\immediate\closeout\@codeout
 
 
 \ifnum \@modestatus = 0
 \else   \ifnum \@modestatus = 1    \@showcode
-\else   \ifnum \@modestatus = 2    \@executecode \@writefeedback
-\else   \ifnum \@modestatus = 9    \@showresult
 \else   \ifnum \@modestatus = 12   \@showcode \@executecode \@writefeedback
 \else   \ifnum \@modestatus = 129    \@showcode \@executecode \@showresult \@writefeedback
 \else   \ifnum \@modestatus = 19   \@showcode  \@showresult
-\else   \ifnum \@modestatus = 29   \@executecode  \@showresult \@writefeedback
-\else          \errmessage{you typed wrong optional parameter,the choice is  0 1 2 9 12 129 19 29 .}
-\fi\fi\fi \fi \fi\fi\fi\fi
+\else          \errmessage{you typed wrong optional parameter,the choice is  0 1   12 129 19  .}
+\fi\fi\fi \fi \fi
 
 }
 

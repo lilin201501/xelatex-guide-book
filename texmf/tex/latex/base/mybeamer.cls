@@ -22,7 +22,8 @@
 %\pgfmathrandomitem{\Theme}{myfavortheme}
 %\usetheme{\Theme}
 
-
+%=chemistry%
+\RequirePackage{chemfig}
 \linespread{1.2}%加大点行距
 
 %================字體================%
@@ -93,6 +94,8 @@
 %==============插入表格========%
 \RequirePackage{booktabs}
 \renewcommand{\arraystretch}{1.3}
+
+
 
 
 

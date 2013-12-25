@@ -18,6 +18,8 @@
 \RequirePackage{calc,float,multicol,moresize}
 \RequirePackage[doublespacing]{setspace}
 
+
+
 %===========加入目录 某章或某节=====%
 
 \newcommand{\addchtoc}[1]{
@@ -41,13 +43,13 @@
 \ifphone
 %for phone
 \RequirePackage[
-  paperwidth=150mm, %210-30-30
+  paperwidth=145mm, %210-30-30
   paperheight=272mm,%
   bindingoffset=0mm,%裝訂線
   top=30mm,  %
   bottom=30mm,%下邊距 包括頁腳
   left=5mm,  %左邊距or inner
-  right=10mm,  %右邊距or  outer
+  right=5mm,  %右邊距or  outer
   headheight=25mm,%頁眉
   footskip=25mm,%頁腳
   includemp=true,% 旁註寬度計入width
@@ -210,7 +212,7 @@ marginparwidth=0mm,  %旁註寬度
 \newenvironment{linefig}[2][1]
         {\begin{figure}[H]
         \centering
-        \includegraphics[width=#1\linewidth ,totalheight=\textheight , keepaspectratio]{#2}
+        \includegraphics[width=#1\linewidth ,totalheight=0.95\textheight , keepaspectratio]{#2}
         \caption{#2}}
         {\end{figure}}
 
@@ -224,7 +226,8 @@ marginparwidth=0mm,  %旁註寬度
 %=============插入尾注=========%
 \RequirePackage{endnotes}
 
-
+%==========其他宏包===========%
+\RequirePackage{chemfig} %化学
 
 
 

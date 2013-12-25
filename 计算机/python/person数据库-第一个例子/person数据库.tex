@@ -1,0 +1,204 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline showendnotes hlabel
+%新加入的环境如下：common-format  fig scalefig xverbatim
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt}
+\newif\ifphone
+\phonefalse
+
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+\usepackage{python}
+
+
+
+\begin{document}
+\frontmatter
+
+\titlea{书籍}
+\titleb{使用\LaTeX 排版}
+\titlec{一种良好的风格}
+\author{作者}
+\authorinfo{作者：}
+\editor{编者}
+\email{a358003542@gmail.com}
+\editorinfo{编者：}
+\version{1.0}
+\titleLC
+
+\addchtoc{前言}
+\chapter*{前言}
+\begin{common-format}
+这里说明你写这个python项目的基本思路和想法。
+
+
+
+
+%这里空一行。
+
+\end{common-format}
+
+
+\addchtoc{目录}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\begin{common-format}
+\mainmatter
+
+\chapter{classtools.py}
+\begin{python}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+##########################
+\end{python}
+
+\section{AttrDisplay}
+\begin{python}
+class AttrDisplay:
+    def gatherattrs(self):
+        attrs = []
+        for key in sorted(self.__dict__):
+            attrs.append('%s=%s' % (key,getattr(self,key)))
+        return ', '.join(attrs)
+             
+    def __repr__(self):
+        return '[%s: %s]' % (self.__class__.__name__,
+        self.gatherattrs())
+\end{python}
+
+
+\section{测试代码}
+\begin{python}
+if __name__ == '__main__':
+    class TopTest(AttrDisplay):
+        count=0
+        def __init__(self):
+            self.attr1 = TopTest.count
+            self.attr2 = TopTest.count+1
+            TopTest.count +=2
+            
+    class SubTest(TopTest):
+        pass
+        
+    X,Y=TopTest(),SubTest()
+    print(X)
+    print(Y)
+\end{python}
+
+
+\section{输出结果}
+\dopython[0]{classtools}
+
+
+
+\chapter{person.py}
+\begin{python}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+##################################
+#序言部分
+\end{python}
+
+
+
+\section{Person}
+\begin{python}
+from classtools import AttrDisplay
+class Person(AttrDisplay):
+    def __init__(self, name, job=None, pay=0):
+        self.name = name
+        self.job = job
+        self.pay = pay
+    def lastname(self):
+        return self.name.split()[-1]
+    def giveraise(self,percent):
+        self.pay = int(self.pay * (1+percent))
+#    def __repr__(self):
+#        return '[Person: %s,%s]' % (self.name,self.pay)
+\end{python}
+
+类名一般都大写。
+
+特殊的\verb+__init__+ 用于这个类具体创建instance实例的时候执行的动作。self表示创建的那个实例，self.name表示实例的名字，self.name ＝name表示接受的name将会传递值给self.name，同时创建的那个实例将会拥有一个自己的name属性。其他属性操作类似。\verb+__init__+ 这里实际上也是进行了函数重载。
+
+和一般函数的做法一样，job=None，表示job这个参数是一个可选参数，它有一个默认值None。
+
+这里新建了一个Person类，这个类有三个属性：name，姓名，job，工作，和pay，薪酬。
+
+新建了lastname方法，将会该实例的名字的最后的姓氏。
+
+新建了giveRaise方法，还需要一个参数percent，这样该实例的pay属性将会提高这么多百分比。这里的int函数是将数值转化为整数。
+
+重新定义\verb+__repr__+，将会影响print函数的行为。
+
+
+\subsection{Manager}
+\begin{python}
+class Manager(Person):
+    def __init__(self,name,pay):
+        Person.__init__(self,name,'mgr',pay)
+    def giveraise(self,percent,bonus=0.10):
+        Person.giveraise(self,percent+bonus)
+\end{python}
+这里定义了一个类Manager，它还接受一个参数Person，表示它是Person的子类，即一切Person类的属性它都将继承。
+
+这里重新定义了giveraise方法，用一种巧妙的方式。直接借用Person类原有的giveraise方法，对参数输入稍作修正。
+
+重载\verb+__init__+方法，提供更加灵活的本地方案。
+
+在python中：\\
+\verb+instance.method(args...)+\\
+都会化成这样的形式：\\
+\verb+class.method(instance, args...)+\\
+这种转换只针对实例。
+
+python中超类，子类，实例的重载是由一种搜索机制实现的：
+\begin{fig}{类搜索结构图}
+\label{fig:类搜索结构图}
+\end{fig}
+python首先搜索self有没有这个属性或者方法，如果没有，就向上搜索。比如说实例没有，就向上搜索那个子类，子类没有就向上搜索那个超类。
+
+
+
+\section{测试代码}
+\begin{python}
+if __name__ == '__main__':
+    bob = Person('Bob Smith')
+    sue = Person('Sue Jones', job='dev', pay=100000)
+    print(bob)
+    print(sue)
+    print(bob.lastname())
+    sue.giveraise(0.10)
+    print(sue)
+    tom=Manager('Tom Jones',50000)
+    tom.giveraise(0.10)
+    print(tom.lastname())
+    print(tom)
+\end{python}
+如果py文件是import的形式，那么这段代码将不会执行。只有以脚本python3 test.py之类的形式才执行。
+
+可见继承过来的类将不会有自己默认定义的\verb+__init__+等方法。
+
+\section{输出结果}
+\dopython{person}
+
+
+
+
+
+
+
+
+%这里空一行
+
+\end{common-format}
+\end{document}
+
+
+

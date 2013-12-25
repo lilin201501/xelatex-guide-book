@@ -1,0 +1,251 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下：addchtoc addsectoc reduline showendnotes hlabel
+%新加入的环境如下：common-format  fig scalefig xverbatim
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt}
+\newif\ifphone
+\phonefalse
+
+
+\usepackage{myconfig}
+\usepackage{mytitle}
+\usepackage{python}
+
+
+
+\begin{document}
+\frontmatter
+
+\titlea{pyqt4入门}
+\author{万泽}
+\authorinfo{作者：}
+\editor{编者}
+\email{a358003542@gmail.com}
+\editorinfo{编者：}
+\version{1.0}
+\titleLA
+
+\addchtoc{前言}
+\chapter*{前言}
+\begin{common-format}
+本文的编译使用了python宏包，这个宏包新建了一个python环境，在这个环境中写入的代码将会下如pdf文档中。如果你的py文件写完了，那么你可以使用dopython命令来生成整个py文件并执行这个py文件。命令格式如下：\\
+\verb+\dopython[0或者1]{py文件名}+\\
+可选项如果不填的话是默认1也就是生成py文件并执行。py文件名的格式是比如你填入test，那么将生成test.py文件。如果你填入可选项0，那么只是进行常规完结py文件操作（dopython命令在你新开一个py文件之前一定要有。），而不执行该py文件。
+
+py文件的执行是python3，也就是所谓的py文件的编写按照python3格式来。
+
+%这里空一行。
+
+\end{common-format}
+
+
+\addchtoc{目录}
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\begin{common-format}
+\mainmatter
+
+\chapter{第一个例子}
+\section{刚开始}
+文件：expample001.py
+\begin{python}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+####序言部分
+import sys
+from PyQt4  import QtGui
+##############
+app001 = QtGui.QApplication(sys.argv)
+
+widget001 = QtGui.QWidget()
+widget001.resize(800, 600)
+widget001.setWindowTitle('第一个程序')
+widget001.show()
+
+sys.exit(app001.exec_())
+\end{python}
+前面的注释部分就不用说了，然后导入sys，是为了后面接受sys.argv参数。导入QtGui是为了后面创建QWidget类的实例。
+
+任何程序都需要创建一个QApplication类的实例，这里是app001，后面跟著数字001就是为了强调这是一个实例。
+
+然后接下来创建QWidget类的实例widget001，首先是引用类的\verb+__init__+方法，然后QWidget类里面有resize方法，这个方法调整等下生成的程序窗口的大小。而setWindowTitle方法设置等下程序窗口上面的标题。show方法就是显示这个窗口。
+
+后面我们看到系统要退出是调用的app001实例的exec\_ 方法，这一句还不太清楚。
+
+
+\dopython[0]{example001}
+\section{加上图标}
+\begin{python}
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+\end{python}
+现在我在前面第一个程序的基础上稍作修改，来给这个程序加上图标。为了模拟Texmaker，程序的名字就叫做Texmaker。
+\begin{python}
+import sys
+from PyQt4  import QtGui
+#######################
+class MyQWidget(QtGui.QWidget):
+    def __init__(self,parent=None):
+        QtGui.QWidget.__init__(self,parent)
+
+        self.setGeometry(0, 0, 800, 600)
+        #坐标0 0 大小1360 768
+        self.setWindowTitle('Texmaker')
+        self.setWindowIcon(QtGui.QIcon\
+        ('icons/texmaker.ico'))
+
+app001 = QtGui.QApplication(sys.argv)
+widget001 = MyQWidget()
+widget001.show()
+sys.exit(app001.exec_())
+\end{python}
+因为自己的DIY开始变多了，所以这里新建了一个类，名字就简单叫做MyQWidget，然后重新定义了这个类的初始函数。首先是继承自QtGui.QWidget类，然后延续了该类的初始函数，而parent被默认为None。
+
+然后用QWidget的setGeometry方法来调整窗口的左上顶点的坐标和窗口的X，Y的大小。这里0，0表示从屏幕的最左上点开始显示，同样800，600类似前面的resize函数的配置。
+
+setWindowTitle方法前面谈论过了，这里加入图标是通过setWindowIcon方法来做到的。这个方法调用了QtGui.QIcon方法，不管这么多，后面跟的就是图标的存放路径，使用相对路径。在运行这个例子的时候，请随便弄个图标文件过来。
+
+后面的和前面类似就不多说了。
+\dopython[0]{example002}
+
+\section{窗口弹出提示信息}
+\begin{python}
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+import sys
+from PyQt4  import QtGui
+#######################
+\end{python}
+接下来要做的DIY就是让这个窗口可以弹出提示信息，就是鼠标停置一会儿会弹出一段小文字。
+\begin{python}
+class MyQWidget(QtGui.QWidget):
+    def __init__(self,parent=None):
+        QtGui.QWidget.__init__(self,parent)
+
+        self.setGeometry(0, 0, 800, 600)
+        #坐标0 0 大小1360 768
+        self.setWindowTitle('Texmaker')
+        self.setWindowIcon(QtGui.QIcon\
+        ('icons/texmaker.ico'))
+        self.setToolTip('<b>看什么看、、</b>')
+        #<b></b> 加粗
+        QtGui.QToolTip.setFont(QtGui.QFont\
+        ('微软雅黑', 10))
+
+app001 = QtGui.QApplication(sys.argv)
+widget001 = MyQWidget()
+widget001.show()
+sys.exit(app001.exec_())
+\end{python}
+上面这段代码和前面的代码的不同就在于MyQWidget类的初始函数新加入了两条命令。其中setToolTip方法设置具体显示的文本内容，而<b></b>之间的文字会加粗。然后后面那条命令是设置字体和字号的，我不太清楚这里随便设置系统的字体微软雅黑是不是有效。
+\dopython[0]{example003}
+
+\section{退出的时候询问}
+目前程序点击那个叉叉图标关闭程序的时候将会直接退出，这里新加入一个询问机制。
+\begin{python}
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+import sys
+from PyQt4  import QtGui
+#######################
+\end{python}
+接下来要做的DIY就是让这个窗口可以弹出提示信息，就是鼠标停置一会儿会弹出一段小文字。
+\begin{python}
+class MyQWidget(QtGui.QWidget):
+    def __init__(self,parent=None):
+        QtGui.QWidget.__init__(self,parent)
+
+        self.setGeometry(0, 0, 800, 600)
+        #坐标0 0 大小1360 768
+        self.setWindowTitle('Texmaker')
+        self.setWindowIcon(QtGui.QIcon\
+        ('icons/texmaker.ico'))
+        self.setToolTip('<b>看什么看、、</b>')
+        #<b></b> 加粗
+        QtGui.QToolTip.setFont(QtGui.QFont\
+        ('微软雅黑', 10))
+        
+    def closeEvent(self, event):
+        #重新定义colseEvent
+        reply = QtGui.QMessageBox.question\
+        (self, '信息',
+            "你确定要退出吗？",
+             QtGui.QMessageBox.Yes,
+             QtGui.QMessageBox.No)
+
+        if reply == QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+app001 = QtGui.QApplication(sys.argv)
+widget001 = MyQWidget()
+widget001.show()
+sys.exit(app001.exec_())
+\end{python}
+这段代码重新了原来的colseEvent方法，这里调用的那个方法内部“信息”两个字是弹出的信息框的标题，后面是信息框里面显示的文字。这里具体代码我还不是很懂。
+\dopython[0]{example004}
+
+\section{居中显示窗体}
+\begin{python}
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+import sys
+from PyQt4  import QtGui
+#######################
+\end{python}
+接下来要做的DIY是让窗体弹出的时候居中显示，前面是设置了窗体的起点坐标的，这里新建了一个center方法来确认窗体居中显示。
+\begin{python}
+class MyQWidget(QtGui.QWidget):
+    def __init__(self,parent=None):
+        QtGui.QWidget.__init__(self,parent)
+
+        #self.setGeometry(0, 0, 800, 600)
+        #坐标0 0 大小1360 768
+        self.resize(800,600)
+        self.center()
+        self.setWindowTitle('Texmaker')
+        self.setWindowIcon(QtGui.QIcon\
+        ('icons/texmaker.ico'))
+        self.setToolTip('<b>看什么看、、</b>')
+        #<b></b> 加粗
+        QtGui.QToolTip.setFont(QtGui.QFont\
+        ('微软雅黑', 10))
+        
+    def center(self):
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        #接受屏幕几何
+        size =  self.geometry()
+        self.move((screen.width()-size.width())/2,\
+         (screen.height()-size.height())/2)       
+
+    def closeEvent(self, event):
+        #重新定义colseEvent
+        reply = QtGui.QMessageBox.question\
+        (self, '信息',
+            "你确定要退出吗？",
+             QtGui.QMessageBox.Yes,
+             QtGui.QMessageBox.No)
+
+        if reply == QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+app001 = QtGui.QApplication(sys.argv)
+widget001 = MyQWidget()
+widget001.show()
+sys.exit(app001.exec_())
+\end{python}
+这里做的改动就是新建了一个center方法，接受实例。然后对这个实例也就是窗口的具体位置做一些调整。前面使用了resize和center两个方法来调整窗口的大小和窗口的位置。
+
+从center方法中我们可以看到move方法的X，Y是从屏幕的坐标原点（0，0）开始计算的。第一个参数X表示向右移动了多少宽度，Y表示向下移动了多少高度。
+\dopython[0]{example005}
+
+%这里空一行
+
+\end{common-format}
+\end{document}

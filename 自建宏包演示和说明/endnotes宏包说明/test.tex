@@ -14,9 +14,7 @@
 %\renewcommand\endnotemark{[\theenmark]}
 %\renewcommand\endnotemarkback{[\theenmark]}
 
-\makeatletter
-\@addtoreset{@EndnoteCounter}{chapter}
-\makeatother
+
 
 
 \begin{document}
@@ -89,9 +87,7 @@ test\endnote{test}
 this is a test line\endnote{this is a test line b}
 
 \lipsum[1-2]
-this is a test line\endnote{\textbf{this is a test line b},  this is\emph{ a test line, this is a test line, this is a t}est line.this is a test line,  thi{\Large s is a test }line, this is a test line, this is a test line.}
-
-test\endnote{test
+接下来，我们考虑\uwave{心理}科学。顺便提一下，心理分析并不是一门科学，它充其量不过是一个医学过程，也许更像巫术。\endnote{任何学科能够从数学上描述之后才能称之为真正意义上的科学，所以恕我直言，目前的中医西医都是医学，区别只有技术层面，但都算不上科学，他们对内部作用细节都没弄明白。}它有一个疾病起源的理论——据说有许多不同的“。\endnote{任何学科能够从数学上描述之后才能称之为真正意义上的科学，所以恕我直言，目前的中医西医都是医学，区别只有技术层面，但都算不上科学，他们对内部作用细节都没弄明白。} a test line\endnote{\textbf{this is a test line b},  this is\emph{ a test line, this is a test line, this is a t}est line.this is a test line,  thi{\Large s is a test }line, this is a test line, this is a test line.}test\endnote{test
 \begin{center}
 testtest test         tet
 \end{center}
@@ -100,11 +96,11 @@ testtest test         tet
 test\endnote{test}
 test\endnote{test}
 
-test\endnote{test}
+\section{心理学}
+接下来，我们考虑\uwave{心理}科学。顺便提一下，心理分析并不是一门科学，它充其量不过是一个医学过程，也许更像巫术。\endnote{任何学科能够从数学上描述之后才能称之为真正意义上的科学，所以恕我直言，目前的中医西医都是医学，区别只有技术层面，但都算不上科学，他们对内部作用细节都没弄明白。}它有一个疾病起源的理论——据说有许多不同的“幽灵”等等。巫医有一个理论说像疟疾那样的疾病是由进入空气中的幽灵所引起的；但是医治疟疾的药方并不是将一条蛇在病人头上晃动，而是奎宁。所以，如果你的身体感到有什么不舒服，我倒劝你到巫医那儿去，因为他是对疾病知道得最多的那批人中的一个。然而，他的知识不是一种科学。心理分析没有用实验仔细地检验过，因此没有办法知道，在哪些情况下它是有效的，在哪些情况下则是无效的，等等。
 
-test\endnote{test}
 
-test\endnote{test}
+
 
 \lipsum[1-2]
 \section{注释}

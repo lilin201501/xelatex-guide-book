@@ -13,8 +13,6 @@
 %
 
 
-
-
 \begin{document}
 \frontmatter   
 
@@ -25,7 +23,7 @@
 \editor{万泽}
 \email{a358003542@gmail.com}
 \editorinfo{编者：万泽，}
-\version{1.18}
+\version{1.19}
 \titleLB
 
 \addchtoc{前言}
@@ -200,7 +198,7 @@ $ \sim $/.config/ibus/rime
 \subsubsection{开始DIY}
 其中官网wiki中讲了一些default.custom.yaml的定制，那些我似乎都没有需要，然后略过。现在主要讨论\\lunna\_{}pinyin.custom.yaml的配置问题。
 具体配置如下：   
-\begin{xverbatim}{yaml}  
+\begin{xverbatim}{luna_pinyin.yaml}  
 patch:
     punctuator:
         import_preset: symbols
@@ -248,7 +246,7 @@ yaml的缩进表达我不太清楚，实际上我不太喜欢那种缩进的语�
 如果你放一张非常漂亮的图片，比如variety可以设置，那么这些白点将会让你很不舒服。\footnote{\href{http://askubuntu.com/questions/72620/how-do-i-remove-the-dots-from-the-lightdm-greeter}{参考了这个网站}}
 
 通过运行下面的bash脚本，就是一行行输入进去即可，重启之后确实去除了。
-\begin{xverbatim}{bash}
+\begin{xverbatim}{去除白点.bash}
 sudo xhost +SI:localuser:lightdm
 sudo su lightdm -s /bin/bash
 gsettings set com.canonical.unity-greeter draw-grid false
@@ -314,16 +312,16 @@ sudo texhash  \\
 请选择最下面的那个管理外部工具，看到在此处打开终端，gnome-terminal后面去除掉，然后就能正常工作了。\endnote{本信息来自ubuntu13.04，gedit版本号为3.6.2。}
 
 现在我们新建一个命令，名字叫做xelatex，具体内容如下：
-\begin{xverbatim}{bash}
+\begin{Verbatim}
 #!/bin/sh
 filename=$GEDIT_CURRENT_DOCUMENT_NAME
 shortname=`echo $filename | sed 's/\(.*\)\.tex$/\1/'`
 xelatex -interaction batchmode -src $filename
-\end{xverbatim}
+\end{Verbatim}
 那么这个小工具就实现xelatex编译功能了。
 
 然后我们也可以再新建一个小工具，名字叫清理：
-\begin{xverbatim}{bash}
+\begin{Verbatim}
 #!/bin/sh
 filename=$GEDIT_CURRENT_DOCUMENT_NAME
 shortname=`echo $filename | sed 's/\(.*\)\.tex$/\1/'`
@@ -331,7 +329,7 @@ rm -f  $shortname.aux $shortname.ent  $shortname.out
 $shortname.lot $shortname.idx $shortname.lof 
 $shortname.ilg $shortname.ind $shortname.log 
 $shortname.toc $shortname.bbl $shortname.blg
-\end{xverbatim}
+\end{Verbatim}
 这样运行它就可以清理临时文件了。
 
 
@@ -406,7 +404,7 @@ sudo  apt-get install font-manager  \\
 
 \section{ubuntu系统字体的配置}
 不是特别难看的情况就没必要改动系统字体，因为我们不要低估了人眼的适应能力。这里的配置主要是指由于系统升级带来的字体的改变，特别是中文字体的改变，手动配置将其固定下来。\endnote{这个代码主要参考了\href{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}{这个网站}}
-\begin{xverbatim}{xml}
+\begin{xverbatim}{local_config.xml}
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
@@ -660,13 +658,13 @@ geometry的机制是以上讨论的横向或者竖向参量指定足够的数量
 
 进入adjustwidth环境就可以调整旁注宽度了。比如这里我新建一个widetext环境代码如下：
 
-\begin{xverbatim}{tex}   
+\begin{Verbatim}
 \newenvironment{widetext}  
 	{\begin{adjustwidth}{}{-70mm}}%marginparwidth+marginparsep
 	{\end{adjustwidth}}
-\end{xverbatim}
+\end{Verbatim}  
 
-新建环境请看\ref{sec:新的环境}。我们在这里建立了一个widetext环境，主要是adjustwidth环境操作，我们看到后面有两个花括号，第一个指左margin，第二个指右margin。注意这里不要和前面geometry宏包里面设置的includemp弄混了。\footnote{geometry宏包里面设置includemp=true让marginpar部分进入width，也就是right margin并不包含旁注部分了，但是只适用于geometry宏包。}这里左margin就是前面设置的left，右margin是前面设置的right+marginparwidth+marginparsep。所以可以考虑geometry宏包不要设置includemp，我前面只是为了理解简单才如此设置的，当然这里理解这个概念了就没有什么问题了。
+新建环境请看\ref{sec:新的环境}。我们在这里建立了一个widetext环境，主要是adjustwidth环境操作，我们看到后面有两个花括号，第一个指左margin，第二个指右margin。注意这里不要和前面geometry宏包里面设置的includemp弄混了。\footnote{geometry宏包里面设置includemp=true让marginpar部分进入width，也就是right margin并不包含旁注部分了，但是只适用于geometry宏包。}这里左margin就是前面设置的left，右margin是前面设置的：\\right+marginparwidth+marginparsep。所以可以考虑geometry宏包不要设置includemp，我前面只是为了理解简单才如此设置的，当然这里理解这个概念了就没有什么问题了。
 
 然后正数表示margin宽度增大，负数表示margin部分宽度减小。这里设置-70mm即右边marginparwidth+marginparsep的宽度。然后自己注意进入这个环境了就不要使用marginpar或者其他旁注的命令了，这是显而易见的。不设置数值即表示不改变，出了adjustwidth环境，一切复原。
 
@@ -678,23 +676,11 @@ changepage宏包还有changetext和changepage命令，有兴趣的可以看下�
 \subsection{多栏环境}
 多栏环境推荐使用\emph{multicol}宏包。\endnote{在beamer类下有一种看上去不错的多栏环境，就是使用的columns环境，不过只适用于beamer类的frame框架下。}
 这个宏包很厉害，支持两栏到十栏的环境。就作为通用的一般形式如下：
-\begin{xverbatim}{tex}
-\begin{multicols}{3}
-   blabla。
-   \columnbreak
-   blablablabla。
-   \columnbreak
-   blabla
-\end{multicols}
-\end{xverbatim}
-以上代码运行效果如下：
-\begin{multicols}{3}
-   在这里每一栏的宽度表示为linewidth，这个可以用来控制放进去的图片宽度。
-   \columnbreak
-   这里用columnbreak命令手动调整栏的跳转。你也可以不用columnbreak命令，而让\TeX 自动计算栏的高度和分布等。不过似乎用columnbreak只能近似控制，并不是那种完全严格的跳转命令。
-   \columnbreak
-   这是最基本的应用，请参看多张图片并列显示这一小节。\ref{sec:多张图片并列显示}
-\end{multicols}
+
+在这里每一栏的宽度表示为linewidth，这个可以用来控制放进去的图片宽度。
+这里用columnbreak命令手动调整栏的跳转。你也可以不用columnbreak命令，而让\TeX 自动计算栏的高度和分布等。不过似乎用columnbreak只能近似控制，并不是那种完全严格的跳转命令。
+这是最基本的应用，请参看多张图片并列显示这一小节。\ref{sec:多张图片并列显示}
+
 
 
 \begin{multicols}{2}
@@ -726,11 +712,11 @@ Serif字体著名的有：Times New Roman、DejaVu Serif、宋体、明体。
 
 \item[sans-serif] Sans-Serif中文译为「无衬线字体」，专用于荧幕、简报、艺术字体、展示等，较美观，但不适于长时间阅读。多数英文语系的作业系统多以此为预设字体，而采用此种字体为预设的中文作业系统，以Mac系统最为著名。
 
-Sans-Serif 字体著名的有：Arial、DejaVu Sans、Helvetica、Verdana、楷体、圆体、黑体、ubuntu logo 体。
+Sans-Serif 字体著名的有：Arial、DejaVu Sans、Helvetica、\linebreak Verdana、楷体、圆体、黑体、ubuntu logo 体。
 
 \item[monospace] Mono意思是「单一的」，space 意思是「空间」，中文翻为「等宽字体」。等宽字是打字机时代下的遗产，每个英文字母皆设计为同一宽度，以便于排版；现代为节省不必要空间的浪费，依字母形状分配其宽度，如m与i其宽度便不相同，不相信可以拿尺来量看看。Monospace 现多用于终端机显示、程序码表示等。
 
-Monospace字体著名的有：Andale Mono、DejaVu Sans Mono、Courier、AR PL New Sung Mono。
+Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Courier、AR PL New Sung Mono。
 \end{description}
 
 
@@ -752,7 +738,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono、Courier、AR PL N
 
 \subsubsection{调整字族}
 有两种方法设置，一种是命令式的，一种是环境式的。roman font family是默认的字族，一般不需要明确设置。
-\begin{table}[h]
+\begin{table}[H]
 \label{tab:调整字族}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -768,7 +754,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono、Courier、AR PL N
 
 \subsubsection{调整字型系列}
 默认的medium，一般不需要设置，然后还有一个bold，即字体加粗。
-\begin{table}[h]
+\begin{table}[H]
 \label{tab:调整字型系列}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -784,7 +770,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono、Courier、AR PL N
 
 \subsubsection{调整字形}
 默认是upright shape，常用的字形如下：
-\begin{table}[h]
+\begin{table}[H]
 \label{tab:调整字形}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -850,16 +836,16 @@ size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
 \subsubsection{绝对字号调整}
 上面的命令基本上够用了，并不鼓励使用绝对字号。不过有的时候还是有用的，比如旁注环境需要同时调整字体大小和行距，使用这个命令注意不要对文本中某一小段文字使用，否则会造成行距的不一致。
 比如这个旁注使用的命令是：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newcommand{\sidenote}[1]{\marginpar{  
  	\fontsize{10pt}{20pt}\selectfont #1}}
-\end{xverbatim}
+\end{Verbatim}
 其中fontsize就是调整字号的命令，第一个参量是字体的大小，第二个参量是行距。然后后面\textbackslash selectfont 必须写上，就理解为表示对后面的字体进行操作吧。类似的还有fontencoding，fontfamily，fontseries，fontshape命令，这些本文略过。
 
 
 \section{本文字体配置}
 本文字体配置代码如下，后面有相关介绍：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \usepackage{xltxtra,fontspec,xunicode} %必备三件套
 \usepackage[CJKnumber=true]{xeCJK} %中文环境宏
 \xeCJKsetup{PunctStyle=plain}
@@ -873,7 +859,7 @@ size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
 \setmainfont[Mapping=tex-text]{DejaVu Serif} 
 \setsansfont[Mapping=tex-text]{DejaVu Sans}
 \setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
-\end{xverbatim}
+\end{Verbatim}
 
 上面代码第一行就是xelatex必备的三件套，其中xltxtra宏包是专门处理\XeLaTeX 的一些问题的，它会自动加载后面的fontspec和xunicode宏包。xunicode是处理某些特殊字符的。上面代码的具体解释详见下面的fontspec宏包和xeCJK宏包详解。
 
@@ -884,8 +870,10 @@ size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
 \subsection{基本的命令}
 fontspec宏包最基本的应用就是用setmainfont来设置文档的默认roman字族字体的，setmainfont原来的名字叫setromanfont。\footnote{\href{http://tex.stackexchange.com/questions/70413/problem-with-xetex-latex-and-system-fonts}{参考了这个网站}}setsansfonts是设置文档默认sans-serif字族字体的，setmonofont是设置monospace字族字体的。然后我们看到前面都有一个可选项Mapping=tex-text，这个说是什么让\XeTeX 文字分布更好的，可能和正确断行有关系，不大确切。
 
-fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常的基本，大约相当于引擎的入门口，我估计前面三个命令实际上是建构在fontspec命令之上的。fontspec命令的作用不光临时改变字体。还可以加上很多可选项，比如字体尺寸，颜色等等。总之fontspec命令的优先级要高于前面的三大默认字体设置命令。请看下面的例子：\\
-\verb+{\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} +\\
+fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常的基本，大约相当于引擎的入门口，我估计前面三个命令实际上是建构在fontspec命令之上的。fontspec命令的作用不光临时改变字体。还可以加上很多可选项，比如字体尺寸，颜色等等。总之fontspec命令的优先级要高于前面的三大默认字体设置命令。请看下面的例子：
+\begin{Verbatim}
+{\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} 
+\end{Verbatim}
 {\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} 
 
 另外还有一个有用的命令就是newfontfamily，这个命令相当于把fontspec命令包起来再新建一个命令。新建的那些字体命令就像\verb+\sffamily+之类的命令一样使用。，在后面讲到引入特殊符号的时候我们还会接触到这个命令。\\　
@@ -893,13 +881,13 @@ fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常
 
 以上基本命令总结如下:
 \newpage
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \fontspec [ font features ] { font name }
 \setmainfont [ font features ] { font name }
 \setsansfont [ font features ] { font name }
 \setmonofont [ font features ] { font name }
 \newfontfamily{ cmd }[ font features ] { font name }
-\end{xverbatim}
+\end{Verbatim}
 上面的font name在安装字体的时候说明清楚了，比如说用fc-list命令调出来的『宋体,SimSun:style=Regular』中字体名字就是宋体或者SimSun。而在fontmanager里面比如第一行显示『Comic Sans MS Regular』，字体名就是Comic Sans Ms。接下来主要讨论font features的内容，所讨论的内容以上几个基本命令都适用。由于xeCJK的fontfeatures可选项是继承自fontspec，所以下面的讨论也适用于xeCJK宏包。
 
 \subsection{font features的讨论}
@@ -938,12 +926,12 @@ SmallCapsFont = font name
 
 \subsection{设置数学字体}
 本文不深究数学领域排版知识的讨论。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \setmathrm [ font features ] { font name }
 \setmathsf [ font features ] { font name }
 \setmathtt [ font features ] { font name }
 \setboldmathrm [ font features ] { font name }
-\end{xverbatim}
+\end{Verbatim}
 
 
 \subsection{xeCJK宏包详解}
@@ -1007,7 +995,7 @@ texmaker软件并没有这个问题，不管怎么样，加上这样一行代码
 \~ ,这个符号在文档中产生一格空白，如要显示在前面加上\textbackslash 符号。这样显示的波浪号有点小。还可以进入数学模式下输入\textbackslash sim，在texmaker左边的关系符号一栏中也可以找到。所以为了美观的话就用数学模式吧。然后在Rime输入法里面我们看到还有一种符号是全角下的波浪号～。我比较了下这个和前面两个都不相同，简单起见用这个全角的波浪号也是可以的。
 
 \subsubsection{\$}
-\$ ,美元符号之所以不可以用是因为它标记了数学模式的开始和结束。比如说我要输入字母$\pi$,就是在两个美元符号中间输入\textbackslash pi即可。理论上输入\textbackslash pi 就可以显示$\pi$了，但是和中文字混合处理的时候会出错，而英文字混合输入会引起字体不协调的问题，而进入数学模式之后就不会。同样还有一种希腊字母的符号π，这个可以正常显示，只是没有前面数学模式下的美观。我查了一下，数学模式下的那个$\pi$也是unicode区域里面的那个希腊字母，我想只是字体问题了。\footnote{\href{http://www.johndcook.com/unicode_latex.html}{这个网站}用来查找unicode和\LaTeX 命令的对应关系}
+\$ ,美元符号之所以不可以用是因为它标记了数学模式的开始和结束。比如说我要输入字母$\Pi$,就是在两个美元符号中间输入\textbackslash pi即可。理论上输入\textbackslash pi 就可以显示$\Pi$了，但是和中文字混合处理的时候会出错，而英文字混合输入会引起字体不协调的问题，而进入数学模式之后就不会。同样还有一种希腊字母的符号π，这个可以正常显示，只是没有前面数学模式下的美观。我查了一下，数学模式下的那个$\Pi$也是unicode区域里面的那个希腊字母，我想只是字体问题了。\footnote{\href{http://www.johndcook.com/unicode_latex.html}{这个网站}用来查找unicode和\LaTeX 命令的对应关系}
 
 \subsubsection{\#}
 \# ,这个符号没怎么接触，latex123说是定义巨集的，前面加上\textbackslash 即可。
@@ -1019,7 +1007,8 @@ texmaker软件并没有这个问题，不管怎么样，加上这样一行代码
 \& ,这个符号表示表格中的分隔符。要显示前面加上\textbackslash 即可。
 
 \subsubsection{单引号和双引号}
-你可以用\textbackslash textquotedblleft来表示左双引号，用\textbackslash textquotedblright 来表示右双引号。用\textbackslash textquoteleft来表示左单引号，用\textbackslash textquoteright来表示右单引号。
+你可以用\textbackslash textquotedblleft来表示左双引号， 用：\\
+\textbackslash textquotedblright 来表示右双引号。用\textbackslash textquoteleft来表示左单引号，用\textbackslash textquoteright来表示右单引号。
 
 然后还有敲键盘的方法，要左边和右边区别对待，比如说左单引号就是点击ESC下面那个键，右单引号是点击分号右边那个键；而左双引号是点两次ESC下面那个键，右双引号是按住shift，然后点击分号右边那个键。
 
@@ -1056,7 +1045,7 @@ this...   that\ldots   \\
 \endnote{主要参考了\href{http://tex.stackexchange.com/questions/41130/getting-xelatex-to-display-accents-and-characters-not-included-with-the-font}{这个网站}}
 
 我的加入新符号的配置代码如下：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
 \newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
 \usepackage{newunicodechar}
@@ -1065,7 +1054,7 @@ this...   that\ldots   \\
 \newunicodechar{Ⓒ}{{\libertine{Ⓒ}}} 
 \newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
 \newunicodechar{}{{\ubuntu{}}}
-\end{xverbatim}
+\end{Verbatim}
 
 值得提醒的是目前系统的文档里面那个Ubuntu图标都不能正确显示出来，而我们在pdf中却能显示出来。我们来看看代码。\endnote{如果你输入了某个Unicode的字形你目前的pdf字体并不包括，那么将会产生这样的一个错误信息：WARNING invalid CMap mapping entry.然后你编译pdf之后发现某个字符没有正常显示出来只是一个方框那么可能是目前字体不包括这个字形。}
 
@@ -1081,7 +1070,7 @@ this...   that\ldots   \\
 
 \section{初步中文化}
 主要是些原\LaTeX 常量是英文单词，然后改成中文字即可。看看代码就清楚了。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \renewcommand\contentsname{目~录}
 \newcommand\econtentsname{Contents}
 \renewcommand\listfigurename{插图目录}
@@ -1094,14 +1083,14 @@ this...   that\ldots   \\
 \renewcommand\appendixname{附录}
 \renewcommand{\abstractname}{摘~要}
 \renewcommand\today{\number\year~年~\number\month~月~\number\day~日}
-\end{xverbatim}
+\end{Verbatim}
 
 
 \section{颜色}
 \label{sec:颜色}
 
 \subsection{本文颜色的配置}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \usepackage{xcolor}  
 %===========在网上找的配黑色文字比较好的背景色=============%
 \definecolor{bgcolor-co}{RGB}{255,255,255}  %引用cite  observe
@@ -1113,7 +1102,7 @@ this...   that\ldots   \\
 \definecolor{defaultbgcolor-1}{RGB}{240,240,240}  %gray25  recommend
 
 \pagecolor{defaultbgcolor-0}
-\end{xverbatim}
+\end{Verbatim}
 
 \subsection{颜色的心理学}
 颜色心理学是一门学问，这里不会深究，只是在文档里面字体或者背景使用什么颜色是一门大学问。这里主要参照\href{http://www.jb51.net/article/8216.htm}{这个网站}简单说下。本文定义的几个颜色也是参考的这个网站。
@@ -1152,7 +1141,7 @@ this...   that\ldots   \\
 xcolor宏包虽然是color宏包的扩展集，但对于我这个颜色知识盲来说多少有点不知所云，可能专业弄颜色的对那些颜色模式的增加还有颜色混合的表达扩展觉得很感动吧。如果你对颜色有更高级的需求，请详细阅读xcolor宏包文档，这里不赘述了。
 
 就一般用户还是用definecolor命令吧，支持的模式有gray，rgb，RGB，HTML，cmyk。其中只要加载xcolor宏包就能使用的颜色名字如下：
-\begin{table}[h]
+\begin{table}[H]
 \begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
 \toprule
 颜色        & 效果  & 颜色       & 效果\\ \midrule
@@ -1174,7 +1163,7 @@ yellow    &    \cellcolor{yellow}\\ \bottomrule
 \verb+yellow & \cellcolor{yellow}\\ \bottomrule+
 
 虽然颜色混合我弄不大明白，不过单个颜色调百分比\footnote{不清楚和谁调？白色？}还是很有用的。比如gray灰色后面跟个!20，就表示20\%的灰，那种淡淡的灰色做背景颜色挺好的。请看下面不同百分比的灰色。
-\begin{table}[h]
+\begin{table}[H]
 \begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
 \toprule
 灰色百分比        & 效果  & 灰色百分比       & 效果\\ \midrule
@@ -1188,21 +1177,22 @@ gray!0    &    \cellcolor{gray!0}\\ \bottomrule
 \label{tab:不同百分比的灰色}
 \caption{不同百分比的灰色}
 \end{table}
+
 这个表格最后一行是：\\
-\verb+gray!0 & \cellcolor{gray!0}\\ \bottomrule+\\
+\verb+gray!0 & \cellcolor{gray!0}\\ \bottomrule+
 
 值得一提的是xcolor宏包还支持一种表格颜色交替模式，看上去不错。请看带颜色的表格这一小节\ref{sec:带颜色的表格}。
 
 
 \section{段落}
 \subsection{本文中段落相关代码}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newenvironment{common-format}{ %不知怎么经过目录会出错。
 	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落间距
 	\setlength{\baselineskip}{22pt}%基础行间距
 	\setlength{\parindent}{\baselineskip * \real{0.12} + \textpt * \real{2.4}}}  
     {}
-\end{xverbatim}
+\end{Verbatim}
 在这里我新建了一个标准格式命令，然后在适当的时候引用。
 
 \subsection{换行和分段}
@@ -1250,11 +1240,11 @@ baselinestretch量相当于行间距glue的伸缩量，也就是对前面的base
 
 \subsection{段落对齐}
 flushleft环境为左对齐环境，flashright环境为右对齐环境，center为居中环境。类似的命令样式有raggedleft，raggedright和centering。这些命令还可以控制表格图片(也许是一切盒子?)的位置。简单示例如下：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{flushright}
 \fbox{右边才是王道。}
 \end{flushright}
-\end{xverbatim}
+\end{Verbatim}
 \begin{flushright}
 \fbox{右边才是王道。}
 \end{flushright}
@@ -1268,12 +1258,12 @@ flushleft环境为左对齐环境，flashright环境为右对齐环境，center�
 \subsection{全部信息归零}
 \subsubsection{plain样式重置}
 fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新的页眉页脚样式。现在我将plain样式所有信息全部清除，宁愿没有也不愿出现其他别样的信息。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \fancypagestyle{plain}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}}
-\end{xverbatim}
+\end{Verbatim}
 该代码第一行是提出要重新定义plain样式，然后里面包含新的定义。第二行是所有的页眉页脚信息换为空值，第三行是将页眉那条线宽度设为0pt，也就是不显示了，第四行类似是页脚那根线不显示了。
 
 \subsubsection{选择默认样式为empty}
@@ -1285,7 +1275,7 @@ fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新�
 我不太喜欢那一条横线，有需要的请自己将前面的什么rulewidht命令横线宽度设为0.4pt左右。
 
 我是一个喜欢简单的人，fancyhdr宏包里面还有很多命令：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \lhead[<even output>]{<odd output>}
 \chead[<even output>]{<odd output>}
 \rhead[<even output>]{<odd output>}
@@ -1294,11 +1284,11 @@ fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新�
 \rfoot[<even output>]{<odd output>}
 \fancyhead[selectors]{output you want}
 \fancyfoot[selectors]{output you want}
-\end{xverbatim}
+\end{Verbatim}
 这些命令都可以用fancyhf命令来达到，所以我不做介绍了，有需要的请参考fancyhdr宏包文档。
 
 \subsubsection{fancyhf命令的可选项}
-\begin{table}[h]
+\begin{table}[H]
 \begin{tabular}{@{}ll@{}}
 \toprule
 字母 & 意义  \\ \midrule
@@ -1321,7 +1311,7 @@ O  & 奇数页(odd) \\ \bottomrule
 显然直接写上书名没多大意思，现在决定定制如下，页眉左边用ttfamily字体，字体大小是footnotesize，左边写上章名，右边写上节名。
 
 \subsection{本文页眉页脚配置代码}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \RequirePackage{fancyhdr}   %頁眉頁腳
 \pagestyle{fancy}
 \fancypagestyle{plain}{
@@ -1338,19 +1328,19 @@ O  & 奇数页(odd) \\ \bottomrule
     \fancyhfoffset[R]{\marginparwidth+\marginparsep}
     }
 \pagestyle{plain} 
-\end{xverbatim}
+\end{Verbatim}
 \subsubsection{一些基础情况说明}
 请看到第11行，设置的是页眉左边的格式，然后设置为ttfamily字族和footnotesize，这个大家都清楚。然后后面是一个命令leftmark，要使用这个命令，前面必须先加上fancy样式。\footnote{似乎可以理解为这个命令继承自fancy样式。}
 
 leftmark就是目前的章名，rightmark就是目前的节名。而重新定义则需要通过chaptermark和sectionmark，不太清楚为什么。我们再看上面对chaptermark和sectionmark的重定义。其中chaptermark影响leftmark，他的参数就是具体的章名。而他使用的是markboth，sectionmark使用的是markright，具体意义也不大清楚。
 
 我起初试图如下重新定义chaptername和sectionname，然后重新定义thechapter和thesection也就是当前章节编号。在这里先将编号用arabic命令转化为1,2,3...的形式，然后用CJKnumber命令转化为一,二,三...的形式。可是目录形式也跟着改变了，还有图片编号。影响范围太大了，所以就直接用上面代码的形式组合了。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
  \renewcommand{\thechapter}{\CJKnumber{\arabic{chapter}}}
  \renewcommand{\thesection}{\CJKnumber{\arabic{section}}}
  \renewcommand{\chaptername}{第\thechapter章}
  \renewcommand{\sectionname}{第\thesection节}
-\end{xverbatim}
+\end{Verbatim}
 
 \subsubsection{页眉页脚宽度}
 如果你文章旁注比较宽，你会注意到下面的页码并不是在最右边。如果你希望页码移到最右边可以通过命令fancyhfoffset来调节。同时相应页眉页脚那条线也会加长。代码类似于：
@@ -1361,21 +1351,21 @@ leftmark就是目前的章名，rightmark就是目前的节名。而重新定义
 推荐使用\emph{titlesec}宏包进行章节标题设计，当然还有其他的宏包可以设计出更加花哨的章节标题这里忽略。
 
 \subsection{本文章节标题设计}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \usepackage{titlesec}
 \titleformat{\part}{\huge\sffamily}{}{0em}{} 
 \titleformat{\chapter}{\LARGE\sffamily}{}{0em}{} 
 \titleformat{\section}{\Large\sffamily}{}{0em}{}
 \titleformat{\subsection}{\large\sffamily}{}{0em}{}
 \titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
-\end{xverbatim}
+\end{Verbatim}
 本文章节标题设计非常简单，几乎就是titleformat命令各个选项的空值。
 
 \subsection{titleformat命令说明}
 titlesec宏包还提供了其他一些命令，不过一切设置都可以通过titleformat命令来获得：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \titleformat{\chapter}[shape]{格式}{label}{sep}{before-code}[after-code]
-\end{xverbatim}
+\end{Verbatim}
 第一个花括号是选择你要修改的目标，也就是是章啊，还是节啊，还是小节。从part到subparagraph都可以的。
 
 后面是shape，一个可选项，没看懂要干嘛的。估计也不太重要吧。
@@ -1390,7 +1380,7 @@ titlesec宏包还提供了其他一些命令，不过一切设置都可以通过
 
 
 \subsection{章节编号数值修改}
-part，chapter，section等这些都是counter量，通过setcounter命令直接修改──比如说section──为2，那么接下来counter自动计数是从2开始，下一个section编号是3。
+part，chapter，section等这些都是counter量，\\通过setcounter命令直接修改──比如说section──为2，那么接下来counter自动计数是从2开始，下一个section编号是3。
 
 \subsection{章节编号深度修改}
 通过设置secnumdepth这个counter的量可以设置章节编号深度。\\
@@ -1411,12 +1401,12 @@ thepart，thechapter，thesection，thesubsection等你可以称他们为标签�
 
 \section{目录设计}
 一般在封面之后插入目录，用tableofcontents命令即可。本文没有对目录做太多的修改，默认的目录格式挺好的。唯一使用的技巧是新建一个comman-format环境，用这个将除了目录和封面之外所有的其他内容都包括进去。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newenvironment{common-format}{ %
 	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
 	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  
     {}
-\end{xverbatim}
+\end{Verbatim}
 
 \subsection{目录深度控制}
 \verb+\setcounter{tocdepth}{1} +
@@ -1425,7 +1415,7 @@ tocdepth是一个counter量，默认是2，显示到subsection。这里为了是
 \subsection{前言加入目录}
 \label{sec:前言加入目录}
 本文定义了两个命令为了做到这点：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newcommand{\addchtoc}[1]{  %目录中加入新章节
 	\cleardoublepage   
 	\phantomsection    
@@ -1433,7 +1423,7 @@ tocdepth是一个counter量，默认是2，显示到subsection。这里为了是
 \newcommand{\addsectoc}[1]{ %目录中加入新的section
 	\phantomsection    
 	\addcontentsline{toc}{section}{#1}}	
-\end{xverbatim}
+\end{Verbatim}
 两个命令大致类似吧，一个是针对chapter的，一个是针对section的。其中chapter的需要加上一个cleardoublepage命令，其具体解释参看\href{http://www.personal.ceu.hu/tex/breaking.htm#clrdblpage}{这个网站}。意思是首先结束本页，然后将所有图片和表格都显示出来。在两面twoside模式里，要确保下一页从奇数页开始，必要时插入空白页。
 
 后面的phantomsection命令\footnote{这个命令名字真不好记。。}是由hyperref宏包提供的，需要加上它使链接有效。     
@@ -1464,7 +1454,7 @@ titletoc宏包可以自己DIY目录格式，这里忽略。
 
 要做出好看的封面大概是很费心思的事情，本文使用了这样的策略，新建了一个模板文件mytitle.sty文件，然后里面内容如下。
 \subsection{mytitle.sty}
-\begin{xverbatim}{tex}
+\begin{xverbatim}{mytitle_sty.tex}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mytitle}
 
@@ -1509,7 +1499,7 @@ titletoc宏包可以自己DIY目录格式，这里忽略。
 \end{xverbatim}
 \subsection{一个简单的封面}
 这个代码牵涉到的内容较多，为了说明基本知识我将使用本文早期的一个简单的封面作为例子讲解。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 %===============%封面設計==========%
 \makeatletter
 \renewcommand\title[1]{\def\@title{#1}}
@@ -1538,7 +1528,7 @@ titletoc宏包可以自己DIY目录格式，这里忽略。
 	\end{titlepage}
 }
 \makeatother
-\end{xverbatim}
+\end{Verbatim}
 这个代码一些小的细节我就不说明了，现在就主要内容说明一下。这个封面主要是通过重新定义maketitle命令来完成的，然后前面还加上了一些新的输入命令。其中makeatletter和makeatother一前一后表示他们夹著的内容@这个符号就是一个符号，这样‘@abc’和‘abc’是不同的。
 
 def命令是\TeX 的原始定义命令，比如说：\\
@@ -1575,12 +1565,12 @@ def命令是\TeX 的原始定义命令，比如说：\\
 首先要在前面加载hyperref库文件\\
 \textbackslash usepackage \{hyperref\}\\
 然后在你想要插入超链接的地方使用命令：\\
-\textbackslash href \{https://www.google.com/\} \{google\}\\
+\textbackslash href \{https://www.google.com/\} \{google\}
 
 \subsubsection{链接字体颜色控制}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \usepackage[colorlinks=true,linkcolor=blue,ulrcolor=red,citecolor=blue]{hyperref} 
-\end{xverbatim}
+\end{Verbatim}
 %\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
 设置书签和目录链接等
 for ebook 目录蓝色，对外链接红色，还可以有更多颜色设置    linkcolor 影响目录颜色和脚注和内部引用，ulrcolor影响对外链接，citecolor影响对文献的链接。anchorcolor 超链接源码
@@ -1595,12 +1585,181 @@ hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己
 
 \section{旁注}
 本文\footnote{早期版本。。}旁注新建了一个命令endnote，对字体和行距做了一下调整，然后使用的是\LaTeX 自带的marginpar命令，我也接触过另外一个宏包的marginnote命令，虽然多了一个可选项可以调整旁注竖向位移，但是带来的麻烦更多，有时候页尾的旁注会向下越界，如果我想写了一个旁注，又在下面继续写一个旁注命令也会出现重叠出错。而marginpar就没有这样的问题。写了一个marginpar，后面可以继续再开一条marginpar命令。至于竖向位移的问题，在endnote里面使用vspace命令即可。
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newcommand{\endnote}[1]{\marginpar{  
  	\fontsize{10pt}{20pt}\selectfont #1}}
-\end{xverbatim}
+\end{Verbatim}
 
 在maginpar命令里面进行各种\LaTeX 命令都是可以的，比如改变字体大小，字体颜色，插入图片等等。
+
+\section{尾注}
+尾注也就是每一章后面的注释部分，这种排版形式显得更加专业。而且如果尾注写的好参考文献一章或者其他附录部分都可以不用写了。
+
+本来已经有一个endnotes宏包了，但是这个宏包不支持超链接，然后后来我按照\href{http://tex.stackexchange.com/questions/8452/making-endnotes-clickable-links-with-hyperref}{这个网站}的说明操作加入另外一个sty文件之后是能够正常双向链接的，但是为了解决一个问题引入两个宏包，而且这两个宏包还存在交互问题只是让问题更加复杂了。
+
+我试著慢慢将这两个宏包融合起来，遇到了很多困难，因为我对tex原初命令并不是十分熟悉，最终似乎解决了这一问题。其中有些细节我也不大清楚，下面就这个新的endnotes宏包详细说明。
+
+
+\subsection{endnotes宏包说明}
+整个宏包还是很简洁的，满打满算八九十行。宏包的文件在github源码的texmf文件夹里面。
+
+首先是一些文档的注释说明信息，这里就不写了。
+
+然后是标准的宏包sty文件的开头样式，这里填上endnotes宏包即可。
+\begin{cverbatim}{tex}
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{endnotes}[2013/11/29 v0.12  fancy endnotes  print]
+\end{cverbatim}
+
+这里使用RequirePackage命令引入了一个宏包etoolbox，这里主要是引入了expandonce命令，这个命令是确保后面的一个命令只运行一次。
+
+然后接下来新建了一个命令flabel，这个命令是为了文本中的尾注标记符号和尾注中的标记符号区分开来，比如文本中的尾注标记符号是上标的，而尾注中的标记符号则不是。flabel命令里面使用了hyperref宏包的精确定位命令phantomsection，因为hyperref宏包在myconfig宏包中已经加载了，这里就不加载了。
+
+flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而第二个参数\#{}2表示显示的label。所谓真实的label指等下生成的pdf中的精确定位label标记。命令中重新定义了\verb+\@currentlabel+，也就是显示的label。这样将这两者区分开来，本来他们都是一样的。
+\begin{cverbatim}{tex}
+\RequirePackage{etoolbox}
+\DeclareRobustCommand*{\flabel}[2]%
+{\phantomsection \def\@currentlabel{#2}
+\label{#1}}%
+
+\gdef\theenmark{\arabic{@EndnoteCounter}}%
+\gdef\endnotemark{\textsuperscript{(\theenmark)}}%
+\gdef\endnotemarkback{(\theenmark)}%
+\end{cverbatim}
+
+然后上面三行定义了一些对外的接口命令，方便DIY。theenmark命令是尾注标记符号的计数器部分，这里使用了arabic命令转化了。endnotemark命令是文本中尾注标记符号的形式，这里简单加上了()然后使用textsuperscript命令将其转化成为上标形式，之所以使用这样的形式，是因为使用数字可以没有任何限制，而使用其他奇怪的符号标记要为可能超过界限操心。而endnotemarkback命令则是尾注中的标记符号形式，这里和前面的区别就是没有转化成为上标。
+
+接下来下面的代码首先用newwrite命令新建了文件，tex中的文件操作命令如下：
+\begin{Verbatim}
+\newwrite\tempfile
+\immediate\openout\tempfile=lists.txt
+\immediate\write\tempfile{this is test}
+\immediate\closeout\tempfile
+\end{Verbatim}
+这里的newwrite是新建一个写文件，然后后面immediate命令表示立即执行，openout表示打开某个文件，这里打开了新建的这个写文件\textbackslash tempfile，后面的等号跟著你想要的这个新文件的文件名，等下电脑中新建出来 的这个文件就是这个文件名。
+
+然后write命令是往这个文件里面写入某个文本信息。接下来是closeout命令把这个文件关闭，只有文件正常关闭了写的内容才能从缓冲区真正进入系统中的文本。
+
+我们再看下面新建了三个计数器@EndnoteCounter等，其中@EndnoteCounter标记每一章尾注内部的计数，而AllEndnoteCounter标记了所有的尾注的计数，这个影响真实label。ShowEndnoteCounter标记了每一个分章的章数（这里主要指按照每一章，不过实际操作并不局限于此。）的计数。然后用setcounter命令给这些计数器一个初值。
+\begin{cverbatim}{tex}
+\newwrite\@entout
+
+\newcounter{@EndnoteCounter}%
+\newcounter{@AllEndnoteCounter}%
+\newcounter{@ShowEndnoteCounter}%
+\setcounter{@EndnoteCounter}{0}
+\setcounter{@AllEndnoteCounter}{0}
+\setcounter{@ShowEndnoteCounter}{1}
+
+\newif\if@entopen \global\@entopenfalse
+\end{cverbatim}
+上一段代码最后还新建了一个条件控制变量，具体请参看tex条件控制语句一小节\ref{sec:条件控制语句}。这里的global命令是让接下来的定义或者声明是全局性的。
+
+\begin{cverbatim}{tex}
+\def\@openent{%
+\def\@entname{\jobname
+\ifnum\value{@ShowEndnoteCounter}<10 0\fi
+\ifnum\value{@ShowEndnoteCounter}<100 0\fi
+\arabic{@ShowEndnoteCounter}}%
+
+\immediate\openout\@entout=\@entname.ent%
+\global\@entopentrue
+}%
+\end{cverbatim}
+上一段代码新建了一个命令@openent，这个命令等下要完成打开新建的ent文件任务，然后正如前面谈及的文件操作，在openout命令打开文件的时候，这里对具体生成的ent文件的文件名进行了一些DIY。其实我可以将文件名简单设置成为jobname-1，-2之类的形式，之所以弄成以上这种形式多少是我在之前探索过程中弄出的一种jobname001，jobname002这种形式，然后方便使用linux系统的cat命令来将他们汇总，后来修改修改着这个功能发现不需要了，但这个技巧还是很有用的就没删除了。
+
+下一段的解释先跳过，看到下下一段定义的endnote命令。
+\begin{cverbatim}{tex}
+\begingroup \catcode `|=0 \catcode `[=1
+\catcode`]=2 \catcode `\{=12 \catcode `\}=12
+\catcode`\\=12
+|gdef|@writeent[|immediate|write|@entout[
+{\footnotesize
+\hspace{-2\parindent}\makebox[\parindent-3pt][l]
+{\flabel{|@linknameb}{|@showlinknameb}  \ref{|@linkname}}
+\leftskip=\parindent   |expandonce|@include \par } ] ]%
+|endgroup
+\end{cverbatim}
+上面这段代码就是定义了那个@writeent，但是以一种十分绕脑袋的形式，我也没完全弄明白。。首先看到catcode命令，这个是改变tex系统内部字符列表的命令。在tex中字符分为以下几类：
+\begin{enumerate}
+\setcounter{enumi}{-1}
+\item 跳脱符号，一般是\textbackslash
+\item group开始符号，一般是\{
+\item group结束符号，一般是\}
+\item 数学符号，一般是\$
+\item 表格分隔符，一般是\&
+\item 一行结束符号，一般是<return>
+\item 参数符号，一般是\#
+\item 上标符号，一般是\^{}
+\item 下标符号，一般是\_
+\item 忽略符号，一般是<null>
+\item space，一般是<space>和<tab>
+\item 字母，一般是a-z和A-Z
+\item 其他，不是其他分类就在此类
+\item 激活（Active）符号，比如\~{}
+\item 注释符号，一般是\%
+\item 无效（Invalid）符号，一般是<delete>
+\end{enumerate}
+也就是说tex引擎看到\textbackslash 符号就会认为接下来将是一个命令，然后catcode命令可以改变这个列表。比如上面这段代码中，\verb+\catcode `|=0+就将|符号归为0类，这样tex看到|也会跟看到\textbackslash 一样处理。后面的类似，于是我们有：\\
+\emph{|类似\textbackslash{  }   [类似\{  ]类似\}  \{\} \textbackslash 都是其他 }
+
+gdef命令是global和def命令的组合缩写，这里定义了下面要用到的@writeent命令。就是立即向打开的那个ent文件写入花括号内的信息。其中的符号变化法则上面谈及了，于是这里的\textbackslash footnote之类的都不会处理，而是直接写入ent文件之中。但是因为我们在这里要建立label（等下插入ent文件之后，在尾注那里要标记label和ref命令。）因此label和ref内的参数必须立即运算出来。在这里有一些尾注的格式美化命令，比如用makebox命令调整尾注标记符号格式等，这里介绍略过。
+
+现在主要看到从下一段代码中定义的@include命令接受的是endnote命令传递过来的文本，本来在下一段代码中新建一个group然后用let命令将endnote命令中所有的protect命令改成了string（字符串），应该是可以了。实际上操作中确实各个命令没有展开直接以文本进入ent文件了，但是环境命令还是展开了，于是这里加上了etoolbox宏包提供的expandonce命令，也就是控制只展开一次，这样环境命令也成功传递过去了。这里的具体实现细节我实际上也没弄太明白。
+
+\begin{cverbatim}{tex}
+\DeclareRobustCommand*\endnote[1]{%
+\stepcounter{@EndnoteCounter}%
+\stepcounter{@AllEndnoteCounter}%
+\edef\@linkname{enote:\arabic{@AllEndnoteCounter}}%
+\edef\@linknameb{enote:\arabic{@AllEndnoteCounter}b}%
+\edef\@showlinknameb{\endnotemark}%
+\edef\@showlinkname{\endnotemarkback}%
+\ignorespaces\flabel{\@linkname}{\@showlinkname}%
+\ignorespaces\hspace{-0.5ex}\ref{\@linkname b}%
+\if@entopen \else \@openent \fi%
+\begingroup%
+\let\protect\string%
+\gdef\@include{#1}%
+\endgroup%
+\@writeent%
+}
+\end{cverbatim}
+显然你看到这里定义的命令endnote就知道这是这个宏包的主体部分，程序一般遇到的就是两个命令，endnote引入尾注，showendnotes插入尾注。首先这个命令将两个主要计数器加1，其中@EndnoteCounter计数器是标记一章尾注内部的计数的，这里加1了就开始从1开始，然后后面这里的处理技巧是如果你需要插入尾注了，那么就将@EndnoteCounter这个计数器归为零。这样做和将@EndnoteCounter和chapter或者part绑定起来的好处就是更加的自由，你不需要考虑什么，甚至在某一个section部分内，插入showendnotes命令就插入了尾注，然后内部计数又重新开始。
+
+接下来定义了四个命令，我们看到这里有一个edef命令，edef命令和def命令类似，区别在于定义某个命令的时候立即展开，比如在这里我edef了一个@linkname命令，那么后面的@AllEndnoteCounter当时是什么立即赋值计算出来。因为这里要建立label的名字比如是独一无二的，然后看到后面@showlinkname和@showlinknameb，这是在决定文档中尾注标记符号和尾注中标记符号的样式，这里名字弄翻了，因为之前我在编写的时候也不大确切，然后后面就交换了一下。
+
+然后我们注意到这个endnote命令后面每一行都有一个\%，这是不得已而为之。endnote命令在它所在地地方我需要插入label和ref，然后每一行换行之后都会增加一个空格。只好用百分号消去。
+
+这里插入的ignorespaces命令为了消去空格可能是多余的，然后使用flabel命令植入label，前面谈及了第一个参数是真实的label，第二个参数是显示的label。还有我们需要把label命令和ref命令的关系弄清楚，label只是在文档中植入一个记号，而ref命令才会在文档中显示某些字符。我在测试的时候发现尾注标签上标记号有点偏后，然后用hspace命令稍作调整，注意我们调整距离尽可能使用ex或者em这样的相对距离。然后就是使用ref命令。
+
+接下来一行语句的意思就是ent那个文件打开了吗？打开了什么也不做，没打开打开这个文件，使用之前定义的openent命令打开。
+
+然后我们进入一个group，tex命令中\textbackslash begingroup \textbackslash endgroup之间夹著一个内环境。这个内环境的作用就是为了把endnote命令中的文本内容传递出去，为什么要这么做？我们的思路是将endnote中的文本写入到某个ent文件中去，然后继续写，直到要插入尾注了再引入这个ent文件即可。思路很简单，但是要实现起来并不简单。
+
+这里最大的问题是endnote命令里面的命令和环境都要不执行，当作文本一行写入进去。因为tex默认参数都要执行计算出来的，这就是问题的所在。这里面的细节甚是复杂，我也没完全弄明白。我们再看到上面那段代码定义的@writeent命令。
+
+
+\begin{cverbatim}{tex}
+\DeclareRobustCommand*\showendnotes{%
+\immediate\closeout\@entout%
+\global\@entopenfalse
+
+\input{\@entname.ent}
+
+\setcounter{@EndnoteCounter}{0}
+\stepcounter{@ShowEndnoteCounter}%
+
+}
+
+\endinput
+\end{cverbatim}
+这是宏包的最后一段了，非常容易理解了。定义了一个showendnotes命令，命令首先将那个打开的ent文件关闭，这样之前写入的内容都写进去了。然后改变那个条件变量表明文件关闭了。然后引入尾注。
+然后@EndnoteCounter计数器归零，这个前面谈到过。然后ShowEndnoteCounter计数器加一。然后结束宏包使用endinput命令。
+
+我在这里使用了cverbatim环境来描述这个endnotes宏包，总的文件生成在本github目录下codehome文件夹里面。进入尾注宏包文件夹之后把那个endnotes\_{}sty.tex文件改名为endnotes.sty然后放入该放的位置即可使用。
+
+\endcodefile[尾注宏包]{endnotes_sty}
 
 
 \section{文字强调}
@@ -1620,24 +1779,24 @@ emph命令是\LaTeX 自带的最基本的用于文字强调的方法。
 \subsection{ulem宏包}
 下面的内容来自ulem宏包。\footnote{现在ulem中文可以正确换行了。}
 
-ulem宏包提供如下命令：uline，uuline，uwave，sout，xout，dashline，dotuline。主要用于文字的强调，其中uline是下划线，dotuline是加点强调，uwave是波浪线。其他命令请参看ulem宏包文档。
+ulem宏包提供如下命令：uline，uuline，uwave，sout，\\ xout，dashline，dotuline。主要用于文字的强调，其中uline是下划线，dotuline是加点强调，uwave是波浪线。其他命令请参看ulem宏包文档。
 
 \uline{这是一段很长的测试文字，主要用于说明中文情况下加入下划线并且能够正确的换行。用的是uline命令。}
 
 \dotuline{注意如果单纯加载ulem宏包，原有的emph命令也会成为类似uline命令的效果，也就是加下划线。可以后面跟上命令\textbackslash normalem，也就是emph命令还是原来的处理效果。}
 
 \subsection{reduline命令}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \newcommand\reduline{\bgroup\markoverwith
 	{\textcolor{red}{\rule[-0.5ex]{1em}{0.4pt}}}
 	\ULon}
-\end{xverbatim}
+\end{Verbatim}
 
 \reduline{这个命令来自ulem文档，其中除了reduline命令名字可以自己diy之外，你能改动的就是第二行了。rule部分简单说明下，第一个可选项是竖向位移，第一个参量是线条横向宽度，我为了好理解就设置成了1em，似乎这个值设置成其他的值影响也不大。第二个参量是线条竖向高度。}
 
 \subsection{reddotuline命令}
 我结合ulem宏包中的代码，然后修改自造一个命令如下：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \makeatletter
 \def\reddotuline{\bgroup 
   \UL@setULdepth
@@ -1648,7 +1807,7 @@ ulem宏包提供如下命令：uline，uuline，uwave，sout，xout，dashline�
      \endgroup}%
   \ULon}
 \makeatother
-\end{xverbatim}
+\end{Verbatim}
 
 我对\TeX 原生命令不太熟悉，就这样借用原代码简单地修改了下凑合着用吧。就是将原来代码中的小点改变了颜色，然后两边kern的距离稍微拉大了点。其实我心目中是希望每个中文字刚好最下面加个红点，先就这样吧。
 
@@ -1656,12 +1815,13 @@ ulem宏包提供如下命令：uline，uuline，uwave，sout，xout，dashline�
 \section{插入列表}
 itemize和enumerate环境其实也支持item后面跟上可选项的形式，只是从格式上他们常常出界，不建议使用。
 \subsection{itemize环境}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{itemize}
 \item 这是一个列表
 \item 这又是一个列表
 \end{itemize}
-\end{xverbatim}
+\end{Verbatim}
+
 
 \begin{itemize}
 \item 这是一个列表
@@ -1669,12 +1829,12 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 \end{itemize}
 
 \subsection{enumerate环境}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{enumerate}
 \item 这是一个列表
 \item 这又是一个列表
 \end{enumerate}
-\end{xverbatim}
+\end{Verbatim}
 
 \begin{enumerate}
 \item 这是一个列表
@@ -1682,13 +1842,12 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 \end{enumerate}
 
 \subsection{description环境}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{description}
 \item[鸭子]是一种动物
 \item[苹果]是红色的
 \end{description}
-\end{xverbatim}
-
+\end{Verbatim}
 \begin{description}
 \item[鸭子]是一种动物
 \item[苹果]是红色的
@@ -1703,7 +1862,7 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 插入图片有很多参数可以设置，这里就最有用的宽度和高度设置说明一下：\\
 具体就是height表示高度，width表示宽度。然后等于多少in，英寸。参数放在可选参数那里。不过我觉得下面这个参数设置挺实用的，如下:\\
 \textbackslash includegraphics[width=\textbackslash textwidth, keepaspectratio]\{texstudio.png\}\\
-其中\textbackslash textwidth 表示让图片和文字一般宽，然后keepaspectratio参数意思是缩放的时候保持宽高比不变。\\
+其中\textbackslash textwidth 表示让图片和文字一般宽，然后keepaspectratio参数意思是缩放的时候保持宽高比不变。
 
 \subsection{图片标题的修改}
 \label{sec:图片标题的修改}
@@ -1711,8 +1870,10 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 其中图这个字是通过重定义figurename命令来完成的。\\
 \verb+\renewcommand\figurename{图}+
 
-而后面本来默认的是1.1这样的形式，但是常见的都是1-1这样的形式，通过重定义thefigure命令即可达到目的。\\
-\verb+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}+
+而后面本来默认的是1.1这样的形式，但是常见的都是1-1这样的形式，通过重定义thefigure命令即可达到目的。
+\begin{Verbatim}
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\end{Verbatim}
 
 \subsection{设置图片寻找文件夹}
 \verb+\graphicspath{{figures/}}+\\
@@ -1791,7 +1952,7 @@ itemize和enumerate环境其实也支持item后面跟上可选项的形式，只
 \subsection{基本情况的讨论}
 一般情况下一些小的表格就用tabular环境处理即可。
 下面看这个例子：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{table}[h]
 \centering
 \begin{tabular}{|c|c|}
@@ -1806,10 +1967,10 @@ r & r表示该列格子右对齐 \\
 \caption{tabular参数}
 \label{tab:tabular参数}
 \end{table}
-\end{xverbatim}
+\end{Verbatim}
 
 例子显示如下：
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|}
 \hline 
@@ -1837,8 +1998,8 @@ hline命令表示画一条横线。\& 这个特殊符号表示进入下一列。
 如果你只是想要一个简洁明了的表格，目前大家公认的好的表格标准就是三线表式，你也可以称之为booktabs风格吧。简单来说有以下规则：①不要垂直线； ②不要双横线；③每一行的各个格子都有足够的空间；④一律左对齐；⑤三线，toprule，midrule，bottomrule。
 \endnote{按照Markus Püschel的small guide to making nice tables里面的介绍。}
 
-在这里我们还有个捷径，不一定要手工将表格代码全部敲出来。首先我们找一个表格软件，libreoffice的或者gnumeric(recommend)都行。然后将数据输入进去保存好。然后我们将数据选择复制，打开网站：\href{http://www.tablesgenerator.com/}{http://www.tablesgenerator.com/}。在那个网站的表格的开头哪里按下Ctrl+v。这个网站还有一些设置可以调整，稍微摸索下就知道了。唯一要说的是那个activate/deactivate custom grid edit选项，可以选择绘制某几根线框显示。在这里不做调整，直接选择最右边的booktabs table style。然后把多余的行或者列删除掉，就可以点击下面的generate了。生成的代码如下：
-\begin{xverbatim}{tex}
+在这里我们还有个捷径，不一定要手工将表格代码全部敲出来。首先我们找一个表格软件，libreoffice的或者gnumeric都行。然后将数据输入进去保存好。然后我们将数据选择复制，打开网站：\href{http://www.tablesgenerator.com/}{http://www.tablesgenerator.com/}。在那个网站的表格的开头哪里按下Ctrl+v。这个网站还有一些设置可以调整，稍微摸索下就知道了。唯一要说的是那个activate/deactivate custom grid edit选项，可以选择绘制某几根线框显示。在这里不做调整，直接选择最右边的booktabs table style。然后把多余的行或者列删除掉，就可以点击下面的generate了。生成的代码如下：
+\begin{Verbatim}
 % Booktabs require to add \usepackage{booktabs} to your document preamble
 \begin{table}[h]
 \begin{tabular}{@{}ll@{}}
@@ -1850,7 +2011,7 @@ r        & 右对齐      \\
 p{width} & 一定宽度自动换行 \\ \bottomrule
 \end{tabular}
 \end{table}
-\end{xverbatim}
+\end{Verbatim}
 表格的显示效果初步如下：
 \endnote{你注意到这里有@\{\}，意思是每一列前面有一段空白，可以被花括号中的字符填充，这里是完全取消掉那点空白。booktabs的风格是开头那点空白和最后一列最后那点空白全部取消掉。}
 \begin{table}[h]
@@ -1865,7 +2026,7 @@ p{width} & 一定宽度自动换行 \\ \bottomrule
 \end{table}
 
 接下来就是微调整了，比如说上面的花括号没有正常显示，还有想要居中，开头加上centering命令，还有caption标题命令，还有label。修改之后结果如下：
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{@{}ll@{}}
 \toprule[1.2pt]
@@ -1888,7 +2049,7 @@ p\{width\} & 一定宽度自动换行 \\ \bottomrule[1.2pt]
 \paragraph{cmidline命令}
 cmidline类似于原来的cline命令，简单来说就是你希望第几个到第几个格子画一条线。这个命令后面一样可以跟个描述粗细的可选项。请看下面的例子：
 
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{table}[h]
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -1900,10 +2061,10 @@ slices      & \multicolumn{2}{l}{abs.error(slices)} \\ \cmidrule(l){2-3}
 >15000      & 317               & 1609              \\ \bottomrule
 \end{tabular}
 \end{table}
-\end{xverbatim}
+\end{Verbatim}
 
 显示效果如下：
-\begin{table}[h]
+\begin{table}[H]
 \begin{tabular}{@{}lll@{}}
 \toprule
 slices      & \multicolumn{2}{l}{abs.error(slices)} \\ \cmidrule(l){2-3} 
@@ -1927,7 +2088,7 @@ slices      & \multicolumn{2}{l}{abs.error(slices)} \\ \cmidrule(l){2-3}
 \subsection[带颜色的表格]{带颜色的表格\endnote{本小节除了参看wikibook之外还参看了\href{http://texblog.org/tag/definecolor/}{这个网站}。}}
 \label{sec:带颜色的表格}
 xcolor宏包提供了一种颜色交替的表格模式，还挺好看的。好吧，我对颜色搭配不太擅长。首先需要在加载xcolor宏包时填上table可选项，即\verb+\usepackage[table]{xcolor}+。
-\begin{table}[h]
+\begin{table}[H]
 \rowcolors{2}{}{lightgray!50}
 
 \centering
@@ -1938,7 +2099,7 @@ table环境下加上rowcolors命令        & 让整个表格交替显色        
 rowscolors第一个选项              & 决定颜色从那一行开始显示              \\
 rowscolors第二个选项            & 奇数列的颜色  \\
 第三个选项  & 偶数列的颜色 \\
-本表具体代码    & \verb+\rowcolors{2}{}{lightgray!50}+     \\
+本表具体代码    & {\small \verb+\rowcolors{2}{}{lightgray!50}+ }    \\
 第一行用rowcolor命令控制       & 在表头行上面           
 \end{tabular}
 \caption{带颜色的表格}
@@ -1954,8 +2115,14 @@ rowscolors第二个选项            & 奇数列的颜色  \\
 \verb*| this is a test . | \\感觉好丑陋，应该没啥用处。
 \endnote{在xverbatim环境或者verb命令之内，字体是ttfamily。}
 
+某一行小代码有时候需要缩小字体从而防止字出界，这里似乎没有办法DIY出一个新的命令，只能在verb命令之外套个改变字体的环境。
+
+\noindent{\footnotesize \verb+this is a test line in verb command and outside is the footnotesize command+}
+
+
 \subsection{稍微大点的程序代码}
 在环境verbatim之间的任何文本是什么就是什么，不执行任何\LaTeX 命令，包括所有的空白和断行，如下：
+\begin{footnotesize}
 \begin{verbatim}
 (defmacro with-gensyms (syms &rest body)
   `(let ,(mapcar #'(lambda (s)
@@ -1963,35 +2130,27 @@ rowscolors第二个选项            & 奇数列的颜色  \\
            syms)
          ,@body))
 \end{verbatim}
+\end{footnotesize}
+同样这里也外面包围了一个footnotesize环境改变字体大小。
 
-\subsection{Verbatim环境的美化}
-这里有点欺骗的嫌疑，其实并不是xverbatim环境。而是用的fancyvrb宏包的Verbatim环境。它有一个重定义Verbatim环境的功能，然后我将重定义的名字改成了verbatim，也就是覆盖默认的verbatim环境了。
 
-之所以要用这个小技巧，也是迫不得已：一是listing宏包虽然对语法加颜色功能很好看，但是内部的Unicode符号显示存在很多问题。而Verbatim环境并没有这个问题；二是命令其他的名字几乎各大主流编辑器都会出现语法染色失常，因为自定义的代码环境都不识别。所以只好用这种小技巧了。
-\begin{xverbatim}{tex}
-\usepackage{fancyvrb} 
-\DefineVerbatimEnvironment%
-	{verbatim}{Verbatim}
-	{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-	xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}  	
-	
-	
-\newlength{\fancyvrbtopsep}
-\newlength{\fancyvrbpartopsep}
-\makeatletter
-	\FV@AddToHook{\FV@ListParameterHook}
-	{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
-\makeatother
-\setlength{\fancyvrbtopsep}{-15pt}   %代碼環境之上空白高度
-\setlength{\fancyvrbpartopsep}{0pt}  %段落之上空白高度
-\end{xverbatim}
-这里的配置代码分为两部分，下面那部分是优化代码环境上下空白的，这里不做说明。
+\subsection{fancyvrb宏包}
+fancyverb宏包提供了一个Verbatim环境，本文具体的配置代码如下：
+\begin{Verbatim}
+\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
+    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
+\end{Verbatim}
 
-具体设置请参见fancyvrb宏包文档，这里只就涉及到的简单谈谈：
-\begin{table}[h]
+更多说明请参见fancyvrb宏包文档，这里只就涉及到的简单说一下：
+\begin{table}[H]
+\centering
+\caption{Verbatim环境一些设置}
+\label{tab:Verbatim环境一些设置}
+\medskip 
 \begin{tabular}{@{}ll@{}}
 \toprule
-numbers=left                         & 左边显示数字     \\ \midrule
+配置                        & 说明     \\ \midrule
+numbers=left                         & 左边显示数字     \\
 frame=lines                          & 框框是两条线     \\
 tabsize=4                            & tab符号是四个空格 \\
 baselinestretch=2                    & 行间距拉伸      \\
@@ -1999,38 +2158,113 @@ xleftmargin=6pt                      & 左边间距6pt    \\
 fontsize=\textbackslash footnotesize & 字体大小设置     \\  
 numbersep=2pt                        & 数字和框框间距 \\   \bottomrule
 \end{tabular}
-\caption{Verbatim环境一些设置}
-\label{tab:Verbatim环境一些设置}
 \end{table}
 
-\subsection{xverbatim宏包研究}
+
+\subsection{xverbatim宏包说明}
+我新建了一个xverbatim宏包，提供了一个xverbatim环境，能够对代码进行染色显示输出，并对某些编程语言具有执行和显示输出结果的功能。这个环境还提供集中可选模式让实际操作更加灵活。由于这个宏包包括很多行pygments（python的一个宏包）的输出配置信息，这里就不将宏包全部列出来了。完整的宏包内容在本github的texmf目录之下。
+
+虽然整个宏包有两百多行，但主干结构也就一百行左右。具体实现结构和前面谈及的endnotes宏包有点类似，在编写的时候也参考了James Brotchie的python宏包。
+
+正常运行这个宏包你需要安装python的pygments宏包，在ubuntu下运行：\\
+\verb+sudo apt-get install python-pygments+\\
+或者python3的版本：\\
+\verb+sudo apt-get install python3-pygments+
+
+首先我们看到程序的入口，定义xverbatim环境的这一段程序，xverbatim宏包的其他部分都是围绕着这个环境命令展开的。
+\begin{Verbatim}
+\newenvironment{xverbatim}[2][1]
+{
+\immediate\stepcounter{@xverbatimCounter}
+\def\@modestatus{#1}
+\def\@codefilename{#2}
+\StrBefore{\@codefilename}{.}[\@codefile]
+\StrBehind{\@codefilename}{.}[\@codemode]
+
+\immediate\write18{
+if [  !  -d  codeexport/\arabic{@xverbatimCounter}   ];
+then mkdir -p codeexport/\arabic{@xverbatimCounter}  ; fi}
+
+\newcommand{\@outname}
+{codeexport/\arabic{@xverbatimCounter}/\@codefile }
+
+\immediate\openout\@codeout=\@outname.\@codemode
+\newlinechar='15
+\begingroup \catcode`\^^M=12 %
+\let\do\@makeother\dospecials\obeyspaces%
+\@xverbatim}
+{\endgroup
+\immediate\closeout\@codeout
+\ifnum \@modestatus = 0
+\else   \ifnum \@modestatus = 1    
+\@showcode
+\else   \ifnum \@modestatus = 12   
+\@showcode \@executecode \@writefeedback
+\else   \ifnum \@modestatus = 129   
+\@showcode \@executecode \@showresult \@writefeedback
+\else   \ifnum \@modestatus = 19  
+\@showcode  \@showresult
+\else    
+\errmessage{you typed wrong optional parameter,
+the choice is  0 1   12 129 19  .}
+\fi\fi\fi \fi \fi
+
+}
+\end{Verbatim}
+首先新建xverbatim环境，然后接下来那么大一段都是xverbatim环境的定义。xverbatim接受两个参数，一个可选参数\#{}1，只能接受0，1，12，129，19这几个数字，其他将会报错。然后还要接受一个必填参数\#{}2，（这里出于简单的美学考虑），这个参数接受等下要创建的文件的完整文件名。比如test.py。这个文件将会放在codeexport目录的第几个例子计数文件夹里面。
+
+这里先将@xverbatimCounter这个计数器加一，为的是它的第一次出现是1。然后每次遇到一个xverbatim环境都会加一。
+
+接下来定义了@modestatus命令接受参数\#{}1，为了将这个参数传递到环境的结尾部分。然后定义了codefilename接受第二个参数。
+
+接下来的两行需要详细说明一下，这里使用的StrBefore和StrBehind命令来自xstring宏包，用处是从某个字符串中提取出某个字符前面的字符串或者后面的字符串。这里是处理@codefilename命令也就是接受的文件名，字符分隔符为‘.’，在‘.’的前面（默认是第一次出现，所以为了防止出错文件名只能出现一次‘.’）的字符串将会赋值给\textbackslash @codefile，下面的StrBehind命令类似，不同的时候将后面出现的字符串赋值给\textbackslash @codemode，这个后面方便pygments处理代码用的。
+
+接下来的write18命令是直接向终端输送某个命令：这个命令首先是if开头表示进入条件语句，然后方括号表示某个条件判断语句，-d表示判断某个文件夹是不是存在，!表示逻辑否。分号;表示换行，bash命令是有一定的格式的，如果你需要一行表示某一整个命令，可以用分号表示换行。then表示条件语句进入如果判断真那么执行下面的语句，然后mkdir -p表示创建某个文件夹包括父目录。然后分号然后fi表示条件语句结束。整个命令就是确保codeexport中的@xverbatimCounter命令的那个目录存在。
+
+接下来新建一个@outname命令，这个命令等下要控制写入文件的所在目录和文件名的。
+
+然后打开那个文件，其中文件名已经包含了目录，文件名和文件后缀。
+
+接下来的几行可能有点多余，这是python宏包里面的，可能和写入文档有关，然后接下来的@xverbatim命令由前面那一系列符号转码规则确定，太难懂了，我也没弄明白，只知道它的作用就是将环境内的所有内容写入文件中，改动的话就是xverbatim这几个字对应环境。
+
+然后我们看到xverbatim环境结尾部分，那个\textbackslash endgroup命令让我不知所以，但是少了它程序就会出错。
+
+接下来就是关闭文件，这个没什么问题。然后接下来就是有点稍显花哨的东西，其实就是前面@modestatus接受的那个参数，在这里构建了一个类似switch语句的结构。
+
+首先如果@modestatus等于0，那么什么也不做，在这里的意思就是既不显示代码也不做其他的。如果@modestatus等于1，那么执行@showcode命令。我们再看到@showcode命令。
+
+这里有个ifdefstring命令是etoolbox宏包提供的，意思是如果\textbackslash @codemode等于tex的话，那么执行命令，否则执行下一个花括号里面的命令。这里主要是tex代码后缀和pygmentize命令生成的tex代码有点容易混淆，就单独开出来，区别只是文件名。
+
+pygmentize命令就是pygments提供的，它有很多选项，最常用的有：
+\begin{table}[H]
+\centering
+\label{tab:pygmentize常用选项}
+\caption{pygmentize常用选项}
+\medskip 
+\begin{tabular}{@{}lp{28em}@{}}
+\toprule
+选项 & 说明  \\ \midrule
+-o  & 输出到某个文件  \\
+-f  & 告知要输出的文件类型，比如tex，如果-o 后面跟着的文件名带着后缀，命令会自动推测的。 \\
+-l & 告知要染色的方案，比如-l python，就是python的染色方案，如果处理的文件带着后缀，命令会自动推测。  \\
+-O & 全部信息，这里主要tex下Verbatim环境中的颜色支持命令。 \\
+-{}-help  & 帮助信息 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+然后我们再往下看，如果选项是12，那么将会执行\\
+\verb+\@showcode \@executecode \@writefeedback+\\
+这三个命令。其中@writefeedback和程序如果发生错误并把错误信息写入文档有关，这里略过了。
+
+而@executecode命令就是根据不同的codemode来选择不同的终端命令，这部分tex和c我有点考虑删除掉，最多支持python3和common-lisp和scheme和bash这几个脚本高级语言吧。
+
+然后就剩下@showresult命令，值得一提的是我之前就是简单使用verbatiminput命令导入生成的结果文件，而在这里我则是使用的input命令，这是有深意的。因为我在探索sympy宏包的时候发现，这个python宏包使用latex命令可以直接生成tex文档下的数学模式下的代码，也就是我直接input将会显示很漂亮的数学公式。这里加了个group方便调整下input之后的一些格式，比如使用obeylines命令input的时候空格换行都将保留，然后取消了行缩进。
+
+简要的说明就到此为止吧。哦，对了，你看到这个宏包前面有很大一段定义命令，这个是pygmentize对于Verbatim环境的颜色支持，通过选项-O获得的，复制到这里以后就不用引入了。
 
 
-
-\section{尾注}
-尾注也就是每一章后面的注释部分，这种排版形式显得更加专业。而且如果尾注写的好参考文献一章或者其他附录部分都可以不用写了。
-
-\subsection{endnotes宏包研究}
-
-
-%
-%本文尾注代码如下：
-%%\begin{xverbatim}{tex}
-%%\RequirePackage{endnotes}
-%%\RequirePackage{hyperendnotes}
-%%\renewcommand\makeenmark{（\theenmark）}
-%%\renewcommand\notesname {注释和参考资料}
-%%\newcommand{\printendnotes}
-%%    {\theendnotes}
-%%\end{xverbatim}
-%\begin{fancycolorbox}
-%本来我是希望每一章重新编号的，也就是重新建立一个printendnotes命令，先用theendnotes命令插入注释，然后用setcounter将endnote这个计数器归零。可惜由于网上的hyperendnotes宏包设计的不够好，超链接会出现覆写现象。我试著解决这个问题无果，只好放弃了。如果你不在乎文章中的超链接，比如你打算纸质印刷，那么是可以重新编号的。
-%\end{fancycolorbox}
-%
-%这里notesname命令就是章节后面显示的名字，makeenmark是每一条注释前面那个标签，这里设计成了（1）这样的形式。其中theenmark命令表示该注释的编号。
-%
-%well，下面是我从网上找的hyperendnotes.sty文件，我只是稍微修改了下开头和结尾，让它更加符合规范，主体部分没动，我不懂这些。
-
+\subsection{cverbatim宏包说明}
+在texmf文件夹里面，我还新建了cverbatim宏包，支持cverbatim环境。这个环境主要是针对很大型的文档的，这个宏包的编写大体和xverbatim类似，属于简化版本。在前面只是显示代码，然后后面通过endcodefile命令来做一些总结工作，比如将temp文件夹删掉，新建一个codehome文件夹，将前面一些小片段的cverbatim环境里的代码合并成为一个文件。前面在介绍endnotes宏包的时候使用的就是cverbatim环境。这个宏包并没有什么新东西，有兴趣的可以自己研究下。
 
 
 
@@ -2044,22 +2278,24 @@ quote为语录环境，quotation用于超过几段的引用环境，verse用于�
 
 \section{插入摘要}
 %使用的环境就是abstract，\endnote{\reduline{book类不能使用摘要环境，只有article和report才有。}}命令如下：\\
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{abstract}
 这是一段摘要文字。
 \end{abstract}
-\end{xverbatim}
+\end{Verbatim}
 
 
 \section{参考文献}
-首先设置thebibliography环境，然后用bibitem命令插入文献，这里99的意思是编号宽度不超过99.在你想要引用的地方用cite命令。如下所示:\\
-\begin{xverbatim}{tex}
+首先设置thebibliography环境，然后用bibitem命令插入文献，这里99的意思是编号宽度不超过99.在你想要引用的地方用cite命令。如下所示:
+
+\begin{Verbatim}
 \begin{thebibliography}{99}
 \bibitem{1} Bachmann W , 1973.
- Verallgemeinerung and Anwendung der Rayleighschen Theorie der Schallstreuung.
+ Verallgemeinerung and Anwendung der Rayleighschen 
+ Theorie der Schallstreuung.
  Acustica,28 (4)：223-228
 \end{thebibliography}
-\end{xverbatim}
+\end{Verbatim}
 
 \section{注释}
 \showendnotes
@@ -2120,9 +2356,9 @@ quote为语录环境，quotation用于超过几段的引用环境，verse用于�
 \subsection{计数器和其他计数器绑定}
 在使用newcounter命令定义新的计数器的时候可以后面跟个可选项，可选项里填著另外一个计数器的名字，每当这个计数器加一的时候你定义的新的计数器就会归为零。
 
-比如.....................................{\color{red}    尾注}。
+比如..........................
 
-它的实现机制应该是使用了这个\verb+\@addtoreset{counter}{chapter}+命令。
+它的实现机制应该是使用了这个{\footnotesize \verb+\@addtoreset{counter}{chapter}+}命令。
 
 
 \section{新的命令或环境}
@@ -2248,7 +2484,7 @@ fcolorbox can also be tweaked with \textbackslash fboxsep and \textbackslash fbo
 为什么是这么复杂的一个代码？这个需要说明一下。首先系统自带的colorbox命令不能换行，必须colorbox里面加上minipage环境才行，9,10行是minipage环境的格式优化，然后整个构成一个新环境我还想传递颜色，就成这个样子了。主要参考的\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
 \end{fancycolorbox}
 \vspace{20pt}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \definecolor{bgcolor-0}{HTML}{CCFFCC} 
 
 \newsavebox{\tempbox}
@@ -2263,7 +2499,7 @@ fcolorbox can also be tweaked with \textbackslash fboxsep and \textbackslash fbo
   \end{minipage}%
   \end{lrbox}%
   \colorbox{\tempcolor}{\usebox{\tempbox}}}  
-\end{xverbatim}
+\end{Verbatim}
 fancycolorbox环境的效果前面你应该已经看过了。这里就不做演示了。
 
 \section{保存盒子}
@@ -2284,9 +2520,27 @@ fancycolorbox环境的效果前面你应该已经看过了。这里就不做演�
 
 
 \section{TeX中的程序结构}
-\subsection{TeX中的条件语句}
+\subsection{条件控制语句}
+\label{sec:条件控制语句}
+\href{http://handyfloss.wordpress.com/2007/08/29/latex-programming-how-to-implement-conditionals/}{参考了这个网站}
 
+条件控制语句的首先要新建一个条件控制变量：\\
+\verb+\newif\iflogvar+
+默认这个变量是设置为假，然后通过以下模式来建立条件语句：
+\begin{Verbatim}
+\iflogvar
+  aaaa
+\else
+  bbbb
+\fi
+\end{Verbatim}
+条件语句可以嵌套，然后你可以通过这样的命令来调整条件控制变量的真假：\\
+\verb+\logvartrue+\\
+\verb+\logvarfalse+
 
+\subsubsection{ifnum命令}
+ifnum命令用于判断数字。
+\verb+\ifnum number = 0+
 
 \section{文本中的上标还有下标}
 上标使用命令textsuperscript命令，下标感觉自己缩小点就差不多了吧。示例如下：\\
@@ -2301,29 +2555,21 @@ fancycolorbox环境的效果前面你应该已经看过了。这里就不做演�
 \begin{figure}[H]
 \label{fig:四栏图片}
 \begin{multicols}{4}
-\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
-i want  some test to show there is a text and not to column break.\\
-\centerline{test}
-\columnbreak
-
-\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
-\centerline{test}
-\columnbreak
-
-\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
-\centerline{test}
-\columnbreak
-
-\includegraphics[width=\linewidth ,totalheight=\textheight , keepaspectratio]{temp.jpg}
-\centerline{test}
-
+\begin{linefig}{temp}
+\end{linefig}
+\begin{linefig}{temp}
+\end{linefig}
+\begin{linefig}{temp}
+\end{linefig}
+\begin{linefig}{temp}
+\end{linefig}
 \end{multicols}
 \caption{denosie fig}
-
+\label{fig:denosie fig}
 \end{figure}
 
 具体代码如下：
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \begin{figure}[h]
 
 \label{fig:四栏图片}
@@ -2348,12 +2594,12 @@ i want  some test to show there is a text and not to column break.\\
 \caption{denosie fig}
 
 \end{figure}
-\end{xverbatim}
+\end{Verbatim}
 这段代码的分栏还有插入图片知识都已经介绍了，值得一提的就是widetext环境，也就是有changepage宏包而来的临时改变页面布局环境和浮动体环境figure以及table不兼容。比如放入浮动体环境内才能起作用。然后caption命令似乎只是默认的linewidth居中。所以如果想要图片和表格在扩大的文本布局中居中对齐，那么需要在浮动体环境内部使用改变页面布局命令，然后使用居中命令。
 
 \section[生成字体所有已有的字形]{生成字体所有已有的字形\endnote{主要参照了\href{http://tex.stackexchange.com/questions/23863/generating-a-table-of-glyphs-with-xetex}{这个网站}}}
 \label{sec:字体已有字形}
-\begin{xverbatim}{tex}
+\begin{xverbatim}{生成已有字形.tex}
 \documentclass[landscape]{article}
 \usepackage{geometry}
 \usepackage{fontspec}
@@ -2381,7 +2627,7 @@ i want  some test to show there is a text and not to column break.\\
 \section{方便手机上观看的pdf}
 原文档内容都不需要修改，只需要修改geometry的设置就可以满足要求，然后在手机上看的时候选择adobe pdf软件的连续观看功能会有更好的体验。具体配置如下：
 \endnote{主要参考了\href{http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。}
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \ifphone
 %for phone
 \RequirePackage[
@@ -2413,7 +2659,7 @@ i want  some test to show there is a text and not to column break.\\
 marginparwidth=0mm,  %旁註寬度
   ]{geometry}
 \fi
-\end{xverbatim}
+\end{Verbatim}
 这里使用了一个条件命令。在加载myconfig.sty宏包的时候已经新建了一个条件变量：\\
 \verb+\newif\ifphone+\\
 \verb+\phonefalse+
@@ -2443,12 +2689,12 @@ myconfig宏包的内容是我以前之前的XeLaTeX指南的精华部分，很�
 
 首先sty文档里面@符号不需要用makeatletter这个命令了，@在里面已经默认就是一个符号。
 其次文档的基本结构
-\begin{xverbatim}{tex}
+\begin{Verbatim}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mytitle}
 …
 \endinput
-\end{xverbatim}
+\end{Verbatim}
 这个不用多说。
 
 然后就是sty文档里面所有usepackage都换成RequirePackage。这样sty文档兼容性更好，前面没有documentclass也行。

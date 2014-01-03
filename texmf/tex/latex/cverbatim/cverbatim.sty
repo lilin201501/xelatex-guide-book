@@ -72,7 +72,7 @@
 }
 
 
-\DeclareRobustCommand*\endcodefile[2][\arabic{@ProjectCounter}]{%#1 test.py  中的test
+\DeclareRobustCommand*\endcodefile[2][\arabic{@ProjectCounter}]{%#2 test.py  中的test
 \immediate\stepcounter{@ProjectCounter}
 \immediate\write18{if [  !  -d  codehome/#1  ];  then mkdir -p codehome/#1 ; fi}
 \immediate\write18{ cd temp  && cat *.\@cverbatimmode >  ../codehome/#1/#2.\@cverbatimmode  }

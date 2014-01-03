@@ -44,7 +44,7 @@
 %for phone
 \RequirePackage[
   paperwidth=145mm, %210-30-30
-  paperheight=272mm,%
+  paperheight=272mm,%297-15-10
   bindingoffset=0mm,%裝訂線
   top=30mm,  %
   bottom=30mm,%下邊距 包括頁腳
@@ -221,13 +221,28 @@ marginparwidth=0mm,  %旁註寬度
 \renewcommand{\arraystretch}{1.3}
 
 %插入代码
-\RequirePackage{xverbatim}
+\RequirePackage{xverbatim}%小代码环境
+\RequirePackage{cverbatim}%大型代码拼接
 
 %=============插入尾注=========%
 \RequirePackage{endnotes}
 
 %==========其他宏包===========%
 \RequirePackage{chemfig} %化学
+
+%=====特殊的环境特殊的文字======%
+%=========重新定义 quote=====%
+\renewenvironment{quote}[1][anonymous]{
+\newcommand{\quoteauthor}[1][anonymous]{#1}
+\list{}{\rightmargin\leftmargin
+%\listparindent 20pt
+\itemindent   24pt
+}\item\relax
+\ttfamily\fontsize{10pt}{12pt}\selectfont}{
+\\
+\makebox[\linewidth][r]{\sffamily —\quoteauthor}
+\endlist}
+
 
 
 

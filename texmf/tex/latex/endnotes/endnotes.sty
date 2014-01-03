@@ -62,8 +62,8 @@
 \edef\@showlinknameb{\endnotemark}%
 \edef\@showlinkname{\endnotemarkback}%
 \ignorespaces\flabel{\@linkname}{\@showlinkname}%
-\ignorespaces\hspace{-2.2pt}\ref{\@linkname b}%
-\if@entopen \else \@openent \fi
+\ignorespaces\hspace{-0.5ex}\ref{\@linkname b}%
+\if@entopen \else \@openent \fi%
 \begingroup%
 \let\protect\string%change to string but the environment seem not act correct
 \gdef\@include{#1}%
@@ -77,6 +77,7 @@
 
 \input{\@entname.ent}
 
+\setcounter{@EndnoteCounter}{0}
 \stepcounter{@ShowEndnoteCounter}%
 
 }

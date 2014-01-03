@@ -1,0 +1,88 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c}{\PYZpc{}基于 John Lavagnino\PYZsq{}s  endnotes.sty and on web finded the  hyperendnotes.sty, 由wanze于2013年12月15日编写而成。}
+\PY{c}{\PYZpc{}base on John Lavagnino\PYZsq{}s  endnotes.sty and on web finded the  hyperendnotes.sty}
+\PY{c}{\PYZpc{}modified by wanze   2013/12/15}
+\PY{c}{\PYZpc{}}
+
+\PY{k}{\PYZbs{}NeedsTeXFormat}\PY{n+nb}{\PYZob{}}LaTeX2e\PY{n+nb}{\PYZcb{}}[1994/12/01]
+\PY{k}{\PYZbs{}ProvidesPackage}\PY{n+nb}{\PYZob{}}endnotes\PY{n+nb}{\PYZcb{}}[2013/11/29 v0.12  fancy endnotes  print]
+
+\PY{k}{\PYZbs{}RequirePackage}\PY{n+nb}{\PYZob{}}etoolbox\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}expandonce}
+\PY{k}{\PYZbs{}DeclareRobustCommand}\PY{k}{*}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}flabel}\PY{n+nb}{\PYZcb{}}[2]\PY{c}{\PYZpc{} \PYZsh{}1 true label \PYZsh{}2 show label}
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}phantomsection} \PY{k}{\PYZbs{}def}\PY{k}{\PYZbs{}@}currentlabel\PY{n+nb}{\PYZob{}}\PYZsh{}2\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}label}\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}label styel customization}
+
+\PY{k}{\PYZbs{}gdef}\PY{k}{\PYZbs{}theenmark}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}@EndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}gdef}\PY{k}{\PYZbs{}endnotemark}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}textsuperscript}\PY{n+nb}{\PYZob{}}(\PY{k}{\PYZbs{}theenmark})\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}gdef}\PY{k}{\PYZbs{}endnotemarkback}\PY{n+nb}{\PYZob{}}(\PY{k}{\PYZbs{}theenmark})\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+
+\PY{c}{\PYZpc{}=============main body=================\PYZpc{}}
+\PY{k}{\PYZbs{}newwrite}\PY{k}{\PYZbs{}@}entout
+
+\PY{k}{\PYZbs{}newcounter}\PY{n+nb}{\PYZob{}}@EndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}[chapter]\PYZpc{}with the chapter reset to 0}
+\PY{c}{\PYZpc{}now use the showendnotes command control it .}
+\PY{k}{\PYZbs{}newcounter}\PY{n+nb}{\PYZob{}}@AllEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}global hyperlink number}
+\PY{k}{\PYZbs{}newcounter}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}control the ent001 ent002}
+
+\PY{k}{\PYZbs{}setcounter}\PY{n+nb}{\PYZob{}}@EndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setcounter}\PY{n+nb}{\PYZob{}}@AllEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setcounter}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}1\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}newif}\PY{k}{\PYZbs{}if}@entopen \PY{k}{\PYZbs{}global}\PY{k}{\PYZbs{}@}entopenfalse
+
+
+\PY{c}{\PYZpc{} open the file}
+\PY{k}{\PYZbs{}def}\PY{k}{\PYZbs{}@}openent\PY{n+nb}{\PYZob{}}\PY{c}{\PYZpc{}}
+\PY{c}{\PYZpc{}modified the code file name\PYZpc{}}
+\PY{k}{\PYZbs{}def}\PY{k}{\PYZbs{}@}entname\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}jobname}
+\PY{k}{\PYZbs{}ifnum}\PY{k}{\PYZbs{}value}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PYZlt{}10 0\PY{k}{\PYZbs{}fi}
+\PY{k}{\PYZbs{}ifnum}\PY{k}{\PYZbs{}value}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PYZlt{}100 0\PY{k}{\PYZbs{}fi}
+\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{c}{\PYZpc{}set the name is 001 002 003 .099.100. 999 for cat order is correct . if there is over 1000 endnote}
+\PY{c}{\PYZpc{}then it going to cat a wrong order , like that,001 ...100 1000..101}
+\PY{c}{\PYZpc{}for simple reason , it is only support the 1000 endnote .i think it is enough}
+\PY{c}{\PYZpc{}but Avril Lavigne said it is not enough \PYZca{}\PYZus{}\PYZca{}}
+
+\PY{k}{\PYZbs{}immediate}\PY{k}{\PYZbs{}openout}\PY{k}{\PYZbs{}@}entout=\PY{k}{\PYZbs{}@}entname.ent\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}global}\PY{k}{\PYZbs{}@}entopentrue
+\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+
+\PY{k}{\PYZbs{}begingroup} \PY{k}{\PYZbs{}catcode} `|=0 \PY{k}{\PYZbs{}catcode} `[=1
+\PY{k}{\PYZbs{}catcode}`]=2 \PY{k}{\PYZbs{}catcode} `\PY{k}{\PYZbs{}\PYZob{}}=12 \PY{k}{\PYZbs{}catcode} `\PY{k}{\PYZbs{}\PYZcb{}}=12
+\PY{k}{\PYZbs{}catcode}`\PY{k}{\PYZbs{}\PYZbs{}}=12
+|gdef|@writeent[|immediate|write|@entout[
+\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}footnotesize}
+\PY{k}{\PYZbs{}hspace}\PY{n+nb}{\PYZob{}}\PYZhy{}2\PY{k}{\PYZbs{}parindent}\PY{n+nb}{\PYZcb{}}\PY{k}{\PYZbs{}makebox}\PY{n+na}{[\PYZbs{}parindent\PYZhy{}3pt]}\PY{n+na}{[l]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}flabel}\PY{n+nb}{\PYZob{}}|@linknameb\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}|@showlinknameb\PY{n+nb}{\PYZcb{}}  \PY{k}{\PYZbs{}ref}\PY{n+nb}{\PYZob{}}|@linkname\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}leftskip}=\PY{k}{\PYZbs{}parindent}   |expandonce|@include \PY{k}{\PYZbs{}par} \PY{n+nb}{\PYZcb{}} ] ]\PY{c}{\PYZpc{}use the expandonce control and the gdef @include}
+|endgroup
+
+\PY{k}{\PYZbs{}DeclareRobustCommand}\PY{k}{*}\PY{k}{\PYZbs{}endnote}\PY{n+na}{[1]}\PY{n+nb}{\PYZob{}}\PY{c}{\PYZpc{}well add so many \PYZpc{} to eat space}
+\PY{k}{\PYZbs{}stepcounter}\PY{n+nb}{\PYZob{}}@EndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}stepcounter}\PY{n+nb}{\PYZob{}}@AllEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}edef}\PY{k}{\PYZbs{}@}linkname\PY{n+nb}{\PYZob{}}enote:\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}@AllEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}edef}\PY{k}{\PYZbs{}@}linknameb\PY{n+nb}{\PYZob{}}enote:\PY{k}{\PYZbs{}arabic}\PY{n+nb}{\PYZob{}}@AllEndnoteCounter\PY{n+nb}{\PYZcb{}}b\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}edef}\PY{k}{\PYZbs{}@}showlinknameb\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}endnotemark}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}edef}\PY{k}{\PYZbs{}@}showlinkname\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}endnotemarkback}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}ignorespaces}\PY{k}{\PYZbs{}flabel}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}@}linkname\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}@}showlinkname\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}ignorespaces}\PY{k}{\PYZbs{}hspace}\PY{n+nb}{\PYZob{}}\PYZhy{}0.5ex\PY{n+nb}{\PYZcb{}}\PY{k}{\PYZbs{}ref}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}@}linkname b\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}if}@entopen \PY{k}{\PYZbs{}else} \PY{k}{\PYZbs{}@}openent \PY{k}{\PYZbs{}fi}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}begingroup}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}let}\PY{k}{\PYZbs{}protect}\PY{k}{\PYZbs{}string}\PY{c}{\PYZpc{}change to string but the environment seem not act correct}
+\PY{k}{\PYZbs{}gdef}\PY{k}{\PYZbs{}@}include\PY{n+nb}{\PYZob{}}\PYZsh{}1\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}endgroup}\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}@}writeent\PY{c}{\PYZpc{}}
+\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}DeclareRobustCommand}\PY{k}{*}\PY{k}{\PYZbs{}showendnotes}\PY{n+nb}{\PYZob{}}\PY{c}{\PYZpc{} close the file}
+\PY{k}{\PYZbs{}immediate}\PY{k}{\PYZbs{}closeout}\PY{k}{\PYZbs{}@}entout\PY{c}{\PYZpc{}}
+\PY{k}{\PYZbs{}global}\PY{k}{\PYZbs{}@}entopenfalse
+
+\PY{k}{\PYZbs{}input}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}@}entname.ent\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}setcounter}\PY{n+nb}{\PYZob{}}@EndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}stepcounter}\PY{n+nb}{\PYZob{}}@ShowEndnoteCounter\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+
+\PY{n+nb}{\PYZcb{}}
+
+\PY{k}{\PYZbs{}endinput}
+\end{Verbatim}

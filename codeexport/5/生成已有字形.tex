@@ -1,0 +1,23 @@
+
+\documentclass[landscape]{article}
+\usepackage{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans}
+\usepackage{multicol}
+\setlength{\columnseprule}{0.4pt}
+\usepackage{multido}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{LARGE}
+\begin{multicols}{5}
+\multido{\i=0+1}{"196607"}{% from U+0000 to U+2FFFF
+%后面的还会继续扩展，目前一般还没使用。
+  \iffontchar\font\i
+    \makebox[4em][l]{\i}%
+    \symbol{\i}\endgraf
+  \fi
+}
+\end{multicols}
+\end{LARGE}
+\end{document}
+

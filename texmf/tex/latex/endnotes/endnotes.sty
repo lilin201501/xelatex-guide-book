@@ -1,3 +1,4 @@
+%基于 John Lavagnino's  endnotes.sty and on web finded the  hyperendnotes.sty, 由wanze于2013年12月15日编写而成。
 %base on John Lavagnino's  endnotes.sty and on web finded the  hyperendnotes.sty
 %modified by wanze   2013/12/15
 %
@@ -50,7 +51,8 @@
 \catcode`\\=12
 |gdef|@writeent[|immediate|write|@entout[
 {\footnotesize
-\hspace{-2\parindent}\makebox[\parindent-3pt][l]{\flabel{|@linknameb}{|@showlinknameb}  \ref{|@linkname}}
+\hspace{-2\parindent}\makebox[\parindent-3pt][l]
+{\flabel{|@linknameb}{|@showlinknameb}  \ref{|@linkname}}
 \leftskip=\parindent   |expandonce|@include \par } ] ]%use the expandonce control and the gdef @include
 |endgroup
 

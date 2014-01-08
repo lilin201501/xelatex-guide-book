@@ -2,16 +2,13 @@
 %
 %modified by wanze   2013-11-21
 
-
-
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
 \ProvidesPackage{xverbatim}[2013/11/21 v0.51  extended code support mode in LaTeX]
 \RequirePackage{etoolbox}
 \RequirePackage{fancyvrb}
 \RequirePackage{verbatim}
 \RequirePackage{color}
-\RequirePackage{xstring}%\StrBefore{}{.}\StrBehind{}{.}
-
+\RequirePackage{mdframed}
 %Verbatim environment a little diy
 \fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
     xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
@@ -111,9 +108,9 @@
 \newwrite\@codeout
 \newread\@retcode
 % Put the  code in separate files.
-\newcounter{@EnvironmentCounter}
-\setcounter{@EnvironmentCounter}{0}
-%reset the EnvironmentCounter when it encounter the chapter
+\newcounter{@xverbatimCounter}[chapter]
+\setcounter{@xverbatimCounter}{0}
+%reset the xverbatimCounter when it encounter the chapter
 
 %here is hard to understand
 \begingroup \catcode `|=0 \catcode `[=1
@@ -125,13 +122,13 @@
 
 \DeclareRobustCommand*{\@showcode}{%
 %use the pygmentize
-\ifdefstring{\@codemode}{tex}
+\ifdefstring{\@xverbatimmode}{tex}
 {
- \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@codemode}
+ \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@xverbatimmode}
  \immediate\input{\@outname.output.tex}
 }
 {
-\immediate\write18{pygmentize   -o \@outname.tex \@outname.\@codemode}
+\immediate\write18{pygmentize   -o \@outname.tex \@outname.\@xverbatimmode}
 %use fancyvrb VerbatimInput control the out
 \immediate\input{\@outname.tex}
 }
@@ -149,54 +146,53 @@
 \ifnumequal{\rc}{0}{}{%
     \begingroup
         \color{red}
-        \verbatiminput{\@outname.\@codemode.err}
+        \verbatiminput{\@outname.\@xverbatimmode.err}
     \endgroup
 }}
 
 
 \DeclareRobustCommand*{\@executecode}{%
-\ifdefstring{\@codemode}{py}
-{ \immediate\write18{cat \@outname.\@codemode |  /usr/bin/env python3 > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+\ifdefstring{\@xverbatimmode}{py}
+{ \immediate\write18{  python3 \@outname.py > \@outname.py.out 2> \@outname.py.err; echo -n $? > \@outname.rc}}
 {
-\ifdefstring{\@codemode}{c}
-{ \immediate\write18{  gcc -o \@outname.\@codemode.cexe \@outname.\@codemode && ./\@outname.\@codemode.cexe > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
+\ifdefstring{\@xverbatimmode}{lisp}
+{ \immediate\write18{sbcl --script \@outname.lisp    > \@outname.lisp.out 2> \@outname.lisp.err; echo -n $? > \@outname.rc}}
 {
-\ifdefstring{\@codemode}{bash}
-{ \immediate\write18{ cp  \@outname.bash \@outname.bash.bashexe &&  chmod +x \@outname.bash.bashexe  &&  ./\@outname.bash.bashexe  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
-{
-\ifdefstring{\@codemode}{lisp}
-{ \immediate\write18{sbcl --script \@outname.\@codemode    > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
-{
-\ifdefstring{\@codemode}{scm}
-{ \immediate\write18{ guile  \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
-{
-\ifdefstring{\@codemode}{tex}
-{ \immediate\write18{  xelatex -synctex=1 -interaction=nonstopmode -output-directory=codeexport/\@codemode/\thechapter/ \@outname.\@codemode  > \@outname.\@codemode.out 2> \@outname.\@codemode.err; echo -n $? > \@outname.rc}}
-{\errmessage{sorry this codemode doesnot executeable recently}
-}}}}}}}
+\ifdefstring{\@xverbatimmode}{scm}
+{ \immediate\write18{ guile  \@outname.scm  > \@outname.scm.out 2> \@outname.scm.err; echo -n $? > \@outname.rc}}
+{\errmessage{only support the py lisp and scm}
+}}}}
 
 
 \DeclareRobustCommand*{\@showresult}{%
 \begingroup
 \obeylines
 \parindent=0pt
-\immediate\input{\@outname.\@codemode.out}
+\begin{mdframed}
+\ttfamily\footnotesize
+\immediate\input{\@outname.\@xverbatimmode.out}
+\end{mdframed}
 \endgroup}
+
+\DeclareRobustCommand*{\@terminalcode}{%
+\immediate\write18{geany \@outname.\@xverbatimmode}
+}
+
 
 
 %environment start
-\newenvironment{xverbatim}[2][1]%#1 optional 0 1 129 ... #2 is test.py
+\newenvironment{xverbatim}[2][1]%#1 optional 0 1 129 ... #2 is 默认的名字 #3 类似py的模式
 {
-\immediate\stepcounter{@EnvironmentCounter}
-\def\@modestatus{#1}
-\def\@codefilename{#2}
-\StrBefore{\@codefilename}{.}[\@codefile]
-\StrBehind{\@codefilename}{.}[\@codemode]
+\immediate\stepcounter{@xverbatimCounter}
+\def\@codemode{#1}
+\def\@codefilename{code:\thechapter-\arabic{@xverbatimCounter}}
+\def\@xverbatimmode{#2}
+
 %if the filefolder doesnot exist  then creat it
-\immediate\write18{if [  !  -d  codeexport/\arabic{@EnvironmentCounter}   ];  then mkdir -p codeexport/\arabic{@EnvironmentCounter}  ; fi}
+\immediate\write18{if [  !  -d  codeexport/code:\thechapter-\arabic{@xverbatimCounter}  ];  then mkdir -p codeexport/code:\thechapter-\arabic{@xverbatimCounter}  ; fi}
 %modified the code file name
-\newcommand{\@outname}{codeexport/\arabic{@EnvironmentCounter}/\@codefile }
-\immediate\openout\@codeout=\@outname.\@codemode
+\newcommand{\@outname}{codeexport/code:\thechapter-\arabic{@xverbatimCounter}/\@codefilename }
+\immediate\openout\@codeout=\@outname.\@xverbatimmode
 \newlinechar='15
 \begingroup \catcode`\^^M=12 %
 \let\do\@makeother\dospecials\obeyspaces%
@@ -206,13 +202,14 @@
 \immediate\closeout\@codeout
 
 
-\ifnum \@modestatus = 0
-\else   \ifnum \@modestatus = 1    \@showcode
-\else   \ifnum \@modestatus = 12   \@showcode \@executecode \@writefeedback
-\else   \ifnum \@modestatus = 129    \@showcode \@executecode \@showresult \@writefeedback
-\else   \ifnum \@modestatus = 19   \@showcode  \@showresult
-\else          \errmessage{you typed wrong optional parameter,the choice is  0 1   12 129 19  .}
-\fi\fi\fi \fi \fi
+\ifnum \@codemode = 0
+\else   \ifnum \@codemode = 1    \@showcode
+\else   \ifnum \@codemode = 12   \@showcode \@executecode \@writefeedback
+\else   \ifnum \@codemode = 129    \@showcode \@executecode \@showresult \@writefeedback
+\else   \ifnum \@codemode = 19   \@showcode  \@showresult
+\else   \ifnum  \@codemode = 13  \@showcode \@terminalcode
+\else          \errmessage{you typed wrong optional parameter,the choice is  0 1   12 129 19 13 .}
+\fi\fi\fi \fi \fi\fi
 
 }
 

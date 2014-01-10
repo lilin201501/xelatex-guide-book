@@ -28,7 +28,7 @@
 \editor{万泽}
 \email{a358003542@gmail.com}
 \editorinfo{编者：万泽，}
-\version{1.19}
+\version{1.20}
 \titleLB
 
 \addchtoc{前言}
@@ -1199,10 +1199,12 @@ gray!0    &    \cellcolor{gray!0}\\ \bottomrule
 
 \textbackslash \textbackslash 命令还有一个用法，比如后面跟上[10pt],表示在原有行距的基础上再加上额外的空白距离，参数也可以是负数。
 
+换行不空一行在tex文档中的效果只是加上一个空格，你可以前面那行后面加上\%{}来取消这个空格，也就是编程中常遇到的一种技巧，多行凑成一行。
+
 \subsection{断字}
 如果你编译的时候出现了overfull hbox什么的错误，一般是断字出现问题了，有字越过文档边界了。命令\textbackslash \textbackslash 是强制换行。还有一个换行命令\textbackslash linebreak，这个命令后面还可以跟个可选项，但意义我不大明确。一般就是观察生成的文档，然后选择合适的位置插入linebreak命令。这个断行命令断行之后，前面那行的文字将会扩展充满整行，在越界小距离的情况下还是可行的，但是距离大了这一行扩展导致字间距过大也不是十分美好。
 
-你可以考虑改变文字，或者直接用\textbackslash newline换行，主要是英文的断字问题，还有一个命令是手动调整英文单词断字的，这里先略过。
+你可以考虑改变文字，或者直接用\textbackslash newline换行，或者手工加上\~符号，或者手工加上-符号和\textbackslash \textbackslash 来断英文字。
 
 \subsection[段落中的行距]{段落中的行距\endnote{参考了\href{http://www.complang.tuwien.ac.at/anton/latex/baselineskip.html}{这个网站}}}
 \verb+\setlength{\baselineskip}{22pt}+\\
@@ -1449,7 +1451,7 @@ tocdepth是一个counter量，默认是2，显示到subsection。这里为了是
 
 
 \subsection{目录数字和标题间距调整}
-
+请参考\href{http://tex.stackexchange.com/questions/64115/table-of-contents-chapter-number-width}{这个网站}。
 
 \subsection{titletoc宏包}
 titletoc宏包可以自己DIY目录格式，这里忽略。
@@ -1621,7 +1623,8 @@ hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己
 
 然后接下来新建了一个命令flabel，这个命令是为了文本中的尾注标记符号和尾注中的标记符号区分开来，比如文本中的尾注标记符号是上标的，而尾注中的标记符号则不是。flabel命令里面使用了hyperref宏包的精确定位命令phantomsection，因为hyperref宏包在myconfig宏包中已经加载了，这里就不加载了。
 
-flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而第二个参数\#{}2表示显示的label。所谓真实的label指等下生成的pdf中的精确定位label标记。命令中重新定义了\verb+\@currentlabel+，也就是显示的label。这样将这两者区分开来，本来他们都是一样的。
+flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而第二个参数\#{}2表示显示的label。所谓真实的label指等下生成的pdf中的精确定位label标记。命令中重新定义了\verb+\@currentlabel+，也就是显示的label。这样将这两者区分开来，本来他们都是一样的。这个知识点参考了这个网站\href{这个知识点参考了这个网站}{手动设置引用显示的文本}
+
 \begin{cverbatim}{tex}
 \RequirePackage{etoolbox}
 \DeclareRobustCommand*{\flabel}[2]%
@@ -1952,7 +1955,9 @@ itemize环境里面当然没有计数器，不过它类似的也有：labelitemi
 \subsection{导入pdf页面}
 这里要讲的是使用pdfpages宏包来实现多个pdf页面的导入。\\
 \verb+\usepackage[options]{pdfpages} +\\
-默认是插入所有pdf页面，
+默认是插入所有pdf页面，还有一些选项请参看文档。最常用的选项就是：\\
+\verb+pages={1,{},8-10}+\\
+上面的意思是插入第一张页面，然后插入一个空页面，然后插入第八张到第十张。
 
 \subsection{本文插入图片的一些DIY}
 \begin{Verbatim}
@@ -2212,7 +2217,7 @@ numbersep=2pt                        & 数字和框框间距 \\   \bottomrule
 
 
 \subsection{xverbatim宏包说明}
-我新建了一个xverbatim宏包，提供了一个xverbatim环境，能够对代码进行染色显示输出，并对某些编程语言具有执行和显示输出结果的功能。这个环境还提供集中可选模式让实际操作更加灵活。由于这个宏包包括很多行pygments（python的一个宏包）的输出配置信息，这里就不将宏包全部列出来了。完整的宏包内容在本github的texmf目录之下。
+我新建了一个xverbatim宏包，提供了一个xverbatim环境，能够对代码进行染色显示输出，并对某些编程语言具有执行和显示输出结果的功能。这个环境还提供集中可选模式让实际操作更加灵活。由于这个宏包包括很多行pygments（python的一个宏包）的输出配置信息，这里就不将宏包全部列出来了。完整的宏包内容在本github的texmf目录之下。使用pygments的灵感来自\href{http://scott.sherrillmix.com/blog/programmer/displaying-code-in-latex/}{这个网站}。
 
 虽然整个宏包有两百多行，但主干结构也就一百行左右。具体实现结构和前面谈及的endnotes宏包有点类似，在编写的时候也参考了James Brotchie的python宏包。
 
@@ -2374,12 +2379,37 @@ em  & （相对长度）大约相当于当时字体的M宽度 & \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{默认的长度量}
 
+\subsection{默认的长度量}
+\begin{itemize}
+\item \textbf{\textbackslash evensidemargin ~ \textbackslash linewidth ~ \textbackslash oddsidemargin ~ \textbackslash paperwidth ~  \textbackslash paperheight ~ \textbackslash textheight ~ \textbackslash textwidth ~ \textbackslash topmargin }：这些长度量都和页面布局有关，很多都在前面页面布局那一节里面说了，这里就不赘述了。
+\item \textbf{\textbackslash baselineskip ~ \textbackslash baselinestretch ~ \textbackslash baselineskip ~  \textbackslash parindent  ~ \textbackslash parskip }：这些长度量和段落格式有关，大多都在前面段落一节说了，这里也不赘述了。
+\item \textbf{\textbackslash columnsep ~ \textbackslash columnwidth ~ \textbackslash tabcolsep ~ \textbackslash unitlength}：这几个长度量和特殊的环境有关，比如columnsep控制多栏环境之间的宽度，columnwidth控制栏的宽度，tabcolsep控制tabular环境一列一列之间的间距，unitlength控制picture环境下的unit的长度（还不太清楚）。
+\end{itemize}
+
+ 
+\subsection{定义自己的长度量}
+要新建一个自己的长度量使用newlength命令即可：\\
+\verb+\newlength{\lengthname}+
+
+\subsection{修改长度量}
+用setlength命令直接设值某个长度量的值为多少。\\
+\verb+\setlength{\lengthname}{20pt}+
+
+此外还可以使用addtolength命令来给某个长度值加上一个数值。\\
+\verb+\addtolength{\lengthname}{20pt}+
 
 \subsection{使用长度量}
-\subsection{定义自己的长度量}
-\subsection{修改长度量}
+长度量一般在该使用的地方可以直接使用，其中伸缩量可以跟一个plus量和一个minus量。此外长度量还支持前面加个实数表示相乘多少的形式。\\
+\verb+0.7\lengthname+
+
+\subsubsection{显示长度量的值}
+要在pdf文档中显示某个长度量的值使用\textbackslash the命令即可：\\
+\verb+\the\lengthname+
+
+\subsection{calc宏包介绍}
+前面提及的setlength，addtolength命令只能接受最简单的长度量，在引入calc宏包之后可以进行一般的中缀数学表达式的运算。
+
 
 
 
@@ -2483,6 +2513,10 @@ arrayjobx这个宏包就提供了这个数据结构。
 它的实现机制应该是使用了这个{\footnotesize \verb+\@addtoreset{counter}{chapter}+}命令。
 
 
+
+
+
+
 \section{新的命令或环境}
 
 \subsection{新的命令}
@@ -2540,33 +2574,10 @@ glue也就是各个盒子之间的间距。下图是glue的具体图示：
 \begin{linefig}{glue说明}
 \label{fig:glue说明}
 \end{linefig}
-前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3*\frac { 6 }{ 9 } $。这样第一个间距的总长度就是$9+3*\frac { 6 }{ 9 } =11$。
+前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3\times\frac { 6 }{ 9 } $。这样第一个间距的总长度就是$9+3\times\frac { 6 }{ 9 } =11$。
 
 经过计算所有的glue间距都确定下来了，那么整个页面布局就确定了。我在这里就戛然而止了，毕竟这里只是对box和glue的基本概念的阐明。
 
-%\subsection{盒子in \TeX}
-%前面稍微介绍了点\TeX 的原初命令hbox和vbox。我们就能够感受到靠着这两个命令已经能够干很多事情了。比如我想写一幅对联。
-%
-%\begin{xverbatim}{tex}
-%{\CJKfontspec[Scale=3,Color=red]{方正魏碑_GBK}
-%\vbox {
-%\centerline{呵呵}
-%    \hbox to \hsize {恭大}
-%    \hbox to \hsize {喜吉}
-%    \hbox to \hsize {发大}
-%    \hbox to \hsize {财利}}}
-%\end{xverbatim}
-%
-%\vspace{30pt}
-%{\CJKfontspec[Scale=3,Color=red]{颜体}
-%\vbox {
-%\centerline{呵呵}
-%    \hbox to \hsize {恭大}
-%    \hbox to \hsize {喜吉}
-%    \hbox to \hsize {发大}
-%    \hbox to \hsize {财利}}}
-%
-%其中hbox和vbox都支持这样的to 多少尺寸和 spread 增加多少尺寸的形式，这里的hsize相当于linewidth吧。然后我用这个例子主要说明用hbox和vbox能够做很多排版工作了。而我们在\LaTeX 里面则用makebox替代了hbox，raisebox替代了vbox。并且排版思路变成了主要是一行一行排版，然后才考虑raisebox微调。
 
 \section{盒子命令介绍}
 \href{http://tex.stackexchange.com/questions/83930/what-are-the-different-kinds-of-boxes-in-latex}{参考了这个网站}
@@ -2632,6 +2643,8 @@ fancycolorbox环境的效果前面你应该已经看过了。这里就不做演�
 这三个选项都要填长度量，第一个长度量是线条竖向偏移量，第二个长度量是线条横向长度，第三个长度量是线条竖向宽度。
 
 \section{大文档管理}
+之前我也用过include命令来试着将文档分开，但是发现一是减弱了编辑器的各种小插件功能，二是有的时候include命令会出错（一些奇怪的错误，我也不太明白）。然后那个includeonly命令我觉得也挺累赘的，如果你使用input命令，不要引入了前面加个百分号注释掉即可。一个文档就是整体，觉得还是不要分开的好。
+
 
 \section{注释}
 \showendnotes
@@ -2641,9 +2654,38 @@ fancycolorbox环境的效果前面你应该已经看过了。这里就不做演�
 
 
 \chapter{其他问题的讨论}
+\section{TeX一些常用命令简介}
+\subsection{relax命令}
+类似python的pass命令，什么也不做的意思。
 
-\section{plain TeX命令}
+\section{TeX中执行系统的命令}
+\href{http://tex.stackexchange.com/questions/20444/what-are-immediate-write18-and-how-does-one-use-them}{参考了这个网站}
 
+\TeX 的write18命令将一连串文本命令送入shell中执行，一般语句的格式如下（immediate命令是立即执行的意思。这里表示将命令立即送入shell现在就执行。）：\\
+\verb+\immediate\write18{your command put it here}+
+
+要成功运行这个命令记得你的编译选项上还需要加上：\\
+\verb+--enable-write18+
+
+比如目前我的texmaker的编译命令如下：\\
+{\footnotesize \verb+xelatex -synctex=1 -interaction=nonstopmode --enable-write18  %.tex+}
+
+\section{TeX中写文件和读文件}
+\href{http://stackoverflow.com/questions/2115379/write-and-read-from-a-latex-temporary-file}{参考了这个网站}
+
+TeX中写文件的流程如下： 
+\begin{enumerate}
+\item 首先新建一个待写的文件：\\
+\verb+\newwrite\tempfile+
+\item 然后打开这个文件并给这个文件一个实际的文件名（支持带文件夹的相对路径名前缀）：\\
+\verb+\immediate\openout\tempfile=test.txt+
+\item 然后用write命令给这个文件写入信息，只要文件没有关闭，可以一直附加的写：\\
+\verb+\immediate\write\tempfile{this is interesting}+
+\item 写完之后记得关闭文件，这样写入的内容才实际从缓存区进入真实的文件区：\\
+\verb+\immediate\closeout\tempfile+
+\end{enumerate}
+
+TeX中读入文件一般用input命令即可，此外verbatim宏包还提供了原文照列的verbatiminput命令，还有fancyvrb宏包有Verbatiminput命令。或者类似上面的有：\textbackslash newread，\textbackslash openin，\textbackslash read 和 \textbackslash closein命令。
 
 \section{TeX中的程序结构}
 \subsection{条件控制语句}
@@ -2665,8 +2707,27 @@ fancycolorbox环境的效果前面你应该已经看过了。这里就不做演�
 \verb+\logvarfalse+
 
 \subsubsection{ifnum命令}
-ifnum命令用于判断数字。
-\verb+\ifnum number = 0+
+ifnum命令用于判断数字。\\
+\verb+\ifnum number = 0+\\
+ifnum控制结构和if命令类似，这里数字判断还可以是大于>或者小于<。
+
+\section{TeX生成前面有零的数字序列}
+\href{http://tex.stackexchange.com/questions/30930/how-to-output-a-counter-with-leading-zeros}{参考了这个网站}
+
+TeX中的计数器用arabic命令之后是1 2 3...这样的形式，如何产生001 002... 010 011 ... 100 ...这样的形式呢？之所以有这样的需求是我在试着编写endnotes宏包的时候用了一种错误的思路，然后希望使用linux系统的cat命令来讲一条条的尾注汇总，cat命令对于计数器产生的文件名，如果按照原来1 2 3...这样的形式顺序是错误的，为了纠正就需要变成001  002 ...这样的一致规则形式。
+
+\begin{Verbatim}
+\def\@entname{\jobname
+\ifnum\value{@ShowEndnoteCounter}<10 0\fi
+\ifnum\value{@ShowEndnoteCounter}<100 0\fi
+\arabic{@ShowEndnoteCounter}}%
+\end{Verbatim}
+
+比如上面这个命令，就是我目前使用的endnotes宏包产生的临时ent文件，文件名如下：xelatex指南001.ent xelatex指南002.ent等等。
+
+这里的逻辑如下，首先假定这个计数器从0开始吧，小于0的情况不予考虑，不要视图做出什么情况都考虑到的完美程序，那只是浪费脑力罢了。如果计数器范围在0到9，那么经过第二行将会生成一个0，经过第三行将会生成另外一个0，然后后面生成个位数的计数器1之类的。如果计数器范围10到99，那么经过第二行不会生成0什么也没有，如是格式就有了010 011之类的。这种构造考虑程序自上而下的顺序，很是简单，比如你如果觉得一千之类的范围太小，那就再加上类似的一行。
+
+
 
 \section{文本中的上标还有下标}
 上标使用命令textsuperscript命令，下标感觉自己缩小点就差不多了吧。示例如下：\\

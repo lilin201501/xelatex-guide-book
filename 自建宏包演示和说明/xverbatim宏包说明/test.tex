@@ -29,8 +29,8 @@
 \version{1.0}
 \titleLC
 
-\addchtoc{开头说的话}
-\chapter*{开头说的话}
+\addchtoc{前言}
+\chapter*{前言}
 \begin{common-format}
 开头说的话
 
@@ -46,24 +46,43 @@
 \begin{common-format}
 \mainmatter
 
-\chapter{章节开始}
 
 \chapter{bash语言}
-\begin{xverbatim}[129]{test.bash}
+默认的可选项是1，就是只显示代码，所以不用写。
+\begin{xverbatim}{bash}
 a=1
 echo $a
 \end{xverbatim}
 
 \chapter{python语言}
-\begin{xverbatim}[129]{test.py}
+\section{基本可执行模式}
+这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，
+
+这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，
+\begin{xverbatim}[129]{py}
 for i in range(1, 5):
     print (i)
 else:
     print ("The for loop is over")
 \end{xverbatim}
+这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，这是一段测试文字，
+
+
+
+%\section{有交互的情况}
+%有交互的情况使用139模式，但是需要手动控制输出到sys.argv[0].out这个文件中。
+%\begin{xverbatim}[1]{py}
+%import sys
+%x=input('请输入一个实数：')
+%string001='你输入的这个实数乘以2等于：'+ str(float(x)*2)
+%pyout=open(sys.argv[0]+'.out',"w")
+%print('请输入一个实数：',file=pyout)
+%print(string001,file=pyout)
+%pyout.close()
+%\end{xverbatim}
 
 \chapter{c语言}
-\begin{xverbatim}[129]{test.c}
+\begin{xverbatim}[1]{c}
 #include <stdio.h>
 main()
 {
@@ -72,12 +91,13 @@ printf ("Hello World!\n");
 \end{xverbatim}
 
 \chapter{lisp语言}
-\begin{xverbatim}[129]{test.lisp}
+common-lisp语言可执行，后缀是lisp。
+\begin{xverbatim}[129]{lisp}
 (format t "hello")
 \end{xverbatim}
 
 \chapter{tex语言}
-\begin{xverbatim}[12]{test.tex}
+\begin{xverbatim}[1]{tex}
 % !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
 %新加入的命令如下：addchtoc addsectoc reduline printendnotes hlabel
 %新加入的环境如下：common-format  fig scalefig
@@ -105,40 +125,12 @@ printf ("Hello World!\n");
 \version{1.0}
 \titleLC
 
-\addchtoc{开头说的话}
-\chapter*{开头说的话}
-\begin{common-format}
-开头说的话
 
-%这里空一行。
-
-\end{common-format}
-
-
-\addchtoc{目录}
-\setcounter{tocdepth}{2}
-\tableofcontents
-
-\begin{common-format}
-\mainmatter
-
-\chapter{章节开始}
-
-开始写作。。。
-
-%这里空一行
-
-\end{common-format}
-\end{document}
 \end{xverbatim}
 
 
-
-%\includepdf[pages={1}]{codeexport/tex/\thechapter/\jobname-1.pdf}
-
-
 \chapter{php语言}
-\begin{xverbatim}{test.php}
+\begin{xverbatim}{php}
 <?php
 echo "<html>
 <head>
@@ -152,7 +144,7 @@ Hello World!
 \end{xverbatim}
 
 \chapter{html语言}
-\begin{xverbatim}{test.html}
+\begin{xverbatim}{html}
 <HTML>
 <HEAD>
 <TITLE>Hello, World Page!</TITLE>
@@ -165,7 +157,7 @@ Hello, World!
 \end{xverbatim}
 
 \chapter{java语言}
-\begin{xverbatim}{test.java}
+\begin{xverbatim}{java}
 class HelloWorld {
         public static void main (String args[]) {
         for (;;) {
@@ -176,7 +168,7 @@ class HelloWorld {
 \end{xverbatim}
 
 \chapter{perl语言}
-\begin{xverbatim}{test.pl}
+\begin{xverbatim}{pl}
 print "Hello, World!\n" while (1);
 \end{xverbatim}
 
@@ -184,7 +176,7 @@ print "Hello, World!\n" while (1);
 
 
 \chapter{后缀名总览txt mode}
-\begin{xverbatim}{test.txt}
+\begin{xverbatim}{txt}
 Pygments version 1.6, (c) 2006-2013 by Georg Brandl.
 
 Lexers:

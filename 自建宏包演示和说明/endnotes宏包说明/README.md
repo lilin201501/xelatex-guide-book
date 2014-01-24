@@ -9,13 +9,8 @@ base on John Lavagnino 's  endnotes.sty and Ulrich Dirr's   hyperendnotes.sty , 
 #2. showendnotes
     insert the endnotes
 
-#3. \newif\ifsplitent\splitentfalse
-    then all endnote insert together
 
-#4. default is splitenttrue
-    endnote split with the chapter counter
-
-#5. you can renewcommand the endnotemark and the endnotemarkback-----it is the mark style in the endnotes
+#3. you can renewcommand the endnotemark and the endnotemarkback-----it is the mark style in the endnotes
 \renewcommand\endnotemark{[\theenmark]}
 \renewcommand\endnotemarkback{[\theenmark]}
 

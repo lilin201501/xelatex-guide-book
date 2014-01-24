@@ -10,11 +10,7 @@
 
 \usepackage{myconfig}
 \usepackage{mytitle}
-
-\newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=1pt,minimum size=8pt] (char) {#1};}
-\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
-\usepackage{arrayjobx} 
+\usepackage{mydef}
 
 
 
@@ -175,10 +171,11 @@ rime输入法也可以在fcitx输入法框架下进行，就目前来说（2013-
 
 
 \subsection{定制rime输出特殊符号}
-\begin{fancycolorbox}
+\begin{flushright}
+\begin{notecard}[olive!30]
 我希望通过rime输入法能够快速地将Unicode中的符号打出来。本文主要关注这个问题，其他定制请参阅官网wiki。
-\end{fancycolorbox}
-
+\end{notecard}
+\end{flushright}
 
 \subsubsection{rime基本情况说明}
 Rime的ubuntu版本叫做中州韵，不管这么多，一般称作ibus-rime，下面简称rime。下面的讨论只使用于ubuntu，我目前的版本是13.04，12.10试过没有问题。
@@ -1065,9 +1062,9 @@ this...   that\ldots   \\
 
 首先第1，2行前面以及谈及了，主要是看这个新引入的宏包newunicodechar。好吧，这个宏包就只有一个命令，这个命令就是这个宏包的名字。其实我们能够猜到，这个命令的作用就是将这个字符变成类似\TeX 命令的东西，然后体换为后面的那一串，而后面的那一串单独提出来也是能够正常显示的。如{\ubuntu{}}。
 
-\begin{fancycolorbox}
+\begin{flashcard}[olive!30]
 所以过程还是很简单的，但是整个过程让人紧张，如果一篇文章有很多这样的特殊符号，那不要写上长长的这样一串？我想到的第一个解决方案就是最好有这么一个字体包含所有的Unicode的字形，然后我试着用fontforge将一些字形复制粘贴调大小混到一起，然后发现这个方案既满足不了美观的要求也满足不了效率的要求。后来认识到也许我多虑了，如果一个符号经常出现，那么那个字体设计者肯定会优先考虑把它加进去的。
-\end{fancycolorbox}
+\end{flashcard}
 
 这里插播一段广告……\\
 这里有一段代码生成该字体所有已有的字形\ref{sec:字体已有字形}。当然你可以直接在字符映射表里面选择只显示已有字形查看，不过有时并不方便。生成那个pdf查看之后可以复制粘贴，到那个字符映射表里面搜索，还是很方便的。
@@ -1248,6 +1245,7 @@ baselinestretch量相当于行间距glue的伸缩量，也就是对前面的base
 
 \subsection{段落对齐}
 flushleft环境为左对齐环境，flashright环境为右对齐环境，center为居中环境。类似的命令样式有raggedleft，raggedright和centering。这些命令还可以控制表格图片(也许是一切盒子?)的位置。简单示例如下：
+
 \begin{Verbatim}
 \begin{flushright}
 \fbox{右边才是王道。}
@@ -1257,6 +1255,18 @@ flushleft环境为左对齐环境，flashright环境为右对齐环境，center�
 \fbox{右边才是王道。}
 \end{flushright}
 
+\subsection{flushright环境空白间距问题}
+flushright环境有一个大型的空白间距，如果你不喜欢这么大的空白间距正如前面谈及的，可以使用raggedright等命令来调整，不过raggedright等命令似乎更适合对图片表格等盒子调整位置。在段落内如何实现类似word那种一行之类居右对齐？
+
+\begin{Verbatim}
+this is a test line
+
+{\vspace{-\parskip}\hfill  some text}
+\end{Verbatim}
+
+这里推荐先空一行分段，然后用hfill命令将文本推到右边去，然后用vspace调整下距离。这里选择-\textbackslash parskip这样得到的行距和其他行距是一致的。
+
+{\vspace{-\parskip}\hfill  然后我注意到开辟新的竖向模式}\\，比如换行之后，不空一行用smallskip，medskip等，然后不用vspace命令调整也是可以的。因为smallskip也是一种vspace命令的调整模式，但是行距和其他的不太一致，所以在这里推荐就空一段，然后负的parskip。当然如果可以接受不用vspace调整也是可以的。
 
 \section{页眉页脚设计}
 页眉页脚设计推荐用\emph{fancyhdr}宏包。
@@ -2324,11 +2334,143 @@ pygmentize命令就是pygments提供的，它有很多选项，最常用的有�
 
 
 
-\section{语录，引用和诗歌环境}
-quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。下面是quote语录环境：
-\begin{quote}
+\section{特殊文字环境}
+\subsection{语录和引用环境}
+\LaTeX 原生的有quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。
+
+以下讨论参考了\href{http://tex.stackexchange.com/questions/33219/whats-the-difference-between-the-environments-quote-and-quotation}{这个网站}
+
+quote和quotation在article.cls中的原初定义是这样的：
+\begin{Verbatim}
+\newenvironment{quote}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax}
+               {\endlist}
+\newenvironment{quotation}
+               {\list{}{\listparindent 1.5em%
+                        \itemindent    \listparindent
+                        \rightmargin   \leftmargin
+                        \parsep        \z@ \@plus\p@}%
+                \item\relax}
+               {\endlist}
+\end{Verbatim}
+
+我改成了如下：
+\begin{Verbatim}
+%=========重新定义 quote=====%
+\renewenvironment{quote}[1][anonymous]{
+\newcommand{\quoteauthor}[1][anonymous]{#1}
+\list{}{\rightmargin\leftmargin %
+\itemindent   24pt
+}\item\relax
+\ttfamily\fontsize{10pt}{12pt}\selectfont}
+{\\
+\makebox[\linewidth][r]{\sffamily —\quoteauthor}
+\endlist}
+
+%重新定义quotation
+\renewenvironment{quotation}
+{\list{}{
+\itemindent 24pt %
+\listparindent \itemindent 
+}%
+\item\relax
+\ttfamily\fontsize{10pt}{12pt}\selectfont}
+{\endlist}
+\end{Verbatim}
+quote和quotation都是通过list环境来实现的，具体不太清楚。这里就我做的修改说明如下：
+\begin{itemize}
+\item \verb+\rightmargin\leftmargin+这是让右边空白距离等于左边空白距离，左边空白距离默认等于\verb+\parindent+，这个有用我保留了。
+\item \verb+\itemindent   24pt+，这个itemindent控制的是第一段的段首缩进量，这里设置为24pt是对应后面的10pt，然后CJK字体放大了1.2倍，然后大约两个字符的样子。
+\item 代码第七行是设置quote环境下字体为ttfamily，和字体大小还有行距的设置。
+\item quote环境后面的代码，在结束环境之前，先换行，然后输出了一个盒子，右对齐，ssfamily，写着这个格言的作者，因为格言一般都要写上作者，如果不知道那么也写上anonymous，无名氏。这个作者的名字是quote环境接受一个可选项而来的额。
+\item \verb+\listparindent \itemindent+，quotation多了一个这个设置，其中listparindent是控制quotation里面除了第一段之外其他段落的缩进，这里就简单设置为跟第一段一样。
+\item quotation环境的其他修改，其中右边空白距离取消了，因为quotation本来内容就很多，觉得没必要了。然后还有一个parsep是控制段与段之间距离的，这里取消了，因为默认的就很好了。
+\end{itemize}
+
+\subsubsection{语录环境演示}
+\begin{quote}[无名氏]
 “When the winds of change blow, some people build walls and others build windmills.”
 \end{quote}
+
+\subsubsection{引用环境演示}
+\begin{quotation}
+说Unix必将衰败，或者被其他操作系统挤出市场。可是在今天，化身Linux、BSD、Solaris、MacOS X以及好几种其它变种的Unix，却显得前所未有的强大。
+
+Robert Metcalf[以太网络的发明者]曾说过：如果将来有什么技术来取代以太网，那么这个取代物的名字还会叫“以太网”。因此以太网是永远不会消亡的Unix也多次经历了类似的转变。
+\end{quotation}
+
+\subsection{诗词歌赋环境}
+
+\subsection{notecard和flashcard环境}
+这两个环境编写主要参考\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
+
+有一类信息，这类信息和正文关系不太大，但是又很重要适合放在正文中而不是尾注或者脚注中。这类信息需要放在文档右边好不引起人们的注意或者好引起人们的注意。文档中的异常元素通常都有这个效果，在于读者的选择。
+
+具体实现代码如下：
+\begin{Verbatim}
+\newsavebox{\tempbox}
+\newenvironment{notecard}[1][white]
+ {\noindent\ignorespaces%
+ \setlength{\fboxsep}{10pt}
+  \newcommand{\tempcolor}{#1}
+  \begin{lrbox}{\tempbox}%
+  \begin{minipage}[c][0.36\linewidth][c]{0.58\linewidth}
+        \setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}
+        \setlength{\parskip}{0.12\parindent}   %段落間距
+}
+ {
+ \ignorespacesafterend%
+  \end{minipage}%
+  \end{lrbox}%
+  \colorbox{\tempcolor}{\usebox{\tempbox}}}
+
+%但是如果文字过多
+\newenvironment{flashcard}[1][white]
+ {\noindent\ignorespaces%
+ \setlength{\fboxsep}{10pt}
+  \newcommand{\tempcolor}{#1}
+  \begin{lrbox}{\tempbox}%
+  \begin{minipage}[c][0.58\linewidth][c]{0.93\linewidth}
+        \setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}
+        \setlength{\parskip}{0.12\parindent}   %段落間距
+}
+ {
+ \ignorespacesafterend%
+  \end{minipage}%
+  \end{lrbox}%
+  \colorbox{\tempcolor}{\usebox{\tempbox}}}
+\end{Verbatim}
+
+notecard环境 一种卡片式记忆环境，长高按照黄金比例分割来，推荐的颜色有：black olive blue orange brown pink cyan purple darkgray red gray teal green violet lightgray white lime magenta yellow 建议都调淡30。!30。不过推荐一个文档内部一种类型使用一种，其他颜色也是可以的。
+
+\subsubsection{notecard环境演示}
+\begin{Verbatim}
+\begin{flushright}
+\begin{notecard}
+不懂Unix的人注定最终还要重复发明一个蹩脚的Unix。
+
+Usenet 签名，1987年11月
+
+{\hfill —Henry Spencer}
+\end{notecard}
+\end{flushright}
+\end{Verbatim}
+
+\begin{flushright}
+\begin{notecard}
+不懂Unix的人注定最终还要重复发明一个蹩脚的Unix。
+
+Usenet 签名，1987年11月
+
+{\hfill —Henry Spencer}
+\end{notecard}
+\end{flushright}
+
+\subsubsection{flashcard环境演示}
+flashcard环境主要是在上面的notecard环境文字超出之后使用，这里就不浪费文档空间了。
+
+
 
 
 \section{插入摘要}
@@ -2546,9 +2688,9 @@ arrayjobx这个宏包就提供了这个数据结构。
 
 \section{盒子和glue}
 \label{sec:盒子和glue}
-\begin{fancycolorbox}
+\begin{flashcard}[olive!30]
 这里参考了Knuth的The Texbook，但是我并没有将其写入参考文献，因为只是觉得关于box和glue的概念最好参考原初定义，但是并不推荐读者阅读这本书，现在已经是\LaTeX 时代了，不推荐读者使用原始的\TeX 命令，一是不太实用，二是兼容性可能不太好。除非你是宏包编写者，但就作为一般的使用者真的没有必要接触那些原始命令了。还参考了\cite{boxes}
-\end{fancycolorbox}
+\end{flashcard}
 \endnote{
 在这里box翻译为盒子没什么问题，就是这个glue翻译为胶水或者橡皮都让我不太满意。在后面我都使用的术语是距离或者间距或者干脆用英文glue。从某种意义上讲glue的直译确实应该译为胶或者胶水，不过觉得距离这个词汇更能够让人们有感觉些：\TeX 排版就是不同的盒子编写和彼此之间距离的设置问题。}
 
@@ -2610,29 +2752,6 @@ colorbox
 \subsection{fcolorbox}
 fcolorbox can also be tweaked with \textbackslash fboxsep and \textbackslash fboxrule这两个长度量。
 
-\subsection{fancycolorbox}
-本文定义了一个fancycolorbox命令，具体代码如下：\\
-\begin{fancycolorbox}
-为什么是这么复杂的一个代码？这个需要说明一下。首先系统自带的colorbox命令不能换行，必须colorbox里面加上minipage环境才行，9,10行是minipage环境的格式优化，然后整个构成一个新环境我还想传递颜色，就成这个样子了。主要参考的\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
-\end{fancycolorbox}
-\vspace{20pt}
-\begin{Verbatim}
-\definecolor{bgcolor-0}{HTML}{CCFFCC} 
-
-\newsavebox{\tempbox}
-\newenvironment{fancycolorbox}[1][bgcolor-0]
- {\noindent%%
-  \renewcommand{\tempcolor}{#1}
-  \begin{lrbox}{\tempbox}%
-  \begin{minipage}{\linewidth-10pt}
-  	\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-	\setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}}  	
- {\ignorespacesafterend%
-  \end{minipage}%
-  \end{lrbox}%
-  \colorbox{\tempcolor}{\usebox{\tempbox}}}  
-\end{Verbatim}
-fancycolorbox环境的效果前面你应该已经看过了。这里就不做演示了。
 
 \section{保存盒子}
 \subsection{savebox}
@@ -2685,7 +2804,7 @@ TeX中写文件的流程如下：
 \verb+\immediate\closeout\tempfile+
 \end{enumerate}
 
-TeX中读入文件一般用input命令即可，此外verbatim宏包还提供了原文照列的verbatiminput命令，还有fancyvrb宏包有Verbatiminput命令。或者类似上面的有：\textbackslash newread，\textbackslash openin，\textbackslash read 和 \textbackslash closein命令。
+TeX中读入文件一般用input命令即可，此外verbatim宏包还提供了原文照列的verbatiminput命令，还有fancyvrb宏包有Verbatiminput命令。
 
 \section{TeX中的程序结构}
 \subsection{条件控制语句}

@@ -3,12 +3,12 @@
 %modified by wanze   2013-11-21
 
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
-\ProvidesPackage{xverbatim}[2013/11/21 v0.51  extended code support mode in LaTeX]
+\ProvidesPackage{xverbatim}[2013/11/21 v0.02  extended code support mode in LaTeX]
 \RequirePackage{etoolbox}
 \RequirePackage{fancyvrb}
 \RequirePackage{verbatim}
 \RequirePackage{color}
-\RequirePackage{mdframed}
+
 %Verbatim environment a little diy
 \fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
     xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
@@ -116,7 +116,9 @@
 \begingroup \catcode `|=0 \catcode `[=1
 \catcode`]=2 \catcode `\{=12 \catcode `\}=12
 \catcode`\\=12
-|gdef|@xverbatim#1\end{xverbatim}[|immediate|write|@codeout[#1]|end[xverbatim]]
+|gdef|@xverbatim#1\end{xverbatim}[
+|immediate|write|@codeout[#1]
+|end[xverbatim]]
 |endgroup
 
 
@@ -124,12 +126,16 @@
 %use the pygmentize
 \ifdefstring{\@xverbatimmode}{tex}
 {
- \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@xverbatimmode}
+ \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@xverbatimmode}%
+ \noindent code:\thechapter-\arabic{@xverbatimCounter}
+ \vspace{-5ex}
  \immediate\input{\@outname.output.tex}
 }
 {
 \immediate\write18{pygmentize   -o \@outname.tex \@outname.\@xverbatimmode}
-%use fancyvrb VerbatimInput control the out
+%a little diy
+\noindent code:\thechapter-\arabic{@xverbatimCounter}
+\vspace{-5ex}
 \immediate\input{\@outname.tex}
 }
 }
@@ -166,13 +172,17 @@
 
 \DeclareRobustCommand*{\@showresult}{%
 \begingroup
-\obeylines
+\catcode`\ =\active
+\catcode`\^^M=\active
 \parindent=0pt
-\begin{mdframed}
+\vspace{-2ex}
+\rule{\linewidth}{0.4pt}
 \ttfamily\footnotesize
 \immediate\input{\@outname.\@xverbatimmode.out}
-\end{mdframed}
-\endgroup}
+\noindent\rule[2em]{\linewidth}{0.4pt}%
+\endgroup
+\vspace{-5ex}
+}
 
 
 %有交互情况的输入和输出 interaction input and output
@@ -197,14 +207,17 @@
 %modified the code file name
 \newcommand{\@outname}{codeexport/code:\thechapter-\arabic{@xverbatimCounter}/\@codefilename }
 \immediate\openout\@codeout=\@outname.\@xverbatimmode
-\newlinechar='15
-\begingroup \catcode`\^^M=12 %
-\let\do\@makeother\dospecials\obeyspaces%
-\@xverbatim}
-{\endgroup
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlinechar=`\^^M%和写入文件新行符号有关
+\begingroup  %
+\let\do\@makeother\dospecials\catcode`\^^M\active%
+%将@转义为12和目前文档一致
+\@xverbatim
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+}
+{
+\endgroup
 \immediate\closeout\@codeout
-
 
 \ifnum \@codemode = 0
 \else   \ifnum \@codemode = 1    \@showcode
@@ -217,5 +230,7 @@
 \fi\fi\fi \fi \fi\fi\fi
 
 }
+
+
 
 \endinput

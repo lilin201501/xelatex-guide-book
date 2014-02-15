@@ -1600,6 +1600,39 @@ hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己
 加入脚注还是很有用的\footnote{这就是一个脚注}。具体方法就是：\\
 \textbackslash footnote\{这就是一个脚注\} 
 
+\subsection{脚注标签修改}
+\begin{Verbatim}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\end{Verbatim}
+
+
+
+\subsection{一页脚注重新编号}
+\begin{Verbatim}
+\usepackage{perpage} %the perpage package
+\MakePerPage{footnote} %the perpage package command
+\end{Verbatim}
+
+\subsection{脚注修改的一个实例}
+\begin{Verbatim}
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
+\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
+
+\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
+
+\RequirePackage{perpage} %the perpage package
+\MakePerPage{footnote} %the perpage package command
+\end{Verbatim}
+这里用了tikz绘图功能，然后修改thefootnote命令，注意这里必须加一个protect命令，具体不太清楚。
+
+\subsection{脚注其他知识}
+footnotesep长度量  控制脚注与脚注之间的距离
+
+\verb+\setlength{\skip\footins}{30pt plus 10pt}+
+控制正文和脚注之间距离
+
+
 
 \section{旁注}
 本文\footnote{早期版本。。}旁注新建了一个命令endnote，对字体和行距做了一下调整，然后使用的是\LaTeX 自带的marginpar命令，我也接触过另外一个宏包的marginnote命令，虽然多了一个可选项可以调整旁注竖向位移，但是带来的麻烦更多，有时候页尾的旁注会向下越界，如果我想写了一个旁注，又在下面继续写一个旁注命令也会出现重叠出错。而marginpar就没有这样的问题。写了一个marginpar，后面可以继续再开一条marginpar命令。至于竖向位移的问题，在endnote里面使用vspace命令即可。

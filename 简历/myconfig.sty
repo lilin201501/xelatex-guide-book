@@ -15,10 +15,11 @@
 
 
 %========基本必备的宏包========%
-\RequirePackage{calc,float,multicol,moresize}
+\RequirePackage{calc,float,multicol,moresize,tikz}
 \RequirePackage[doublespacing]{setspace}
 
-
+%=========其他命令==========%
+\newcommand{\notefont}{\ttfamily\fontsize{10pt}{12pt}\selectfont }
 
 %===========加入目录 某章或某节=====%
 
@@ -60,12 +61,12 @@
 
 \RequirePackage[a4paper, %a4paper size 297:210 mm
   bindingoffset=0mm,%裝訂線
-  top=45mm,  %上邊距 包括頁眉
-  bottom=40mm,%下邊距 包括頁腳
-  left=35mm,  %左邊距or inner
-  right=40mm,  %右邊距or  outer
-  headheight=25mm,%頁眉
-  footskip=25mm,%頁腳
+  top=20mm,  %上邊距 包括頁眉
+  bottom=20mm,%下邊距 包括頁腳
+  left=20mm,  %左邊距or inner
+  right=30mm,  %右邊距or  outer
+  headheight=15mm,%頁眉
+  footskip=15mm,%頁腳
  includemp=true,% 旁註寬度計入width
  marginparsep=0mm, %旁註與正文間距
 marginparwidth=0mm  %旁註寬度
@@ -73,7 +74,7 @@ marginparwidth=0mm  %旁註寬度
 \fi
 
 %color
-\RequirePackage[table]{xcolor}
+\RequirePackage{xcolor}
 \definecolor{bgcolor-0}{HTML}{CCFFCC}
 
 
@@ -141,23 +142,21 @@ marginparwidth=0mm  %旁註寬度
     \renewcommand{\footrulewidth}{0pt}
 %    \renewcommand{\chaptermark}[1]{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
 %    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
-    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
+    \fancyhf[HR]{}%什么都不显示
     \fancyhf[FR]{\thepage}
     \fancyhfoffset[R]{\marginparwidth+\marginparsep}}
 \pagestyle{plain}
 
 %=========章節標題設計=========%
-\RequirePackage{titlesec}
-%修改part
-\titleformat{\part}{\huge\sffamily}{}{0em}{}
-%修改chapter
-\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{}
-%修改section
-\titleformat{\section}{\Large\sffamily}{}{0em}{}
-%修改subsection
-\titleformat{\subsection}{\large\sffamily}{}{0em}{}
-%修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
+
+\renewcommand{\chapter}[1]{
+\noindent{\centering\HUGE\sffamily #1 \par}}
+
+
+\renewcommand{\section}[1]{
+\noindent
+{\tikz{\shade[left color=gray!0,right color=gray!50] (0,0) node[above] {\Large\sffamily #1} rectangle (\textwidth-38.3pt,1cm-4pt);} \par}}
+
 
 
 %================目录===============%
@@ -211,11 +210,25 @@ marginparwidth=0mm  %旁註寬度
 \RequirePackage{xverbatim}%小代码环境
 \RequirePackage{cverbatim}%大型代码拼接
 
+
 %=============插入尾注=========%
 \RequirePackage{endnotes}
 
 %==========其他宏包===========%
 \RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
+
+%========脚注=========%
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
+\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
+
+\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
+
+\RequirePackage{perpage} %the perpage package
+\MakePerPage{footnote} %the perpage package command
+
+%=======列表DIY===========%
+\renewcommand{\labelitemi}{\tikz{\shade[ball color=black!50]  (0,0) circle (0.18) ;}}
 
 %=====特殊的环境特殊的文字======%
 %=========重新定义 quote=====%

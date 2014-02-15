@@ -49,7 +49,7 @@
 % open the file
 \def\@opencverbatim{%
 %modified the code file name%
-\def\@cverbatimname{temp/\ifnum\value{@cverbatimCounter}<10 0\fi\ifnum\value{@cverbatimCounter}<100 0\fi\arabic{@cverbatimCounter}}%
+\def\@cverbatimname{codehometemp/\ifnum\value{@cverbatimCounter}<10 0\fi\ifnum\value{@cverbatimCounter}<100 0\fi\arabic{@cverbatimCounter}}%
 \immediate\openout\@cverbatimout=\@cverbatimname.\@cverbatimmode%
 }%
 
@@ -60,7 +60,7 @@
 \gdef\@cverbatimmode{#1}
 \immediate\stepcounter{@cverbatimCounter}
 %if the filefolder doesnot exist  then creat it
-\immediate\write18{if [  !  -d  temp/  ];  then mkdir -p temp/ ; fi}
+\immediate\write18{if [  !  -d  codehometemp/  ];  then mkdir -p codehometemp/ ; fi}
 \@opencverbatim
 \newlinechar='15
 \begingroup \catcode`\^^M=12 %
@@ -75,8 +75,8 @@
 \DeclareRobustCommand*\endcodefile[2][\arabic{@ProjectCounter}]{%#1 test.py  中的test
 \immediate\stepcounter{@ProjectCounter}
 \immediate\write18{if [  !  -d  codehome/#1  ];  then mkdir -p codehome/#1 ; fi}
-\immediate\write18{ cd temp  && cat *.\@cverbatimmode >  ../codehome/#1/#2.\@cverbatimmode  }
-\immediate\write18{ rm -rf temp    }%
+\immediate\write18{ cd codehometemp  && cat *.\@cverbatimmode >  ../codehome/#1/#2.\@cverbatimmode  }
+\immediate\write18{ rm -rf codehometemp    }%
 }
 
 

@@ -1,0 +1,74 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%tikz draw the onepage for cv or titlepage or poster
+
+\documentclass[11pt,oneside]{book}
+\newlength{\textpt}
+\setlength{\textpt}{11pt}
+
+
+\usepackage{onepage}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{titlepage}
+%start drawing
+%a4paper size 297:210 mm
+\begin{tikzpicture}
+%先画网格线
+%为了简便起见，约定图画在坐标系的像素第一象
+%上间距默认有5mm
+\draw[step=1,color=gray!40] (0,0) grid (20,29);
+%这样最多得到20,29。
+%现在开始定义整个页面的一些点
+%左顶点
+\path (0,29) coordinate (top-left);
+%右顶点
+\path (20,29) coordinate (top-right);
+%左底点
+\path (0,0) coordinate (bottom-left);
+%右底点
+\path (20,0) coordinate (bottom-right);
+%测试从左顶点到右底点
+%\draw[color=red] (top-left) -- (bottom-right);
+%接下来多使用偏移地址，基本单位是1或者0.5。
+
+\newcommand{\redball}[1]{\shade[ball color=red] #1 circle (0.25);}
+\newcommand{\shorttext}[2]{\node[align=center,right] (name) at #1 {#2};}
+\path (top-left) ++(1,-2) coordinate (name-point);
+\shorttext{(name-point)}{{\HUGE\sffamily 万泽}}
+\path (name-point) ++(4,0) coordinate (email-point);
+\shorttext{(email-point)}{{\large\sffamily 邮箱：a358003542@gmail.com}}
+\path (email-point) ++(0,-1) coordinate (phone-point);
+\shorttext{(phone-point)}{{\large\sffamily 电话：123456789}}
+
+
+\path (1.5,24) coordinate (born-point);
+\shade[ball color=red] (born-point) circle (0.25);
+\draw[->] (born-point) ++(0.25,0) -- ++(4,0) node[midway,above] {1986年} node[right] {生于湖南常德。} ;
+
+%24-1986
+%1个刻度就是5年
+%0-2086
+\path (born-point) ++(0,-2) coordinate (ten-point);
+\draw[color=red,thick] (born-point) -- (ten-point);
+\shade[ball color=red] (ten-point) circle (0.25) ;
+\draw[->] (ten-point) ++(0.25,0) -- ++(4,0) node[midway,above] {9岁还是10岁} node[right] {黑铁时代，似乎人生的磨难才刚刚开始。} ;
+
+\path (ten-point) ++(0,-2) coordinate (twenty-point);
+\draw[color=red,thick] (ten-point) -- (twenty-point);
+\shade[ball color=red] (twenty-point) circle (0.25) ;
+\draw[->] (twenty-point) ++(0.25,0) -- ++(4,0) node[midway,above] {20岁} node[right] {说点什么。} ;
+
+
+
+
+
+
+ 
+ 
+\end{tikzpicture}
+\end{titlepage}
+\end{document}
+
+
+

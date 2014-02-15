@@ -1,0 +1,29 @@
+% base on myconfig.sty
+% more defination ——command or environment
+% by wanze
+% LPPL LaTeX Public Project License
+%
+%
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{mydef}
+
+%宏包编写基本命令。
+%\def\hi{Hello, this is my own package}
+%\let\myDate\date
+%\newcommand\GoodBye[1][\bfseries]{{#1Good Bye}}
+
+%带圈的数字用tikz的实现方法。
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=1pt,minimum size=8pt] (char) {#1};}
+\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
+\RequirePackage{arrayjobx}
+
+
+
+
+
+
+\endinput
+
+

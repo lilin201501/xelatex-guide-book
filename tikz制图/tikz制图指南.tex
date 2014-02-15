@@ -11,7 +11,7 @@
 
 \usepackage{myconfig}
 \usepackage{mytitle}
-
+\usetikzlibrary{calc}
 
 
 \begin{document}
@@ -75,6 +75,17 @@ tikz宏包的加载是必须的，因为我这里myconfig.sty里面的已经加�
 
 
 \chapter{tikz基础}
+
+\section{tikz系统简介}
+一般使用frontend layer（前端）就够了，有时可能需要用到basic layer（基本层）的命令。基本层是架构在系统层上的，里面是画图的最底层的驱动，绝大多数用户完全不需要了解这些。
+
+tikz的画图命令要某在\verb+\tikz{}+里面，要某在tikzpicture环境里面。
+
+\section{单位}
+默认的长度单位是cm。
+
+
+
 \section{第一个例子}
 \subsection{画网格}
 \begin{Verbatim}
@@ -105,6 +116,8 @@ step是网格之间的间距，color是网格的颜色。第一个坐标点是�
 \end{tikzpicture}
 
 画直线就是两个坐标点相连，中间 -{}-{} 符号表示直线的意思。之前网格是grid表示网格的意思。
+
+如果几个点用 -{}-{} 符号连接起来，表示这几个点连着来画几条折线，有多个画直线命令依次执行的意思。
 
 \subsubsection{直线带上箭头}
 draw命令可以跟上可选项\textbf{->}，这样直线的右端就有一个箭头了。此外还有：\textbf{->>}，\textbf{->|}，\textbf{-to}，\textbf{-latex}，\textbf{-stealth}。
@@ -148,7 +161,37 @@ draw命令可以跟上可选项\textbf{->}，这样直线的右端就有一个�
 \draw (0,0) ellipse (1 and 0.5);
 \end{tikzpicture}
 
-这里第一个点是椭圆的中心点，ellipse表示画椭圆，后面参数两个值第一个是a也就是椭圆的半长，第二个是b也就是椭圆的半高。
+这里第一个点是椭圆的中心点，ellipse表示画椭圆，后面参数两个值第一个是a也就是椭圆的半长轴，第二个是b也就是椭圆的半短轴。
+
+
+\subsection{画弧线}
+
+\begin{Verbatim}
+\begin{tikzpicture}
+\draw[step=1,color=gray!40] (-2,-2) grid (2,2);
+\draw[->] (-3,0) -- (3,0);
+\draw[->] (0,-3) -- (0,3);
+\draw[color=gray!40] (0,0) circle (1); %
+\draw[color=red] (1,0) arc (0:45:1);
+\draw[color=gray!40] (0,0) ellipse (1 and 0.5);
+\draw[color=green] (1,0) arc (0:60:1 and 0.5);
+\end{tikzpicture}
+\end{Verbatim}
+最基本的画弧线的命令如上代码第5行，其中第一个点是弧线的起点，然后arc表示画弧线，接下来括号里面的三个参数：第一个参数是开始的角度，第二个参数是结束时的角度，第三个参数是弧线对应圆的半径。对比第4行画的浅灰色的圆可以看出他们之间的关系。
+
+上面代码第7行画弧线增加了一个and 和一个参数，这个时候画的弧线是根据椭圆来的，其中1是椭圆的半长轴，0.5是椭圆的半短轴。对比第6行画的浅灰色的椭圆可以看出他们的关系。
+
+\begin{tikzpicture}
+\draw[step=1,color=gray!40] (-2,-2) grid (2,2);
+\draw[->] (-3,0) -- (3,0);
+\draw[->] (0,-3) -- (0,3);
+\draw[color=gray!40] (0,0) circle (1); %
+\draw[color=red] (1,0) arc (0:45:1);
+\draw[color=gray!40] (0,0) ellipse (1 and 0.5);
+\draw[color=green] (1,0) arc (0:60:1 and 0.5);
+\end{tikzpicture}
+
+
 
 \subsection{点的定义}
 tikz中定义一个点方便之后使用：
@@ -256,103 +299,365 @@ tikz中有一个重要的概念，当前点，然后点可以通过当前点根�
 这里可选项\textbf{domain=-pi:pi}控制画的函数的x范围，可以直接用pi表示π，然后接下来plot function表示画一个函数，接下来的花括号里面放着gnuplot的各种命令，这里就是简单的$ sin(x) $
 
 
-\chapter{画画的理论讨论}
+\begin{tikzpicture}[domain=0:4]
+\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+\draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+\draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
+\draw[color=red]
+plot[id=x]
+function{x}
+node[right] {$f(x) =x$};
+\draw[color=blue]
+plot[id=sin] function{sin(x)}
+node[right] {$f(x) = \sin x$};
+\draw[color=orange] plot[id=exp] function{0.05*exp(x)} node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+\end{tikzpicture}
 
+
+\section{颜色填充}
+fill命令就是填充某种颜色的形状，后面跟个\textbf{color}可选项设置填充的颜色，默认是黑色。比如画一个填充颜色的圆：\\
+\verb+\fill[cyan] (0,0) circle  (1) ;+
+
+\newcommand{\testtext}{this is a test line}
+
+\begin{tikzpicture}
+\fill[cyan] (0,0) circle  (1) ;
+\end{tikzpicture}
+
+为了简单起见，draw命令可以加上fill可选项，然后和上面类似的有：
+
+\begin{Verbatim}
+\begin{tikzpicture}
+\draw [color=blue,fill=red,ultra thick,] (0,0) circle (1);
+\end{tikzpicture}
+\end{Verbatim}
+
+
+\begin{tikzpicture}
+\draw [color=blue,fill=red,ultra thick,] (0,0) circle (1);
+\end{tikzpicture}
+注意到线条的颜色和填充颜色的控制。
+
+
+\subsection{填充没有线条}
+如果你不希望有线条，那么使用path命令可以做到这点。
+
+\begin{Verbatim}
+\begin{tikzpicture}
+\path[fill=cyan] (0,0) circle  (1) ;
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\path[fill=cyan] (0,0) circle  (1) ;
+\end{tikzpicture}
+
+\section{node命令}
+node命令主要用于插入文本，不过最好将其理解为接口。\XeLaTeX 文档内部各个命令等都可以使用，然后外面包围一个形状，如rectangle长方形，circle圆等。
+
+\begin{Verbatim}
+\newcommand{\testlinea}{this is a test line a}
+\newcommand{\testlineb}{this is a test line b}
+\begin{tikzpicture}
+%\fill[cyan] (0,0) circle  (1) ;
+\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
+\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
+\draw[-latex](a) -- (b);
+\end{tikzpicture}
+\end{Verbatim}
+
+这里我们看到\LaTeX 里面自定义的命令是可以正常使用的，然后可选项\textbf{shape}的意思是外面包围的形状是长方形，\textbf{draw}就是画这个形状是用的draw命令方法，比如fill就会填充。\textbf{inner sep}控制外面的形状和内部文本之间的间距。 然后\textbf{at (0,0)}控制整个图形的位置，然后\textbf{(a)}表示整个图形的名字，后面可以调用的，可以看作接口把。然后后面就是\LaTeX 的内容了。
+
+\newcommand{\testlinea}{this is a test line a}
+\newcommand{\testlineb}{this is a test line b}
+\begin{tikzpicture}
+%\fill[cyan] (0,0) circle  (1) ;
+\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
+\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
+\draw[-latex](a) -- (b);
+\end{tikzpicture}
+
+\subsection{插入文本的位置}
+node命令的可选项\textbf{left}，\textbf{right}，\textbf{above}，\textbf{below}用于控制插入文本的位置。此外还有\textbf{above right}，\textbf{below right}，\textbf{above left} ，\textbf{below left}等。
+
+\subsection{文本对齐控制}
+用\textbf{align=left}，\textbf{align=right}，\textbf{align=center}来控制。
+
+\subsection{在画图形的时候插入文本}
+\begin{tikzpicture}
+\draw (1,1) node {text} -- (2,2);
+\end{tikzpicture}
+
+在画图形的时候某个当前点下可以直接node接某个文本。
+
+
+
+
+
+\section{clip命令}
+clip就是剪切的意思，就是通过clip命令按照某个形状来剪切，外面的图形都不保留，可以跟一个可选项\textbf{draw}，这样剪切的时候同时画出了这个形状。
+
+
+\section{抛物线}
+
+\section{path路径闭合}
+任何构建的path最后都可以通过\textbf{ -{}- circle}将其闭合起来。
+
+\section{filldraw命令}
+是draw命令和fill命令的结合。\textbf{fill=}可选项调整填充的颜色，\textbf{draw=}可选项调整画的线条的颜色。
+
+\section{阴影}
+shade命令和fill命令的区别就是填充的颜色是渐变的，其他类似。
+
+其可选项有\textbf{top color和bottom color}表示上下渐变的颜色，\textbf{left color和right color}，\textbf{innercolor和outercolor}，\textbf{ball color}让颜色渐变像一个有光照的球。
+
+\subsection{小红球}
+\begin{tikzpicture}
+\shade[ball color=red] (1,2) circle (1);
+\end{tikzpicture}
+
+
+\section{scope环境}
+scope环境就是作用域控制，一个局域环境，参数只影响内部。
+
+\subsection{更灵活的scope控制}
+
+\begin{tikzpicture}
+\draw (0,0) -- (1,1)
+{[rounded corners] -- (2,0) -- (3,1)}
+-- (3,0) -- (2,1);
+\end{tikzpicture}
+
+
+\section{变形}
+xshift x坐标轴平移  yshift y坐标轴平移  rotate 旋转 。注意xshift默认的单位并不是cm，如果要单位是cm需要写出来。
+
+\subsection{旋转图形}
+后面加上可选项\textbf{rotate=30}即可，意思是图形逆时针旋转30度。
+
+\begin{Verbatim}
+\begin{tikzpicture}
+\draw (0,0)[rotate=30]  ellipse (2 and 1);
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\draw (0,0)[rotate=30]  ellipse (2 and 1);
+\end{tikzpicture}
 
 
 
 
 \begin{tikzpicture}
-% Define the points of a regular pentagon
-\path (0,0) coordinate (origin);
-\path (0:1cm) coordinate (P0);
-\path (1*72:1cm) coordinate (P1);
-\path (2*72:1cm) coordinate (P2);
-\path (3*72:1cm) coordinate (P3);
-\path (4*72:1cm) coordinate (P4);
-% Draw the edges of the pentagon
-\draw (P0) -- (P1) -- (P2) -- (P3) -- (P4) -- cycle;
-% Add "spokes"
-\draw (origin) -- (P0) (origin) -- (P1) (origin) -- (P2)
-(origin) -- (P3) (origin) -- (P4);
+\draw[help lines] (0,0) grid (3,2);
+\draw (0,0) -- (1,1);
+\draw[red] (0,0) -- ([xshift=1cm] 1,1);
 \end{tikzpicture}
 
-he concept of the current point plays an important role when multiple actions
-are involved. For example, suppose two line segments are drawn joining points
-P and Q along with Q and R
+\section{迭代语句}
+\begin{tikzpicture}[scale=3]
+\foreach \x in {0,1,...,4}
+\draw[xshift=\x cm] (0,-1) -- (0,1);
+\end{tikzpicture}
 
-A relative point may be defined by providing offsets in each of the horizontal
-and vertical directions.
+其中...表示一直这样有规律下去生成迭代列表。
 
-%\path (P) ++(∆x,∆y) coordinate (Q);
-%Alternately, the offset may be specified with polar coordinates. For example,
-%given angle α and radius r, with an appropriate dimensional unit dim, the com-
-%mand:
-%\path (P) ++(α:rim) coordinate (Q);
 
-There are two forms of relative points — one which updates the current point
-and one which does not. The ++ prefix updates the current point while the +
-prefix does not.
+
+\section{文本中的图片}
+wherever \begin{tikzpicture} \draw [yellow, line width=6]
+(0,0) -- (.5,0); \end{tikzpicture} you want
+
+
+
+\section{baseline选项}
+这个主要控制inline模式下图片的位置，默认\textbf{baseline=0pt}。
+
+\section{样式}
+style，特定图形的样式。定义一个样式比如style001如下：\\
+\verb+style001/.style={color=red,fill=red!20}+
+
+\subsection{原有样式修改}
+\verb+help lines/.append style=blue!50+\\
+附加之后最新的样式胜出。
+
+\subsection{样式带参数}
+\begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50}]
+\node [outline=red] at (0,1) {red};
+\node [outline=blue] at (0,0) {blue};
+\end{tikzpicture}
+
+\subsection{样式参数有默认值}
+\begin{tikzpicture}[outline/.style={draw=#1,thick,fill=#1!50},
+outline/.default=black]
+\node [outline]
+at (0,1) {default};
+\node [outline=blue] at (0,0) {blue};
+\end{tikzpicture}
+
+\section{定义点}
+\subsection{定义绝对点}
+\begin{Verbatim}
+\path (0,29) coordinate (top-left);
+\end{Verbatim}
+path命令后面跟着坐标点，然后coordinate后面跟着这个点的名字。这里规范为coordinate命令后面跟着就是点的名字，node命令后面跟着node的名字。
+
+\subsection{定义相对点}
+\begin{Verbatim}
+\path (top-left) ++(1,-2) coordinate (name-point);
+\end{Verbatim}
+
+\subsection{极座标}
+tikz中的点也支持极座标表示，(30:1cm)，第一个参数是极座标里面的角度，第二个参数是半径。
+
+
+\subsection{node命令中点的定义}
 
 \begin{tikzpicture}
-\draw (0,0) -- ++(1,0) -- ++(1,1) -- ++(1,-1);
+\node (node001) at (0,2) [draw] {test};
 \end{tikzpicture}
+
+从这里可以看到只要写上draw选项外面就会加上一个长方形，也就是shape的默认选项是rectangle。如果你不希望外面有长方形，不写draw选项即可。
+
+这里通过node命令定义了一个点，node001，在(0,2)那里。后面是可以使用的。
 
 \begin{tikzpicture}
-\draw (0,0) -- +(1,0) -- +(0,-1) -- +(-1,0) -- +(0,1);
+\node (node001) at (0,2) [draw] {node001};
+\node (node002) at (-2,0) [draw] {node002};
+\node (node003) at (2,0) [draw] {node003};
+\draw (node cs:name=node003,anchor=north) |- (0,1);
+\draw (node002.north) |- (0,1) -| (node cs:name=node001,anchor=south);
 \end{tikzpicture}
 
-every offset which appears is performed
-relative to the initial point, ( 0, 0 ) .
+这里通过\textbf{node cs:name=node003}来获取之前那个node所在的点，然后通过\textbf{anchor=north}来定义那个node的接口在北边。除此之外的选项还有：\textbf{south}，\textbf{east}，\textbf{west}。这里\textbf{|-}似乎是画垂直拐线的意思。上面的语法简写为可以node002.north。
 
-– Grids and rectangles
+此外还有\textbf{angle}选项控制node接口的开口角度。
 
-– Circles and ellipses
-– Arcs
-– Bézier curves
+\subsection{两个点定义出一个点}
+\begin{Verbatim}
+\begin{tikzpicture}
+\node (p1) at (30:1) {$p_1$} ;
+\node (p2) at (75:1) {$p_2$} ;
+\draw (-0.2,0) -- (1.2,0) node[right] (xline) {$q_1$};
+\draw (2,-0.2) -- (2,1.2) node[above] (yline) {$q_2$};
+
+\draw[->] (p1) -- (p1 |- xline);
+\end{tikzpicture}
+\end{Verbatim}
+
+这种形式(p1 |- xline)表示取第一个点的x和第二个点的y组成一个新的点。如果是(p1 -| xline)表示取第二个点的x和第一个点的y组成一个新的点。
 
 \begin{tikzpicture}
-\draw (0,0) rectangle (1,1)
-rectangle (3,2)
-rectangle (4,3);
+\node (p1) at (30:1) {$p_1$} ;
+\node (p2) at (75:1) {$p_2$} ;
+\draw (-0.2,0) -- (1.2,0) node[right] (xline) {$q_1$};
+\draw (2,-0.2) -- (2,1.2) node[above] (yline) {$q_2$};
+
+\draw[->] (p1) -- (p1 |- xline);
 \end{tikzpicture}
+
+
+
+\subsection{两个path的交点}
+
+
+\subsection{点的运算}
+在进行下面说的数学运算之前需要加载calc宏包：\\
+\verb+\usetikzlibrary{calc}+
+
+基本格式是：\\
+\verb+([options]$(一些运算)$)+
+
+这里\verb+$$+表示这里有一些数学运算。里面的基本格式如下：\\
+\verb+<factor>*<点><其他修饰>+
+
+\begin{Verbatim}
+\begin{tikzpicture}[scale=3]
+\draw [help lines] (0,0) grid (3,2);
+\fill [red] ($2*(1,1)$) circle (2pt);
+\fill [green] (${1+1}*(1,0.5)$) circle (2pt);
+\fill [blue] ($cos(0)*sin(90)*(1,1)$) circle (2pt);
+\fill [black] (${3*(4-3)}*(1,0.5)$) circle (2pt);
+\end{tikzpicture}
+\end{Verbatim}
+
+第一个红点是点(1,1)，然后x和y都乘以2从而得到新点。后面情况类似，不同的是前面的乘法还可以加入更多的运算。
+
+\begin{tikzpicture}[scale=3]
+\draw [help lines] (0,0) grid (3,2);
+\fill [red] ($2*(1,1)$) circle (2pt);
+\fill [green] (${1+1}*(1,0.5)$) circle (2pt);
+\fill [blue] ($cos(0)*sin(90)*(1,1)$) circle (2pt);
+\fill [black] (${3*(4-3)}*(1,0.5)$) circle (2pt);
+\end{tikzpicture}
+
+
+
+\section{path命令}
+path路径是最基本的命令，draw命令等价于\verb+\path[draw]+，fill命令等价于\verb+\path[fill]+，filldraw命令等价于\verb+\path[draw,fill]+，其他clip，shade命令情况类似。
+
+\section{path之线条}
+
+\subsection{虚线和点线}
+线条除了之前说的dashed和dotted两种样式之外，还有loosely dashed，densely dashed和loosely dotted， densely dotted。比如：\tikz{\draw[loosely dashed] (0,0) -- (1,0);} ~~ \tikz{\draw[dashed] (0,0) -- (1,0);} ~~ \tikz{\draw[densely dashed] (0,0) -- (1,0);}，这是dashed的三种，下面是dotted的三种：\tikz{\draw[loosely dotted] (0,0) -- (1,0);} ~~ \tikz{\draw[dotted] (0,0) -- (1,0);} ~~ \tikz{\draw[densely dotted] (0,0) -- (1,0);}。
+
+\subsection{线条的粗细}
+\begin{tikzpicture}
+\draw [ultra thick] (0,1) -- (2,1);
+\draw [thick] (0,0.5) -- (2,0.5);
+\draw [thin] (0,0) -- (2,0);
+\end{tikzpicture}
+
+其他选项还有\textbf{ultra thin}, \textbf{very thin}, \textbf{thin}, \textbf{semithick},  \textbf{thick},\\ \textbf{very thick} and \textbf{ultra thick}
+还有\textbf{help lines}选项那种很淡灰的样式。
+
+或者直接通过可选项line width来定义。
 
 \begin{tikzpicture}
-\draw (0,0) circle (1cm)
-circle (0.6cm)
-circle (0.2cm);
+\draw [line width=12] (0,0) -- (2,0);
+\draw [line width=0.2cm] (4,.75) -- (5,.25);
 \end{tikzpicture}
 
+
+\subsection{圆圆的拐角}
 \begin{tikzpicture}
-\draw (0,0) ellipse (2cm and 1cm)
-ellipse (0.5cm and 1 cm)
-ellipse (0.5cm and 0.25cm);
+\draw [<->, rounded corners, thick, purple] (0,2) -- (0,0) -- (3,0);
 \end{tikzpicture}
 
-\begin{tikzpicture}
-\draw (0:1cm) -- (0:2cm)
-arc (0:60:2cm) -- (60:1cm)
-arc (60:0:1cm) -- cycle;
+\section{贝塞尔曲线}
+贝塞尔曲线是四个点画出一个曲线，具体我现在还不太清楚。其中第一个点是起点，第四个点终点，然后另外两个点是控制点。
+
+\begin{Verbatim}
+\begin{tikzpicture}[scale=3]
+\draw[help lines] (0,0) grid (2,2);
+\draw[color=red] (0,0) .. controls (1,1) and (2,1) .. (2,0);
+\shade[ball color=gray!10] (0,0) circle (0.1);
+\shade[ball color=gray!40] (1,1) circle (0.1);
+\shade[ball color=gray!70] (2,1) circle (0.1);
+\shade[ball color=gray] (2,0) circle (0.1);
+\end{tikzpicture}
+\end{Verbatim}
+
+上面第2行代码就是画贝塞尔曲线的代码。
+
+\begin{tikzpicture}[scale=3]
+\draw[help lines] (0,0) grid (2,2);
+\draw[color=red] (0,0) .. controls (1,1) and (2,1) .. (2,0);
+\shade[ball color=gray!10] (0,0) circle (0.1);
+\shade[ball color=gray!40] (1,1) circle (0.1);
+\shade[ball color=gray!70] (2,1) circle (0.1);
+\shade[ball color=gray] (2,0) circle (0.1);
 \end{tikzpicture}
 
 
-\begin{tikzpicture}[scale=2.5]
-\tikzstyle{every node}=[draw,shape=circle];
-\path (0:0cm)
-node (v0) {$v_0$};
-\path (0:1cm)
-node (v1) {$v_1$};
-\path (72:1cm)
-node (v2) {$v_2$};
-\path (2*72:1cm) node (v3) {$v_3$};
-\path (3*72:1cm) node (v4) {$v_4$};
-\path (4*72:1cm) node (v5) {$v_5$};
-\draw (v0) -- (v1)
-(v0) -- (v2)
-(v0) -- (v3)
-(v0) -- (v4)
-(v0) -- (v5);
-\end{tikzpicture}
+
+
+
+
+
+\chapter{tikz的一些例子}
+
+
 %这里空一行
 
 \end{common-format}

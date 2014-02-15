@@ -1,30 +1,33 @@
-% mybeamer.cls
-%
+%write some tikz command for onepage sitation like
+%cv or  poster or titlepage
 % by wanze
 % LPPL LaTeX Public Project License
-%2013/12/11
+%
 %
 
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesClass{mybeamer}
-\PassOptionsToPackage{table}{xcolor}
-\PassOptionsToPackage{colorlinks=true,linkcolor=blue,citecolor=blue}{hyperref}
+\ProvidesPackage{onepage}
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}%
-\ProcessOptions\relax
-\LoadClass[covered]{beamer}
-\mode<presentation>{\beamer@suppressreplacementstrue}
-%beamer class auto load packages：xcolor, amsmath, amsthm, calc, geometry, hyperref, extsizes.
+%========基本必备的宏包========%
+\RequirePackage{calc,float,multicol,moresize}
+\RequirePackage[doublespacing]{setspace}
 
+%=========页面设置=========%
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=5mm,  %上邊距 包括頁眉
+  bottom=0mm,%下邊距 包括頁腳
+  left=0mm,  %左邊距or inner
+  right=0mm,  %右邊距or  outer
+  headheight=0mm,%頁眉
+  footskip=0mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm  %旁註寬度
+ ]{geometry}
 
-% random theme
-%\pgfmathdeclarerandomlist{myfavortheme}{{AnnArbor}{Bergen}{Berkeley}{Berlin}{Boadilla}{CambridgeUS}{Dresden}{Goettingen}{Hannover}{Ilmenau}{Madrid}{Marburg}{Montpellier}{PaloAlto}{Pittsburgh}{Rochester}{Singapore}{Szeged}{boxes}{default}}
-%\pgfmathrandomitem{\Theme}{myfavortheme}
-%\usetheme{\Theme}
-
-%------------chemistry---------%
-\RequirePackage{chemfig}
-\linespread{1.2}%加大点行距
+%color
+\RequirePackage[table]{xcolor}
 
 %================字體================%
 %设置数学字体
@@ -52,36 +55,13 @@
 
 \RequirePackage{xltxtra} %put here to avoid some package option error. maybe this package is useless ?
 
-%=============新的字符===========%
-\newfontfamily{\libertine}[Scale=1.5]{Linux Libertine O}
-\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
-\RequirePackage{newunicodechar}
-\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
-\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
-\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}}
-\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
-\newunicodechar{①}{{\libertine{①}}}
-\newunicodechar{②}{{\libertine{②}}}
-\newunicodechar{③}{{\libertine{③}}}
-\newunicodechar{④}{{\libertine{④}}}
-\newunicodechar{⑤}{{\libertine{⑤}}}
-\newunicodechar{}{{\ubuntu{}}}
 
-%%===============中文化=========%
-\renewcommand\contentsname{目~录}
-\renewcommand\listfigurename{插图目录}
-\renewcommand\listtablename{表格目录}
-\renewcommand\bibname{参~考~文~献}
-\renewcommand\indexname{索~引}
-\renewcommand\figurename{图}
-\renewcommand\tablename{表}
-\renewcommand\partname{部分}
-\renewcommand\appendixname{附录}
-
+%==============超鏈接===============%
+\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
 
 %=================文字強調=========%
 \RequirePackage{ulem} %下劃線,加點
-\normalem
+\normalem%normal em , not instead of the uline
 
 \newcommand\reduline{\bgroup\markoverwith
     {\textcolor{red}{\rule[-0.8ex]{1em}{0.4pt}}}\ULon}
@@ -90,12 +70,16 @@
 %==================插入圖片=======%
 \RequirePackage{graphicx}
 \graphicspath{{figures/}}
+%change the caption style a little like 1-1
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 
 %==============插入表格========%
 \RequirePackage{booktabs}
 \renewcommand{\arraystretch}{1.3}
 
 
+%==========其他宏包===========%
+\RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
 
 
 

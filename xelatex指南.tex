@@ -644,7 +644,7 @@ geometry提供的纸张类型很多，从a0paper一直到a6paper都有，还有b
 
 我们先来看横向参量，paperwidth是纸张的宽度，textwidth是正文宽度，marginparsep指旁注和正文之间的间距，marginparwidth指旁注宽度，left指左边空白宽度，right指右边空白宽度。如果book类型是twoside的，那么left最好命名为inner，也就是类似出版书籍靠里面的那段空白宽度，类似的right最好命名为outer，靠外面的那段空白宽度。其中默认情况下width=textwidth，如果加入选项\\includemp=true，那么:\\width=textwidth+marginparsep+marginparwidth。然后还有:\\paperwidth=left+width+right。
 
-再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文见的一段小空白headsep，bottom包含页脚高度footskip，所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}:
+再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文间的一段小空白headsep，bottom包含页脚高度\endnote{这里的概念理清一下，headheight是页眉高度，保证页眉内容能够装的下即可，而headsep是页眉（一般页眉靠下）和正文间的空白距离，也就是你看到的页眉上面的那段空白有top减去headsep再减去headheight剩下的距离，然后这段空白从视觉上来说还有你的页眉文本上面没有填充的部分。而footnote命令插入的文本和页码之间的空白间距是由footskip控制的，然后bottom减去footskip还会得到一个值，这个值是页码下面的空白距离。}footskip和下面的一段空白。所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}:
 
 \begin{linefig}{geometry选项2}  
 	\label{fig:geometry选项2}
@@ -2094,7 +2094,7 @@ p{width} & 一定宽度自动换行 \\ \bottomrule
 \end{Verbatim}
 表格的显示效果初步如下：
 \endnote{你注意到这里有@\{\}，意思是每一列前面有一段空白，可以被花括号中的字符填充，这里是完全取消掉那点空白。booktabs的风格是开头那点空白和最后一列最后那点空白全部取消掉。}
-\begin{table}[h]
+\begin{table}[H]
 \begin{tabular}{@{}ll@{}}
 \toprule
 参数       & 描述       \\ \midrule

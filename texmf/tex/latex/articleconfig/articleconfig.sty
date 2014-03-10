@@ -6,7 +6,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{myconfig}
+\ProvidesPackage{articleconfig}
 
 %宏包编写基本命令。
 %\def\hi{Hello, this is my own package}
@@ -123,14 +123,12 @@ marginparwidth=0mm  %旁註寬度
 \renewcommand\contentsname{目~录}
 \renewcommand\listfigurename{插图目录}
 \renewcommand\listtablename{表格目录}
-\renewcommand\bibname{参~考~文~献}
 \renewcommand\indexname{索~引}
 \renewcommand\figurename{图}
 \renewcommand\tablename{表}
 \renewcommand\partname{部分}
 \renewcommand\appendixname{附录}
-\renewcommand\today{\number\year年\number\month月\number\day日}
-
+\renewcommand\abstractname{摘要}
 
 %=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
@@ -142,7 +140,7 @@ marginparwidth=0mm  %旁註寬度
     \renewcommand{\footrulewidth}{0pt}
 %    \renewcommand{\chaptermark}[1]{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
 %    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
-    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
+%    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
     \fancyhf[FR]{\thepage}
     \fancyhfoffset[R]{\marginparwidth+\marginparsep}}
 \pagestyle{plain}
@@ -150,15 +148,15 @@ marginparwidth=0mm  %旁註寬度
 %=========章節標題設計=========%
 \RequirePackage{titlesec}
 %修改part
-\titleformat{\part}{\huge\sffamily}{}{0em}{}
+%\titleformat{\part}{\huge\sffamily\centering}{}{0em}{}
 %修改chapter
-\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{}
+%\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{}
 %修改section
-\titleformat{\section}{\Large\sffamily}{}{0em}{}
+\titleformat{\section}{\Large\sffamily\centering}{}{0em}{}
 %修改subsection
-\titleformat{\subsection}{\large\sffamily}{}{0em}{}
+\titleformat{\subsection}{\large\sffamily\centering}{}{0em}{}
 %修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily\centering}{}{0em}{}
 
 
 %================目录===============%
@@ -209,8 +207,7 @@ marginparwidth=0mm  %旁註寬度
 \renewcommand{\arraystretch}{1.3}
 
 %插入代码
-\RequirePackage{xverbatim}%小代码环境
-\RequirePackage{cverbatim}%大型代码拼接
+\RequirePackage{fancyvrb}%
 
 %=============插入尾注=========%
 \RequirePackage{endnotes}
@@ -218,21 +215,9 @@ marginparwidth=0mm  %旁註寬度
 %==========其他宏包===========%
 \RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
 
-%========脚注=========%
-\newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
-\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
-
-\RequirePackage{perpage} %the perpage package
-\MakePerPage{footnote} %the perpage package command
-
-\renewcommand\@makefntext[1]
-{\vspace{10pt}
-\noindent
-\makebox[24pt][c]{\@makefnmark}
-\fontsize{10pt}{18pt}\selectfont #1}
-
-\setlength{\skip\footins}{20pt plus 10pt}
+%======脚注=====%
+%脚注和正文之间的间距
+\setlength{\skip\footins}{30pt plus 10pt}
 
 
 

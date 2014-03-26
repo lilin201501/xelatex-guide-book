@@ -82,11 +82,7 @@ marginparwidth=0mm  %旁註寬度
 %设置数学字体
 \RequirePackage{amssymb,amsmath}
 \RequirePackage{mathspec}
-%Digits Latin this is option i am not sure what is use for , just want enlarge the math font and make it more beautiful.
-\setmathsfont(Digits,Latin,Greek)[Scale=1.2,ItalicFont=Latin Modern Mono Slanted]{Latin Modern Math}%maybe enlarge the CJK font is not a good idea. but
-%i really think the CJK font  is bigger than the normal english font is more comfort
-%so now here is a rule , if the number or  the symbol is more important then please use it in the math mode
-%Latin Modern Math not have the italic shape
+
 
  %設置英文字體
 \setmainfont[Mapping=tex-text]{DejaVu Serif}
@@ -215,9 +211,23 @@ marginparwidth=0mm  %旁註寬度
 %==========其他宏包===========%
 \RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
 
-%======脚注=====%
-%脚注和正文之间的间距
-\setlength{\skip\footins}{30pt plus 10pt}
+%========脚注=========%
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
+\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
+
+\RequirePackage{perpage} %the perpage package
+\MakePerPage{footnote} %the perpage package command
+
+\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
+
+\renewcommand\@makefntext[1]
+{\vspace{10pt}
+\noindent
+\makebox[24pt][c]{\@makefnmark}
+\fontsize{10pt}{18pt}\selectfont #1}
+
+\setlength{\skip\footins}{20pt plus 10pt}
 
 
 

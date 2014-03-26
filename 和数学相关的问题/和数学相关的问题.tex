@@ -46,9 +46,118 @@
 \begin{common-format}
 \mainmatter
 
-\chapter{章节开始}
+\section{数学环境}
+\$ \$包围起来的是段落中的数学公式；\textbf{displaymath}环境显示单独占一行的数学公式，不过没有编号；\textbf{equation}环境有编号，\textbf{equation*}环境没有编号。
 
-\section{数学模式下的字体}
+\section{数学的label和ref}
+一般格式是\verb+\label{eq:Ⅰ:4:1}+
+
+然后引用是\verb+(\ref{eq:Ⅰ:4:1})+，外面加个括号好看点。
+
+
+\section{加入文本}
+text命令
+
+\section{常用数学符号列表}
+数学符号 大于等于 $\geqslant$  \verb+\geqslant+
+
+数学符号 并集 $\cup$  \verb+\cup+
+
+数学符号 属于  $\in$  \verb+\in+
+
+数学符号 $x'$  \verb+x'+
+
+数学符号 约等于  $\approx$ \verb+\approx+
+
+数学符号 中间一个小点 表示字母相乘 $\cdot$  \verb+\cdot+
+
+数学符号 趋近于  $\to$ \verb+\to+
+
+数学符号 无穷大 $\infty$  \verb+\infty+
+
+数学符号 角度 $\angle$ \verb+\angle+
+
+数学符号  正比  $\propto$ \verb+\propto+
+
+积分 $\int_{0}^{1}\sin x$
+
+求和 $\sum_{i=1}^{n}$
+
+乘积 $\prod$
+
+
+
+
+
+\section{空心粗体实数集合}
+$\mathbb{R}$  \verb+\mathbb{R}+
+
+\section{上标和下标}
+\verb+^   _+，这两个符号跟着上标和下标。多个符号的用\verb+{}+括起来。
+
+\section{平方根符号}
+\verb+\sqrt+，如果是\verb+\sqrt[n]+表示n次平方根。
+
+$\sqrt[n]{x^2+y^2}$
+
+\section{表达式上划线或者下划线}
+就是\textbf{overline}命令和\textbf{underline}命令。
+
+$\overline{x+y}$  $\underline{\frac{2}{3}}$
+
+\section{表达式上或下有个大括号}
+使用\textbf{overbrace}和\textbf{underbrace}命令。
+
+$\underbrace{ a+b+\cdots+z }_{26}$
+
+\section{向量}
+\textbf{vec}命令，\textbf{overrightarrow}和\textbf{overleftarrow}命令。
+
+vec命令只适用一个字母的小箭头。
+
+$\vec {A} \quad \overrightarrow{BC}$
+
+\section{空白距离}
+数学环境里面的所有空白距离和换行都被忽略了。需要用命令手动生成。
+
+\textbf{quad}  \textbf{qquad}
+
+
+\section{特殊的函数}
+\begin{Verbatim}
+\begin{gather*}
+\arccos \cos \\
+\csc \exp \\
+\ker \\
+\limsup \min \\ 
+\arcsin \cosh \deg \gcd \lg \ln \Pr \\ 
+\arctan \cot \det \hom \lim \log \sec \\
+\arg \coth \dim \inf \liminf \max \sin \\
+\sinh \sup \tan \tanh
+\end{gather*}
+\end{Verbatim}
+
+\begin{gather*}
+\arccos \cos \\
+\csc \exp \\
+\ker \\
+\limsup \min \\ 
+\arcsin \cosh \deg \gcd \lg \ln \Pr \\ 
+\arctan \cot \det \hom \lim \log \sec \\
+\arg \coth \dim \inf \liminf \max \sin \\
+\sinh \sup \tan \tanh
+\end{gather*}
+
+\section{多行数学环境}
+gather或者gather*，align或者align*。
+
+\section{分数}
+\verb+\frac{1}{2}+，或者1/2。
+
+$\frac{1}{2} \qquad 1/2$
+
+\section{二项系数}
+
 
 
 

@@ -74,7 +74,7 @@ marginparwidth=0mm  %旁註寬度
 \fi
 
 %color
-\RequirePackage[table]{xcolor}
+\RequirePackage[table,svgnames]{xcolor}
 \definecolor{bgcolor-0}{HTML}{CCFFCC}
 
 
@@ -82,11 +82,7 @@ marginparwidth=0mm  %旁註寬度
 %设置数学字体
 \RequirePackage{amssymb,amsmath}
 \RequirePackage{mathspec}
-%Digits Latin this is option i am not sure what is use for , just want enlarge the math font and make it more beautiful.
-\setmathsfont(Digits,Latin,Greek)[Scale=1.2,ItalicFont=Latin Modern Mono Slanted]{Latin Modern Math}%maybe enlarge the CJK font is not a good idea. but
-%i really think the CJK font  is bigger than the normal english font is more comfort
-%so now here is a rule , if the number or  the symbol is more important then please use it in the math mode
-%Latin Modern Math not have the italic shape
+
 
  %設置英文字體
 \setmainfont[Mapping=tex-text]{DejaVu Serif}
@@ -225,6 +221,8 @@ marginparwidth=0mm  %旁註寬度
 
 \RequirePackage{perpage} %the perpage package
 \MakePerPage{footnote} %the perpage package command
+
+\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
 
 \renewcommand\@makefntext[1]
 {\vspace{10pt}

@@ -11,8 +11,9 @@
 
 \usepackage{myconfig}
 \usepackage{mytitle}
-\usetikzlibrary{calc}
 
+
+\usetikzlibrary{intersections,calc,positioning,through,backgrounds}
 
 \begin{document}
 \frontmatter
@@ -157,7 +158,6 @@ draw命令可以跟上可选项\textbf{->}，这样直线的右端就有一个�
 \draw[step=1,color=gray!40] (-2,-2) grid (2,2);
 \draw[->] (-3,0) -- (3,0);
 \draw[->] (0,-3) -- (0,3);
-\draw (0,0) circle (1); %
 \draw (0,0) ellipse (1 and 0.5);
 \end{tikzpicture}
 
@@ -204,10 +204,6 @@ tikz中定义一个点方便之后使用：
 
 \begin{tikzpicture}
 \draw[step=1,color=gray!40] (-2,-2) grid (2,2);
-\draw[->] (-3,0) -- (3,0);
-\draw[->] (0,-3) -- (0,3);
-\draw (0,0) circle (1); %
-\draw (0,0) ellipse (1 and 0.5);
 \path (1,1) coordinate (point001);
 \path (2,0) coordinate (point002);
 \draw[dotted] (point001) -- (point002)  ;
@@ -222,11 +218,6 @@ tikz中定义一个点方便之后使用：
 \draw[step=1,color=gray!40] (-2,-2) grid (2,2);
 \draw[->] (-3,0) -- (3,0);
 \draw[->] (0,-3) -- (0,3);
-\draw (0,0) circle (1); %
-\draw (0,0) ellipse (1 and 0.5);
-\path (1,1) coordinate (point001);
-\path (2,0) coordinate (point002);
-\draw[dotted] (point001) -- (point002)  ;
 \end{tikzpicture}
 
 
@@ -240,13 +231,6 @@ tikz中定义一个点方便之后使用：
 
 \begin{tikzpicture}[scale=2]
 \draw[step=1,color=gray!40] (-2,-2) grid (2,2);
-\draw[->] (-3,0) -- (3,0);
-\draw[->] (0,-3) -- (0,3);
-\draw (0,0) circle (1); %
-\draw (0,0) ellipse (1 and 0.5);
-\path (1,1) coordinate (point001);
-\path (2,0) coordinate (point002);
-\draw[dotted] (point001) -- (point002)  ;
 \draw[latex-latex] (0,-2) -- ++(-1,1) -- ++(-1,-1);
 \draw[dashed] (0,1) -- +(-1,1) -- +(-2,0);
 \end{tikzpicture}
@@ -260,15 +244,6 @@ tikz中有一个重要的概念，当前点，然后点可以通过当前点根�
 
 \begin{tikzpicture}[scale=2]
 \draw[step=1,color=gray!40] (-2,-2) grid (2,2);
-\draw[->] (-3,0) -- (3,0);
-\draw[->] (0,-3) -- (0,3);
-\draw (0,0) circle (1); %
-\draw (0,0) ellipse (1 and 0.5);
-\path (1,1) coordinate (point001);
-\path (2,0) coordinate (point002);
-\draw[dotted] (point001) -- (point002)  ;
-\draw[<->] (0,-2) -- ++(-1,1) -- ++(-1,-1);
-\draw[dashed] (0,1) -- +(-1,1) -- +(-2,0);
 \draw[color=red] (-1,-1) rectangle (1,1);
 \end{tikzpicture}
 
@@ -298,20 +273,27 @@ tikz中有一个重要的概念，当前点，然后点可以通过当前点根�
 
 这里可选项\textbf{domain=-pi:pi}控制画的函数的x范围，可以直接用pi表示π，然后接下来plot function表示画一个函数，接下来的花括号里面放着gnuplot的各种命令，这里就是简单的$ sin(x) $
 
-
-\begin{tikzpicture}[domain=0:4]
-\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-\draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
-\draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
-\draw[color=red]
-plot[id=x]
-function{x}
-node[right] {$f(x) =x$};
-\draw[color=blue]
-plot[id=sin] function{sin(x)}
-node[right] {$f(x) = \sin x$};
-\draw[color=orange] plot[id=exp] function{0.05*exp(x)} node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+\section{定义style}
+\subsection{help lines}
+\begin{Verbatim}
+\tikzset{help lines/.style= {step=0.5cm,color=gray!40,very thin}}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (5,5);
 \end{tikzpicture}
+\end{Verbatim}
+
+\tikzset{help lines/.style= {step=0.5cm,color=gray!40,very thin}}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (5,5);
+\end{tikzpicture}
+
+\subsection{information text}
+\tikzset{information text/.style={rounded corners,fill=red!10,inner sep=1ex}}
+
+\begin{tikzpicture}
+\node[right, text width = 6cm,information text] {这是一段测试文字。};
+\end{tikzpicture}
+
 
 
 \section{颜色填充}
@@ -352,56 +334,16 @@ fill命令就是填充某种颜色的形状，后面跟个\textbf{color}可选�
 \path[fill=cyan] (0,0) circle  (1) ;
 \end{tikzpicture}
 
-\section{node命令}
-node命令主要用于插入文本，不过最好将其理解为接口。\XeLaTeX 文档内部各个命令等都可以使用，然后外面包围一个形状，如rectangle长方形，circle圆等。
-
-\begin{Verbatim}
-\newcommand{\testlinea}{this is a test line a}
-\newcommand{\testlineb}{this is a test line b}
-\begin{tikzpicture}
-%\fill[cyan] (0,0) circle  (1) ;
-\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
-\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
-\draw[-latex](a) -- (b);
-\end{tikzpicture}
-\end{Verbatim}
-
-这里我们看到\LaTeX 里面自定义的命令是可以正常使用的，然后可选项\textbf{shape}的意思是外面包围的形状是长方形，\textbf{draw}就是画这个形状是用的draw命令方法，比如fill就会填充。\textbf{inner sep}控制外面的形状和内部文本之间的间距。 然后\textbf{at (0,0)}控制整个图形的位置，然后\textbf{(a)}表示整个图形的名字，后面可以调用的，可以看作接口把。然后后面就是\LaTeX 的内容了。
-
-\newcommand{\testlinea}{this is a test line a}
-\newcommand{\testlineb}{this is a test line b}
-\begin{tikzpicture}
-%\fill[cyan] (0,0) circle  (1) ;
-\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
-\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
-\draw[-latex](a) -- (b);
-\end{tikzpicture}
-
-\subsection{插入文本的位置}
-node命令的可选项\textbf{left}，\textbf{right}，\textbf{above}，\textbf{below}用于控制插入文本的位置。此外还有\textbf{above right}，\textbf{below right}，\textbf{above left} ，\textbf{below left}等。
-
-\subsection{文本对齐控制}
-用\textbf{align=left}，\textbf{align=right}，\textbf{align=center}来控制。
-
-\subsection{在画图形的时候插入文本}
-\begin{tikzpicture}
-\draw (1,1) node {text} -- (2,2);
-\end{tikzpicture}
-
-在画图形的时候某个当前点下可以直接node接某个文本。
-
-
-
-
 
 \section{clip命令}
 clip就是剪切的意思，就是通过clip命令按照某个形状来剪切，外面的图形都不保留，可以跟一个可选项\textbf{draw}，这样剪切的时候同时画出了这个形状。
 
 
-\section{抛物线}
+
+
 
 \section{path路径闭合}
-任何构建的path最后都可以通过\textbf{ -{}- circle}将其闭合起来。
+任何构建的path最后都可以通过\textbf{ -{}- cycle}将其闭合起来。
 
 \section{filldraw命令}
 是draw命令和fill命令的结合。\textbf{fill=}可选项调整填充的颜色，\textbf{draw=}可选项调整画的线条的颜色。
@@ -409,7 +351,7 @@ clip就是剪切的意思，就是通过clip命令按照某个形状来剪切，
 \section{阴影}
 shade命令和fill命令的区别就是填充的颜色是渐变的，其他类似。
 
-其可选项有\textbf{top color和bottom color}表示上下渐变的颜色，\textbf{left color和right color}，\textbf{innercolor和outercolor}，\textbf{ball color}让颜色渐变像一个有光照的球。
+其可选项有\textbf{top color和bottom color}表示上下渐变的颜色，\textbf{left color和right color}，\textbf{innercolor和outercolor}，这些是配对的。此外还有\textbf{ball color}让颜色渐变像一个有光照的球。
 
 \subsection{小红球}
 \begin{tikzpicture}
@@ -418,19 +360,14 @@ shade命令和fill命令的区别就是填充的颜色是渐变的，其他类�
 
 
 \section{scope环境}
-scope环境就是作用域控制，一个局域环境，参数只影响内部。
+scope环境就是作用域控制，一个局域环境，参数只影响内部，外部的参数也影响不进来，不过值得一提的是，定义的点外面也可以用。
 
-\subsection{更灵活的scope控制}
+scope环境一个有用的特性的里面的clip命令不会影响到外面。
 
-\begin{tikzpicture}
-\draw (0,0) -- (1,1)
-{[rounded corners] -- (2,0) -- (3,1)}
--- (3,0) -- (2,1);
-\end{tikzpicture}
 
 
 \section{变形}
-xshift x坐标轴平移  yshift y坐标轴平移  rotate 旋转 。注意xshift默认的单位并不是cm，如果要单位是cm需要写出来。
+\textbf{xshift}，x坐标轴平移。 \textbf{yshift}，y坐标轴平移。\textbf{rotate}，旋转 。\emph{注意xshift默认的单位并不是cm，如果要单位是cm需要写出来。}
 
 \subsection{旋转图形}
 后面加上可选项\textbf{rotate=30}即可，意思是图形逆时针旋转30度。
@@ -455,18 +392,24 @@ xshift x坐标轴平移  yshift y坐标轴平移  rotate 旋转 。注意xshift�
 \end{tikzpicture}
 
 \section{迭代语句}
-\begin{tikzpicture}[scale=3]
+\begin{Verbatim}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (3,2);
+\foreach \x in {0,1,...,4}
+\draw[xshift=\x cm] (0,-1) -- (0,1);
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (3,2);
 \foreach \x in {0,1,...,4}
 \draw[xshift=\x cm] (0,-1) -- (0,1);
 \end{tikzpicture}
 
-其中...表示一直这样有规律下去生成迭代列表。
+其中...表示一直这样有规律下去生成迭代列表。迭代语句有很多用法，详见后面的具体例子。
 
 
 
-\section{文本中的图片}
-wherever \begin{tikzpicture} \draw [yellow, line width=6]
-(0,0) -- (.5,0); \end{tikzpicture} you want
 
 
 
@@ -559,6 +502,53 @@ tikz中的点也支持极座标表示，(30:1cm)，第一个参数是极座标�
 
 
 \subsection{两个path的交点}
+\begin{Verbatim}
+\begin{tikzpicture}[scale=3]
+\draw[help lines] (0,0) grid (2,2);
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,0.5);
+\coordinate (C) at (2,0);
+\coordinate (D) at (0,2);
+\shade[ball color=red](A) circle (0.025) node[below] {A};
+\shade[ball color=red](B) circle (0.025) node[below] {B};
+\shade[ball color=red](C) circle (0.025) node[below] {C};
+\shade[ball color=red](D) circle (0.025) node[below] {D};
+\draw[name path=AB] (A) -- (B);
+\draw[name path=CD] (C) -- (D);
+\path[name intersections={of=AB and CD}] (intersection-1) coordinate (P);
+\shade[ball color=red](P) circle (0.025) node[below] {P};
+\end{tikzpicture}
+\end{Verbatim}
+
+
+\usetikzlibrary{intersections,calc}
+\tikzset{help lines/.style= {step=0.5cm,color=gray!40,very thin}}
+\begin{tikzpicture}[scale=3]
+\draw[help lines] (0,0) grid (2,2);
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,0.5);
+\coordinate (C) at (2,0);
+\coordinate (D) at (0,2);
+\shade[ball color=red](A) circle (0.025) node[below] {A};
+\shade[ball color=red](B) circle (0.025) node[below] {B};
+\shade[ball color=red](C) circle (0.025) node[below] {C};
+\shade[ball color=red](D) circle (0.025) node[below] {D};
+\draw[name path=AB] (A) -- (B);
+\draw[name path=CD] (C) -- (D);
+\path[name intersections={of=AB and CD}] 
+(intersection-1) coordinate (P);
+\shade[ball color=red](P) circle (0.025) node[below] {P};
+\end{tikzpicture}
+
+这个例子用到了点的定义，点的标出，以及path交点的定义，要用到library：\textbf{intersections}。有时候有些路径你不希望显示出来那么就用path命令来定义路径。
+
+\subsubsection{给新交点取名字}
+用\textbf{by}选项可以给画出来的交点取一个名字，默认的\\intersection-1之类的也可以使用。此外还可以加上选项：
+\begin{Verbatim}
+\path [name intersections={of=D and E, 
+by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+\end{Verbatim}
+
 
 
 \subsection{点的运算}
@@ -591,12 +581,55 @@ tikz中的点也支持极座标表示，(30:1cm)，第一个参数是极座标�
 \fill [black] (${3*(4-3)}*(1,0.5)$) circle (2pt);
 \end{tikzpicture}
 
+这里有点类似矢量运算计算出点的位置，前面计算出乘量因子，然后后面一个矢量偏移量。
 
 
-\section{path命令}
-path路径是最基本的命令，draw命令等价于\verb+\path[draw]+，fill命令等价于\verb+\path[fill]+，filldraw命令等价于\verb+\path[draw,fill]+，其他clip，shade命令情况类似。
+\section{计算两个点之间的距离}
+\begin{Verbatim}
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B) at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw (A) -- (B);
+
+\draw  let
+\p1 = ($ (B) - (A) $),
+\n1 = {veclen(\x1,\y1)}
+in
+(A) circle (\n1)
+(B) circle (\n1);
+
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) 
+at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B)
+ at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw (A) -- (B);
+
+\draw  let
+\p1 = ($ (B) - (A) $),
+\n1 = {veclen(\x1,\y1)}
+in
+(A) circle (\n1)
+(B) circle (\n1);
+
+\end{tikzpicture}
+
+\textbf{let ... in ...}语句可以放在任何path命令的任何位置来控制变量的计算和定义。
+\textbackslash p\textit{<digit>}定义的是点的变量，\textbackslash n\textit{<digit>}定义的是数值的变量，后面可以跟数字从而定义多个变量。
+
+任何点变量都可以用\textbackslash x\textit{<digit>}和\textbackslash y\textit{<digit>}来引用该点的x坐标和y坐标。
+
+\textbf{veclen}函数计算某个矢量的长度。
+
+
 
 \section{path之线条}
+path路径是最基本的命令，draw命令等价于\verb+\path[draw]+，fill命令等价于\verb+\path[fill]+，filldraw命令等价于\verb+\path[draw,fill]+，其他clip，shade命令情况类似。
 
 \subsection{虚线和点线}
 线条除了之前说的dashed和dotted两种样式之外，还有loosely dashed，densely dashed和loosely dotted， densely dotted。比如：\tikz{\draw[loosely dashed] (0,0) -- (1,0);} ~~ \tikz{\draw[dashed] (0,0) -- (1,0);} ~~ \tikz{\draw[densely dashed] (0,0) -- (1,0);}，这是dashed的三种，下面是dotted的三种：\tikz{\draw[loosely dotted] (0,0) -- (1,0);} ~~ \tikz{\draw[dotted] (0,0) -- (1,0);} ~~ \tikz{\draw[densely dotted] (0,0) -- (1,0);}。
@@ -651,11 +684,265 @@ path路径是最基本的命令，draw命令等价于\verb+\path[draw]+，fill�
 
 
 
+\section{弧线}
+\subsection{弧线反向}
+\begin{Verbatim}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (5,5);
+\fill[green!20] (0,0) -- (3,0)
+arc (0:30:3)  -- cycle;
+\draw (2,2) arc (0:-90:-2);
+\end{tikzpicture}
+\end{Verbatim}
+
+
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (5,5);
+\fill[green!20] (0,0) -- (3,0)
+arc (0:30:3)  -- cycle;
+\draw (2,2) arc (0:-90:-2);
+\end{tikzpicture}
+
+我们可以看到画弧线如果要中心点不是在左边而是在右边，那么可以通过让半径为负值和调整角度获得。其中角度的计算是顺时针的负值。
+
+
+
+
+\section{node命令}
+node命令主要用于插入文本，不过最好将其理解为接口。\XeLaTeX 文档内部各个命令等都可以使用，然后外面包围一个形状，如rectangle长方形，circle圆等。
+
+\begin{Verbatim}
+\newcommand{\testlinea}{this is a test line a}
+\newcommand{\testlineb}{this is a test line b}
+\begin{tikzpicture}
+%\fill[cyan] (0,0) circle  (1) ;
+\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
+\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
+\draw[-latex](a) -- (b);
+\end{tikzpicture}
+\end{Verbatim}
+
+这里我们看到\LaTeX 里面自定义的命令是可以正常使用的，然后可选项\textbf{shape}的意思是外面包围的形状是长方形，\textbf{draw}就是画这个形状是用的draw命令方法，比如fill就会填充。\textbf{inner sep}控制外面的形状和内部文本之间的间距。 然后\textbf{at (0,0)}控制整个图形的位置，然后\textbf{(a)}表示整个图形的名字，后面可以调用的，可以看作接口把。然后后面就是\LaTeX 的内容了。
+
+\newcommand{\testlinea}{this is a test line a}
+\newcommand{\testlineb}{this is a test line b}
+\begin{tikzpicture}
+%\fill[cyan] (0,0) circle  (1) ;
+\node[shape=rectangle,draw,inner sep=10pt] at (0,0) (a) {\testlinea};
+\node[shape=rectangle,draw,inner sep=10pt] at (0,-3) (b) {\testlineb};
+\draw[-latex](a) -- (b);
+\end{tikzpicture}
+
+\subsection{插入文本的位置}
+node命令的可选项\textbf{left}，\textbf{right}，\textbf{above}，\textbf{below}用于控制插入文本的位置。此外还有\textbf{above right}，\textbf{below right}，\textbf{above left} ，\textbf{below left}等。
+
+\subsection{文本对齐控制}
+用\textbf{align=left}，\textbf{align=right}，\textbf{align=center}来控制。
+
+\subsection{在画图形的时候插入文本}
+\begin{tikzpicture}
+\draw (1,1) node {text} -- (2,2);
+\end{tikzpicture}
+
+在画图形的时候某个当前点下可以直接node接某个文本。
+
+node命令在path的任何位置都可插入，具体是path完成之后才绘制出node要插入的内容。
+
+node的\textbf{inner sep}选项调整node文本和外围的shape之间的间距。
+
+node的\textbf{minimum size}选项控制node没有文本时候外围shape的大小，装上文本可以更大。
+
+node可以通过\textbf{at}来具体控制node的位置，可以通过\textbf{[below=of wating]}这样的语句来让新的node相对其他node而存在。
+
+
+\subsection{node旁插入标签}
+node旁边加上标签，使用\textbf{label}选项，语法是：\\
+\verb+label=above:$s\le3$+。除了常用的above，below等控制位置外，还可以直接用60这样的数值控制位置，表示node圆圈逆时针旋转60度的那个位置。
+
+所有标签的样式可以通过重定义\textbf{every label}样式来实现，
+
+
+\subsection{node用箭头连接}
+\verb+\draw [->] (critical.west) -- (enter critical.east);+
+比如上面这个语句，critical是node的名字，\emph{.west}表示该node的shape的西边（也就是左边）出发。
+
+\subsection{弯曲箭头}
+用\textbf{to}语句更加灵活地画弯曲箭头，out选项控制出来的角度，in选项控制进去的角度。
+\textbf{bend right}选项很有用，此外还有\textbf{bend left}选项，后面跟数值控制偏转量，一般45。
+
+\subsection{箭头旁边加标签}
+to语句后面跟个node就可以直接加上标签，表示在这个箭头path上加个node。这种方法有一个\textbf{swap}可以让标签交换位置。
+
+
+\subsection{shape穿过某个点}
+使用through包可以让node外的某个shape自定义穿过某个点，比如\textbf{circle through}=(3,3)
+
+
+
+
+\section{tikz中的随机数}
+\textbf{rand}产生一个随机数，范围在-1～1之间。
 
 
 
 
 \chapter{tikz的一些例子}
+\section{画正多边形}
+\begin{Verbatim}
+
+\begin{tikzpicture}
+\draw (0,0) circle (4) ;
+\coordinate (O) at (0,0);
+\shade[ball color=red](O) circle (0.1) node[below] {O};
+\def\n{5}
+\pgfmathsetmacro\i{\n-1}
+\foreach \x in {0,...,\i}
+{
+\def\pointname{\x}
+\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
+\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
+}
+
+\draw (0)
+\foreach \x in {0,...,\i}
+{ -- (\x) } -- cycle;
+
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\draw (0,0) circle (4) ;
+\coordinate (O) at (0,0);
+\shade[ball color=red](O) circle (0.1) node[below] {O};
+\def\n{5}
+\pgfmathsetmacro\i{\n-1}
+\foreach \x in {0,...,\i}
+{
+\def\pointname{\x}
+\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
+\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
+}
+
+\draw (0)
+\foreach \x in {0,...,\i}
+{ -- (\x) } -- cycle;
+
+\end{tikzpicture}
+
+这个例子核心内容是批量定义点和点的运算，把这个弄懂了，后面tikz的核心大门就为你打开了，然后很多图形都可以用简洁的命令生成出来了。
+
+
+\section{多个node连接}
+\begin{Verbatim}
+\usetikzlibrary{positioning}
+\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,
+thick,inner sep=0pt,minimum size=6mm}}
+\tikzset{transition/.style={rectangle,draw=black!50,
+fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
+\tikzset{every label/.style=red}
+\begin{tikzpicture}[bend angle=45]
+\node[place] (waiting)  {};
+\node[place] (critical) [below=of waiting] {};
+\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
+\node[transition](leave critical) [right=of critical]{};
+\node[transition] (enter critical)[left=of critical]{};
+\draw [->] (enter critical) to (critical);
+\draw [->] (waiting) to [bend right] (enter critical);
+\draw [->] (enter critical) to [bend right] (semaphore);
+\draw [->] (semaphore) to [bend right] (leave critical);
+\draw [->] (critical) to (leave critical);
+\draw [->] (leave critical) to [bend right] (waiting);
+\end{tikzpicture}
+\end{Verbatim}
+
+\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=6mm}}
+\tikzset{transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
+\tikzset{every label/.style=red}
+\begin{tikzpicture}[bend angle=45]
+\node[place] (waiting)  {};
+\node[place] (critical) [below=of waiting] {};
+\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
+\node[transition](leave critical) [right=of critical]{};
+\node[transition] (enter critical)[left=of critical]{};
+\draw [->] (enter critical) to (critical);
+\draw [->] (waiting) to [bend right] (enter critical);
+\draw [->] (enter critical) to [bend right] (semaphore);
+\draw [->] (semaphore) to [bend right] (leave critical);
+\draw [->] (critical) to (leave critical);
+\draw [->] (leave critical) to [bend right] (waiting);
+\end{tikzpicture}
+
+这个例子需要加载positioning包，这个例子很好地展示了多个node和用箭头连接来表示他们关系的图形如何绘制。
+
+
+\section{几何第一个例子}
+\begin{Verbatim}
+
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) 
+at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B) 
+at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw [name path=A--B] (A) -- (B);
+
+\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
+\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+\path [name intersections={of=D and E, 
+by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+
+\draw [red] (A) -- (C);
+\draw [red] (B) -- (C);
+
+\draw [name path=C--C',red] (C) -- (C');
+\path [name intersections={of=A--B and C--C',by=F}];
+
+\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
+
+\foreach \point in {A,B,C,C'}
+\fill [black,opacity=.5] (\point) circle (2pt);
+
+\begin{pgfonlayer}{background}
+\fill[orange!80] (A) -- (C) -- (B) -- cycle;
+\end{pgfonlayer}
+
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B) at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw [name path=A--B] (A) -- (B);
+
+\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
+\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+\path [name intersections={of=D and E, by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+
+\draw [red] (A) -- (C);
+\draw [red] (B) -- (C);
+
+\draw [name path=C--C',red] (C) -- (C');
+\path [name intersections={of=A--B and C--C',by=F}];
+
+\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
+
+\foreach \point in {A,B,C,C'}
+\fill [black,opacity=.5] (\point) circle (2pt);
+
+\begin{pgfonlayer}{background}
+\fill[orange!80] (A) -- (C) -- (B) -- cycle;
+\end{pgfonlayer}
+
+\end{tikzpicture}
+
+
+\chapter{其他}
+\section{文本中的图片}
+wherever \begin{tikzpicture} \draw [yellow, line width=6]
+(0,0) -- (.5,0); \end{tikzpicture} you want
 
 
 %这里空一行

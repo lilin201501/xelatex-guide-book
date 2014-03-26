@@ -9,12 +9,33 @@
 \phonefalse
 
 
-
 \usepackage{myconfig}
 \usepackage{mytitle}
-
+\usetikzlibrary{shapes,positioning,backgrounds}
+\usepackage[ISBN=978-71-08003-83-6]{ean13isbn}
+\usepackage{wallpaper} 
 
 \begin{document}
+\frontmatter
+\thispagestyle{empty}
+
+\tikz[remember picture,overlay]%
+% draw image
+\node[inner sep=0] at (current page.center)
+{\includegraphics[width=\paperwidth,height=\paperheight]{封面}};
+
+
+\tikz[remember picture,overlay]%
+\node[fill=Sienna,text=white,%
+minimum width=0.5\paperwidth,minimum height=6em,anchor=north]%
+(title) [below=100pt of current page.north]
+{
+{\bfseries\itshape\color{Cornsilk}\fontsize{36pt}{46pt}\selectfont
+活出意义来}};
+
+\cleardoublepage
+
+
 \frontmatter   
 
 \titlea{意义}
@@ -25,7 +46,7 @@
 \editor{德山书生}
 \email{a358003542@gmail.com}
 \editorinfo{根据网上txt核对pdf版本精确校对排版而成，并加上注解。这个翻译版本《活出意义来》比另外一个版本《追寻生命的意义》明显要好些。}
-\version{1.2}
+\version{1.21}
 \titleLC
 
 \addchtoc{目录}
@@ -902,10 +923,33 @@
 
 我们这一代处于现实主义的时代，因此我们要知道“人”真正是什么。毕竟，“人”是发明奥斯维辛煤气间的“存在”；但同时，“人”也是笔直走进煤气间，口中念着天主经或犹太祈祷文的“存在”！
 
-【全书完】
 
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% Back cover
+%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%% Temporarily enlarge this page to push
+%% down the bottom margin
+\enlargethispage{3\baselineskip}
+\thispagestyle{empty}
+
+\ThisLLCornerWallPaper{2}{美好的家}
+
+\vspace*{\stretch{1}}
+
+\begin{center}
+\colorbox{white}{\EANisbn[SC4]}
+
+\vspace*{\baselineskip}
+
+\textbf{\textcolor{red!50}{Malaysian \LaTeX\ User Group \textbullet\ \texttt{http://latex-my.blogspot.com}}}
+
+\textbf{\textcolor{red!50}{Cover Illustration by Dusan Bicanski \textbullet\ \texttt{http://www.public-domain-image.com}}}
+\end{center}
 
 
 \end{common-format}  

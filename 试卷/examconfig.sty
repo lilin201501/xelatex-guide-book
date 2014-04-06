@@ -40,8 +40,7 @@
 %================字體================%
 %设置数学字体
 \RequirePackage{amssymb,amsmath}
-\RequirePackage{mathspec}
-\DeclareMathSizes{11}{22.8}{15.6}{10.8}      % For size 11 text
+\RequirePackage{fontspec}
 
 \setmainfont[Mapping=tex-text]{DejaVu Serif}
 \setsansfont[Mapping=tex-text]{DejaVu Sans}
@@ -50,7 +49,7 @@
 %中文環境
 \RequirePackage[CJKnumber=true]{xeCJK}
 \xeCJKsetup{PunctStyle=plain}
-\defaultCJKfontfeatures{Scale=1.2}   %放大全局CJK字體。中文字應該稍微高於英文字
+\defaultCJKfontfeatures{Scale=1.2}   %放大全局CJK字體。中文字應該稍微高於英文字，这样更美观
 \setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
     {Adobe 宋体 Std}%影響rmfamily字體
 \setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體

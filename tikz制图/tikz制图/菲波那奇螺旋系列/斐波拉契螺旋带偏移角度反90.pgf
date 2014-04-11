@@ -5,7 +5,7 @@
   \newcounter{b}
   \newcounter{temp}
 
-\def\n{8}
+\def\n{18}
 \foreach \i in {1,...,\n}
 {
 \begin{scope}[rotate=\i*360/\n]
@@ -14,7 +14,7 @@
   \setcounter{b}{1}
 
   % The spiral will start at the origin
-  \coordinate (0) at (15,15);
+  \coordinate (0) at (8,8);
 
   % This loop defines the number of turns in the spiral. Note that we
   % will have to be careful not to overflow our counters or make the
@@ -30,7 +30,7 @@
 
     % Draw this turn of the spiral and remember the point where we end 
     \draw[color=white] (\lastpoint) arc 
-      (\startangle  : \startangle + 90 : \value{b}/10.0pt) coordinate (\i);
+      (\startangle  : \startangle - 90 : \value{b}/10.0pt) coordinate (\i);
    % Compute the next Fibonacci number
     \setcounter{temp}{\value{b}}
     \addtocounter{b}{\value{a}}

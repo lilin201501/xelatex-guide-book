@@ -1,0 +1,46 @@
+\documentclass[11pt]{standalone}
+\newlength{\textpt}
+\setlength{\textpt}{11pt}
+
+\usepackage{tikz}
+%================字體================%
+%设置数学字体
+\RequirePackage{amssymb,amsmath}
+\RequirePackage{fontspec}
+ %設置英文字體
+\setmainfont[Mapping=tex-text]{DejaVu Serif}
+\setsansfont[Mapping=tex-text]{DejaVu Sans}
+\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+%中文環境
+\RequirePackage[CJKnumber=true]{xeCJK}
+\xeCJKsetup{PunctStyle=plain}
+\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
+    {Adobe 宋体 Std}%影響rmfamily字體
+\setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
+\setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
+
+\RequirePackage{xltxtra} %put here to avoid some package option error. maybe this package is useless ?
+
+\usepackage{pgfplots}
+
+
+\pgfplotsset{width=7cm,compat=1.8}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+xlabel=中文测试,
+ylabel=y轴]
+\addplot[color=red,mark=x] coordinates {
+(2,-2.8559703)
+(3,-3.5301677)
+(4,-4.3050655)
+(5,-5.1413136)
+(6,-6.0322865)
+(7,-6.9675052)
+(8,-7.9377747)
+};
+\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,32 +1,0 @@
-\usetikzlibrary{intersections,calc,positioning}
-
-\begin{tikzpicture}
-\begin{scope}[rotate=18]
-\def\n{5}
-\pgfmathsetmacro\i{\n-1}
-\foreach \x in {0,...,\i}
-{
-\def\pointname{\x}
-\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
-}
-\end{scope}
-
-\node[circle,draw] (huo) at (0) {å};
-\node[circle,draw]  (mu) at (1) {æ³};
-\node[circle,draw] (shui) at (2) {æ¿};
-\node[circle,draw] (jin) at (3) {å};
-\node[circle,draw] (tu) at (4) {å};
-
-\draw [-latex] (mu) to [bend left] node[above] {ç1}  (huo);
-\draw [-latex] (huo) to [bend left=15] node[right] {ç1} (tu);
-\draw [-latex] (tu) to [bend left=5] node[below] {ç1}   (jin);
-\draw [-latex] (jin) to [bend left=15] node[left] {ç1} (shui);
-\draw [-latex] (shui) to [bend left] node[above] {ç1} (mu);
-
-\draw [-latex] (mu) to node[right] {å2}  (tu);
-\draw [-latex] (huo) to  node[below] {å2} (jin);
-\draw [-latex] (tu) to  node[below] {å2}   (shui);
-\draw [-latex] (jin) to  node[left] {å2} (mu);
-\draw [-latex] (shui) to  node[above] {å2} (huo);
-
-\end{tikzpicture}

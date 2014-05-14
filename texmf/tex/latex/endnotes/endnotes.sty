@@ -15,7 +15,10 @@
 \gdef\endnotemark{\textsuperscript{(\theenmark)}}%
 \gdef\endnotemarkback{(\theenmark)}%
 
-%=============main body=================%
+%
+\newlength{\enoteindent}
+\setlength{\enoteindent}{2\textpt}
+%=============main body==============%
 \newwrite\@entout
 
 \newcounter{@EndnoteCounter}%[chapter]%with the chapter reset to 0
@@ -50,10 +53,10 @@
 \catcode`]=2 \catcode `\{=12 \catcode `\}=12
 \catcode`\\=12
 |gdef|@writeent[|immediate|write|@entout[
-{\footnotesize
-\hspace{-2\parindent}\makebox[\parindent-3pt][l]
+{\footnotesize\noindent
+\hspace{-\enoteindent}\makebox[\enoteindent-3pt][l]
 {\flabel{|@linknameb}{|@showlinknameb}  \ref{|@linkname}}
-\leftskip=\parindent   |expandonce|@include \par } ] ]%use the expandonce control and the gdef @include
+\leftskip=\enoteindent   |expandonce|@include \par } ] ]%use the expandonce control and the gdef @include
 |endgroup
 
 \DeclareRobustCommand*\endnote[1]{%well add so many % to eat space

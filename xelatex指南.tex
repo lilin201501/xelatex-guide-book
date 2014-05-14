@@ -2,16 +2,14 @@
 %新加入的命令如下：addchtoc addsectoc reduline showendnotes  devideentby
 %新加入的环境如下：common-format  fig
 
-\documentclass[11pt,oneside]{book}
+\documentclass[12pt,oneside]{book}
 \newlength{\textpt}
-\setlength{\textpt}{11pt} 
+\setlength{\textpt}{12pt} 
 \newif\ifphone
 \phonefalse
 
 \usepackage{myconfig}
 \usepackage{mytitle}
-\usepackage{mydef}
-
 
 
 \begin{document}
@@ -24,7 +22,7 @@
 \editor{万泽}
 \email{a358003542@gmail.com}
 \editorinfo{编者：万泽，}
-\version{1.20}
+\version{1.22}
 \titleLB
 
 \addchtoc{前言}
@@ -79,7 +77,7 @@
 \item 设置ubuntu的root用户，这个以后可能会有用。按住\\
 ctrl+alt+t弹出终端，然后输入：\\ sudo passwd \\设置好密码之后，以后输入：\\ su\\就可以进入root账户了。
 \item 安装一个有用的工具：\\sudo apt-get install nautilus-open-terminal\\这个工具可以让你在视窗背景下鼠标右键之后打开当前目录下的终端，有时还是很快捷的，尤其是遇到一些怪怪的文件名的时候。
-\item 系统安装好之后第一件要做的事是选一个好的源，然后安装更新。我的ubuntu版本是12.04，在右上角的哪里，软件更新，软件源设置，在下载自的哪里就是软件源的服务商，你最好还是自己搜索一个速度最快的源。然后在终端中执行以下命令来升级系统软件包：\\sudo apt-get update  （更新源）\\sudo apt-get upgrade   （升级源下已经安装了的软件）\footnote{如果有很多软件需要升级的时候推荐使用命令：sudo apt-get dist-upgrade 这样不容易出错些。}
+\item 系统安装好之后第一件要做的事是选一个好的源，然后安装更新。在系统设置→软件和更新那里，在“下载自”的哪里就是软件源的服务商，你最好还是自己搜索一个速度最快的源。然后在终端中执行以下命令来升级系统软件包：\\sudo apt-get update  （更新源）\\sudo apt-get upgrade   （升级源下已经安装了的软件）\footnote{如果有很多软件需要升级的时候推荐使用命令：sudo apt-get dist-upgrade 这样不容易出错些。}
 \item 一些闭源的有用的东西：\\sudo apt-get install ubuntu-restricted-extras\\这个安装到adoubeflashplugin的时候会有点卡住，最好还是耐心点吧。或者在ubuntu软件中心（Ubuntu 额外的版权受限程序）中安装也是可以的。
 \item ubuntu系统清理，运行以下两个命令即可：\\sudo apt-get autoremove （清理软件残余）\\sudo apt-get autoclean  （清理缓存）。
 \item 删除通过apt-get安装的软件：\\sudo apt-get remove 要删除的软件名\\删除相应的软件配置文件：\\sudo apt-get purge 软件名
@@ -88,7 +86,7 @@ ctrl+alt+t弹出终端，然后输入：\\ sudo passwd \\设置好密码之后�
 
 \section{linux命令介绍}
 \begin{description}
-\item[ \${} 和\~{}] 当我们打开终端的时候，看到一个美元\$ 符号，如果我们输入su命令，然后进入root账户，看到开头有一个\#{} 符号，其中\$ 表示普通用户，\#{} 表示现在是超级用户。然后我们看到一个波浪号$\sim$  ,这个波浪号的意思就是当前用户的个人主文件夹，比如现在我这里$\sim$ 的意思就表示目录／home／wanze 。
+\item[ \${} 和\~{}] 当我们打开终端的时候，看到一个美元\$ 符号，如果我们输入su命令，然后进入root账户，看到开头有一个\#{} 符号，其中\$ 表示普通用户，\#{} 表示现在是超级用户。然后我们看到一个波浪号\~{}，这个波浪号的意思就是当前用户的个人主文件夹，比如现在我这里\~{}的意思就表示目录/home/wanze 。
 \item[ cd] 一般dir或者ls之后列出该目录所包含的文件夹或者文件，然后执行如下命令:\\cd 某个文件夹名 \\ 就进入这个文件夹了。如果cd一个文件就会报错。然后特殊的有：\\ cd $\sim$ 回到个人主文件夹\\cd . 其中点表示当前目录\\cd .. 表示返回上一级目录\\cd 某个目录 ，比如cd ／etc 那么就直接跳到系统的／etc目录下了。
 \item[ cp] 复制文件命令:\\ cp~~~要复制的文件~~~目标文件目录 
 \item[ which] 查看系统某个命令的位置
@@ -115,27 +113,23 @@ sudo apt-get update\\
 \item[新立得软件包管理器] 这个有时安装一套软件组合很有用的。Ⓐ
 \item[chromium] 不清楚和google-chrome的区别。它的插件很方便，有的时候网页显示相比较于firefox不会出错些。Ⓐ\\
 chromium插件推荐：
-
 \begin{description}
 \item[Daum Equation Editor]  本文暂时不会讨论数学公式的输入问题，这里有个简单的解决方案，就是在这个插件里面编辑公式，下面就有对应的\LaTeX 的代码。
 \item[代理助手] 好吧，我讲这个完全是因为天朝的防火墙，不学会翻墙严重干扰我们搜索信息。具体设置是http代理填写相关地址，china list这个选项也勾上吧。下面还有详细说明。
 \end{description}
-
 \item[翻墙软件] 要搜东西真的要用google，在天朝你懂的，因为要跑防火墙慢死了。轮子的自由门还可以。\footnote{\href{http://115.com/lb/5lbdvqz2o9i}{下载freegate的链接}}翻完墙之后到弹出来的那个网站或者voa网站哪里多下几个类似的翻墙软件吧，有备无患。freegate在ubuntu下需要使用wine模拟，在模拟前先用winetricks装好mfc42.dll，然后就行了。freegate进去之后在通道哪里选择经典模式。google-chrome那边的设置在代理助手哪里，就是使用freegate提供的那个http地址加上端口号即可——在内容那一页。一般代理助手就点系统自动连接吧，毕竟是免费代理，别想质量有多好。
 \item[texmaker] 写\LaTeX 非常好的界面环境，和windows下的texstudio类似，但是感觉界面更加的漂亮。Ⓐ
 \item[shutter] 一个非常好的截图软件。ubuntu系统自带的截图软件截完图不能拖动改变大小，这个可以。Ⓐ
-\item[ubuntuone] 在ubuntu系统下很好的文档同步软件，在手机上安装之后可以方便进行某些文档的传输。云诺和坚果云也还可以。115网页版也行。Ⓐ
 \item[wine] 虽然wine软件一直在更新，但是老实说总感觉不是十分令人满意。这里提到wine是因为前面谈到的翻墙软件需要用wine来模拟。wine的安装不同于其他软件，尽量下载最新版本的吧。到官网上查看最新的稳定版本号，比如wine1.6。然后在终端上通过ppa来安装，ppa地址见脚注。Ⓒ\footnote{ppa:ubuntu-wine/ppa}
 \item[workrave] 人们对久坐的危害总是低估了，这个软件帮助提醒人们做一段时间之后最好起来活动活动。Ⓐ 
 \item[Gcolor2] 这个小软件取色，RGB转换等很有用。Ⓐ
-\item[wps for linux] 目前写毕业论文不得已还是要用doc格式，而在ubuntu下我试过很多解决方案，比如wine，libreoffice，或者网上的在线编辑。结果都不尽如人意。因为我需要的是最好完完全全兼容microoffice2003的格式。金山公司的这个wps for linux 目前还在开发中，但是效果还是可以了。下载地址见脚注。Ⓓ\footnote{\href{http://linux.wps.cn/}{wps for linux}}
+\item[wps for linux] 有时不得已还是要用doc格式，而在ubuntu下我试过很多解决方案，比如wine，libreoffice，或者网上的在线编辑。结果都不尽如人意。因为我需要的是最好完完全全兼容microoffice2003的格式。金山公司的这个wps for linux 目前还在开发中，但是效果还是可以了。下载地址见脚注。Ⓓ\footnote{\href{http://linux.wps.cn/}{wps for linux}}
 \end{description} 
 其他还有很多有用的软件看官自己探索吧。
 
 
 \section{rime输入法}
-更多信息请参考rime官方wiki\endnote{\href{https://code.google.com/p/rimeime/w/list}{rime官方wiki}}。
-还有一种ppa安装方法，ppa地址见尾注\endnote{ppa地址是：[ppa:lotem/rime] }。
+更多信息请参考\href{https://code.google.com/p/rimeime/w/list}{rime官方wiki}。还有一种ppa安装方法，ppa地址是：[ppa:lotem/rime] 。
 
 rime输入法也可以在fcitx输入法框架下进行，就目前来说（2013-12-04）感觉fcitx输入法框架要比ibus稍微好一点点。
 
@@ -152,7 +146,7 @@ rime输入法也可以在fcitx输入法框架下进行，就目前来说（2013-
 \subsection{备份和还原}
 输入法用久了，你的自造词还有你输入相关词的词频这些信息是非常有用的，能够极大地提高你的工作效率。rime备份的核心词是命令：\emph{rime\_{}dict\_{}manager}。你需要在rime的用户配置文件夹里面打开终端，然后输入这个命令，你就可以看到提示信息了。
 
-首先输入-l选项，你可以看到现在已经有的词典，比如luna\_{}pinyin。然后用-s同步，这样你就会看到一个sync文件夹，里面放着快照文件。-b是选择性是备份某一个词典。-r是还原快照文件。-e，-i是txt格式操作，txt保存数据会有点损失。将用户rime配置文件夹整个复制到同步盘即可。
+首先输入-l选项，你可以看到现在已经有的词典，比如\\ luna\_{}pinyin。然后用-s同步，这样你就会看到一个sync文件夹，里面放着快照文件。-b是选择性是备份某一个词典。-r是还原快照文件。-e，-i是txt格式操作，txt保存数据会有点损失。将用户rime配置文件夹整个复制到同步盘即可。
 
 \subsection{把QQ拼音上你的词库导入rime}
 \begin{enumerate}
@@ -172,56 +166,13 @@ rime输入法也可以在fcitx输入法框架下进行，就目前来说（2013-
 
 \subsection{定制rime输出特殊符号}
 \begin{flushright}
-\begin{notecard}[olive!30]
+\begin{notecard}[olive!30]{15em}
 我希望通过rime输入法能够快速地将Unicode中的符号打出来。本文主要关注这个问题，其他定制请参阅官网wiki。
 \end{notecard}
 \end{flushright}
 
-\subsubsection{rime基本情况说明}
-Rime的ubuntu版本叫做中州韵，不管这么多，一般称作ibus-rime，下面简称rime。下面的讨论只使用于ubuntu，我目前的版本是13.04，12.10试过没有问题。
-
-rime的程序在哪里我不关心，在ubuntu下所有程序的配置是用户配置优先级高于程序自带的配置，所以我们在rime的用户文件夹里面DIY就是了。rime的用户资料夹在：\\
-$ \sim $/.config/ibus/rime
-
-
-进入这个文件夹之后，我们可以点击看以下里面的内容，这些文件情况说明如下：
-\begin{description}
-\item[cangjie5.schema.yaml] 仓颉五代配置文件。我用的是朙(míng)月拼音，这个文件就不管了。
-\item[default.yaml] 这个文件存放着输入法的一些全局设定，重新部署rime时会重新生成。
-\item[installation.yaml] 这个文件存放着rime的安装信息，不用管它。
-\item[luna\_{}pinyin.schema.yaml] 这个是默认的朙月拼音的配置文件，要仔细看看。
-\item[luna\_{}pinyin\_{}fluency.schema.yaml] 这个是朙月拼音语句流的配置文件，我不关心。
-\item[luna\_{}pinyin\_{}simp.schema.yaml] 这个是明月拼音简化字的配置文件，也就是输入法切换到简体字输入之后起作用的。
-\item[luna\_{}pinyin\_{}tw.schema.yaml] 这个是朙月拼音台湾正体的配置文件，没用过。
-\item[symbols.yaml] 这个是rime自带的一个输出symbol的配置文件，但是奇怪的是刚开始并没有配置好。
-\item[user.yaml] 这个是用户状态信息。
-\end{description}
-
-\subsubsection{开始DIY}
-其中官网wiki中讲了一些default.custom.yaml的定制，那些我似乎都没有需要，然后略过。现在主要讨论\\lunna\_{}pinyin.custom.yaml的配置问题。
-具体配置如下：   
-\begin{xverbatim}{luna_pinyin.yaml}  
-patch:
-    punctuator:
-        import_preset: symbols
-    recognizer:
-        import_preset: default
-        patterns:
-        reverse_lookup: "`[a-z]*'?$"
-        punct: "^/[a-z\\[\\]]*$"  
-\end{xverbatim}
-
-我想你已经看到了这些配置文件都是.yaml后缀，它们是用一种什么yaml数据描述语言写的，类似于XML的标记语言。然后里面还有一些正则表达式的东西。关于这些内容我是能够略过就略过吧。
-
-刚开始我写这个patch的时候总是不成功，然后看到佛振的那个帖子，链接到另外一个源码上。\href{https://github.com/lotem/brise/blob/master/preset/luna_pinyin_fluency.schema.yaml#L103}{请参看这个网站}。然后直接修改luna\_{}pinyin.schema.yaml文件，就是把default改成symbols，也就是指向那个symbols.yaml文件，然后将patterns的punct:那一行复制过去。就发现可以了。
-
-现在patch可以正常工作了，原因是之前我的缩进不正确，由于我对yaml语言不清楚，就此打住。
-
-其中punct那一行涉及到的正则表达式知识有符号\^{}表示匹配开始，\$表示匹配结束，[]和里面的内容一起表示一个字符，这个字符可能是a-z所有的小写字母，然后我想加上符号[和]，因为我想新建一个命令/[]就能输入很多形式的括号。最后发现这个问题还有点小麻烦，\href{http://www.infoq.com/cn/news/2011/01/regular-expressions-1}{请参看这个网站}。他解释了最好前面加上两个\textbackslash ，然后才能更好的工作。最后那个*表示重复零次或者更多次。
-\endnote{你可以到这个网站继续学习正则表达式：\href{http://deerchao.net/tutorials/regex/regex.htm}{正则表达式30分钟入门教程}}
-
 \subsubsection{symbols.yaml文件的说明}
-我在github网站上新建了\href{https://github.com/a358003542/rime-symbols-yaml}{一个项目}。里面有我编辑的symbols.yaml文件。现在将我所做的修改工作简单说明如下：
+为了文章精简，这一块内容大多删除了，详细信息请参见github上的那个网站。我在github网站上新建了\href{https://github.com/a358003542/rime-symbols-yaml}{一个项目}。里面有我编辑的symbols.yaml文件。现在将我所做的修改工作简单说明如下：
 
 前面是全角和半角部分，如果你有需要可以自己定制下，这里我略过。然后看到symbols:哪里，开始自己定制命令。前面那个代码我们看到了匹配是以/开始的，所以下面所有的命令都要以符号/开始，如果你想有其他模式修改正则表达式就可以了，比如说可以换成命令以符号\textbackslash 开始。
 
@@ -239,7 +190,7 @@ yaml的缩进表达我不太清楚，实际上我不太喜欢那种缩进的语�
 \section{ubuntu美化}
 \begin{enumerate}
 \item 不要unity环境，我一直都用unity环境，觉得自己还是有权发言了，真的不好。推荐安装gnome环境。我不喜欢什么桌面特效，用无特效环境，毕竟系统流畅才是最重要的东西。
-\item 安装vareity软件自动换桌面，推荐在加点其他的网站壁纸资源。然后登录界面也选上。
+\item 安装vareity软件自动换桌面，推荐在加点其他的网站壁纸资源。然后登录界面也选上\footnote{\href{http://peterlevi.com/variety/}{vareity官网}}。
 \item 按住alt键 右键点击gnome面板，然后优化。推荐把上面的设置到底部，因为上面的视角很重要，然后设置为隐藏带按钮最好。
 \item 顺便谈谈快捷键，在系统设置→键盘→快捷键那里。你可以设置各种程序的快捷键。比如ctrl+alt+t 是打开终端设置 ctrl+alt+w 打开默认网页浏览器等等。
 \end{enumerate}
@@ -248,17 +199,17 @@ yaml的缩进表达我不太清楚，实际上我不太喜欢那种缩进的语�
 如果你放一张非常漂亮的图片，比如variety可以设置，那么这些白点将会让你很不舒服。\footnote{\href{http://askubuntu.com/questions/72620/how-do-i-remove-the-dots-from-the-lightdm-greeter}{参考了这个网站}}
 
 通过运行下面的bash脚本，就是一行行输入进去即可，重启之后确实去除了。
-\begin{xverbatim}{去除白点.bash}
+\begin{Verbatim}
 sudo xhost +SI:localuser:lightdm
 sudo su lightdm -s /bin/bash
 gsettings set com.canonical.unity-greeter draw-grid false
 exit
-\end{xverbatim}
+\end{Verbatim}
 
 
 \section{配置\LaTeX 编写环境}
 \begin{enumerate}
-\item sudo apt-get install texlive   (下载安装ubuntu下有名的texlive）
+\item sudo apt-get install texlive   (下载安装有名的texlive）
 \item sudo apt-get install texlive-full   （下载安装texlive的各个包）
 \item 在ubuntu软件中心中下载安装texmaker软件。
 \item ibus似乎在这里面有点小问题，有点不稳定。在终端中运行\\sudo apt-get install ibus-qt4\\则问题解决。
@@ -268,7 +219,7 @@ xelatex -interaction=nonstopmode \%.tex| \\
 \end{enumerate}
 
 
-\section{ubuntu下新宏包的安装}
+\section{新宏包的安装}
 安装texlive-full之后，如果还遇到没有的宏包，可以先到CTAN官网上下载到这个宏包之后，然后将这个宏包解压到系统目录：\\
 /usr/share/texmf/tex/latex 里面即可。
 
@@ -301,13 +252,13 @@ sudo texhash  \\
 \item[gedit] gedit安装好latex的插件之后也很好。因为latexila编辑器在编译大文件的时候速度好慢，而gedit是直接调用终端模式所以没有损伤的。值得一提的是latexila编辑器的一些功能在gedit里面可以通过外部工具这个插件自己编写终端命令来实现。
 \item[texworks] 没怎么评测。
 \item[kile] 没怎么评测。
-\item[texstudio] 我刚进去什么都没动，它好像中毒一样到处乱操作。。
-\item[gummi] 打开tex文档或者做些小的测试还是可以的，但是似乎不支持include文档。
+\item[texstudio] 没怎么评测
+\item[gummi] 小的文档小的测试或者tikz制图是极好极好的。。但是不支持你自己定义的宏包。是我心目中的number two。
 \item[latexila] 这个软件刚进去我就感觉设计理念非常的简洁，和gedit一样。然后我特别在意的文档结构图显示，语法染色都有。\endnote{latexila编辑器使用xelatex引擎生成文档，一样要自己编写一个生成命令，在创建→首选项那里→标签就写xelatex，写其他的也可以。扩展名写.tex，然后命令和texmaker一样写上这个：xelatex -interaction=nonstopmode  \$filename 。}
 \end{description}
 
 
-\section{gedit的一些技巧简要说明}
+\subsection{gedit的一些技巧简要说明}
 在编辑→首选项那里请安装好latex插件和外部工具插件，恩，代码注释插件和文件浏览器插件推荐。
 
 我在这里重点介绍一下外部工具插件的用法。看到工具→外部工具。
@@ -333,17 +284,21 @@ $shortname.ilg $shortname.ind $shortname.log
 $shortname.toc $shortname.bbl $shortname.blg
 \end{Verbatim}
 这样运行它就可以清理临时文件了。
-
+%$
 
 \section{结合github进行项目管理}
 以下主要参考\href{http://rogerdudler.github.io/git-guide/index.zh.html}{这个网站}\endnote{在项目网站右下角settings哪里进去有很多项目管理内容，其中最下面有删除项目的功能，请慎重使用。}
 到github上注册，创建新的项目,还有安装git软件（ubuntu12.10自带的有）都很简单的，我就不多说了。下面就git命令使用的基本流程说明如下：
 \subsection{基本命令}
 \subsubsection{远程仓库文件到本地}
-网上创建项目之后，你需要将网上的存档下载到本地，在你希望下载的地点，打开终端：\\
-git ~~clone ~~https://github.com/a358003542/xelatex-guide-book.git\footnote{后面的这个链接地址在你创建的项目的右下角哪里，写着HTTPS clone URL}
+网上创建项目之后，你需要将网上的存档下载到本地，在你希望下载的地点，打开终端：
+\begin{Verbatim}
+git clone https://github.com/a358003542/xelatex-guide-book.git
+\end{Verbatim}
 
-git init 命令用于本地创建的文件夹上传到远程仓库，git clone 下来的仓库文件已经索引了。\endnote{参考了\href{http://www.cnblogs.com/findingsea/archive/2012/08/27/2654549.html}{这个网站}}
+后面的这个链接地址在你创建的项目的右下角哪里，写着HTTPS clone URL。
+
+\textbf{git init }命令用于本地创建的文件夹上传到远程仓库，\textbf{git clone }下来的仓库文件已经索引了。\endnote{参考了\href{http://www.cnblogs.com/findingsea/archive/2012/08/27/2654549.html}{这个网站}}
 
 \subsubsection{本地仓库文件进入索引}
 下载下来的本地仓库文件进入git的索引，该文件夹内的所有文件都进入索引则在终端中输入如下命令：\\
@@ -360,8 +315,11 @@ git ~~commit ~~-m ~~'2013-08-25:19:00' \\
 后面的文字串等下在github网站中会看到的，表示这个文件的标示符吧，你也可以取其他的名字，比如version0.1之类的。
 
 \subsubsection{将head中改动的文件更新到远程仓库}
-第一次你需要给你的远程服务器取个简单点的名字：\\
-git ~~remote ~~add ~~origin ~~https://github.com/a358003542/xelatex-guide-book.git
+第一次你需要给你的远程服务器取个简单点的名字：
+\begin{Verbatim}
+git remote add origin 
+        https://github.com/a358003542/xelatex-guide-book.git
+\end{Verbatim}
 
 然后以后都可以用这个简单的命令来更新了：\\
 git~~ push~~ origin~~ master\footnote{这里的origin的意思前面说了，master是远程仓库默认的一个分支，后面会讲到你可以创建其他的分支。}
@@ -399,12 +357,16 @@ fc-list :lang=zh | sort >ziti.txt
 /home/wanze/.fonts/simsun.ttc: \\宋体,SimSun:style=Regular \\
 其中第一个是字体文件所在的目录，第二列信息是可以调用的名字，有宋体和SimSun。
 
-\subsection{通过fontmanager安装字体}
+\subsection{用fontmanager安装字体}
 你可以安装其他软件来安装和管理字体，比如fontmanager：\\
 sudo  apt-get install font-manager  \\
 这个软件查看安装卸载或者禁用某些字体都很方便的，需要提醒的是这个软件占用了默认的用户配置文件.fonts.conf。然后你的字体DIY需要到～/.config/font-manager/local.conf哪里去设置。这个下面会讲到。
 
+
+
 \section{ubuntu系统字体的配置}
+如果你不喜欢fontmanager，那么在Ubuntu14.04以后，在\linebreak .config/fontconfig文件夹里面，有一个fonts.conf文件，进行设置也是一样的。这里是文泉驿给出的网页自动生成脚本方案\\：\href{http://wenq.org/cloud/fcdesigner_local.html}{http://wenq.org/cloud/fcdesigner\_local.html}
+
 不是特别难看的情况就没必要改动系统字体，因为我们不要低估了人眼的适应能力。这里的配置主要是指由于系统升级带来的字体的改变，特别是中文字体的改变，手动配置将其固定下来。\endnote{这个代码主要参考了\href{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}{这个网站}}
 \begin{xverbatim}{local_config.xml}
 <?xml version="1.0"?>
@@ -412,31 +374,35 @@ sudo  apt-get install font-manager  \\
 <fontconfig>
 
 <match target="font">
-	<edit name="rgba" mode="assign"><const>rgb</const></edit>
-</match>
+	<edit name="rgba" mode="assign"><const>rgb</const>
+	</edit></match>
 
 <match>
 	<test name="lang" compare="contains"><string>zh</string></test>
 	<test name="family"><string>serif</string></test>
-	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
-</match>
+	<edit name="family" mode="prepend"><string>微软雅黑</string>
+	</edit></match>
 
 <match>
 	<test name="lang" compare="contains"><string>zh</string></test>
 	<test name="family"><string>sans-serif</string></test>
-	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
-</match>
+	<edit name="family" mode="prepend"><string>微软雅黑</string>
+	</edit></match>
 
 <match>
 	<test name="lang" compare="contains"><string>zh</string></test>
 	<test name="family"><string>monospace</string></test>
-	<edit name="family" mode="prepend"><string>微软雅黑</string></edit>
-</match>	
+	<edit name="family" mode="prepend"><string>微软雅黑</string>
+	</edit></match>	
 
 </fontconfig>
 \end{xverbatim}
 有很多内容没有深究，第一个是打开rgba模式，优化液晶显示的。然后下面就是对三大字族设置，如果是zh中文的话那么就prepend也就是插入微软雅黑，也就是在搜索队列中微软雅黑优先级最高。这个可以通过fc-match  -s  serif等来查看。然后其他字体设置不想涉及了，只希望他们能够稳定下来。感觉设置雅黑字体了，系统的主题换为Radiance更好看些。然后用font-manager针对微软雅黑高级设置加上AA和AH。一个是反锯齿一个是自动粗细设置吧。就这样了。
 \endnote{chromium字体也都设置成为微软雅黑吧，然后我感觉页面稍微放大点更好看。}
+
+\subsection{或者更简单的方法？}
+通过\verb+sudo apt-get install gnome-tweak-tool+安装gnome-tweak-took或者其他软件快速设置字体，不太清楚这种方法是不是中英文一起改动的。
+ 
 
 
 \section[ubuntu的备份和还原]{ubuntu的备份和还原\footnote{以下主要参考了\href{http://www.matthartley.com/how-to-backup-your-ubuntu-software/}{这个网站}}}
@@ -446,20 +412,26 @@ sudo  apt-get install font-manager  \\
 \begin{enumerate}
 \item 备份你的PPA，也就是你通过PPA装的软件。有的可能都没有通过PPA装过软件，那么这一步和下面的备份PPA的key都可以省略。命令如下：\\
 sudo~~cp~~-r ~~/etc/apt/sources.list.d~ ～/Nutstore/ubuntu-config
-\item 备份你的PPA的key:\\
-sudo~~apt-key~~exportall~>~~～/Nutstore/ubuntu-config/myppakey
+\item 备份你的PPA的key:
+\begin{Verbatim}
+sudo apt-key exportall > ~/Nutstore/ubuntu-config/myppakey
+\end{Verbatim}
 \item 通过新力得软件包管理器生成你安装的所有软件包的列表：选择文件F→将标记的项目另存为A→然后下面保存全部状态，不仅仅是变更选项勾上→然后选择一个地址取一个有意义的名字。
 \end{enumerate}
 
 如果重装系统了，还原步骤相当于前面备份步骤的反向操作吧:
 \begin{enumerate}
 \item 还原你的PPA:这里就不写命令了，和上面类似也是cp   -r，不同的是现在将你保存的PPA还原到新系统的etc的apt目录下。
-\item 还原你的PPA key，假设对照上面的情况，我们有命令:\\
-\verb+sudo  apt-key  add  ~/Nutstore/ubuntu-config/myppakey+
+\item 还原你的PPA key，假设对照上面的情况，我们有命令:
+\begin{Verbatim}
+sudo  apt-key  add  ~/Nutstore/ubuntu-config/myppakey
+\end{Verbatim}
 \item 通过新力得软件包全部安装你之前保存的软件包列表 ：选择文件F→读取标记的项目R→然后类似正常的通过新力得安装软件包的步骤，点击应用即可。
 \item 通过上面的步骤，你的新系统的所有软件全新安装好了，至于其他配置文件前面说了一些你在意的配置保存，然后选择相应的位置，一般在.config文件夹里面，复制进去就行了。
 \end{enumerate}
 
+\subsection{更简单的备份？}
+当然你可以用luckybackup软件（ubuntu软件中心里有）或者其他云盘将你觉得重要的资料重点备份即可，这取决于你的喜好了。
 
 \section{更多ubuntu知识}
 更多ubuntu知识将被放在ubuntu技巧一书中。
@@ -469,6 +441,7 @@ sudo~~apt-key~~exportall~>~~～/Nutstore/ubuntu-config/myppakey
 
 \section{注解}
 \showendnotes
+
 
 
 \chapter{latex基础}
@@ -490,6 +463,7 @@ Tex是一个底层的标记式的编程语言，Donald Knuth发明的排版系�
 \item 1977	不满意书商所印出的 TAOCP，因此，自行开发 TeX 排版系统，这可就影响了往后的排版、出版界，至今不坠。但也因此拖延了 TAOCP 第四册的完成时间。
 \item 1986	荣获 ACM 软件系统奖。
 \end{itemize}
+
 他可说是著作等身，书籍、论文都有，他的任何著作有个奇怪的『副作用』，那就是任何人发现书上的错误，都可以向他举发，并领取 \$2.56（美金）！想试试看「手气」吗？台湾就有人领过。:-) 为什么是 \$2.56？Knuth 教授的答案是：
 
 ``256 pennies is one hexadecimal dollar."发现 TeX 系统的臭虫也是一样，这个奖金每年倍数增加，直至 \$655.36($ 2^{16}$ pennies) 为止。
@@ -507,7 +481,7 @@ Knuth 大师已于 1992 年自大学退休，但仍在 Stanford/Oxford 等大学
 虽然 Knuth 教授写了许多严肃艰深的书籍、论文，但是他也是有风趣的一面，在 1996 年，Mathematisch Centrum (MC, 为庆祝五十周年庆改称为 Centrum voor Wiskunde en Informatica, CWI) 曾邀请他演讲，并知会荷兰的 TeX User Group(NTG)，NTG 见机会难得，就邀请 Knuth 教授另开个 TeX 及 Metafont 讨论会，并接受大家的提问，他说：『不对，我也是可以问你们问题的！』。而且，他还说：『这种问答的内容，很可能在不同场合重复过，所以，如果我对同一个问题，曾有过两种答案的话，你们必需取其平均值。』他的妙语如珠，在许多类似的场合常常引起哄堂大笑，但实际的内容却绝非泛泛之言。:-)
 
 \subsection{LaTeX}
-LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的专业页面设置,从而得以高质量地排版和打印他们的作品。LaTeX 最早是由 Leslie Lamport编写的,并使用 TEX 作为其排版系统引擎。\footnote{again，form the lshort}
+LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的专业页面设置,从而得以高质量地排版和打印他们的作品。LaTeX 最早是由 Leslie Lamport编写的,并使用\TeX 作为其排版系统引擎。\footnote{again，form the lshort}
 
 \subsection{XeLaTeX}
 关于XeLaTeX第一是文档是UTF-8编码的，第二是它对各种字体多语言输出文章的解决方案是最完美的，第三是LaTeX里面能够用的命令它一般都能用，第四是编译生成pdf文件使用的命令是xelatex什么什么tex文件，第五是需要知道它内置引擎现在一般是xdvipdfmx。
@@ -1062,9 +1036,9 @@ this...   that\ldots   \\
 
 首先第1，2行前面以及谈及了，主要是看这个新引入的宏包newunicodechar。好吧，这个宏包就只有一个命令，这个命令就是这个宏包的名字。其实我们能够猜到，这个命令的作用就是将这个字符变成类似\TeX 命令的东西，然后体换为后面的那一串，而后面的那一串单独提出来也是能够正常显示的。如{\ubuntu{}}。
 
-\begin{flashcard}[olive!30]
+\begin{notecard}[olive!30]{20em}
 所以过程还是很简单的，但是整个过程让人紧张，如果一篇文章有很多这样的特殊符号，那不要写上长长的这样一串？我想到的第一个解决方案就是最好有这么一个字体包含所有的Unicode的字形，然后我试着用fontforge将一些字形复制粘贴调大小混到一起，然后发现这个方案既满足不了美观的要求也满足不了效率的要求。后来认识到也许我多虑了，如果一个符号经常出现，那么那个字体设计者肯定会优先考虑把它加进去的。
-\end{flashcard}
+\end{notecard}
 
 这里插播一段广告……\\
 这里有一段代码生成该字体所有已有的字形\ref{sec:字体已有字形}。当然你可以直接在字符映射表里面选择只显示已有字形查看，不过有时并不方便。生成那个pdf查看之后可以复制粘贴，到那个字符映射表里面搜索，还是很方便的。
@@ -1616,7 +1590,8 @@ hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己
 \subsection{脚注修改的一个实例}
 \begin{Verbatim}
 \newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
+  \tikz[baseline=(char.base)]\node[shape=circle,
+  draw,inner sep=0.8pt,minimum size=6pt] (char) {#1};}
 \newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
 
 \renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
@@ -1628,10 +1603,54 @@ hyperref宏包目前我的DIY只限于一些颜色设置，有兴趣的请自己
 
 \subsection{脚注其他知识}
 footnotesep长度量  控制脚注与脚注之间的距离
+\begin{Verbatim}
+\setlength{\skip\footins}{30pt plus 10pt}
+\end{Verbatim}
 
-\verb+\setlength{\skip\footins}{30pt plus 10pt}+
 控制正文和脚注之间距离
 
+
+\subsection{重定义脚注文本格式}
+\begin{Verbatim}
+\renewcommand\@makefntext[1]
+{\vspace{5pt}
+\noindent
+\makebox[20pt][c]{\@makefnmark}
+\fontsize{10pt}{12pt}\selectfont #1}
+\end{Verbatim}
+
+这里重新定义了（在sty文件中）\verb+\@makefntext+命令，命令的参数就是每一条脚注的内容的。都是一些格式的调整，主要是加入了盒子放着脚注的标签。
+
+
+\subsection{表格里的脚注}
+\href{http://texblog.org/tag/footnote/}{参考网站}
+
+\begin{Verbatim}
+\begin{minipage}{6cm}
+	\begin{tabular}{|l|c|c|}
+		\hline
+		A & 1 & 2 \footnote{This is a footnote.} \\
+		\hline
+		B & 2 & 1 \\
+		\hline
+		C & 3 & 3 \\
+		\hline
+	\end{tabular}
+\end{minipage}
+\end{Verbatim}
+
+
+\begin{minipage}{6cm}
+	\begin{tabular}{|l|c|c|}
+		\hline
+		A & 1 & 2 \footnote{This is a footnote.} \\
+		\hline
+		B & 2 & 1 \\
+		\hline
+		C & 3 & 3 \\
+		\hline
+	\end{tabular}
+\end{minipage}
 
 
 \section{旁注}
@@ -1657,10 +1676,10 @@ footnotesep长度量  控制脚注与脚注之间的距离
 首先是一些文档的注释说明信息，这里就不写了。
 
 然后是标准的宏包sty文件的开头样式，这里填上endnotes宏包即可。
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
 \ProvidesPackage{endnotes}[2013/11/29 v0.12  fancy endnotes  print]
-\end{cverbatim}
+\end{Verbatim}
 
 这里使用RequirePackage命令引入了一个宏包etoolbox，这里主要是引入了expandonce命令，这个命令是确保后面的一个命令只运行一次。
 
@@ -1668,7 +1687,7 @@ footnotesep长度量  控制脚注与脚注之间的距离
 
 flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而第二个参数\#{}2表示显示的label。所谓真实的label指等下生成的pdf中的精确定位label标记。命令中重新定义了\verb+\@currentlabel+，也就是显示的label。这样将这两者区分开来，本来他们都是一样的。这个知识点参考了这个网站\href{这个知识点参考了这个网站}{手动设置引用显示的文本}
 
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \RequirePackage{etoolbox}
 \DeclareRobustCommand*{\flabel}[2]%
 {\phantomsection \def\@currentlabel{#2}
@@ -1677,7 +1696,7 @@ flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而�
 \gdef\theenmark{\arabic{@EndnoteCounter}}%
 \gdef\endnotemark{\textsuperscript{(\theenmark)}}%
 \gdef\endnotemarkback{(\theenmark)}%
-\end{cverbatim}
+\end{Verbatim}
 
 然后上面三行定义了一些对外的接口命令，方便DIY。theenmark命令是尾注标记符号的计数器部分，这里使用了arabic命令转化了。endnotemark命令是文本中尾注标记符号的形式，这里简单加上了()然后使用textsuperscript命令将其转化成为上标形式，之所以使用这样的形式，是因为使用数字可以没有任何限制，而使用其他奇怪的符号标记要为可能超过界限操心。而endnotemarkback命令则是尾注中的标记符号形式，这里和前面的区别就是没有转化成为上标。
 
@@ -1693,7 +1712,7 @@ flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而�
 然后write命令是往这个文件里面写入某个文本信息。接下来是closeout命令把这个文件关闭，只有文件正常关闭了写的内容才能从缓冲区真正进入系统中的文本。
 
 我们再看下面新建了三个计数器@EndnoteCounter等，其中@EndnoteCounter标记每一章尾注内部的计数，而AllEndnoteCounter标记了所有的尾注的计数，这个影响真实label。ShowEndnoteCounter标记了每一个分章的章数（这里主要指按照每一章，不过实际操作并不局限于此。）的计数。然后用setcounter命令给这些计数器一个初值。
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \newwrite\@entout
 
 \newcounter{@EndnoteCounter}%
@@ -1704,10 +1723,10 @@ flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而�
 \setcounter{@ShowEndnoteCounter}{1}
 
 \newif\if@entopen \global\@entopenfalse
-\end{cverbatim}
+\end{Verbatim}
 上一段代码最后还新建了一个条件控制变量，具体请参看tex条件控制语句一小节\ref{sec:条件控制语句}。这里的global命令是让接下来的定义或者声明是全局性的。
 
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \def\@openent{%
 \def\@entname{\jobname
 \ifnum\value{@ShowEndnoteCounter}<10 0\fi
@@ -1717,11 +1736,11 @@ flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而�
 \immediate\openout\@entout=\@entname.ent%
 \global\@entopentrue
 }%
-\end{cverbatim}
+\end{Verbatim}
 上一段代码新建了一个命令@openent，这个命令等下要完成打开新建的ent文件任务，然后正如前面谈及的文件操作，在openout命令打开文件的时候，这里对具体生成的ent文件的文件名进行了一些DIY。其实我可以将文件名简单设置成为jobname-1，-2之类的形式，之所以弄成以上这种形式多少是我在之前探索过程中弄出的一种jobname001，jobname002这种形式，然后方便使用linux系统的cat命令来将他们汇总，后来修改修改着这个功能发现不需要了，但这个技巧还是很有用的就没删除了。
 
 下一段的解释先跳过，看到下下一段定义的endnote命令。
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \begingroup \catcode `|=0 \catcode `[=1
 \catcode`]=2 \catcode `\{=12 \catcode `\}=12
 \catcode`\\=12
@@ -1731,7 +1750,7 @@ flabel命令接受两个参数，第一个参数\#{}1表示真实的label，而�
 {\flabel{|@linknameb}{|@showlinknameb}  \ref{|@linkname}}
 \leftskip=\parindent   |expandonce|@include \par } ] ]%
 |endgroup
-\end{cverbatim}
+\end{Verbatim}
 上面这段代码就是定义了那个@writeent，但是以一种十分绕脑袋的形式，我也没完全弄明白。。首先看到catcode命令，这个是改变tex系统内部字符列表的命令。在tex中字符分为以下几类：
 \begin{enumerate}
 \setcounter{enumi}{-1}
@@ -1759,7 +1778,7 @@ gdef命令是global和def命令的组合缩写，这里定义了下面要用到�
 
 现在主要看到从下一段代码中定义的@include命令接受的是endnote命令传递过来的文本，本来在下一段代码中新建一个group然后用let命令将endnote命令中所有的protect命令改成了string（字符串），应该是可以了。实际上操作中确实各个命令没有展开直接以文本进入ent文件了，但是环境命令还是展开了，于是这里加上了etoolbox宏包提供的expandonce命令，也就是控制只展开一次，这样环境命令也成功传递过去了。这里的具体实现细节我实际上也没弄太明白。
 
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \DeclareRobustCommand*\endnote[1]{%
 \stepcounter{@EndnoteCounter}%
 \stepcounter{@AllEndnoteCounter}%
@@ -1776,7 +1795,7 @@ gdef命令是global和def命令的组合缩写，这里定义了下面要用到�
 \endgroup%
 \@writeent%
 }
-\end{cverbatim}
+\end{Verbatim}
 显然你看到这里定义的命令endnote就知道这是这个宏包的主体部分，程序一般遇到的就是两个命令，endnote引入尾注，showendnotes插入尾注。首先这个命令将两个主要计数器加1，其中@EndnoteCounter计数器是标记一章尾注内部的计数的，这里加1了就开始从1开始，然后后面这里的处理技巧是如果你需要插入尾注了，那么就将@EndnoteCounter这个计数器归为零。这样做和将@EndnoteCounter和chapter或者part绑定起来的好处就是更加的自由，你不需要考虑什么，甚至在某一个section部分内，插入showendnotes命令就插入了尾注，然后内部计数又重新开始。
 
 接下来定义了四个命令，我们看到这里有一个edef命令，edef命令和def命令类似，区别在于定义某个命令的时候立即展开，比如在这里我edef了一个@linkname命令，那么后面的@AllEndnoteCounter当时是什么立即赋值计算出来。因为这里要建立label的名字比如是独一无二的，然后看到后面@showlinkname和@showlinknameb，这是在决定文档中尾注标记符号和尾注中标记符号的样式，这里名字弄翻了，因为之前我在编写的时候也不大确切，然后后面就交换了一下。
@@ -1792,7 +1811,7 @@ gdef命令是global和def命令的组合缩写，这里定义了下面要用到�
 这里最大的问题是endnote命令里面的命令和环境都要不执行，当作文本一行写入进去。因为tex默认参数都要执行计算出来的，这就是问题的所在。这里面的细节甚是复杂，我也没完全弄明白。我们再看到上面那段代码定义的@writeent命令。
 
 
-\begin{cverbatim}{tex}
+\begin{Verbatim}
 \DeclareRobustCommand*\showendnotes{%
 \immediate\closeout\@entout%
 \global\@entopenfalse
@@ -1805,13 +1824,9 @@ gdef命令是global和def命令的组合缩写，这里定义了下面要用到�
 }
 
 \endinput
-\end{cverbatim}
+\end{Verbatim}
 这是宏包的最后一段了，非常容易理解了。定义了一个showendnotes命令，命令首先将那个打开的ent文件关闭，这样之前写入的内容都写进去了。然后改变那个条件变量表明文件关闭了。然后引入尾注。
 然后@EndnoteCounter计数器归零，这个前面谈到过。然后ShowEndnoteCounter计数器加一。然后结束宏包使用endinput命令。
-
-我在这里使用了cverbatim环境来描述这个endnotes宏包，总的文件生成在本github目录下codehome文件夹里面。进入尾注宏包文件夹之后把那个endnotes\_{}sty.tex文件改名为endnotes.sty然后放入该放的位置即可使用。
-
-\endcodefile[尾注宏包]{endnotes_sty}
 
 
 \section{文字强调}
@@ -2361,12 +2376,6 @@ pygmentize命令就是pygments提供的，它有很多选项，最常用的有�
 简要的说明就到此为止吧。哦，对了，你看到这个宏包前面有很大一段定义命令，这个是pygmentize对于Verbatim环境的颜色支持，通过选项-O获得的，复制到这里以后就不用引入了。
 
 
-\subsection{cverbatim宏包说明}
-在texmf文件夹里面，我还新建了cverbatim宏包，支持cverbatim环境。这个环境主要是针对很大型的文档的，这个宏包的编写大体和xverbatim类似，属于简化版本。在前面只是显示代码，然后后面通过endcodefile命令来做一些总结工作，比如将temp文件夹删掉，新建一个codehome文件夹，将前面一些小片段的cverbatim环境里的代码合并成为一个文件。前面在介绍endnotes宏包的时候使用的就是cverbatim环境。这个宏包并没有什么新东西，有兴趣的可以自己研究下。
-
-
-
-
 \section{特殊文字环境}
 \subsection{语录和引用环境}
 \LaTeX 原生的有quote为语录环境，quotation用于超过几段的引用环境，verse用于诗歌环境。
@@ -2435,7 +2444,7 @@ Robert Metcalf[以太网络的发明者]曾说过：如果将来有什么技术�
 
 \subsection{诗词歌赋环境}
 
-\subsection{notecard和flashcard环境}
+\subsection{notecard环境}
 这两个环境编写主要参考\href{http://tex.stackexchange.com/questions/127612/color-text-and-bg-of-verbatim-without-affecting-fancyvrb-line-numbers}{这个网站}。
 
 有一类信息，这类信息和正文关系不太大，但是又很重要适合放在正文中而不是尾注或者脚注中。这类信息需要放在文档右边好不引起人们的注意或者好引起人们的注意。文档中的异常元素通常都有这个效果，在于读者的选择。
@@ -2458,21 +2467,6 @@ Robert Metcalf[以太网络的发明者]曾说过：如果将来有什么技术�
   \end{lrbox}%
   \colorbox{\tempcolor}{\usebox{\tempbox}}}
 
-%但是如果文字过多
-\newenvironment{flashcard}[1][white]
- {\noindent\ignorespaces%
- \setlength{\fboxsep}{10pt}
-  \newcommand{\tempcolor}{#1}
-  \begin{lrbox}{\tempbox}%
-  \begin{minipage}[c][0.58\linewidth][c]{0.93\linewidth}
-        \setlength{\parindent}{\baselineskip * \real{0.06} + \textpt * \real{2.4}}
-        \setlength{\parskip}{0.12\parindent}   %段落間距
-}
- {
- \ignorespacesafterend%
-  \end{minipage}%
-  \end{lrbox}%
-  \colorbox{\tempcolor}{\usebox{\tempbox}}}
 \end{Verbatim}
 
 notecard环境 一种卡片式记忆环境，长高按照黄金比例分割来，推荐的颜色有：black olive blue orange brown pink cyan purple darkgray red gray teal green violet lightgray white lime magenta yellow 建议都调淡30。!30。不过推荐一个文档内部一种类型使用一种，其他颜色也是可以的。
@@ -2480,7 +2474,7 @@ notecard环境 一种卡片式记忆环境，长高按照黄金比例分割来�
 \subsubsection{notecard环境演示}
 \begin{Verbatim}
 \begin{flushright}
-\begin{notecard}
+\begin{notecard}{10em}
 不懂Unix的人注定最终还要重复发明一个蹩脚的Unix。
 
 Usenet 签名，1987年11月
@@ -2491,7 +2485,7 @@ Usenet 签名，1987年11月
 \end{Verbatim}
 
 \begin{flushright}
-\begin{notecard}
+\begin{notecard}{10em}
 不懂Unix的人注定最终还要重复发明一个蹩脚的Unix。
 
 Usenet 签名，1987年11月
@@ -2499,10 +2493,6 @@ Usenet 签名，1987年11月
 {\hfill —Henry Spencer}
 \end{notecard}
 \end{flushright}
-
-\subsubsection{flashcard环境演示}
-flashcard环境主要是在上面的notecard环境文字超出之后使用，这里就不浪费文档空间了。
-
 
 
 
@@ -2558,7 +2548,7 @@ em  & （相对长度）大约相当于当时字体的M宽度 & \\ \bottomrule
 \subsection{默认的长度量}
 \begin{itemize}
 \item \textbf{\textbackslash evensidemargin ~ \textbackslash linewidth ~ \textbackslash oddsidemargin ~ \textbackslash paperwidth ~  \textbackslash paperheight ~ \textbackslash textheight ~ \textbackslash textwidth ~ \textbackslash topmargin }：这些长度量都和页面布局有关，很多都在前面页面布局那一节里面说了，这里就不赘述了。
-\item \textbf{\textbackslash baselineskip ~ \textbackslash baselinestretch ~ \textbackslash baselineskip ~  \textbackslash parindent  ~ \textbackslash parskip }：这些长度量和段落格式有关，大多都在前面段落一节说了，这里也不赘述了。
+\item \textbf{\textbackslash baselineskip ~ \textbackslash baselinestretch ~\\ \textbackslash baselineskip ~  \textbackslash parindent  ~ \textbackslash parskip }：这些长度量和段落格式有关，大多都在前面段落一节说了，这里也不赘述了。
 \item \textbf{\textbackslash columnsep ~ \textbackslash columnwidth ~ \textbackslash tabcolsep ~ \textbackslash unitlength}：这几个长度量和特殊的环境有关，比如columnsep控制多栏环境之间的宽度，columnwidth控制栏的宽度，tabcolsep控制tabular环境一列一列之间的间距，unitlength控制picture环境下的unit的长度（还不太清楚）。
 \end{itemize}
 
@@ -2651,17 +2641,8 @@ arrayjobx这个宏包就提供了这个数据结构。
 \osn{testcounter}%
 \end{Verbatim}
 
-\newarray\circlednumber
-\readarray{circlednumber}{①&②&③}
-\newcounter{testcounter}
-\setcounter{testcounter}{1}
 
-\circlednumber(\arabic{testcounter})%
-\stepcounter{testcounter}%
-\newcommand{\osn}[1]{\circlednumber(\arabic{#1})}%
-\osn{testcounter}%
-
-这个方法的缺点就是前面第一个方法的优点，首先是字体符号要引入进来，并且符号总会有不够用的时候。不过这个方法有一个优点，那就是引入的字体符号和文档中其他类似的符号形体上都差不多，前面第一个方法通过一些DIY应该可以达到接近类似的效果，但较为繁琐了。不过通过脚注单页编号的设置或者某些小型的列表使用这个方法也未尝不可，这个看读者自己的取舍了。
+这个方法的缺点就是前面第一个方法的优点，首先是字体符号要引入进来，并且符号总会有不够用的时候。不过这个方法有一个优点，那就是引入的字体符号和文档中其他类似的符号形体上都差不多。
 
 \subsection{定义自己的计数器}
 用newcounter命令来定义自己新的计数器。\\
@@ -2682,13 +2663,6 @@ arrayjobx这个宏包就提供了这个数据结构。
 
 \subsection{计数器和其他计数器绑定}
 在使用newcounter命令定义新的计数器的时候可以后面跟个可选项，可选项里填著另外一个计数器的名字，每当这个计数器加一的时候你定义的新的计数器就会归为零。
-
-比如..........................
-
-它的实现机制应该是使用了这个{\footnotesize \verb+\@addtoreset{counter}{chapter}+}命令。
-
-
-
 
 
 
@@ -2713,7 +2687,7 @@ arrayjobx这个宏包就提供了这个数据结构。
 \verb+\newenvironment{name}[num]{before}{after}+\\
 和newcommand命令其他用法都差不多，区别就在于后面有两个宏替换。这里值得一提的是原\TeX 并没有新建环境这个命令，而是\LaTeX 新加进去的。
 
-我们假设我们要新建env这个环境，那么\LaTeX 的工作流程是，创建了两个命令，一个是\verb+\begin{env}+命令；一个是\verb+\endenv+命令。{\color{red}   ？？？}。所以简单的来看newenvironment命令就是把它看作开辟了一个group（原\TeX 里面的概念），然后首先执行了before中的命令，然后是环境中的内容，然后是after中的命令，然后退出环境。
+我们假设我们要新建env这个环境，那么\LaTeX 的工作流程是，创建了两个命令，一个是\verb+\begin{env}+命令；一个是\verb+\endenv+命令。所以简单的来看newenvironment命令就是把它看作开辟了一个group（原\TeX 里面的概念），然后首先执行了before中的命令，然后是环境中的内容，然后是after中的命令，然后退出环境。
 
 这里只是说明一下newenvironment命令的工作原理，具体我们新建环境还是用\LaTeX 的风格，即用newenironment命令，只有在不得已的情况下（通常很复杂的情况）才考虑用\TeX 里面的group概念，那个时候估计是要使用catcode命令。
 
@@ -2721,16 +2695,16 @@ arrayjobx这个宏包就提供了这个数据结构。
 
 \section{盒子和glue}
 \label{sec:盒子和glue}
-\begin{flashcard}[olive!30]
+\begin{notecard}[olive!30]{20em}
 这里参考了Knuth的The Texbook，但是我并没有将其写入参考文献，因为只是觉得关于box和glue的概念最好参考原初定义，但是并不推荐读者阅读这本书，现在已经是\LaTeX 时代了，不推荐读者使用原始的\TeX 命令，一是不太实用，二是兼容性可能不太好。除非你是宏包编写者，但就作为一般的使用者真的没有必要接触那些原始命令了。还参考了\cite{boxes}
-\end{flashcard}
+\end{notecard}
 \endnote{
 在这里box翻译为盒子没什么问题，就是这个glue翻译为胶水或者橡皮都让我不太满意。在后面我都使用的术语是距离或者间距或者干脆用英文glue。从某种意义上讲glue的直译确实应该译为胶或者胶水，不过觉得距离这个词汇更能够让人们有感觉些：\TeX 排版就是不同的盒子编写和彼此之间距离的设置问题。}
 
 \subsection{基本知识}
 最小的盒子就是基于Unicode的字符，这些字符然后组成更大的盒子──单词，然后单词组成更大的盒子──行等等。行是一个盒子，段落也是一个盒子，图片是一个盒子，表格也是一个盒子。而这些盒子按照Knuth的描述都是用glue胶水粘合起来的，或者我们称之为这些盒子之间都存在着空间胶合层。下面就是一个盒子的详细参数：
 
-\begin{linefig}{box参数}
+\begin{linefig}[0.8]{box参数}
 \label{fig:box参数}
 \end{linefig}
 
@@ -2764,9 +2738,44 @@ glue也就是各个盒子之间的间距。下图是glue的具体图示：
 
 
 \subsection{raisebox}
-\subsection{parbox}
-\subsection{minipage}
-minipage
+raisebox命令一般的用法就是：\\
+\verb+\raisebox{高度}{内容}+\\
+表示把某个内容放进一个盒子里然后抬高多少高度，高度值可以是负值则是降低。
+
+\subsection{resizebox}
+\href{http://tex.stackexchange.com/questions/13460/scalebox-knowing-how-much-it-scales}{参照了这个网站}
+
+resizebox命令是由graphics宏包提供的，一般都加载了吧。比如tikz绘图的时候如果你只是简单scale那么node内容会出现很大的偏差。这个时候如果你使用scalebox命令则可以将整个图片进行大小变换。
+
+用法如下：\\
+\verb+\resizebox{宽度}{高度}{内容} +\\
+\verb+\resizebox{\linewidth}{!}{内容}+\\
+\verb+\scalebox{2}{测试文字}+
+
+第二个的用法是将这个图片放大到文本宽度，高度填“!”符号的意思是随之而变化。
+
+\scalebox{2}{测试文字}
+
+
+
+\subsection{parbox和minipage}
+parbox用法：\\
+\verb+\parbox[pos][height][contentpos]{width}{text}+
+
+minipage用法：
+\begin{Verbatim}
+\begin{minipage}[pos][height][contentpos]{width}
+text
+\end{minipage} 
+\end{Verbatim}
+
+
+pos：center，top和bottom。
+
+height：盒子高度
+
+contentpos：\textbf{c}enter，\textbf{b}ottom，\textbf{t}op，\textbf{s}pread。文本分布，居中，底部，顶部或两端对齐。
+
 
 
 \section{带颜色或者线框的盒子}
@@ -2796,6 +2805,11 @@ fcolorbox can also be tweaked with \textbackslash fboxsep and \textbackslash fbo
 
 \section{大文档管理}
 之前我也用过include命令来试着将文档分开，但是发现一是减弱了编辑器的各种小插件功能，二是有的时候include命令会出错（一些奇怪的错误，我也不太明白）。然后那个includeonly命令我觉得也挺累赘的，如果你使用input命令，不要引入了前面加个百分号注释掉即可。一个文档就是整体，觉得还是不要分开的好。
+
+
+\section{tikz制图}
+更多内容请参见我的这个github项目，里面专门讨论了tikz制图，并放了很多实际的例子进去。\href{https://github.com/a358003542/tikz-examples}{tikz-examples}
+
 
 
 \section{注释}

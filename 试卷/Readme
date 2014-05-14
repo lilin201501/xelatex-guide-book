@@ -1,0 +1,83 @@
+exam 类的一些优化：
+
+1.
+%answerline
+%参考网站：http://tex.stackexchange.com/questions/82152/answerline-to-the-right-of-a-question
+
+\setlength{\answerskip}{0pt}
+%让exam默认的answerline命令默认竖向跳转为0pt。
+
+\setlength\answerlinelength{50pt}
+%设置默认横线长度50pt
+
+\setlength\answerclearance{0ex}%the answer up distance
+%设置答案和横线间距，因为我重定义了横线命令，所以这里反而调小了。
+
+\RequirePackage{xpatch}% http://ctan.org/pkg/etoolbox
+\xpatchcmd{\answerline}% <cmd>
+  {\par\nobreak\vskip\answerskip}% <search>
+  {}% <replace>
+  {}{}% <success><failure>
+%通过xpatch命令让answerline命令不分段，不跳转
+
+
+\xpatchcmd{\answerline}{\fi \par}{\fi}{}{}
+% Remove line break after \answerline
+\xpatchcmd{\answerline}{\fi \hfill}{\fi}{}{}
+% Remove \hfill 也就是不居右。
+
+\xpatchcmd{\answerline}{\hrulefill}{\rule[-4pt]{\answerlinelength}{0.4pt}}{}{}%
+%重定义了画横线命令，让其稍微下一点点。
+
+\LetLtxMacro{\oldanswerline}{\answerline}
+\RenewDocumentCommand{\answerline}{s o}{%
+  \begingroup
+  \IfBooleanTF{#1}
+    {\def\@queslevel{\relax}}% \answerline*
+    {}% \answerline
+  \IfNoValueTF{#2}
+    {\oldanswerline[{}]}% \answerline
+    {\oldanswerline[#2]}% \answerline[..]
+  \endgroup
+}
+%这段作用不明。。。
+
+
+%=======问题格式=======%
+\renewcommand{\questionshook}{%
+\setlength{\leftmargin}{0pt}%
+\setlength{\labelwidth}{-\labelsep}%
+}%remove indentation
+%=======选项格式=======%
+\renewcommand{\choiceshook}{%
+\setlength{\leftmargin}{29.5pt}%
+\setlength{\labelwidth}{-\labelsep}%
+}%让选项有点右移
+
+\let\oldoneparchoices\oneparchoices
+\def\oneparchoices{\hspace{7.5pt}  \oldoneparchoices }
+%同样让oneparchoices环境右移一点
+
+
+\DeclareRobustCommand*{\shortanswerline}{\rule[-2pt]{50pt}{0.4pt}}
+%定义了一个新的命令，只是画线，随着answer命令似乎已经要被淘汰了。
+
+\renewcommand{\solutiontitle}{\noindent\textbf{}}
+%解答环境重定义，不缩进，没有其他额外的东西。
+
+
+%fillwithlines 命令线高
+\setlength\linefillheight{3em}
+
+
+%新命令：answer命令，长度可调整
+\newcommand{\answer}[2][50pt]{{%
+\ignorespaces%
+\setlength{\answerlinelength}{#1}%
+\answerline*[#2]}}
+
+
+
+
+
+

@@ -22,7 +22,7 @@
 \editor{万泽}
 \email{a358003542@gmail.com}
 \editorinfo{编者：万泽，}
-\version{1.22}
+\version{1.23}
 \titleLB
 
 \addchtoc{前言}
@@ -50,9 +50,11 @@
 
 所以我现在约定如下，不写part部分，文章大小控制在一两百页左右范围内，同时这个文章内部链接互引非常的精彩浑然一体。至于其他的内容建议写入另外的文章中。如果你非常需要将更多的内容合并，我的建议是将最紧密的部分单独写成一个pdf文档，然后几个pdf文档再合并吧。毕竟没有分离就没有紧密。不过这种合并之后超链接可能就没有了。所以网络版的建议文档还是不要做的太大。
 
-为了减小文章大小，除了精炼文字之外，和文章相关的几行代码写出来，大段的源码就不列出来了，最多把github地址写出来。
-\end{common-format}
+为了减小文章大小，除了精炼文字之外，和文章相关的几行代码写出来，大段的源码就不列出来了，最多把github地址写出来。本文的github地址是：\\
+\href{https://github.com/a358003542/xelatex-guide-book}{https://github.com/a358003542/xelatex-guide-book}
 
+
+\end{common-format}
 
 \addchtoc{目录}
 \setcounter{tocdepth}{2}    
@@ -439,7 +441,7 @@ sudo  apt-key  add  ~/Nutstore/ubuntu-config/myppakey
 我又扫了一遍。这一部分进入冷处理状态，即除非特别的需要，不再新加入内容了。
 
 
-\section{注解}
+\section{注释}
 \showendnotes
 
 
@@ -549,8 +551,7 @@ documentclass命令的必选参量有article，report，book，\linebreak slides
 \textbackslash paragraph \{paragraphname\}\\
 \textbackslash subparagraph \{subparagraphname\}
 
-一般paragraph和subparagraph分节不怎么使用，就在文档中一行一行空出来即可。还有subsubsection这个分节也不常使用，因为section之下有subsection已经很好地满足了思想的分级结构，再加上一个subsubsection只会让人们更加困惑罢了。
-\endnote{paragraph命令可以构建出类似description环境的效果，不同的是后面不缩进，装载内容容量更大。}
+一般paragraph和subparagraph分节不怎么使用，就在文档中一行一行空出来即可。还有subsubsection这个分节也不常使用，因为section之下有subsection已经很好地满足了思想的分级结构。paragraph命令可以构建出类似description环境的效果，不同的是后面不缩进，装载内容容量更大。
 
 所以结合前面book，article分类我在这里为了简单起见约定如下:文档中一个小段落就是subparagraph不需要用命令再标识一次，几个段落构成一个paragraph，这从原则上就是某一个问题的阐述，也就是一个section级别，当我们对某一个课题反复思考之后，积累的资料越来越多，然后我们发现某几个section可以合并起来，这样出现了section和subsection两个级别。目录只需要显示section，如果是大型文档有part的时候可以考虑加入少量的subsection，这样目录才不至于过于庞大反而失去了实用性。这所有的section潜在的一个大的分类是chapter，但是这里不需要写出来，因为这个时候整个文档的级别是article。也就是通常所见的小容量的书小册子，某一个专门课题的讨论就按照article来处理。如果上升到某一个学科不同课题的讨论，那么上面article隐藏的chapter写出来，然后将他们合并为book类，这个时候这个book潜藏的最高级别为part。如果是不同学科的合并书籍那么级别就上升到part了。目录在book类的时候有part写上part，然后chapter和section都显示出来，结构也不会太复杂的。
 
@@ -593,7 +594,7 @@ openright, openany       定义chapter开始时仅在奇数页或者随意，boo
 
 然后是参考资料部分。
 
-然后是索引：是针对这本书中重要资料如人名、地名、概念等的查检。将本文的重要概念列出，并注明出现在文中的页次。它是依一定的方法排列，通常中文是按字体的笔划多寡决先后顺序，西文则按字母的顺序排列，以便检查。 通常附录是直接资料，索引则是提供查询资料的线索。
+然后是索引：是针对这本书中重要资料如人名、地名、概念等的查检。将本文的重要概念列出，并注明出现在文中的页次。它是依一定的方法排列，通常中文是按字体的笔划多寡决先后顺序，西文则按字母的顺序排列，以便检查。 通常附录是直接资料，索引则是提供查询资料的线索。（索引主要是方便纸质书检索，我觉得如果一本书如果电子化了还是很容易搜索了，可以不加索引了。）
 
 
 \subsection{页码}
@@ -611,17 +612,20 @@ backmatter命令放在参考文献或者索引的前面。章节编号关掉，�
 页面布局尺寸由geometry宏包指定，页面布局包含很多参量也就是geometry的可选项，请看下图\ref{fig:geometry选项1}：
 
 \begin{linefig}{geometry选项1}   %简单的插入图片环境，后面的必填项既是图片标签的名字，也是图片caption。
-	\label{fig:geometry选项1}
+\caption{geometry选项1}
+\label{fig:geometry选项1}
 \end{linefig}
 
 geometry提供的纸张类型很多，从a0paper一直到a6paper都有，还有b1paper到b6paper系列等等。纸张类型指定了后面的paperwidth和paperheight就都确定了。
 
 我们先来看横向参量，paperwidth是纸张的宽度，textwidth是正文宽度，marginparsep指旁注和正文之间的间距，marginparwidth指旁注宽度，left指左边空白宽度，right指右边空白宽度。如果book类型是twoside的，那么left最好命名为inner，也就是类似出版书籍靠里面的那段空白宽度，类似的right最好命名为outer，靠外面的那段空白宽度。其中默认情况下width=textwidth，如果加入选项\\includemp=true，那么:\\width=textwidth+marginparsep+marginparwidth。然后还有:\\paperwidth=left+width+right。
+\endnote{主要是针对有旁注的情况，在设置为true之后，那么旁注宽度你定义是多少就是多少，左边距右边距是多少就是多少，然后剩下的正文宽度是一个从量（即自动确定的量）了。}
 
-再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文间的一段小空白headsep，bottom包含页脚高度\endnote{这里的概念理清一下，headheight是页眉高度，保证页眉内容能够装的下即可，而headsep是页眉（一般页眉靠下）和正文间的空白距离，也就是你看到的页眉上面的那段空白有top减去headsep再减去headheight剩下的距离，然后这段空白从视觉上来说还有你的页眉文本上面没有填充的部分。而footnote命令插入的文本和页码之间的空白间距是由footskip控制的，然后bottom减去footskip还会得到一个值，这个值是页码下面的空白距离。}footskip和下面的一段空白。所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}:
+再来看竖向参量，paperheight为纸张高度，textheight是正文高度，top为上面的空白高度，bottom为下面的高度，默认top包含页眉高度headheight和页眉于正文间的一段小空白headsep，bottom包含页脚高度\endnote{这里的概念理清一下，headheight是页眉高度，保证页眉内容能够装的下即可，而headsep是页眉（一般页眉靠下）和正文间的空白距离，也就是你看到的页眉上面的那段空白有top减去headsep再减去headheight剩下的距离，然后这段空白从视觉上来说还有你的页眉文本上面没有填充的部分。而footnote命令插入的文本和页码之间的空白间距是由footskip控制的，然后bottom减去footskip还会得到一个值，这个值是页码下面的空白距离。}footskip和下面的一段空白。所以你的top至少要大于headheight高度。然后中间的区域高度为height。默认情况下height=textheight，请看下图\ref{fig:geometry选项2}
 
 \begin{linefig}{geometry选项2}  
-	\label{fig:geometry选项2}
+\caption{geometry选项2}
+\label{fig:geometry选项2}
 \end{linefig}
 
 如果加上includehead=true选项，那么就和上图右边描述的类似，页眉部分计入height，类似的有includefoot=true,那么页脚部分也计入height。
@@ -667,6 +671,66 @@ changepage宏包还有changetext和changepage命令，有兴趣的可以看下�
 \end{multicols}
 
 
+\subsection{分栏环境备用}
+在实际应用过程中，常常遇到分两栏的情况，但是这两栏宽度是可以自由调整的。我找了一下似乎并没有类似beamer类columns环境那样方便的存在，只好通过minipage命令简单地实现了类似的效果。实际应用我是通过texmaker自定义快捷输入代码模块功能快速输入进文档的。
+\begin{Verbatim}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{minipage}[c][6cm][c]{0.38\textwidth}
+
+\end{minipage}\hfill
+\begin{minipage}[c][6cm][c]{0.6\textwidth}
+
+\end{minipage} 
+\end{minipage} 
+\end{Verbatim}
+
+值得一提的是这个代码块前面和后面还需要加上额外的vspace命令调整，否则内容和上下都有重叠。
+
+\vspace{30pt}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{minipage}[c][6cm][c]{0.3\textwidth}
+\begin{table}[H]
+\centering
+\medskip 
+\scalebox{0.82}{
+\begin{tabular}{@{}ll@{}}
+\toprule
+$t$（分） & $s$（英尺）  \\ \midrule
+0 & 0     \\
+1 & 1200  \\
+2 & 4000  \\
+3 & 9000  \\
+4 & 9500  \\
+5 & 9600  \\
+6 & 13000 \\
+7 & 18000 \\
+8 & 23500 \\
+9 & 24000 
+\\ \bottomrule
+\end{tabular}
+}
+\caption*{表 2-1}
+\end{table}
+
+\end{minipage}\hfill
+\begin{minipage}[c][6cm][c]{0.7\textwidth}
+\begin{linefig}[0.9]{汽车的距离-时间曲线}
+\caption{汽车的距离-时间曲线}
+\label{fig:汽车的距离-时间曲线}
+\end{linefig}
+\end{minipage} 
+\end{minipage} 
+
+\vspace{42pt}
+
+解决方案不是很完美，实际应用一般能够用multicols环境平均分栏处理就那样处理，实在不行才考虑这个方案。
+
+
+
+
+
 \section{字体}
 我们知道xelatex的机制可以调用系统内的任意字体，当然系统没有的字体就要自己安装了，请看\ref{sec:安装字体}。
 
@@ -684,15 +748,15 @@ changepage宏包还有changetext和changepage命令，有兴趣的可以看下�
 \begin{description}
 \item[serif] Serif中文译为「有衬线字体」，衬线即是印刷字体在每个笔划起始与终止处，加上短线或三角突起等，以便于快速辨认字符，利于阅读，为印刷专用字体。旧版Windows与较旧的Linux发行版以此为预设显示字体，而英文新版则改为Sans-Serif，中文新版则是：当字体大于某一程度时，则将 Serif的明体或宋体，以Sans的黑体取代。
 
-Serif字体著名的有：Times New Roman、DejaVu Serif、宋体、明体。
+Serif字体著名的有：Times New Roman、DejaVu Serif、宋体、明体等。
 
 \item[sans-serif] Sans-Serif中文译为「无衬线字体」，专用于荧幕、简报、艺术字体、展示等，较美观，但不适于长时间阅读。多数英文语系的作业系统多以此为预设字体，而采用此种字体为预设的中文作业系统，以Mac系统最为著名。
 
-Sans-Serif 字体著名的有：Arial、DejaVu Sans、Helvetica、\linebreak Verdana、楷体、圆体、黑体、ubuntu logo 体。
+Sans-Serif 字体著名的有：DejaVu Sans、Helvetica、Verda-\\na、圆体、黑体等。
 
 \item[monospace] Mono意思是「单一的」，space 意思是「空间」，中文翻为「等宽字体」。等宽字是打字机时代下的遗产，每个英文字母皆设计为同一宽度，以便于排版；现代为节省不必要空间的浪费，依字母形状分配其宽度，如m与i其宽度便不相同，不相信可以拿尺来量看看。Monospace 现多用于终端机显示、程序码表示等。
 
-Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Courier、AR PL New Sung Mono。
+Monospace字体著名的有：Andale Mono、DejaVu Sans \\ Mono 、 Courier、AR PL New Sung Mono。
 \end{description}
 
 
@@ -705,7 +769,9 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 
 
 \subsubsection{字号}
-比如说本文设置的就是11pt。
+比如说本文设置的就是12pt。
+
+
 
 \subsection{调整五种属性}
 \subsubsection{调整字型编码}
@@ -715,14 +781,15 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 \subsubsection{调整字族}
 有两种方法设置，一种是命令式的，一种是环境式的。roman font family是默认的字族，一般不需要明确设置。
 \begin{table}[H]
+\centering
 \label{tab:调整字族}
 \begin{tabular}{|c|c|c|}
 \hline
 命令式 & 环境式 & 描述 \\
 \hline
-\verb+ \textrm{text...}+ & \verb+ {\rmfamily  text...}+  & roman字族 \\[5pt]  
-\verb+ \textsf{text...}+ & \verb+ {\sffamily  text...}+  & sans-serif字族 \\[5pt]
-\verb+ \texttt{text...}+ & \verb+ {\ttfamily  text...}+  & monospace字族 \\
+\verb+ \textrm{text}+ & \verb+ {\rmfamily  text}+  & roman字族 \\
+\verb+ \textsf{text}+ & \verb+ {\sffamily  text}+  & sans-serif字族 \\
+\verb+ \texttt{text}+ & \verb+ {\ttfamily  text}+  & monospace字族 \\
 \hline
 \end{tabular}
 \caption{调整字族}
@@ -731,6 +798,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 \subsubsection{调整字型系列}
 默认的medium，一般不需要设置，然后还有一个bold，即字体加粗。
 \begin{table}[H]
+\centering
 \label{tab:调整字型系列}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -747,6 +815,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 \subsubsection{调整字形}
 默认是upright shape，常用的字形如下：
 \begin{table}[H]
+\centering
 \label{tab:调整字形}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -767,6 +836,7 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 \subsubsection{相对字号调整}
 \LaTeX 里面自带的调整相对字号命令如下：
 \begin{table}[H]
+\centering
 \label{tab:调整字体大小命令}
 \begin{tabular}{|l|l|}
 \hline
@@ -787,9 +857,10 @@ Monospace字体著名的有：Andale Mono、DejaVu Sans Mono\linebreak 、 Couri
 \caption{调整字体大小命令}
 \end{table}
 
-然后我们看下图，不同字号下这些命令确切的大小：
+然后我们看下图，不同字号下这些命令确切的大小\endnote{不知道你注意到没有，本文用的是12pt，上面表格上的huge和Huge字号还是有差异，这里因为我加载了moresize宏包的缘故。}：
 
 \begin{table}[H]
+\centering
 \begin{tabular}{@{}llll@{}}
 \toprule 
 size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
@@ -819,25 +890,8 @@ size          & 10pt (default) & 11pt option & 12pt option \\ \midrule
 其中fontsize就是调整字号的命令，第一个参量是字体的大小，第二个参量是行距。然后后面\textbackslash selectfont 必须写上，就理解为表示对后面的字体进行操作吧。类似的还有fontencoding，fontfamily，fontseries，fontshape命令，这些本文略过。
 
 
-\section{本文字体配置}
-本文字体配置代码如下，后面有相关介绍：
-\begin{Verbatim}
-\usepackage{xltxtra,fontspec,xunicode} %必备三件套
-\usepackage[CJKnumber=true]{xeCJK} %中文环境宏
-\xeCJKsetup{PunctStyle=plain}
-\defaultCJKfontfeatures{Scale=1.2}   %中文字应该稍微高于英文字
-\renewcommand\CJKglue{\hskip 0pt plus 0.12\baselineskip} 
-\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
-    {Adobe 宋体 Std}%影响rmfamily字体
-\setCJKsansfont{Adobe 黑体 Std}%影响sffamily字体
-\setCJKmonofont{Adobe 楷体 Std}%影响ttfamily字体
- %设置英文字体
-\setmainfont[Mapping=tex-text]{DejaVu Serif} 
-\setsansfont[Mapping=tex-text]{DejaVu Sans}
-\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
-\end{Verbatim}
-
-上面代码第一行就是xelatex必备的三件套，其中xltxtra宏包是专门处理\XeLaTeX 的一些问题的，它会自动加载后面的fontspec和xunicode宏包。xunicode是处理某些特殊字符的。上面代码的具体解释详见下面的fontspec宏包和xeCJK宏包详解。
+\section{字体配置}
+xelatex字体配置有名的三件套就是：xltxtra，fontspec和xunicode这三个宏包。其中其中xltxtra宏包是专门处理\XeLaTeX 的一些问题的，它会自动加载后面的fontspec和xunicode宏包。xunicode是处理某些特殊字符的。注意xltxtra宏包在加载时我放到所以字体配置宏包的后面，否则会出现错误。下面就字体配置相关宏包详细说明之。
 
 
 \subsection{fontspec宏包详解}
@@ -856,7 +910,6 @@ fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常
 \verb+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}+
 
 以上基本命令总结如下:
-\newpage
 \begin{Verbatim}
 \fontspec [ font features ] { font name }
 \setmainfont [ font features ] { font name }
@@ -864,11 +917,19 @@ fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常
 \setmonofont [ font features ] { font name }
 \newfontfamily{ cmd }[ font features ] { font name }
 \end{Verbatim}
+
 上面的font name在安装字体的时候说明清楚了，比如说用fc-list命令调出来的『宋体,SimSun:style=Regular』中字体名字就是宋体或者SimSun。而在fontmanager里面比如第一行显示『Comic Sans MS Regular』，字体名就是Comic Sans Ms。接下来主要讨论font features的内容，所讨论的内容以上几个基本命令都适用。由于xeCJK的fontfeatures可选项是继承自fontspec，所以下面的讨论也适用于xeCJK宏包。
 
 \subsection{font features的讨论}
 \subsubsection{字形}
-一个字体的字族之下还分为不同的字形，默认的字形设置可能并不能满足你的要求。有一些字体甚至没有粗体或者意大利体这样的字形。一般的玩家就选用默认字形设置足有了，最多在mainfont哪里设置下boldfont和italicfont。见上面例子的第4，5行。\\
+一个字体的字族之下还分为不同的字形，默认的字形设置可能并不能满足你的要求。有一些字体甚至没有粗体或者意大利体这样的字形。一般的玩家就选用默认字形设置足有了，最多在mainfont哪里设置下boldfont和italicfont。比如类似下面这样配置：
+\begin{Verbatim}
+\setCJKmainfont[BoldFont=Adobe 黑体 Std,
+    ItalicFont=Adobe 楷体 Std]
+    {Adobe 宋体 Std}%影響rmfamily字體
+\end{Verbatim}
+
+具体字形有：\\
 BoldFont = font name\\
 ItalicFont = font name\\
 BoldItalicFont = font name\\
@@ -876,11 +937,12 @@ SlantedFont = font name\\
 BoldSlantedFont = font name\\
 SmallCapsFont = font name
 
+
+
 \subsubsection{Color}
 前面的例子我们看到了Color属性的定制，在这里推荐适用xcolor宏包。\XeLaTeX 默认使用的是xdvipdfm，不支持透明颜色。然后xcolor宏包对于颜色的讨论请参看颜色一节\ref{sec:颜色}
 
 \subsubsection{字体大小}
-\endnote{我查看了log文件，Scale=1.2之后的pt值就是原pt值乘以1.2。}
 在前面的那个例子也用到了Scale选项，选个数字来整体调整这个字体的尺寸大小。还有两个常量值，一个是MatchLowercase，一个是MatchUppercase。就是变成小写字母一样的或者大写字母一样的大小。
 
 \subsubsection{词间距——WordSpace}
@@ -900,14 +962,27 @@ SmallCapsFont = font name
 最后还有两个命令defaultfontfeatures和addfontfeatures。有什么优先级：\\ addfontfeatures>fontspec>defaultfontfeatures。觉得太花哨了暂时应该用不到。
 
 
+
+
 \subsection{设置数学字体}
-本文不深究数学领域排版知识的讨论。
+觉得默认的数学字体也很好看的，就不折腾了。数学上的排版问题我另外写了一篇文章讨论，在文件夹[\textbf{和数学相关的问题}]里面。
+
+这里简单提一下，数学没有太多额外需要加载的宏包，其中amssy-\\mb和amsmath这两个宏包必备，基本上大家都加载了的。然后数学上或者物理上等对于国际单位和文本中小的数字（但是需要输入上标下标等的）推荐用siuintx宏包处理。
+
+然后通过\verb+\everymath{\displaystyle}+这个语句可以让文本内的数学形式，比如分数显得更大更好看一点。其他问题这里都略过了。
+
 \begin{Verbatim}
-\setmathrm [ font features ] { font name }
-\setmathsf [ font features ] { font name }
-\setmathtt [ font features ] { font name }
-\setboldmathrm [ font features ] { font name }
+\RequirePackage{amssymb,amsmath}
+\RequirePackage{fontspec}
+%si unit
+\RequirePackage{siunitx}
+\sisetup{
+math-micro = \text{μ},
+text-micro = μ
+}
+\everymath{\displaystyle}
 \end{Verbatim}
+
 
 
 \subsection{xeCJK宏包详解}
@@ -941,7 +1016,11 @@ PunctStyle = {⟨quanjiao|…………|plain⟩}\\
 \end{description}
 
 \subsection{设置CJK字符大小}
-在本文字体配置中第4行，我将CJK字体都放大了1.2倍，为的是让中文字比英文字稍微大一点，这样更好看一点。具体原来为11pt，放大后为13.1pt。
+可以通过如下命令：
+\begin{Verbatim}
+\defaultCJKfontfeatures{Scale=1.2}   
+\end{Verbatim}
+来调整所有CJK字体的属性，比如上面代码的意思就是所有CJK字体都放大1.2倍。比如你在documentclass里面设置10pt，那么实际CJK字符是12pt。\endnote{以前我喜欢放大CJK字体，但是后来发现这样放大之后让数学环境下的字体显得太小很不好看，而且这样整了之后似乎数学环境下的字体也不能通过DeclareMathSizes命令调节了。}
 
 
 
@@ -971,7 +1050,7 @@ texmaker软件并没有这个问题，不管怎么样，加上这样一行代码
 \~ ,这个符号在文档中产生一格空白，如要显示在前面加上\textbackslash 符号。这样显示的波浪号有点小。还可以进入数学模式下输入\textbackslash sim，在texmaker左边的关系符号一栏中也可以找到。所以为了美观的话就用数学模式吧。然后在Rime输入法里面我们看到还有一种符号是全角下的波浪号～。我比较了下这个和前面两个都不相同，简单起见用这个全角的波浪号也是可以的。
 
 \subsubsection{\$}
-\$ ,美元符号之所以不可以用是因为它标记了数学模式的开始和结束。比如说我要输入字母$\Pi$,就是在两个美元符号中间输入\textbackslash pi即可。理论上输入\textbackslash pi 就可以显示$\Pi$了，但是和中文字混合处理的时候会出错，而英文字混合输入会引起字体不协调的问题，而进入数学模式之后就不会。同样还有一种希腊字母的符号π，这个可以正常显示，只是没有前面数学模式下的美观。我查了一下，数学模式下的那个$\Pi$也是unicode区域里面的那个希腊字母，我想只是字体问题了。\footnote{\href{http://www.johndcook.com/unicode_latex.html}{这个网站}用来查找unicode和\LaTeX 命令的对应关系}
+\$ ,美元符号之所以不可以用是因为它标记了数学模式的开始和结束。比如说我要输入字母$\pi$,就是在两个美元符号中间输入\textbackslash pi即可。如果直接从输入法输入希腊字母的符号π，这个也是可以正常显示的，只是没有前面数学模式下的美观。我查了一下，数学模式下的那个$\pi$也是unicode区域里面的那个希腊字母，我想只是字体问题了。\footnote{\href{http://www.johndcook.com/unicode_latex.html}{这个网站}用来查找unicode和\LaTeX 命令的对应关系}
 
 \subsubsection{\#}
 \# ,这个符号没怎么接触，latex123说是定义巨集的，前面加上\textbackslash 即可。
@@ -988,24 +1067,30 @@ texmaker软件并没有这个问题，不管怎么样，加上这样一行代码
 
 然后还有敲键盘的方法，要左边和右边区别对待，比如说左单引号就是点击ESC下面那个键，右单引号是点击分号右边那个键；而左双引号是点两次ESC下面那个键，右双引号是按住shift，然后点击分号右边那个键。
 
-这两个符号倒不怎么用到，因为中文的输入法调试好会很方便的，至于英文左单引号和右单引号好像都没区分。
+一边单引号和双引号都用全角模式，中文的输入法调试好会很方便输入的，这不存在什么问题。至于英文左单引号和右单引号好像一般不怎么区分。
 
 \subsubsection{破折号和连字号}
-连字号就是一个这个- ，可以直接在键盘上输入。\\
-短破折号就是两个-连续输入 $ \Longrightarrow $  --\\
-长破折号就是三个-连续输入 $ \Longrightarrow $  ---\\
-负号就是数学模式下的-  $ \Longrightarrow $ $ -1 $  如果有时嫌麻烦就直接-1应该可以接受把。
+连字号就是一个这个[-] ，可以直接在键盘上输入。\\
+短破折号就是两个-连续输入成为→  [--]\\
+长破折号就是三个-连续输入成为→  [---]\\
+负号如果在数学模式下是→  $ -1 $  如果有时嫌麻烦就直接-1应该可以接受把。
 
-%http://tex.stackexchange.com/questions/9813/how-can-i-stop-latex-from-converting-two-hyphens-to-a-single-hyphen-when-loading
-%A hyphen: \texttt{-}
-%
-%Two hyphens: \texttt{-{}-}
-%
-%Three hyphens: \texttt{-{}-{}-}
+此外中文全角短的连字号有[－]，unicode码是U+FF0D；长破折号是[——]，有两个unicode码U+2014的符号组成。值得注意的是长破折号的一个，[—]，和前面的全角短连字号也是有所不同的，似乎稍微长一点，一般不怎么用吧，但我发现有些书排版有时用到这个符号。
+
+\paragraph{两个连字号的显示}
+比如要显示终端选项的时候有两个短连字号，如果你直接输入两个--就变成短破折号了。如果你要有这样的显示效果，-{}-，那么你需要中间加一个花括号\footnote{\href{http://tex.stackexchange.com/questions/9813/how-can-i-stop-latex-from-converting-two-hyphens-to-a-single-hyphen-when-loading}{参考网站}}。下面是三个连字号的例子：\\
+\verb+-{}-{}-+\\
+-{}-{}-
+
+
 \subsubsection{温度的度}
 在texmaker左边的关系负号哪里我们可以看到一个小圆圈，输入命令是\textbackslash circ，当然需要在数学模式下。现在就需要让这个小圆圈位于上标即可。前面的符号介绍我们提及\^{},就是进入上标显示，上标的内容在\^{}后面的那个花括号内，于是我们就知道三十度怎么画了。$ 30^{\circ} $ ，注意texmaker左边有快捷键。点起来很方便的。具体代码是：\$ 30\^{}\{\textbackslash circ\} \$。当然你可以直接用rime输入法打出这个温度的度：°，℃。在输出\%候选项哪里。
 
-最后八一句，不明白全角形式的百分号怎么在\LaTeX 文档里面也是注释作用？我确认是全角的unicode。
+\paragraph{更加专业的做法：}
+输入温度的度的更加专业的做法利用siunitx宏包的degreeCelsius命令输出：\\
+\verb+30\si{\degreeCelsius} and 45\si{\degree}+\\
+30\si{\degreeCelsius} and 45\si{\degree}
+
 
 \subsubsection{省略号}
 this...   that\ldots   \\
@@ -1015,7 +1100,7 @@ this...   that\ldots   \\
 
 
 \subsection{更多特殊符号}
-{\fontsize{50pt}{10pt}\selectfont \color[HTML]{DE4815}  }
+{\fontsize{40pt}{20pt}\selectfont \color[HTML]{DE4815}  }
 
 上面是Ubuntu的图标符号，可不是一张图片哦，是一个字符。这个图标符号只在Ubuntu字体里面才有。现在让我们将思路先理清一下。首先是Unicode码，这个只是一个理论上的编码规则，具体的实现是字体。但是每一个字体都只专注于某一个领域，并没有把Unicode所有的码都画出字形来，那么系统是如何显示字体的呢？系统是安装了很多字体，如果一个字体并不包含它要显示的Unicode，它就搜索打开下一个字体文件，找相关的Unicode的字形。只有从字体文件中具体找了这个Unicode的字形，才有办法将其显示出来。
 \endnote{主要参考了\href{http://tex.stackexchange.com/questions/41130/getting-xelatex-to-display-accents-and-characters-not-included-with-the-font}{这个网站}}
@@ -1034,13 +1119,15 @@ this...   that\ldots   \\
 
 值得提醒的是目前系统的文档里面那个Ubuntu图标都不能正确显示出来，而我们在pdf中却能显示出来。我们来看看代码。\endnote{如果你输入了某个Unicode的字形你目前的pdf字体并不包括，那么将会产生这样的一个错误信息：WARNING invalid CMap mapping entry.然后你编译pdf之后发现某个字符没有正常显示出来只是一个方框那么可能是目前字体不包括这个字形。}
 
-首先第1，2行前面以及谈及了，主要是看这个新引入的宏包newunicodechar。好吧，这个宏包就只有一个命令，这个命令就是这个宏包的名字。其实我们能够猜到，这个命令的作用就是将这个字符变成类似\TeX 命令的东西，然后体换为后面的那一串，而后面的那一串单独提出来也是能够正常显示的。如{\ubuntu{}}。
+首先第1，2行前面以及谈及了，主要是看这个新引入的宏包newunicodechar。好吧，这个宏包就只有一个命令，这个命令就是这个宏包的名字。其实我们能够猜到，这个命令的作用就是将这个字符变成类似\TeX 命令的东西，然后替换为后面的那一串，而后面的那一串单独提出来也是能够正常显示的。如{\ubuntu{}}。
 
+\begin{flushright}
 \begin{notecard}[olive!30]{20em}
 所以过程还是很简单的，但是整个过程让人紧张，如果一篇文章有很多这样的特殊符号，那不要写上长长的这样一串？我想到的第一个解决方案就是最好有这么一个字体包含所有的Unicode的字形，然后我试着用fontforge将一些字形复制粘贴调大小混到一起，然后发现这个方案既满足不了美观的要求也满足不了效率的要求。后来认识到也许我多虑了，如果一个符号经常出现，那么那个字体设计者肯定会优先考虑把它加进去的。
 \end{notecard}
+\end{flushright}
 
-这里插播一段广告……\\
+
 这里有一段代码生成该字体所有已有的字形\ref{sec:字体已有字形}。当然你可以直接在字符映射表里面选择只显示已有字形查看，不过有时并不方便。生成那个pdf查看之后可以复制粘贴，到那个字符映射表里面搜索，还是很方便的。
 
 
@@ -1058,28 +1145,15 @@ this...   that\ldots   \\
 \renewcommand\partname{部分}
 \renewcommand\appendixname{附录}
 \renewcommand{\abstractname}{摘~要}
-\renewcommand\today{\number\year~年~\number\month~月~\number\day~日}
+\renewcommand\today{\number\year 年\number\month 月\number\day 日}
 \end{Verbatim}
+
+值得一提的是不同的文档类包含不同的命令，比如有的文档类可能没有定义today这个命令，比如article类不包含参考文献命令等。
+
 
 
 \section{颜色}
 \label{sec:颜色}
-
-\subsection{本文颜色的配置}
-\begin{Verbatim}
-\usepackage{xcolor}  
-%===========在网上找的配黑色文字比较好的背景色=============%
-\definecolor{bgcolor-co}{RGB}{255,255,255}  %引用cite  observe
-\definecolor{bgcolor-dd}{RGB}{255,255,200}  %怀疑  doubt desire 
-\definecolor{bgcolor-tp}{RGB}{215,255,240}  %理论  theory 实践  practice
-\definecolor{bgcolor-bf}{RGB}{240,218,210}  %believe %faith
-
-\definecolor{defaultbgcolor-0}{RGB}{199,237,204}  %for eye
-\definecolor{defaultbgcolor-1}{RGB}{240,240,240}  %gray25  recommend
-
-\pagecolor{defaultbgcolor-0}
-\end{Verbatim}
-
 \subsection{颜色的心理学}
 颜色心理学是一门学问，这里不会深究，只是在文档里面字体或者背景使用什么颜色是一门大学问。这里主要参照\href{http://www.jb51.net/article/8216.htm}{这个网站}简单说下。本文定义的几个颜色也是参考的这个网站。
 
@@ -1095,29 +1169,47 @@ this...   that\ldots   \\
 \end{description}
 关于具体选择什么颜色，我也纠结了很久，但最后无果而终，可选择的颜色太多了，我说不上什么意见。
 
-\subsection{有关颜色的基本命令讨论}
-首先推荐使用xcolor宏包。\endnote{在\href{http://tex.stackexchange.com/questions/89763/when-to-use-the-xcolor-package-instead-of-the-color-package}{这个网页}里，谈到原color宏包的所有特性基本上xcolor都支持，同时又加了很多新特性，相当于扩充集吧。}
 
-\paragraph{定义新的颜色}
-前面谈及本文颜色配置的代码中有很多definecolor命令就是定义新的颜色的，然后在后面要用到颜色的地方使用你这里定义的新的颜色名字就可以了。第一个花括号就填着你定义的新颜色的名字。第二个花括号填着你要定义的颜色的模式，比如RGB，rgb，HTML，cmyk等。最后就是填着对应的模式的对应的数值。其中HTML模式不要\#号。
+\subsection{颜色配置}
+首先推荐使用xcolor宏包。在\href{http://tex.stackexchange.com/questions/89763/when-to-use-the-xcolor-package-instead-of-the-color-package}{这个网页}里，谈到原color宏包的所有特性基本上xcolor都支持，同时又加了很多新特性，相当于扩充集吧。
 
-\paragraph{用软件查看颜色}
+这里放着我之前的一些颜色配置的代码。
+\begin{Verbatim}
+\usepackage{xcolor}  
+%=====在网上找的配黑色文字比较好的背景色======%
+\definecolor{bgcolor-co}{RGB}{255,255,255}  
+\definecolor{bgcolor-dd}{RGB}{255,255,200}  
+\definecolor{bgcolor-tp}{RGB}{215,255,240}  
+\definecolor{bgcolor-bf}{RGB}{240,218,210}  
+\definecolor{defaultbgcolor-0}{RGB}{199,237,204}  %for eye
+
+%\pagecolor{defaultbgcolor-0}
+\end{Verbatim}
+
+
+\subsubsection{定义新的颜色}
+上面颜色配置代码里有很多definecolor命令就是定义新的颜色的，然后在后面要用到颜色的地方使用你这里定义的新的颜色名字就可以了。第一个花括号就填着你定义的新颜色的名字。第二个花括号填着你要定义的颜色的模式，比如RGB，rgb，HTML，cmyk等。最后就是填着对应的模式的对应的数值。其中HTML模式不要\#号。
+
+\subsubsection{用软件查看颜色}
 你可以用手机照相，或者某个在某个网页某个文档上截图。然后用Gcolor2软件来捕捉某个点的颜色。
 
-\paragraph{改变文章的背景颜色}
-上面代码第11行pagecolor命令就是，我试着在minipage模式下使用也会改变整个文章的背景颜色。
+\subsubsection{改变文章的背景颜色}
+上面代码最后的pagecolor命令就是设置整个文档背景颜色的。我试着在minipage模式下使用也会改变整个文章的背景颜色。
 
-\paragraph{改变字体的颜色}
+
+\subsubsection{改变字体的颜色}
 有两个命令，textcolor和color命令。\\
 \verb+\textcolor{colorname}{some text}+\\
 \verb+{\color{colorname}  some text...}+\\
 我更喜欢color命令。
 
-\subsection{xcolor宏包}   
+
+\subsection{xcolor宏包简介}   
 xcolor宏包虽然是color宏包的扩展集，但对于我这个颜色知识盲来说多少有点不知所云，可能专业弄颜色的对那些颜色模式的增加还有颜色混合的表达扩展觉得很感动吧。如果你对颜色有更高级的需求，请详细阅读xcolor宏包文档，这里不赘述了。
 
 就一般用户还是用definecolor命令吧，支持的模式有gray，rgb，RGB，HTML，cmyk。其中只要加载xcolor宏包就能使用的颜色名字如下：
 \begin{table}[H]
+\centering
 \begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
 \toprule
 颜色        & 效果  & 颜色       & 效果\\ \midrule
@@ -1138,26 +1230,30 @@ yellow    &    \cellcolor{yellow}\\ \bottomrule
 这个表格里面的小格子涂上颜色是使用的xcolor宏包里面的cellcolor命令，就是在表格相应的格子位置使用这个命令就可以了。上面表格类似的一行我写出来吧：\\
 \verb+yellow & \cellcolor{yellow}\\ \bottomrule+
 
-虽然颜色混合我弄不大明白，不过单个颜色调百分比\footnote{不清楚和谁调？白色？}还是很有用的。比如gray灰色后面跟个!20，就表示20\%的灰，那种淡淡的灰色做背景颜色挺好的。请看下面不同百分比的灰色。
+如果你加载xcolor宏包时填上其他选项，比如svgnames等，就会有更多其他颜色的名字可以直接使用了。具体请参看\href{http://mirrors.ctan.org/macros/latex/contrib/xcolor/xcolor.pdf}{xcolor官方文档}。
+
+
+\subsubsection{单个颜色调百分比}
+虽然颜色混合我弄不大明白，不过单个颜色调百分比\footnote{不清楚和谁调？白色？}还是很有用的。比如gray灰色后面跟个!20，就表示20\%的灰。请看下面不同百分比的红色。
 \begin{table}[H]
+\centering
 \begin{tabular}{@{}lp{50pt}lp{50pt}@{}}
 \toprule
-灰色百分比        & 效果  & 灰色百分比       & 效果\\ \midrule
-gray     &  \cellcolor{gray}  & gray!90     &    \cellcolor{gray!90} \\
-gray!80      &   \cellcolor{gray!80} & gray!70    &   \cellcolor{gray!70}\\
-gray!60     &  \cellcolor{gray!60}  & gray!50      &   \cellcolor{gray!50}\\
-gray!40      &   \cellcolor{gray!40} & gray!30    &   \cellcolor{gray!30}\\
-gray!20  &  \cellcolor{gray!20} &gray!10       &   \cellcolor{gray!10}  \\
-gray!0    &    \cellcolor{gray!0}\\ \bottomrule
+颜色        & 效果  & 颜色       & 效果\\ \midrule
+red     &  \cellcolor{red}  & red!90     &    \cellcolor{red!90} \\
+red!80      &   \cellcolor{red!80} & red!70    &   \cellcolor{red!70}\\
+red!60     &  \cellcolor{red!60}  & red!50      &   \cellcolor{red!50}\\
+red!40      &   \cellcolor{red!40} & red!30    &   \cellcolor{red!30}\\
+red!20  &  \cellcolor{red!20} &red!10       &   \cellcolor{red!10}  \\
+red!0    &    \cellcolor{red!0}\\ \bottomrule
 \end{tabular}
 \label{tab:不同百分比的灰色}
 \caption{不同百分比的灰色}
 \end{table}
 
-这个表格最后一行是：\\
-\verb+gray!0 & \cellcolor{gray!0}\\ \bottomrule+
 
 值得一提的是xcolor宏包还支持一种表格颜色交替模式，看上去不错。请看带颜色的表格这一小节\ref{sec:带颜色的表格}。
+
 
 
 \section{段落}
@@ -1170,10 +1266,11 @@ gray!0    &    \cellcolor{gray!0}\\ \bottomrule
 
 \textbackslash \textbackslash 命令还有一个用法，比如后面跟上[10pt],表示在原有行距的基础上再加上额外的空白距离，参数也可以是负数。
 
-换行不空一行在tex文档中的效果只是加上一个空格，你可以前面那行后面加上\%{}来取消这个空格，也就是编程中常遇到的一种技巧，多行凑成一行。
+换行不空一行在tex文档中的效果只是加上一个空格，你可以前面那行后面加上\%{}来取消这个空格。
+
 
 \subsection{断字}
-如果你编译的时候出现了overfull hbox什么的错误，一般是断字出现问题了，有字越过文档边界了。命令\textbackslash \textbackslash 是强制换行。还有一个换行命令\textbackslash linebreak，这个命令后面还可以跟个可选项，但意义我不大明确。一般就是观察生成的文档，然后选择合适的位置插入linebreak命令。这个断行命令断行之后，前面那行的文字将会扩展充满整行，在越界小距离的情况下还是可行的，但是距离大了这一行扩展导致字间距过大也不是十分美好。
+如果你编译的时候出现了overfull hbox什么的错误，一般是断字出现问题了，有字越过文档边界了。命令\textbackslash \textbackslash 是强制换行。还有一个换行命令\textbackslash linebreak，这个命令后面还可以跟个可选项，但意义我不大明确。一般就是观察生成的文档，然后选择合适的位置插入linebreak命令。这个断行命令断行之后，前面那行的文字将会扩展充满整行，在越界小距离的情况下还是可行的，但是距离大了这一行扩展导致字间距过大也不是十分美观。
 
 你可以考虑改变文字，或者直接用\textbackslash newline换行，或者手工加上\~符号，或者手工加上-符号和\textbackslash \textbackslash 来断英文字。
 
@@ -1181,41 +1278,53 @@ gray!0    &    \cellcolor{gray!0}\\ \bottomrule
 \verb+\setlength{\baselineskip}{22pt}+\\
 上面的代码就是设置行间距的。一行一行之间的间距也是一个glue，我们知道glue有基本的space和伸缩量。行距的基本space由命令baselineskip控制，伸缩量有baselinestretch命令。\footnote{实际上这个多少有点揣测的意思。}
 
-本文目前控制段落行距模板采用的方案是使用宏包setspace。因为这个宏包使用双倍行距选项之后尾注部分行距也有调整，更加好看些：\\
+一般行间距的调整用宏包setspace，似乎这个宏包对文档其他内容比如脚注旁注等都有所调整，但是如果你自己定义的脚注格式就不太依赖这个宏包了。不过用法也简单，如下所示：\\
 \verb+\RequirePackage[doublespacing]{setspace}+
 
+此外还有选项onehalfspacing，如果你试了onehalfspacing和doublespacing（当然还有默认的不拉伸间距的情况），你都感觉不太满意。这个时候推荐你使用linespread命令，在刚开始的配置内容里写上即可，不需要额外的宏包加载。其中\verb+\linespread{1.3}+的效果相当于前面的onehalfspacing，如果是1.6则相当于doublespacing，然后当然，1.4，1.5等等都随你设置了。
+
+值得注意的是linespread命令还会对表格有拉伸效果，而setspa-\\ce宏包没有这个效果。所以如果用setspace宏包而不是linespread调整行间距，那么才需要对arraystretch量进行一些修改，提供额外的表格行间距。
+
+
 \subsubsection{baselineskip} 
-段落中行之间上下间距\footnote{一行一行就是横向的盒子，行间距就是横向的盒子之间的上下间距。}由三个命令控制：baselineskip，lineskip和lineskiplimit。简单的说明就是首先间距是baselineskip\linebreak ，但是如果上面的盒子伸的太下或者下面的盒子伸的太高，那么他们就可能会碰到一起。lineskiplimit控制的就是盒子之间最小间距，比如0pt。当baselineskip减去上面的盒子的深度depth再减去下面盒子的高度height然后得到的值比lineskiplimit小，那么跳转方案就会选择lineskip模式。也就是上面盒子最低的点和下面盒子最高的点之间的距离是lineskip那么多。\endnote{参看了a beginner's book of \TeX 的spacing between boxes一节。在google book哪里可以看到这一段，不过似乎这本书网上并不能自由下载。}
+段落中行之间上下间距\footnote{一行一行就是横向的盒子，行间距就是横向的盒子之间的上下间距。}由三个命令控制：baselineskip，linesk-\\ip和lineskiplimit。简单的说明就是首先间距是baselineskip，但是如果上面的盒子伸的太下或者下面的盒子伸的太高，那么他们就可能会碰到一起。lineskiplimit控制的就是盒子之间最小间距，比如0pt。当baselineskip减去上面的盒子的深度depth再减去下面盒子的高度height然后得到的值比lineskiplimit小，那么跳转方案就会选择lineskip模式。也就是上面盒子最低的点和下面盒子最高的点之间的距离是lineskip那么多。\endnote{参看了a beginner's book of \TeX 的spacing between boxes一节。在google book哪里可以看到这一段，不过似乎这本书网上并不能自由下载。}
 
 我感觉自己设置一个baselineskip已经很满足要求了，尤其个别字用Huge命令的时候效果也还行。
 
-\subsubsection{baselinestretch}\footnote{参看的\href{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=linespread}{这个网站}}
+
+\subsubsection{baselinestretch}\footnote{参看的\href{http://tex.stackexchange.com/questions/49596/no-effect-of-baselinestretch}{这个网站}}
 baselinestretch量相当于行间距glue的伸缩量，也就是对前面的baselineskip做一定的伸缩。这个命令要使用的话格式如下：\\
 \verb+\renewcommand{\baselinestretch}{伸缩量}+\\
 这个命令等价于：\\
 \verb+\linespread{伸缩量}+\\
-不过这不是故事的全部。完整的设置格式如下：\\
-\verb+{\linespread{伸缩量}\selectfont  sometext}+\\
-其中伸缩量人们说设为1.3就是1.5倍行距，1.6就是双倍行距。放在导言区里面才有效果，不能在文档中临时改变行间距。还是推荐使用setspace宏包，除非setspace宏包不知怎么失效了。
+不过这不是故事的全部。如果要在文档中改变行间距必须采用如下的形式：\\
+\verb+{\linespread{伸缩量}\selectfont  sometext  \par}+
+
+{\linespread{3} \selectfont 其中伸缩量和前面说的一样是：设为1.3就是1.5倍行距，1.6就是双倍行距，其他自由发挥。除了要封闭环境否则对其他文本有影响外，还需要加上selectfont命令，此外最后还必须加上\textbackslash par命令，否则会没有效果。\par}
+
 
 
 \subsection{段落间距}
 \verb+\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}+\\
 段落间距也就是一段和一段之间的空白距离。上面就是本文段落间距的设置代码。parskip是一个length量。其中距离设置设置一个固定量和一个加量还有一个减量，wikibook中说很有用，不太清楚。
 
+
 \subsection{段首缩进}
 \subsubsection{段首缩进量调整}
 \begin{Verbatim}
-\setlength{\parindent}
-{\baselineskip * \real{0.06} + \textpt * \real{2.4}}
+ \setlength{\parindent}{\textpt * \real{2}}
 \end{Verbatim}
-上面代码就是设置段首缩进量的，其中parindent是一个length量。具体设置我用了一个算法，需要加载calc宏包\footnote{注意乘法乘以小数的时候需要用real命令处理。}。也就是希望设置的距离更加相对化。其中textpt是我新建的一个长度量：\\
+
+上面代码就是设置段首缩进量的，其中parindent是一个length量。具体就是两个字符的意思。这里预先需要加载calc宏包\footnote{注意乘法乘以小数的时候需要用real命令处理。}，为了让设置的距离更加相对化，我新建的一个长度量textpt：\\
 \verb+\newlength{\textpt}+\\
 \verb+\setlength{\textpt}{12pt}+\\ 
-本文的默认字体大小值是11pt，然后传递到了textpt这里。这里textpt乘以2.4的意思是之前我放大CJK字符1.2倍了，再乘以2相当于乘以2.4即两个字的距离。然后我在字体设置哪里中文字之间间距为0.12个baselineskip。由于glue有点波动，所以在这设置0.06个baselineskip。因为我设置为0.18的时候距离过大了，总之大概在30pt左右，在这里用公式表示就是为了距离表达更加相对化。
+本文的默认字体大小值是12pt，然后传递到了textpt这里。
+
 
 \subsubsection{缩进还是不缩进}
 在xeCJK宏包加载的时候默认章节下面第一段缩进打开了，然后后面基本上都段段有缩进，也没怎么管了。如果你希望某一段不缩进就用noindent命令吧，类似的有indent命令。如果你希望都不缩进，我觉得简单点的办法就是把缩进量设置为0吧。
+
+
 
 \subsection{段落对齐}
 flushleft环境为左对齐环境，flashright环境为右对齐环境，center为居中环境。类似的命令样式有raggedleft，raggedright和centering。这些命令还可以控制表格图片(也许是一切盒子?)的位置。简单示例如下：
@@ -1229,8 +1338,11 @@ flushleft环境为左对齐环境，flashright环境为右对齐环境，center�
 \fbox{右边才是王道。}
 \end{flushright}
 
+
 \subsection{flushright环境空白间距问题}
-flushright环境有一个大型的空白间距，如果你不喜欢这么大的空白间距正如前面谈及的，可以使用raggedright等命令来调整，不过raggedright等命令似乎更适合对图片表格等盒子调整位置。在段落内如何实现类似word那种一行之类居右对齐？
+flushright环境有一个大型的空白间距，如果你不喜欢这么大的空白间距正如前面谈及的，可以使用raggedright等命令来调整，不过raggedright等命令似乎更适合对图片表格等盒子调整位置（raggedright命令不太好用，有时不知怎么不起作用，推荐就用hfill命令让其他内容居右，唯一要提醒的是hfill命令是针对当前行把内容往右推。）
+
+那么在段落内如何实现类似word那种一行之类居右对齐？
 
 \begin{Verbatim}
 this is a test line
@@ -1241,6 +1353,8 @@ this is a test line
 这里推荐先空一行分段，然后用hfill命令将文本推到右边去，然后用vspace调整下距离。这里选择-\textbackslash parskip这样得到的行距和其他行距是一致的。
 
 {\vspace{-\parskip}\hfill  然后我注意到开辟新的竖向模式}\\，比如换行之后，不空一行用smallskip，medskip等，然后不用vspace命令调整也是可以的。因为smallskip也是一种vspace命令的调整模式，但是行距和其他的不太一致，所以在这里推荐就空一段，然后负的parskip。当然如果可以接受不用vspace调整也是可以的。
+
+
 
 \section{页眉页脚设计}
 页眉页脚设计推荐用\emph{fancyhdr}宏包。
@@ -1267,6 +1381,7 @@ fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新�
 我不太喜欢那一条横线，有需要的请自己将前面的什么rulewidht命令横线宽度设为0.4pt左右。
 
 我是一个喜欢简单的人，fancyhdr宏包里面还有很多命令：
+\vspace{-20pt}
 \begin{Verbatim}
 \lhead[<even output>]{<odd output>}
 \chead[<even output>]{<odd output>}
@@ -1280,7 +1395,9 @@ fancyhdr宏包提供了一个命令fancypagestyle来重新或者定义一个新�
 这些命令都可以用fancyhf命令来达到，所以我不做介绍了，有需要的请参考fancyhdr宏包文档。
 
 \subsubsection{fancyhf命令的可选项}
+fancyhf命令的一些可选项如下表所示，比如偶数页的页眉左边位置的表示就是EHL，奇数页页脚中间位置就是OFC。本文没有区分偶数页和奇数页，而且也不想有过多的信息，比如就想页眉左边和页脚右边有点内容，那么可选项为HL和FR。
 \begin{table}[H]
+\centering
 \begin{tabular}{@{}ll@{}}
 \toprule
 字母 & 意义  \\ \midrule
@@ -1295,48 +1412,58 @@ O  & 奇数页(odd) \\ \bottomrule
 \label{tab:fancyhf可选项字母意义}
 \caption{fancyhf可选项字母意义}
 \end{table}
-比如偶数页的页眉左边就是OHL，本文没有区分偶数页和奇数页，而且也不想有过多的信息，比如就想页眉左边和页脚右边有点内容，那么可选项为HL和FR。
 
-\subsubsection{fancyhf必填项定制}
-必填项就是在那个位置要输出的内容，可以是一段简单的文字比如书名。而FR也就是右边页脚处哪里简单填上\textbackslash thepage即表示当前页码。具体格式不用设置，请参看页码这一小节\ref{sec:页码}。
 
-显然直接写上书名没多大意思，现在决定定制如下，页眉左边用ttfamily字体，字体大小是footnotesize，左边写上章名，右边写上节名。
-
-\subsection{本文页眉页脚配置代码}
+\subsubsection{本文页眉页脚配置代码}
 \begin{Verbatim}
+%=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
 \pagestyle{fancy}
-\fancypagestyle{plain}{
+\renewcommand{\sectionmark}[1]
+{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+
+\fancypagestyle{plain}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}
-    \renewcommand{\chaptermark}[1]
-        {\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}} 
-     \renewcommand{\sectionmark}[1]
-         {\markright{第\CJKnumber{\arabic{section}}節~~#1}{}} 
+%    \renewcommand{\chaptermark}[1]
+%{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
 %    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
     \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
     \fancyhf[FR]{\thepage}
-    \fancyhfoffset[R]{\marginparwidth+\marginparsep}
-    }
-\pagestyle{plain} 
+    \fancyhfoffset[R]{\marginparwidth+\marginparsep}}
+\pagestyle{plain}
 \end{Verbatim}
-\subsubsection{一些基础情况说明}
-请看到第11行，设置的是页眉左边的格式，然后设置为ttfamily字族和footnotesize，这个大家都清楚。然后后面是一个命令leftmark，要使用这个命令，前面必须先加上fancy样式。\footnote{似乎可以理解为这个命令继承自fancy样式。}
 
-leftmark就是目前的章名，rightmark就是目前的节名。而重新定义则需要通过chaptermark和sectionmark，不太清楚为什么。我们再看上面对chaptermark和sectionmark的重定义。其中chaptermark影响leftmark，他的参数就是具体的章名。而他使用的是markboth，sectionmark使用的是markright，具体意义也不大清楚。
+首先是加载fancyhdr宏包\footnote{exam类有自己的页眉页脚定制方法，和fancyhdr宏包有冲突。}。接下来是页面风格fancy，不先这样做后面的sectionmark的重定义无效，具体原因不明。
+
+然后接下来重定义sectionmark，这个sectionmark我不太明白，十分有意思的它在exam文档类里面照样有效，但是如果不设置\verb+\pagestyle{fancy}+它就无效，然后放在新定义的plain样式里面也会出错。
+
+下面就是重新定制plain样式，首先是：
+\begin{Verbatim}
+%    \renewcommand{\chaptermark}[1]
+%{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
+%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
+\end{Verbatim}
+为了文档简洁这些代码我都注释掉了，不过你可能用的着。这里leftmark就是目前的章名，fancyhf带上选项HL就是定义文档页眉左边的内容。然后通过修改chaptermark（如果你章节标题不自己DIY的话，这里修改chaptermark你会看到变化的。）会影响leftmark的内容。这里的markboth也是配套的。
+
+\begin{Verbatim}
+    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
+    \fancyhf[FR]{\thepage}
+\end{Verbatim}
+这里的rightmark就是目前的节名，通过修改sectionmark会影响它的内容。sectionmark的重新定义如前所示是和markright命令配套的。
+
 
 我起初试图如下重新定义chaptername和sectionname，然后重新定义thechapter和thesection也就是当前章节编号。在这里先将编号用arabic命令转化为1,2,3...的形式，然后用CJKnumber命令转化为一,二,三...的形式。可是目录形式也跟着改变了，还有图片编号。影响范围太大了，所以就直接用上面代码的形式组合了。
-\begin{Verbatim}
- \renewcommand{\thechapter}{\CJKnumber{\arabic{chapter}}}
- \renewcommand{\thesection}{\CJKnumber{\arabic{section}}}
- \renewcommand{\chaptername}{第\thechapter章}
- \renewcommand{\sectionname}{第\thesection节}
-\end{Verbatim}
 
-\subsubsection{页眉页脚宽度}
-如果你文章旁注比较宽，你会注意到下面的页码并不是在最右边。如果你希望页码移到最右边可以通过命令fancyhfoffset来调节。同时相应页眉页脚那条线也会加长。代码类似于：
-\verb|\fancyhfoffset[R]{\marginparwidth+\marginparsep}|
+
+FR也就是右边页脚处，哪里简单填上\textbackslash thepage即表示当前页码。具体格式不用设置，请参看页码这一小节\ref{sec:页码}。
+
+\begin{Verbatim}
+\fancyhfoffset[R]{\marginparwidth+\marginparsep}
+\end{Verbatim}
+最后这段代码可要可不要，作用是让页眉页脚扩展到旁注的宽度那里。放在这里，如果设置marginparwidth和marginparsep都是0pt的话，也没有什么影响的。
+
 
 
 \section{章节标题设计}
@@ -1446,7 +1573,7 @@ titletoc宏包可以自己DIY目录格式，这里忽略。
 
 要做出好看的封面大概是很费心思的事情，本文使用了这样的策略，新建了一个模板文件mytitle.sty文件，然后里面内容如下。
 \subsection{mytitle.sty}
-\begin{xverbatim}{mytitle_sty.tex}
+\begin{Verbatim}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mytitle}
 
@@ -1488,7 +1615,7 @@ titletoc宏包可以自己DIY目录格式，这里忽略。
 }
 
 \endinput
-\end{xverbatim}
+\end{Verbatim}
 \subsection{一个简单的封面}
 这个代码牵涉到的内容较多，为了说明基本知识我将使用本文早期的一个简单的封面作为例子讲解。
 \begin{Verbatim}

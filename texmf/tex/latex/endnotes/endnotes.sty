@@ -4,7 +4,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]
-\ProvidesPackage{endnotes}[2013/11/29 v0.12  fancy endnotes  print]
+\ProvidesPackage{endnotes}[2014/05/09 v0.2  fancy endnotes  print]
 
 \RequirePackage{etoolbox}%expandonce
 \DeclareRobustCommand*{\flabel}[2]% #1 true label #2 show label
@@ -66,16 +66,16 @@
 \edef\@linknameb{enote:\arabic{@AllEndnoteCounter}b}%
 \edef\@showlinknameb{\endnotemark}%
 \edef\@showlinkname{\endnotemarkback}%
-\ignorespaces\flabel{\@linkname}{\@showlinkname}%
-\ignorespaces\hspace{-0.5ex}\ref{\@linkname b}%
+\flabel{\@linkname}{\@showlinkname}%
+\hspace{-0.5ex}\ref{\@linkname b}%
 \if@entopen \else \@openent \fi%
-
 \begingroup%
 \let\protect\string%change to string but the environment seem not act correct
 \gdef\@include{#1}%
 \endgroup%
 \@writeent%
-}
+\ignorespaces%
+}%
 
 \DeclareRobustCommand*\showendnotes{% close the file
 \immediate\closeout\@entout%

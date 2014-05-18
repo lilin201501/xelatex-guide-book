@@ -26,24 +26,21 @@
 
 %=========页面设置=========%
 \RequirePackage[a4paper, %a4paper size 297:210 mm
-  bindingoffset=0mm,%裝訂線
-  top=75pt,  %上邊距 包括頁眉
-  bottom=78pt,%下邊距 包括頁腳
-  inner=50pt,  %左邊距or inner
-  outer=62pt,  %右邊距or  outer
-  headheight=10mm,%頁眉
-  headsep=15mm,%
+  bindingoffset=10mm,%裝訂線
+  top=35mm,  %上邊距 包括頁眉
+  bottom=30mm,%下邊距 包括頁腳
+  inner=10mm,  %左邊距or inner
+  outer=10mm,  %右邊距or  outer
+  headheight=20mm,%頁眉
+  headsep=10mm,%
   footskip=15mm,%
-  includemp=true,% 旁註寬度計入width
   marginparsep=10pt, %旁註與正文間距
-  marginparwidth=50pt,  %旁註寬度
-  twoside,
-  reversemarginpar,%oneside旁注
-  asymmetric]{geometry}
+  marginparwidth=75pt,includemp=true% 旁註寬度計入width%旁註寬度
+  ]{geometry}
 
 
-
-
+%  reversemarginpar,%oneside旁注
+%  asymmetric
 
 
 %color
@@ -61,6 +58,9 @@
 math-micro = \text{μ},
 text-micro = μ
 }
+%num命令两边加上空格 numb
+\providecommand{\numb}[1]{{ \num{#1} }}
+
 
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \everymath{\displaystyle}
@@ -99,14 +99,43 @@ text-micro = μ
 \renewcommand\figurename{图}
 \renewcommand\tablename{表}
 \renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
+\renewcommand\contentsname{目~录}
 
 %目录
+%================目录===============%
+%toc label to contents space   dynamic adjust
+\RequirePackage{tocloft}%
+\renewcommand{\numberline}[1]{%
+  \@cftbsnum #1\@cftasnum~\@cftasnumb%
+}
 \setcounter{tocdepth}{2}
 
 %=======页眉页脚格式=========%
+%section格式
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
 \pagestyle{headandfoot}
-\firstpagefooter{}{}{\thepage}
-\runningfooter{}{}{\thepage}
+
+\firstpagefooter{\oddeven{}{\thepage}}{}{\oddeven{\thepage}{}}
+
+\runningfooter{\oddeven{}{\thepage}}{}{\oddeven{\thepage}{}}
+
+\firstpageheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}{\begin{large}
+{\CJKfontspec{颜体}
+\makebox[13em][s]{
+德山学派－回归教育本质}}
+\end{large}}{\rightmark}
+
+\runningheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}{\begin{large}
+{\CJKfontspec{颜体}
+\makebox[13em][s]{
+德山学派－回归教育本质}}
+\end{large}}{\rightmark}
+
+
+\firstpageheadrule
+\runningheadrule
+
 
 %==============超鏈接===============%
 \RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
@@ -220,10 +249,21 @@ text-micro = μ
 \DeclareRobustCommand*{\shortanswerline}{\rule[-2pt]{50pt}{0.4pt}}
 \renewcommand{\solutiontitle}{\noindent\textbf{}}
 
+%fillwithlines 命令线高
+\setlength\linefillheight{3em}
+
+%answer命令长度调整
+\newcommand{\answer}[2][50pt]{{%
+\ignorespaces%
+\setlength{\answerlinelength}{#1}%
+\answerline*[#2]}}
+
 
 
 %=========章節標題設計=========%
 \RequirePackage{titlesec}
+%exam class 没有chapter
+\newcommand{\chapter}[1]{\par\begin{LARGE}\sffamily  #1\end{LARGE} \par}
 %修改section
 \titleformat{\section}{\Large\sffamily}{}{0em}{}
 %修改subsection
@@ -231,16 +271,9 @@ text-micro = μ
 %修改subsubsection
 \titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
 
-%\renewcommand{\section}[1]{{\large\sffamily  #1} \par}
-%\renewcommand{\subsection}[1]{{\normalsize\sffamily  #1} \par}
 
 %===========旁注===========%
 \newcommand{\leftnote}[1]{\marginpar{\notefont #1}}
-%answer命令长度调整
-\newcommand{\answer}[2][50pt]{{%
-\ignorespaces%
-\setlength{\answerlinelength}{#1}%
-\answerline*[#2]}}
 
 
 %=========重新定义 quote=====%
@@ -264,8 +297,6 @@ text-micro = μ
 \ttfamily\fontsize{10pt}{12pt}\selectfont}
 {\endlist}
 
-%fillwithlines 命令线高
-\setlength\linefillheight{3em}
 
 %======notecard环境 一种卡片式记忆环境====%
 %长高按照黄金比例分割来，长1，高0.62--0.62\linewidth 0.38\linewidth

@@ -1,0 +1,116 @@
+\newpage
+\section{题库A}
+\begin{questions}
+\question
+妈妈用电动车送小明上学，途中妈妈提醒小明“坐好，别动！”。这个“别动”的参照物是（\answerline*[A]）
+
+\begin{choices}
+\choice 电动车上的座位
+\choice 路旁的树木
+\choice 迎面走来的行人
+\choice 从旁边超越的汽车
+\end{choices}
+
+
+\question
+小明坐在行驶的列车内，若说他是静止的，则所选择的参照物是（\answer[39pt]{A}）\par
+\begin{oneparchoices}
+\choice 车窗
+\choice 铁轨
+\choice 路边的树
+\choice 在车内走动的乘务员
+\end{oneparchoices}
+
+
+\question
+一辆汽车沿平直的公路向西快速行驶，一个行人沿该公路的便道向西散步。以行人为参照物汽车（\answerline*[B]）
+
+\begin{choices}
+\choice 向东运动
+\choice 向西运动
+\choice 静止不动
+\choice 无法确定
+\end{choices}
+
+
+\question
+机场周围不允许有鸟类飞行，以免撞毁飞机。这是因为（\answerline*[D]）
+\begin{choices}
+\choice 以地面为参照物，鸟的速度非常大
+\choice 以机场步行的人为参照物，鸟的速度非常大
+\choice 以机场内的飞机为参照物，鸟的速度很大
+\choice 以正在飞行的飞机为参照物，鸟的速度很大
+\end{choices}
+
+
+\question
+甲、乙两位同学进行百米赛跑，假如把他们的运动近似看作匀速直线运动处理，他们同时从起跑线起跑，经过一段时间后他们的位置如下图所示，在图中分别作出在这段时间内两人运动路程$s$、速度$v$与时间$t$的图像，正确的是（\answerline*[B]）
+
+\includegraphics[scale=0.8]{figures/图片7.png}
+
+
+\question
+为了减小测量的误差，使测量结果更精确，下列方法中错误的是（\answer[39pt]{D}）
+\begin{choices}
+\choice 进行多次测量取平均值
+\choice 改进测量方法
+\choice 更换更精确的测量工具
+\choice 测量数据不合适时，可做适当的修改
+\end{choices}
+
+
+\question
+坐在逆水行驶的船中的乘客，我们说他静止是以下列哪种物体为参照物的（\answerline*[C]）
+
+\begin{oneparchoices}
+\choice 河岸上的树
+\choice 迎面驶来的船
+\choice 船舱
+\choice 河水
+\end{oneparchoices}
+
+
+\question
+空中加油机加油过程中，加油机、受油机沿同一水平方向以相同的速度飞行，以加油机为参照物，受油机是\answerline*[静止]的；以地面为参照物，加油机是\answerline*[运动]的。
+
+
+\question
+甲、乙两辆汽车在水平路面上同时向东行驶，路程-时间图像如下图所示，则甲车的速度是\answerline*[15]$m/s$；两车行驶过程中，若以甲车为参照物，乙车向\answerline*[西]运动。
+
+\includegraphics[scale=1]{figures/图片11.png}
+
+
+\question
+如下图所示，量筒的直径$d$为\answerline*[1.20]$cm$。
+
+\includegraphics[scale=1]{figures/图片12.png}
+
+
+\question
+如下图所示，是小球从静止开始下落时的频闪摄影照片。照相机拍照时每隔$0.02s$曝光一次。由照片可知，小球从A位置下落到F位置时所用的时间是\answerline*[0.1]$s$，此过程中，小球下落的平均速度大约是\answerline*[4]$m/s$。
+
+\includegraphics[scale=1]{figures/图片13.png}
+
+
+\question
+小明同学在今年初中毕业升学体育考试$50m$跑项目中，取得$7s$的成绩。求：
+\begin{enumerate}
+\item 小明的平均速度；
+\item 如果终点计时员听到发令枪才计时，则小明的成绩比他的实际成绩快多少秒？（已知声速为$340m/s$，结果保留两位小数。）
+\end{enumerate}
+
+\begin{solution}[10ex]
+（1）$v=s/t=50m/s \approx 7.14m/s $
+
+（2）由$v=s/t$ 得 $t_ \textrm{声}=s_\textrm{声}/v_\textrm{声}=50m/340m/s \approx 0.15s$
+\end{solution}
+
+
+\question
+一座大桥长$1.6km$，一列长$200m$的火车以$15m/s$的速度通过此桥，火车完全通过此桥所需的时间为多少？
+
+\begin{solution}[8ex]
+解：S=S桥+S车      $t=s/v=(1600m+200m)/15m/s=120s$
+\end{solution}
+
+\end{questions}

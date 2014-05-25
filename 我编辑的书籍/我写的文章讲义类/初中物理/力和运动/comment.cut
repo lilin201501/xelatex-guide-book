@@ -1,0 +1,23 @@
+\newpage
+\section{题库A}
+\begin{questions}
+\question
+\textbf{（2009广州，9，3分）}如图所示，将木块放在压缩了的弹簧旁，释放弹簧，木块沿水平地面向右运动，离开弹簧后，木块运动一段距离后停下来。下列说法正确的是（\answerline*[B]）
+
+\noindent
+\begin{minipage}{\textwidth}
+\begin{minipage}[c][6cm][c]{0.7\textwidth}
+\begin{choices}
+\choice 木块所受摩擦力使木块由静止开始运动
+\choice 弹簧对木块的弹力使木块由静止开始运动
+\choice 木块所受摩擦力不会改变木块的运动状态
+\choice 木块最终停止运动是由于失去弹簧的弹力作用
+\end{choices}
+\end{minipage}\hfill
+\begin{minipage}[c][6cm][c]{0.3\textwidth}
+\includegraphics[scale=0.8]{figures/2009广州9.png}
+\end{minipage}
+\end{minipage}
+
+
+\end{questions}

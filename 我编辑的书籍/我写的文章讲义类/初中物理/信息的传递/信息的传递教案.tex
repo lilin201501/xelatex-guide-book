@@ -1,0 +1,104 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下： reduline showendnotes 
+%新加入的环境如下：solution solutionorbox solutionorlines solutionordottedlines
+
+\documentclass[12pt]{exam}
+\newlength{\textpt}
+\setlength{\textpt}{12pt}
+
+\usepackage{teachingplan}
+\usepackage{wallpaper}
+\usepackage{comment}
+\usetikzlibrary{positioning}
+
+%输出方案 
+%1.自己用答案，知识点等都有  ——老师版
+%2.给学生用基础差的可以考虑加上知识点，但不写答案——基础差版
+%3.练习题加提高题——学生版
+%4.练习题加提高题加综合题——学霸版
+
+%写上答案或者不写上答案%1  
+\printanswers  
+
+%提高题%1  4
+%\includecomment{improveexercises}
+\excludecomment{improveexercises}
+%综合题%1  4  5
+%\includecomment{advanceexercises}
+\excludecomment{advanceexercises}
+
+
+\CenterWallPaper{1}{教案模板-2.pdf}
+\newcommand{\shortanswerline}{\rule[-2pt]{50pt}{0.4pt}}
+\renewcommand{\solutiontitle}{\noindent\textbf{}}
+
+\newcommand{\keti}{热和能}
+\newcommand{\zhongdian}{1.分子热运动 2.内能 3.比热容\\  4.热机 5.能量的转化和守恒}
+\renewcommand{\section}[1]{{\large\sffamily  #1} \par}
+\renewcommand{\subsection}[1]{{\normalsize\sffamily  #1} \par}
+\newcommand{\leftnote}[1]{\marginpar{\ttfamily\fontsize{10}{10}\selectfont #1}}
+
+
+
+\newcommand{\answer}[2][50pt]{{\setlength{\answerlinelength}{
+#1} \answerline*[#2]}}
+
+\begin{document}
+\ThisCenterWallPaper{1}{教案模板-1.pdf}
+\vspace*{80pt}
+\keti \par
+\zhongdian \par
+\section{分子热运动}
+1876年美国发明家贝尔发明了第一部电话
+
+话筒把声信号变成变化的电流，电流沿着导线把信息传到远方，在另一端，电流使听筒的膜片振动，携带信息的电流又变成了声音。（话筒把声信号转化为电信号；听筒把电信号转化为声信号）
+
+电话交换机：为了提高线路的利用率，人们发明了电话交换机。现在除特殊需要的极少数电话还要专线之外，一般电话都是通过电话交换机来转接的。
+
+早期的电话交换机是依靠话务员手工操作来接线和拆线的，1891年出来了自动电话交换机，它通过电磁继电器进行接线。现在的程控电话交换机利用电子计算机技术，自动进行接线操作。
+
+模拟通信和数字通信
+模拟信号：声音转换成信号电流时，信号电流的频率、振幅变化的情况跟声音的频率、振幅变化的情况完全一样，“模仿”着声信号的“一举一动”，这种电流传递的信号叫做模拟信号，使用模拟信号的通信方式叫做模拟通信。
+
+数字信号：用不同符号的不同组合表示的信号叫做数学信号，使用数学信号的通信方式叫做数字通信。
+
+模拟信号容易失真；数字信号抗干扰能力强，便于加工处理，可以加密。
+在电话与交换机之间一般传递模拟信号，在交换机之间传递数字信号。
+
+
+
+电磁波可以在真空中传播，不需要任何介质。
+
+电磁波在真空中的波速为c,大小和光速一样， c=$3$3×108m/s 
+
+\section{练习题}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{improveexercises}
+\section{提高题}
+
+\end{improveexercises}
+
+\begin{advanceexercises}
+\section{综合题}
+
+\end{advanceexercises}
+
+\ThisCenterWallPaper{1}{教案模板-3.pdf}
+
+\end{document}
+
+
+

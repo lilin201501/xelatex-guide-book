@@ -18,7 +18,11 @@
 
 %========基本必备的宏包========%
 \RequirePackage{calc,float,multicol,moresize}
-\RequirePackage[onehalfspacing]{setspace}
+%\RequirePackage[onehalfspacing]{setspace}
+\linespread{1.4}
+%1.3 onehalfspacing
+%试卷或需要文字紧凑的
+%1.6 doublespacing
 
 %=========其他命令==========%
 \newcommand{\notefont}{\ttfamily\fontsize{10pt}{10pt}\selectfont }
@@ -120,17 +124,21 @@ text-micro = μ
 
 \runningfooter{\oddeven{}{\thepage}}{}{\oddeven{\thepage}{}}
 
-\firstpageheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}{\begin{large}
-{\CJKfontspec{颜体}
-\makebox[13em][s]{
-德山学派－回归教育本质}}
-\end{large}}{\rightmark}
+\firstpageheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}
+{%\begin{large}
+%{\CJKfontspec{颜体}
+%\makebox[13em][s]{
+%德山学派－回归教育本质}}
+%\end{large}
+}{\rightmark}
 
-\runningheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}{\begin{large}
-{\CJKfontspec{颜体}
-\makebox[13em][s]{
-德山学派－回归教育本质}}
-\end{large}}{\rightmark}
+\runningheader{\raisebox{-12pt}{\includegraphics[scale=0.2]{mandala.pdf}}}
+{%\begin{large}
+%{\CJKfontspec{颜体}
+%\makebox[13em][s]{
+%德山学派－回归教育本质}}
+%\end{large}
+}{\rightmark}
 
 
 \firstpageheadrule
@@ -160,7 +168,7 @@ text-micro = μ
 \graphicspath{{figures/}}
 
 %change the caption style a little like 1-1
-\renewcommand{\thefigure}{\arabic{figure}}
+%\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 
 \newenvironment{fig}[2][1]
         {\begin{figure}[H]
@@ -176,8 +184,10 @@ text-micro = μ
 
 %==============插入表格========%
 \RequirePackage{booktabs}
-\renewcommand{\arraystretch}{1.5}
-
+%\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+\RequirePackage{caption}
+%\renewcommand{\arraystretch}{1.3}
+%如果用setspace宏包而不是linespread调整行间距，那么才需要额外的表格行距拉大。
 
 %=============插入尾注=========%
 \RequirePackage{endnotes}
@@ -188,12 +198,12 @@ text-micro = μ
 %=======列表
 \renewcommand{\labelenumi}{(\arabic{enumi})}
 
-%======tikz
+%======常用tikz宏包
 \usetikzlibrary{calc,shapes,positioning,backgrounds}
-
+\usetikzlibrary{mindmap,trees}
 
 \setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-\setlength{\parindent}{0pt}
+\setlength{\parindent}{24pt plus 2pt minus 2pt }
 
 
 
@@ -273,16 +283,17 @@ text-micro = μ
 
 
 %===========旁注===========%
-\newcommand{\leftnote}[1]{\marginpar{\notefont #1}}
+\newcommand{\sidenote}[1]{\marginpar{\notefont #1}}
 
 
+%=====特殊的环境特殊的文字======%
 %=========重新定义 quote=====%
 \renewenvironment{quote}[1][anonymous]{
 \newcommand{\quoteauthor}[1][anonymous]{#1}
 \list{}{\rightmargin\leftmargin %右间距等于左间距
-\itemindent   20pt
+\itemindent   2em
 }\item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\\
 \makebox[\linewidth][r]{\sffamily —\quoteauthor}
 \endlist}
@@ -290,11 +301,11 @@ text-micro = μ
 %重新定义quotation
 \renewenvironment{quotation}
 {\list{}{
-\itemindent 20pt %item的缩进也就是第一段的缩进
+\itemindent 2em %item的缩进也就是第一段的缩进
 \listparindent \itemindent %第二段的缩进
 }%
 \item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\endlist}
 
 

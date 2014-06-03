@@ -6,7 +6,7 @@
 \newlength{\textpt}
 \setlength{\textpt}{12pt} 
 \newif\ifphone
-\phonetrue
+\phonefalse
 
 \usepackage{myconfig}
 \usepackage{mytitle}
@@ -2586,31 +2586,31 @@ quote和quotation在article.cls中的原初定义是这样的：
 \renewenvironment{quote}[1][anonymous]{
 \newcommand{\quoteauthor}[1][anonymous]{#1}
 \list{}{\rightmargin\leftmargin %右间距等于左间距
-\itemindent   20pt
+\itemindent   2em
 }\item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\\
 \makebox[\linewidth][r]{\sffamily —\quoteauthor}
 \endlist}
 
 %重新定义quotation
 \renewenvironment{quotation}
-{\list{}{
-\itemindent 20pt%item的缩进也就是第一段的缩进
+{\list{}{\rightmargin\leftmargin %右间距等于左间距
+\itemindent 2em%item的缩进也就是第一段的缩进
 \listparindent \itemindent %第二段的缩进
 }%
 \item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\endlist}
 \end{Verbatim}
 quote和quotation都是通过list环境来实现的，具体不太清楚。这里就我做的修改说明如下：
 \begin{itemize}
 \item \verb+\rightmargin\leftmargin+这是让右边空白距离等于左边空白距离，左边空白距离默认等于\verb+\parindent+，这个有用我保留了。
-\item \verb+\itemindent   20pt+，这个itemindent控制的是第一段的段首缩进量，这里设置为20pt是对应后面的10pt，即两个字符的意思。
-\item 代码第七行是设置quote环境下字体为ttfamily，和字体大小还有行距的设置。
+\item \verb+\itemindent   2em+，这个itemindent控制的是第一段的段首缩进量，这里设置为2em即两个字符的意思。
+\item 代码第七行是设置quote环境下字体为ttfamily。
 \item quote环境后面的代码，在结束环境之前，先换行，然后输出了一个盒子，右对齐，ssfamily，写着这个格言的作者，因为格言一般都要写上作者，如果不知道那么也写上anonymous，无名氏。这个作者的名字是quote环境接受一个可选项而来的额。
 \item \verb+\listparindent \itemindent+，quotation多了一个这个设置，其中listparindent是控制quotation里面除了第一段之外其他段落的缩进，这里就简单设置为跟第一段一样。
-\item quotation环境的其他修改，其中右边空白距离取消了，因为quotation本来内容就很多，觉得没必要了。然后还有一个parsep是控制段与段之间距离的，这里取消了，因为默认的就很好了。
+\item quotation环境的其他修改，parsep是控制段与段之间距离的，这里取消了，因为默认的就很好了。
 \end{itemize}
 
 \subsubsection{语录环境演示}

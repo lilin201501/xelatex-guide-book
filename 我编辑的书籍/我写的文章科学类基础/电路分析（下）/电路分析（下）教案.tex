@@ -1,0 +1,106 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+%新加入的命令如下： reduline showendnotes 
+%新加入的环境如下：solution solutionorbox solutionorlines solutionordottedlines
+
+\documentclass[12pt]{exam}
+\newlength{\textpt}
+\setlength{\textpt}{12pt}
+
+\usepackage{teachingplan}
+\usepackage{wallpaper}
+\usepackage{comment}
+\usetikzlibrary{positioning}
+
+%输出方案 
+%1.自己用答案，知识点等都有  ——老师版
+%2.给学生用基础差的可以考虑加上知识点，但不写答案——基础差版
+%3.练习题加提高题——学生版
+%4.练习题加提高题加综合题——学霸版
+
+%写上答案或者不写上答案%1  
+\printanswers  
+
+%提高题%1  4
+%\includecomment{improveexercises}
+\excludecomment{improveexercises}
+%综合题%1  4  5
+%\includecomment{advanceexercises}
+\excludecomment{advanceexercises}
+
+
+\CenterWallPaper{1}{教案模板-2.pdf}
+\newcommand{\shortanswerline}{\rule[-2pt]{50pt}{0.4pt}}
+\renewcommand{\solutiontitle}{\noindent\textbf{}}
+
+\newcommand{\keti}{热和能}
+\newcommand{\zhongdian}{1.分子热运动 2.内能 3.比热容\\  4.热机 5.能量的转化和守恒}
+\renewcommand{\section}[1]{{\large\sffamily  #1} \par}
+\renewcommand{\subsection}[1]{{\normalsize\sffamily  #1} \par}
+\newcommand{\leftnote}[1]{\marginpar{\ttfamily\fontsize{10}{10}\selectfont #1}}
+
+
+
+\newcommand{\answer}[2][50pt]{{\setlength{\answerlinelength}{
+#1} \answerline*[#2]}}
+
+\begin{document}
+\ThisCenterWallPaper{1}{教案模板-1.pdf}
+\vspace*{80pt}
+\keti \par
+\zhongdian \par
+\section{分子热运动}
+第二章  声现象
+　　第1节  声音的产生与传播                 
+　　第2节  声音的特性                       
+　　第3节  声的利用                         
+　　第4节  噪声的危害和控制                
+（本章节内容相对独立，比较容易掌握，可多结合生活常识进行认知。本章节出题量不大，分值在中考中三分到五分之间，也可能不会出现本章题型。主要以填空、选择为主，偶尔会结合机械运动声速等知识出现简单的计算题，分值会增大。）
+
+
+　　【教学目标】
+　　1、知识和技能目标  
+　　知道声波是振动在介质中以疏密相间的形式向外传播。
+　　知道常温下声音在空气中传播速度，了解不同介质中声速不同。
+　　了解不同介质的传声本领不同。
+　　知道声波的反射规律及其应用。
+　　2、过程和方法目标 
+　　体会根据“类比法”学习物理知识和探究性的实验方法。
+　　使学生具备运用物理语言归纳和表达观点的能力。
+　　3、情感、态度和价值观目标  
+　　通过对物理现象的分析，激发学生学习物理知识的热情，正确理解生活中的物理知识。
+　　学会协作交流，形成积极向上、主动学习的习惯，体现自我价值。
+
+
+
+
+\section{练习题}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{improveexercises}
+\section{提高题}
+
+\end{improveexercises}
+
+\begin{advanceexercises}
+\section{综合题}
+
+\end{advanceexercises}
+
+\ThisCenterWallPaper{1}{教案模板-3.pdf}
+
+\end{document}
+
+
+

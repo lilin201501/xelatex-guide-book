@@ -91,8 +91,7 @@ math-micro = \text{μ},
 text-micro = μ
 }
 %num命令两边加上空格 numb
-\providecommand{\numb}[1]{{ \num{#1} }}
-
+\providecommand{\numb}[1]{{~\num{#1}~}}
 
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \everymath{\displaystyle}
@@ -137,23 +136,27 @@ text-micro = μ
 \renewcommand\tablename{表}
 \renewcommand\partname{部分}
 \renewcommand\appendixname{附录}
-\renewcommand\today{\number\year年\number\month月\number\day日}
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
 
 
 %=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
 \pagestyle{fancy}
-\renewcommand{\sectionmark}[1]{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+\renewcommand{\sectionmark}[1]
+{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+
 \fancypagestyle{plain}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}
-%    \renewcommand{\chaptermark}[1]{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
+%    \renewcommand{\chaptermark}[1]
+%{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
 %    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
     \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
     \fancyhf[FR]{\thepage}
     \fancyhfoffset[R]{\marginparwidth+\marginparsep}}
 \pagestyle{plain}
+
 
 %=========章節標題設計=========%
 \RequirePackage{titlesec}
@@ -190,7 +193,16 @@ text-micro = μ
 
 
 \newcommand\reduline{\bgroup\markoverwith
-    {\textcolor{red}{\rule[-0.8ex]{1em}{0.4pt}}}\ULon}
+    {\textcolor{red}{\rule[-0.5ex]{1em}{0.4pt}}}\ULon}
+
+\newcommand\utriangle{\bgroup\markoverwith
+    {\raisebox{-0.4em}{\makebox[1em][c]{\tikz[blue]{\draw(0,0) -- (0.1,0) -- (0.05,0.05) --cycle;}}}}
+    \ULon}
+
+\newcommand\ucircle{\bgroup\markoverwith
+    {\raisebox{-0.6em}{\makebox[1em][c]{\tikz[red]{\draw(0,0) circle  (0.05) ;}}}}
+    \ULon}
+
 \renewcommand\emshape{\color{red}}
 
 %==================插入圖片=======%
@@ -253,25 +265,24 @@ text-micro = μ
 \renewenvironment{quote}[1][anonymous]{
 \newcommand{\quoteauthor}[1][anonymous]{#1}
 \list{}{\rightmargin\leftmargin %右间距等于左间距
-\itemindent   20pt
+\itemindent   2em
 }\item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\\
 \makebox[\linewidth][r]{\sffamily —\quoteauthor}
 \endlist}
 
 %重新定义quotation
 \renewenvironment{quotation}
-{\list{}{
-\itemindent 20pt%item的缩进也就是第一段的缩进
+{\list{}{\rightmargin\leftmargin %右间距等于左间距
+\itemindent 2em%item的缩进也就是第一段的缩进
 \listparindent \itemindent %第二段的缩进
 }%
 \item\relax
-\ttfamily\fontsize{10pt}{12pt}\selectfont}
+\ttfamily}
 {\endlist}
 
 %======notecard环境 一种卡片式记忆环境====%
-%长高按照黄金比例分割来，长1，高0.62--0.62\linewidth 0.38\linewidth
 %推荐的颜色有：black olive blue orange brown pink cyan purple darkgray red gray teal green violet lightgray white lime magenta yellow 建议都调淡30。!30
 %不过推荐一个文档内部一种类型使用一种，其他颜色也是可以的。
 \newsavebox{\tempbox}

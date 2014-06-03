@@ -185,17 +185,9 @@
 }
 
 
-%有交互情况的输入和输出 interaction input and output
-\DeclareRobustCommand*{\@terminalcode}{%
-\ifdefstring{\@xverbatimmode}{py}
-{ \immediate\write18{gnome-terminal -e "python3 \@outname.py " }}
-{\errmessage{only support the py lisp and scm}
-}}
-
-
 
 %environment start
-\newenvironment{xverbatim}[2][1]%#1 optional 0 1 129 ... #2 is 默认的名字 #3 类似py的模式
+\newenvironment{xverbatim}[2][1]%#1 optional 0 1 129 ... #2 程序语言模式 py lisp scm
 {
 \immediate\stepcounter{@xverbatimCounter}
 \def\@codemode{#1}
@@ -224,10 +216,8 @@
 \else   \ifnum \@codemode = 12   \@showcode \@executecode \@writefeedback
 \else   \ifnum \@codemode = 129    \@showcode \@executecode \@showresult \@writefeedback
 \else   \ifnum \@codemode = 19   \@showcode  \@showresult
-\else   \ifnum  \@codemode = 13  \@showcode \@terminalcode
-\else   \ifnum  \@codemode = 139  \@showcode \@terminalcode \@showresult
-\else          \errmessage{you typed wrong optional parameter,the choice is  0 1   12 129 19 13 139 .}
-\fi\fi\fi \fi \fi\fi\fi
+\else          \errmessage{you typed wrong optional parameter,the choice is  0 1   12 129 19  .}
+\fi\fi\fi \fi \fi
 
 }
 

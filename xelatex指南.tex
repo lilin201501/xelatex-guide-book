@@ -1268,7 +1268,9 @@ red!0    &    \cellcolor{red!0}\\ \bottomrule
 \subsection{断字}
 如果你编译的时候出现了overfull hbox什么的错误，一般是断字出现问题了，有字越过文档边界了。命令\textbackslash \textbackslash 是强制换行。还有一个换行命令\textbackslash linebreak，这个命令后面还可以跟个可选项，但意义我不大明确。一般就是观察生成的文档，然后选择合适的位置插入linebreak命令。这个断行命令断行之后，前面那行的文字将会扩展充满整行，在越界小距离的情况下还是可行的，但是距离大了这一行扩展导致字间距过大也不是十分美观。
 
-你可以考虑改变文字，或者直接用\textbackslash newline换行，或者手工加上\~符号，或者手工加上-符号和\textbackslash \textbackslash 来断英文字。
+一般断字问题主要是英文单词的断字，你可以在你想要断字的位置加上\verb+\- +，这样系统会自动判断，如果这里适合断字它就会在这里断字，这种断字方法不会加上符号\verb+-+。其实还有一种直接的断字方法，那就是在你想要断字的文字加上\verb+-\\+，这样会显示符号\verb+-+，有的时候也许这样会更加美观些。
+
+
 
 \subsection[段落中的行距]{段落中的行距\endnote{参考了\href{http://www.complang.tuwien.ac.at/anton/latex/baselineskip.html}{这个网站}}}
 \verb+\setlength{\baselineskip}{22pt}+\\

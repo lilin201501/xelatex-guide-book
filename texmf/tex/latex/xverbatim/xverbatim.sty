@@ -9,9 +9,6 @@
 \RequirePackage{verbatim}
 \RequirePackage{color}
 
-%Verbatim environment a little diy
-\fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
-    xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
 
 %%%%%%%%%%%%%%%%%%%%%for pygmentize
 \def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
@@ -177,11 +174,11 @@
 \parindent=0pt
 \vspace{-2ex}
 \rule{\linewidth}{0.4pt}
-\ttfamily\footnotesize
+\footnotesize
 \immediate\input{\@outname.\@xverbatimmode.out}
 \noindent\rule[2em]{\linewidth}{0.4pt}%
 \endgroup
-\vspace{-5ex}
+\vspace{-2ex}
 }
 
 

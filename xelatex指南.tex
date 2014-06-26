@@ -5,8 +5,7 @@
 \documentclass[12pt,oneside]{book}
 \newlength{\textpt}
 \setlength{\textpt}{12pt} 
-\newif\ifphone
-\phonefalse
+
 
 \usepackage{myconfig}
 \usepackage{mytitle}
@@ -367,7 +366,7 @@ sudo  apt-get install font-manager  \\
 
 
 \section{ubuntu系统字体的配置}
-如果你不喜欢fontmanager，那么在Ubuntu14.04以后，在\linebreak .config/fontconfig文件夹里面，有一个fonts.conf文件，进行设置也是一样的。这里是文泉驿给出的网页自动生成脚本方案\\：\href{http://wenq.org/cloud/fcdesigner_local.html}{http://wenq.org/cloud/fcdesigner\_local.html}
+如果你不喜欢fontmanager，那么在Ubuntu14.04以后，在.config/\\fontconfig文件夹里面，有一个fonts.conf文件，进行设置也是一样的。这里是文泉驿给出的网页自动生成脚本方案：\\ \href{http://wenq.org/cloud/fcdesigner_local.html}{http://wenq.org/cloud/fcdesigner\_local.html}
 
 不是特别难看的情况就没必要改动系统字体，因为我们不要低估了人眼的适应能力。这里的配置主要是指由于系统升级带来的字体的改变，特别是中文字体的改变，手动配置将其固定下来。\endnote{这个代码主要参考了\href{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}{这个网站}}
 \begin{xverbatim}{local_config.xml}
@@ -454,33 +453,7 @@ sudo  apt-key  add  ~/Nutstore/ubuntu-config/myppakey
 Tex是一个底层的标记式的编程语言，Donald Knuth发明的排版系统，可以用来排版出很漂亮的文章。当初Knuth看到自己的文章和书籍被排版的丑陋不堪，于是在1977年开发了这个排版引擎，这个引擎深深地改变了出版业，大力扩展了数字打印设备的潜能。1989年Tex支持了8位字符，然后Tex的开发就被冻结了，只限bug的修复。Tex作为一种编程语言，是支持if-else结构的：你能够在里面执行数学运算（他们在编译文件的时候被执行），等等。。不过你会发现要做其他的还是很困难的除了排版文字。Tex对于文章的结构和格式提供了良好的解决方案，使得它成为一个强大的神器。Tex是出了名的稳定，可以运行在各种计算机上，几乎没有bug。Tex的版本是按照$\pi$的序列扩展的，目前到了3.1415926。
 
 \subsection{关于Knuth教授}
-摘自台湾同胞良心作品latex123。\href{http://cle.linux.org.tw/~edt1023/tex/latex123/node2.html}{latex123}
-\begin{itemize}
-\item 1938.01.10	诞生。Milwaukee, Wisconsin; U.S. citizen。
-\item 1956	进入凯思工学院（Case Institute of Technology）学习物理。
-\item 1960	毕业后进入加州理工学院（California Institute of Technology）研究所，此时转向数学领域的研究方向。
-\item 1961.06.24	和 Nancy Jill Carter 结婚。他的中文名字是高德纳，他老婆名叫高精兰，老婆小他一岁。两个小孩，一男一女。中文名字是 1977 去中国大陆时取的。
-\item 1963	拿到 Ph.D.，并留校任教。
-\item 1968	开始任教于 Stanford 大学，信息科学系(Computer Science)。同年开始撰写名闻遐迩的 TAOCP(The Art of Computer Programming)。有人曾说，看了这部书，往后对写程序的话题都会变得谦虚。:)
-\item 1977	不满意书商所印出的 TAOCP，因此，自行开发 TeX 排版系统，这可就影响了往后的排版、出版界，至今不坠。但也因此拖延了 TAOCP 第四册的完成时间。
-\item 1986	荣获 ACM 软件系统奖。
-\end{itemize}
-
-他可说是著作等身，书籍、论文都有，他的任何著作有个奇怪的『副作用』，那就是任何人发现书上的错误，都可以向他举发，并领取 \$2.56（美金）！想试试看「手气」吗？台湾就有人领过。:-) 为什么是 \$2.56？Knuth 教授的答案是：
-
-``256 pennies is one hexadecimal dollar."发现 TeX 系统的臭虫也是一样，这个奖金每年倍数增加，直至 \$655.36($ 2^{16}$ pennies) 为止。
-
-他也很推崇自由软件基金会 (Free Software Foundation)及 GNU/Linux，把一些希望都寄托于 GNU/Linux，尤其是 Unicode 环境，他希望 GNU/Linux 很快就能在网页上显示他的中文名字，而不必使用图档。其实是可以做到了，只是 Unicode 环境还不算普及罢了。他曾在 1996 年接受 Dr. Dobb's Journal 访问时英雄惜英雄的公开表示，创导自由软件 (Free Software)的 Richard M. Stallman 是他心目中的英雄之一，他认为自由软件基金会这些人所做的贡献很不错，虽然和他的方式不一定一样，但许多贡献是互有认同的。
-
-在发展 TeX 时就同时思考 WEB（这个词比目前使用的 WWW Web 还早使用），那是一种 literate programming 的程序方法。他认为目前已成熟的可以提出含有文件的程序方法，使写程序就像写文学作品（小说？）一般的艺术表现。后来也把他由 C 改写（和 Silvio Levy 合作），名为 CWEB。TeX 就是由 WEB 写成的，WEB 可视为 Pascal 语言的一个子集。
-
-一个 literate 程序师可被视为文学作家、评论写作者、随笔作者 $ \cdots\cdots$，程序的表现不仅仅是搬弄符号，而是展现自己的风格，当然也是指达成目的的风格、甚至程序中变量运用的风格。
-
-这样一来就可以展现让人类较能理解的程序码。使用形式及非形式的融合，而且两者间相辅相成，目的达成了，也让阅读的人就好像读文学作品般的去抓住作者的心，使程序创作提升至更高的（文学）艺术境界，而不再是死板板的 code 了。
-
-Knuth 大师已于 1992 年自大学退休，但仍在 Stanford/Oxford 等大学有授课。目前正处于隐居的生活，他这么早退休的原因，就是因为 TAOCP 这部书，他估计大约要花 20 年来完成，因此目前的重点工作是完成他的 TAOCP（分成好几册，目前真正出版的只有三大册）。他认为 email会影响他的思路，因此，宁愿留住址，要和他联络就只好写信，传真。给他的秘书的 email，是最后有时间才会去看，他曾公开的表明，这部书是他这一生中最重要的工作。
-
-虽然 Knuth 教授写了许多严肃艰深的书籍、论文，但是他也是有风趣的一面，在 1996 年，Mathematisch Centrum (MC, 为庆祝五十周年庆改称为 Centrum voor Wiskunde en Informatica, CWI) 曾邀请他演讲，并知会荷兰的 TeX User Group(NTG)，NTG 见机会难得，就邀请 Knuth 教授另开个 TeX 及 Metafont 讨论会，并接受大家的提问，他说：『不对，我也是可以问你们问题的！』。而且，他还说：『这种问答的内容，很可能在不同场合重复过，所以，如果我对同一个问题，曾有过两种答案的话，你们必需取其平均值。』他的妙语如珠，在许多类似的场合常常引起哄堂大笑，但实际的内容却绝非泛泛之言。:-)
+Knuth教授是\TeX 排版系统的发明人，出于内容精简的目的，关于Knuth教授的生平信息删去了，有兴趣的请自行搜索之。
 
 \subsection{LaTeX}
 LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的专业页面设置,从而得以高质量地排版和打印他们的作品。LaTeX 最早是由 Leslie Lamport编写的,并使用\TeX 作为其排版系统引擎。\footnote{again，form the lshort}
@@ -509,7 +482,7 @@ LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的�
 \textbackslash command [optional parameters]\{parameters\}
 
 前面第一行代码是：\\
-\textbackslash documentclass [12pt,oneside]\{book\},意思是描述文章模板的类型为book，也就是一本书，除此之外还有article，report，slide类型等，更详细的讨论参见documentclass说明\ref{sec:documentclass}
+\textbackslash documentclass [12pt,oneside]\{book\},意思是描述文章模板的类型为book\\，也就是一本书，除此之外还有article，report，slide类型等，更详细的讨论参见documentclass说明\ref{sec:documentclass}
 
 然后我们看到第二行代码：
 
@@ -536,9 +509,9 @@ texdoc xeCJK
 
 \section{从documentclass说起}
 \label{sec:documentclass}
-文档刚开始是preamble区域，放着文档的一些配置，从begin\{document\}开始进入正文区，出了end\{document\}这句话之后后面写的什么程序都不管了。document是一个环境，后面我们会接触很多的环境的。
+文档刚开始是preamble区域，放着文档的一些配置，从begin\\\{document\}开始进入正文区，出了end\{document\}这句话之后后面写的什么程序都不管了。document是一个环境，后面我们会接触很多的环境的。
 
-documentclass命令的必选参量有article，report，book，\linebreak slides，beamer等，一般了解这几个就够用了。他们之间有很多细微的差别，这个后面慢慢了解。
+documentclass命令的必选参量有article，report，book， slides，beamer等，一般了解这几个就够用了。他们之间有很多细微的差别，这个后面慢慢了解。
 
 分节命令带星号表示该分节不进入目录，也不编号。
 
@@ -560,7 +533,7 @@ documentclass命令的必选参量有article，report，book，\linebreak slides
 \subsection{一般的可选项}
 10pt，11pt，12pt      设置文档所使用字体的大小，默认是10pt。
 
-a4paper ，letterpaper...      定义纸张的大小，此外还有a5paper，b5paper，executivepaper，legalpaper等。
+a4paper ，letterpaper...      定义纸张的大小，此外还有\\a5paper，b5paper，executivepaper，legalpaper等。
 
 fleqn       设置该选项将使数学公式左对齐，而不是中间对齐。
 
@@ -738,7 +711,7 @@ $t$（分） & $s$（英尺）  \\ \midrule
 
 
 \subsubsection{字族}
-字族分为三大类，roman or serif（rm），sans serif（sf） 和 monospace。（tt）\endnote{下面参考了\href{http://wiki.ubuntu-tw.org/index.php?title=HowtoCustomFontswithFontconfig}{这个网站}}
+字族分为三大类，roman or serif（rm），sans serif（sf）和\\monospace（tt）。\endnote{下面参考了\href{http://wiki.ubuntu-tw.org/index.php?title=HowtoCustomFontswithFontconfig}{这个网站}}
 
 
 \begin{description}
@@ -902,7 +875,7 @@ fontspec宏包有一个和这个宏包名字一样的命令，这个命令非常
 \end{Verbatim}
 {\fontspec[Scale=4,Color=magenta]{Comic Sans MS} this is a test.} 
 
-另外还有一个有用的命令就是newfontfamily，这个命令相当于把fontspec命令包起来再新建一个命令。新建的那些字体命令就像\verb+\sffamily+之类的命令一样使用。，在后面讲到引入特殊符号的时候我们还会接触到这个命令。\\　
+另外还有一个有用的命令就是newfontfamily，这个命令相当于把fontsp\- ec命令包起来再新建一个命令。新建的那些字体命令就像\verb+\sffamily+之类的命令一样使用。，在后面讲到引入特殊符号的时候我们还会接触到这个命令。\\　
 \verb+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}+
 
 以上基本命令总结如下:
@@ -986,7 +959,8 @@ xeCJK宏包只处理CJK字符在这里指中文字，也就是英文字还是用
 
 \subsection{只能在加载宏包时填入的选项}
 CJKnumber = <true | false> \\
-默认是false，如果设置为true，那么可以适用CJKnumber命令。比如这个命令\verb+\CJKnumber{1}+的输出结果是：\CJKnumber{1}。还有一个命令比如\verb+\CJKdigits{1545}+的输出结果是：\CJKdigits{1545}。
+默认是false，如果设置为true，那么可以适用CJKnumber命令。比如这个命令\verb+\CJKnumber{1}+的输出结果是：\CJKnumber{1}。还有一个命令比如:\\
+\verb+\CJKdigits{1545}+的输出结果是：\CJKdigits{1545}。
 
 indentfirst = <true | false>\\
 章节下面第一段首行缩进不缩进，默认是true，缩进。这个没啥好修改的，一般都统一缩进吧，如果有某个段落你不想缩进加上noindent命令就是了。
@@ -1634,7 +1608,8 @@ def命令是\TeX 的原始定义命令，比如说：\\
 \subsection{文章内部引用}
 某一个特别的章节图片或者表格等需要被引用时，你就在它哪里加上label命令。然后就可以用ref命令在文章内部建立链接引用他们了。值得一提的是texmaker的提示功能非常好。建立label的时候方便你管理，section部分前面就加一个sec:前缀，图片加一个fig:前缀，表格加个tab:前缀等。然后labe中文英文都是可以的，方便自己管理最好写的很明晰。
 
-比如在这里我插入了一个参考文献的引用，是用的是cite命令。\verb+ \cite{lshort}+请参见文献\cite{lshort}
+比如在这里我插入了一个参考文献的引用，是用的是cite命令。\\
+\verb+ \cite{lshort}+请参见文献\cite{lshort}
 
 还有一个pageref命令和ref命令差不多，文档上写法都类似，不同的是在文章上显示的是页码。
 
@@ -2239,7 +2214,7 @@ hline命令表示画一条横线。\& 这个特殊符号表示进入下一列。
 如果你只是想要一个简洁明了的表格，目前大家公认的好的表格标准就是三线表式，你也可以称之为booktabs风格吧。简单来说有以下规则：①不要垂直线； ②不要双横线；③每一行的各个格子都有足够的空间；④一律左对齐；⑤三线，toprule，midrule，bottomrule。
 \endnote{按照Markus Püschel的small guide to making nice tables里面的介绍。}
 
-在这里我们还有个捷径，不一定要手工将表格代码全部敲出来。首先我们找一个表格软件，libreoffice的或者gnumeric都行。然后将数据输入进去保存好。然后我们将数据选择复制，打开网站：\href{http://www.tablesgenerator.com/}{http://www.tablesgenerator.com/}。在那个网站的表格的开头哪里按下Ctrl+v。这个网站还有一些设置可以调整，稍微摸索下就知道了。唯一要说的是那个activate/deactivate custom grid edit选项，可以选择绘制某几根线框显示。在这里不做调整，直接选择最右边的booktabs table style。然后把多余的行或者列删除掉，就可以点击下面的generate了。生成的代码如下：
+在这里我们还有个捷径，不一定要手工将表格代码全部敲出来。首先我们找一个表格软件，libreoffice的或者gnumeric都行。然后将数据输入进去保存好。然后我们将数据选择复制，打开网站：\\ \href{http://www.tablesgenerator.com/}{http://www.tablesgenerator.com/}\\在那个网站的表格的开头哪里按下Ctrl+v。这个网站还有一些设置可以调整，稍微摸索下就知道了。唯一要说的是那个activate/deactivate custom grid edit选项，可以选择绘制某几根线框显示。在这里不做调整，直接选择最右边的booktabs table style。然后把多余的行或者列删除掉，就可以点击下面的generate了。生成的代码如下：
 \begin{Verbatim}
 \begin{table}[h]
 \begin{tabular}{@{}ll@{}}
@@ -2405,13 +2380,12 @@ rowscolors第二个选项            & 奇数列的颜色  \\
 
 
 \subsection{fancyvrb宏包}
-fancyverb宏包提供了一个Verbatim环境，本文具体的配置代码如下：
+fancyverb宏包提供了一个Verbatim环境，比如下面的配置代码的说明如下。更多说明请参见fancyvrb宏包文档。
 \begin{Verbatim}
 \fvset{numbers=left,frame=lines,tabsize=4 ,baselinestretch=2,
     xleftmargin=6pt, fontsize=\footnotesize , numbersep=2pt}
 \end{Verbatim}
 
-更多说明请参见fancyvrb宏包文档，这里只就涉及到的简单说一下：
 \begin{table}[H]
 \centering
 \caption{Verbatim环境一些设置}
@@ -2557,6 +2531,101 @@ print('$$' + latex(ep1) + '$$', '$$' + latex(ep2) + '$$')
 基本用法就是这样的，其中可选项1表示显示代码，2表示执行代码，9表示显示结果。除了129之外，还有的行为模式有：0，1，12和19。其中较常用的是1，就是染色的显示代码。12表示只显示代码和执行代码，19表示只显示代码和显示结果（这个在之前已经执行了有用。）总的来说常用的模式有0什么都不做，1显示代码和129模式。
 
 后面跟一个可选项表示目标程序语言的后缀，可执行代码的目前只有：py，lisp和scm。如果只是想显示代码的话，后面可以跟的代码后缀对应的染色方案就有很多了，比如：c，cpp，tex，html，php，java，pl等等，更多具体细节请参看文件夹[\textit{自建宏包的演示和说明}]里面的内容。
+
+
+\subsection{minted宏包}
+minted宏包也是利用pygments来自动进行语法染色，它还提供了一个listings环境，不过并不能正确分页，所以让我们忘了那个listings环境（或者现在问题解决了？），然后就其他部分，自动语法染色，fancyvrbDIY选项的继承，还新增了背景颜色的设置，这些都是极好极好的。。
+
+\subsubsection{mint命令}
+minted宏包提供了mint命令来进行inline的code输入，这正好弥补了原verb命令功能过于简陋的问题。
+
+\begin{Verbatim}
+\mint{tex}+\test code+
+\end{Verbatim}
+
+\mint{tex}+\test code+
+
+初步的测试情况如下，mint命令里面不能再写上mint命令。
+
+\subsubsection{minted环境}
+\begin{Verbatim}
+\begin{minted}{c}
+#include <stdio.h>
+
+int main(void)
+{
+    printf("hello, world\n");
+    return 0;
+}
+\end{minted}
+\end{Verbatim}
+
+\begin{minted}{c}
+#include <stdio.h>
+
+int main(void)
+{
+    printf("hello, world\n");
+    return 0;
+}
+\end{minted}
+
+然后minted宏包加上背景颜色会出现hbox的badness问题，推荐使用tcolorbox来加上背景颜色。
+
+
+\subsection{tcolorbox和minted}
+我不愿加上数字之类的主要是方便人们在pdf上复制，虽然空格并不能保留，不过还是已经很省心了。这里用tcolorbox宏包的主要任务就是加上背景颜色。
+
+\begin{Verbatim}
+%minted
+\RequirePackage{minted}%
+\RequirePackage[minted]{tcolorbox}%
+\tcbuselibrary{breakable}
+\newtcblisting{tcbminted}[2][]{listing engine=minted,minted style=colorful,minted language=#2,minted options={fontsize=\footnotesize},colback=blue!5!white,colframe=blue!75!black,listing only,#1,breakable=true}
+
+\begin{tcbminted}{python}
+class Hero():
+    def addlevel(self):
+        self.level=self.level+1
+        self.hp=self.hp+self.addhp
+
+class Garen(Hero):
+    def __init__(self):
+        self.level=1
+        self.hp=455
+        self.addhp=96
+        self.skill=['不屈','致命打击','勇气','审判','德玛西亚正义']
+
+garen001=Garen()
+for i in range(6):
+    print('级别:',garen001.level,'生命值：' ,garen001.hp)
+    garen001.addlevel()
+print('盖伦的技能有：',"".join([x + '  ' for x in garen001.skill]))
+\end{tcbminted}
+\end{Verbatim}
+
+\begin{tcbminted}{python}
+class Hero():
+    def addlevel(self):
+        self.level=self.level+1
+        self.hp=self.hp+self.addhp
+
+class Garen(Hero):
+    def __init__(self):
+        self.level=1
+        self.hp=455
+        self.addhp=96
+        self.skill=['不屈','致命打击','勇气','审判','德玛西亚正义']
+
+garen001=Garen()
+for i in range(6):
+    print('级别:',garen001.level,'生命值：' ,garen001.hp)
+    garen001.addlevel()
+print('盖伦的技能有：',"".join([x + '  ' for x in garen001.skill]))
+\end{tcbminted}
+
+
+
 
 
 
@@ -2962,7 +3031,7 @@ em  & （相对长度）大约相当于当时字体的M宽度 & \\ \bottomrule
 \label{fig:box参数}
 \end{linefig}
 
-盒子就是这么一个长方形的区域，如上图所示，它有参数：height\linebreak ，width，depth。baseline和reference point在后面讲的hbox和vbox中会用到。在\TeX 看来，从字体而来的Unicode 字符就是一个最简单的盒子。字体的设计者已经决定了这个字符的高度，宽度和深度以及它在这个盒子里面看起来如何。\TeX 就是用这些维度将盒子黏合到一起，并最终决定所有字符的reference point 参考点在页面上的位置。
+盒子就是这么一个长方形的区域，如上图所示，它有参数：height，width，depth。baseline和reference point在后面讲的hbox和vbox中会用到。在\TeX 看来，从字体而来的Unicode 字符就是一个最简单的盒子。字体的设计者已经决定了这个字符的高度，宽度和深度以及它在这个盒子里面看起来如何。\TeX 就是用这些维度将盒子黏合到一起，并最终决定所有字符的reference point 参考点在页面上的位置。
 
 \TeX 的盒子如果全部涂上颜色，一般是黑色，那么就成了一个黑盒子。这样的黑盒子还有一个名字叫做rule box。也就是线条。这个在后面会谈论到的。
 
@@ -2977,7 +3046,7 @@ glue也就是各个盒子之间的间距。下图是glue的具体图示：
 \begin{linefig}{glue说明}
 \label{fig:glue说明}
 \end{linefig}
-前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12+8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3\times\frac { 6 }{ 9 } $。这样第一个间距的总长度就是$9+3\times\frac { 6 }{ 9 } =11$。
+前面说到盒子的reference point水平排列，然后他们之间还有叫做glue的间距。间距有三个属性：正常间距量(space)，拉伸量(stretch)，缩减量(shrink)。比如这个图片中第一个glue的正常间距是9个单位，拉伸量为3个单位，缩减量为1个单位。而总的情况是正常间距是5(box1)+9+6+9+3+12\- +8=52个单位。现在假设一行宽58个单位，\TeX 就要调整使得这一行盒子的宽度刚好等于58个单位，于是还需要增加6个单位的宽度，而这6个单位的宽度\footnote{为了简单起见这里不考虑缩减量，具体缩减量如何计算我也不大清楚。}需要从这一行所有glue里的拉伸量中找出来。于是总的拉伸量加法是3+6+0=9。也就是6个单位的宽度要分成9等分再分配给他们，即第一个glue的拉伸量是$3\times\frac { 6 }{ 9 } $。这样第一个间距的总长度就是$9+3\times\frac { 6 }{ 9 } =11$。
 
 经过计算所有的glue间距都确定下来了，那么整个页面布局就确定了。我在这里就戛然而止了，毕竟这里只是对box和glue的基本概念的阐明。
 
@@ -3372,7 +3441,7 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 \backmatter
 \addchtoc{参考文献}
 \begin{thebibliography}{9}
-\bibitem{lshort} 有名的《一份不太简短的\LaTeX2e 介绍》,原版作者：Tobias Oetiker,Hubert Partl,Irene Hyna等，版本：2001-08-09，中文翻译：CTeX用户小组,版本：2002-05，pdf下载链接：\href{http://www.ctan.org/tex-archive/info/lshort/chinese}{http://www.ctan.org/tex-archive/info/lshort/chinese}。
+\bibitem{lshort} 有名的《一份不太简短的\LaTeX2e 介绍》，原版作者：Tobias Oetik\- er,Hubert Partl,Irene Hyna等，版本：2001-08-09，中文翻译：CTeX用户小组，版本：2002-05，pdf下载链接：\\ \href{http://www.ctan.org/tex-archive/info/lshort/chinese}{http://www.ctan.org/tex-archive/info/lshort/chinese}。
 \bibitem{latex123}  《大家来学\LaTeX 》,原版作者：李果正，版本：2004-03-08，网站链接：\href{http://edt1023.sayya.org/tex/latex123/}{http://edt1023.sayya.org/tex/latex123/}。
 \bibitem{wikibook-latex} 维基图书latex篇英文版，版本：2013-08，网站链接\\：\href{http://en.wikibooks.org/wiki/LaTeX}{http://en.wikibooks.org/wiki/LaTeX}。\emph{这本书甚至都没有cite它一下，因为不知道插在哪里，几乎到处都有对它的引用，谢谢所有wikibook的编写者。}
 \bibitem{boxes} using boxes and glue in \TeX{} and \LaTeX ，原版作者：Nelson H. F. Beebe，版本：2009-03-28，pdf下载链接：链接地址不好复制，请google搜索书名之。

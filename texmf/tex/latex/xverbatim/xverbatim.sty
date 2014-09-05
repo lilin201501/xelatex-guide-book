@@ -104,8 +104,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newwrite\@codeout
 \newread\@retcode
+
+
+
 % Put the  code in separate files.
-\newcounter{@xverbatimCounter}[chapter]
+\@ifclassloaded{article}%support article class
+  {\newcounter{@xverbatimCounter}[section]
+  \let\thechapter\thesection}
+  {\newcounter{@xverbatimCounter}[chapter]}%
 \setcounter{@xverbatimCounter}{0}
 %reset the xverbatimCounter when it encounter the chapter
 

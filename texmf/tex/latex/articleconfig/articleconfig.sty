@@ -19,7 +19,7 @@
 
 %========基本必备的宏包========%
 \RequirePackage{calc,float,multicol,moresize}
-%\RequirePackage[doublespacing]{setspace}
+%\RequirePackage[onehalfspacing]{setspace}
 \linespread{1.5}
 %1.3 onehalfspacing
 %试卷或需要文字紧凑的
@@ -31,7 +31,6 @@
         \addcontentsline{toc}{section}{#1}}
 
 %===========全文基本格式==========%
-
 \newenvironment{common-format}{ %
         \setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
         \setlength{\parindent}{\textpt * \real{2}}}
@@ -39,16 +38,16 @@
 
 %=========页面设置=========%
 \RequirePackage[a4paper, %a4paper size 297:210 mm
-  bindingoffset=0mm,%裝訂線
+  bindingoffset=10mm,%裝訂線
   top=35mm,  %上邊距 包括頁眉
   bottom=30mm,%下邊距 包括頁腳
-  inner=35mm,  %左邊距or inner
-  outer=40mm,  %右邊距or  outer
+  inner=10mm,  %左邊距or inner
+  outer=10mm,  %右邊距or  outer
   headheight=10mm,%頁眉
   headsep=15mm,%
   footskip=15mm,%
-  marginparsep=0pt, %旁註與正文間距
-  marginparwidth=0pt,includemp=true% 旁註寬度計入width%旁註寬度
+  marginparsep=10pt, %旁註與正文間距
+  marginparwidth=6em,includemp=true% 旁註寬度計入width%旁註寬度
   ]{geometry}
 
 %color
@@ -112,6 +111,8 @@ text-micro = μ
 \renewcommand\partname{部分}
 \renewcommand\appendixname{附录}
 \renewcommand\abstractname{摘要}
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
+
 
 %=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
@@ -127,11 +128,11 @@ text-micro = μ
 %=========章節標題設計=========%
 \RequirePackage{titlesec}
 %修改section
-\titleformat{\section}{\Large\sffamily\centering}{}{0em}{}
+\titleformat{\section}{\Large\sffamily}{}{0em}{}
 %修改subsection
-\titleformat{\subsection}{\large\sffamily\centering}{}{0em}{}
+\titleformat{\subsection}{\large\sffamily}{}{0em}{}
 %修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily\centering}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
 
 
 %================目录===============%
@@ -156,6 +157,15 @@ text-micro = μ
 
 \newcommand\reduline{\bgroup\markoverwith
     {\textcolor{red}{\rule[-0.5ex]{1em}{0.4pt}}}\ULon}
+
+%modified udot command from the dotuline
+\def\udot{\bgroup
+  \UL@setULdepth
+  \markoverwith{\begingroup
+     \advance\ULdepth0.1ex
+     \lower\ULdepth\hbox{\kern.25em . \kern.045em}%
+     \endgroup}%
+  \ULon}
 \renewcommand\emshape{\color{red}}
 
 %==================插入圖片=======%
@@ -188,11 +198,16 @@ text-micro = μ
 \RequirePackage{minted}%
 \RequirePackage[minted]{tcolorbox}%
 \tcbuselibrary{breakable}
-\definecolor{pythonback}{RGB}{240,240,240}
+\definecolor{codeback}{RGB}{240,240,240}
 \definecolor{bashback}{RGB}{48,10,36}
-\newtcblisting{tcbminted}[2][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=white,boxrule=0.4pt}
-\newtcblisting[]{tcbpython}[1][]{listing engine=minted,minted language=python,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=pythonback,boxrule=0.4pt,boxsep=0pt}
-\newtcblisting{tcbbash}[1][]{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white,boxsep=0pt}
+
+\newtcblisting{tcbcode}[2][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
+
+\newtcblisting{tcbpython}[1][]{listing engine=minted,minted language=python,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
+
+\newtcblisting{tcbbash}[1][]{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white}
+
+
 
 %=============插入尾注=========%
 \RequirePackage{endnotes}
@@ -203,7 +218,7 @@ text-micro = μ
 
 %========脚注=========%
 \newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.4pt,minimum size=6pt] (char) {#1};}
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.4pt,minimum size=4pt] (char) {#1};}
 \newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
 
 \RequirePackage{perpage} %the perpage package
@@ -219,6 +234,10 @@ text-micro = μ
 
 \setlength{\skip\footins}{20pt plus 10pt}
 %main body 与脚注之间的距离
+
+%===========旁注===========%
+\newcommand{\notefont}{\itshape\fontsize{10pt}{10pt}\selectfont }
+\newcommand{\sidenote}[1]{\marginpar{\notefont #1}}
 
 
 %=====特殊的环境特殊的文字======%

@@ -20,8 +20,17 @@
 
 全书主要分为五大块：
 \begin{description}
-\item[1. latex基础] \hfill \\
-为了更好的兼容org模式或者以后的可能其他基于内容而不是表现层的文本，这部分只有latex原生的最简的命令和环境，这些命令和环境的DIY然后随便加上一个sty宏包就能很好支持org模式了。因为org模式原生支持数学环境的输入，数学环境的输入问题也在其内。
+
+latex最简部分，为了更好的兼容org模式或者以后的可能其他基于内容而不是表现层的文本，这部分只有latex原生的最简的命令和环境，这些命令和环境的DIY然后随便加上一个sty宏包就能很好支持org模式了。因为org模式原生支持数学环境的输入，所以这部分就直接加进去了，不过额外加载的ams宏包新加入的命令是不是很好支持org模式，还需要讨论一下。
+
+
+
+
+
+
+
+\item[1. ubuntu知识] \hfill \\
+主要是一些最基本的ubuntu知识或者和本文其他内容相关的知识。当然有时出于全面性考虑会加入一点其他的linux知识进来，不过这部分需要做到不过分扩充内容。
 
 \item[2.xelatex基础] \hfill \\
 这部分主要是讨论了latex和xelatex的区别，主要就是讨论中文化，字体设置等等问题。
@@ -56,20 +65,24 @@
 
 \begin{common-format}
 \mainmatter 
-\part{latex基础}
-\chapter{背景知识}
-\section{TeX}
+
+
+
+
+\chapter{latex基础}
+\section{背景知识}
+\subsection{TeX}
 以下完全按照wikibook中的latex翻译的。\href{http://en.wikibooks.org/wiki/LaTeX/Introduction}{wikibook-latex}
 
 Tex是一个底层的标记式的编程语言，Donald Knuth发明的排版系统，可以用来排版出很漂亮的文章。当初Knuth看到自己的文章和书籍被排版的丑陋不堪，于是在1977年开发了这个排版引擎，这个引擎深深地改变了出版业，大力扩展了数字打印设备的潜能。1989年Tex支持了8位字符，然后Tex的开发就被冻结了，只限bug的修复。Tex作为一种编程语言，是支持if-else结构的：你能够在里面执行数学运算（他们在编译文件的时候被执行），等等。。不过你会发现要做其他的还是很困难的除了排版文字。Tex对于文章的结构和格式提供了良好的解决方案，使得它成为一个强大的神器。Tex是出了名的稳定，可以运行在各种计算机上，几乎没有bug。Tex的版本是按照$\pi$的序列扩展的，目前到了3.1415926。
 
-\section{关于Knuth教授}
+\subsection{关于Knuth教授}
 Knuth教授是\TeX 排版系统的发明人，出于内容精简的目的，关于Knuth教授的生平信息删去了，有兴趣的请自行搜索之。
 
-\section{LaTeX}
+\subsection{LaTeX}
 LaTeX是一个宏包,其目的是使作者能够利用一个预先定义好的专业页面设置,从而得以高质量地排版和打印他们的作品。LaTeX 最早是由 Leslie Lamport编写的,并使用\TeX 作为其排版系统引擎。\footnote{again，form the lshort}
 
-\section{XeLaTeX}
+\subsection{XeLaTeX}
 关于XeLaTeX第一是文档是UTF-8编码的，第二是它对各种字体多语言输出文章的解决方案是最完美的，第三是LaTeX里面能够用的命令它一般都能用，第四是编译生成pdf文件使用的命令是xelatex什么什么tex文件，第五是需要知道它内置引擎现在一般是xdvipdfmx。
 
 
@@ -2463,7 +2476,7 @@ bibitem命令的必填参数是参考文献的标签名字，但不是实际显�
 
 
 
-\part{xelatex基础}
+
 
 
 

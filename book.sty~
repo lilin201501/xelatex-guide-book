@@ -6,7 +6,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{articleconfig}
+\ProvidesPackage{book}
 
 %盒子填不满容忍？
 %\hbadness=10000
@@ -16,6 +16,17 @@
 %\let\myDate\date
 %\newcommand\GoodBye[1][\bfseries]{{#1Good Bye}}
 
+\newlength{\textpt}
+\setlength{\textpt}{11pt} 
+
+%额外的一些命令
+\newcommand\utriangle{\bgroup\markoverwith
+    {\raisebox{-0.4em}{\makebox[1em][c]{\tikz[blue]{\draw(0,0) -- (0.1,0) -- (0.05,0.05) --cycle;}}}}
+    \ULon}
+
+\newcommand\ucircle{\bgroup\markoverwith
+    {\raisebox{-0.6em}{\makebox[1em][c]{\tikz[red]{\draw(0,0) circle  (0.05) ;}}}}
+    \ULon}%
 
 %========基本必备的宏包========%
 \RequirePackage{calc,float,multicol,moresize}
@@ -26,6 +37,12 @@
 %1.6 doublespacing
 
 %===========加入目录 某章或某节=====%
+
+\newcommand{\addchtoc}[1]{
+        \cleardoublepage
+        \phantomsection
+        \addcontentsline{toc}{chapter}{#1}}
+
 \newcommand{\addsectoc}[1]{
         \phantomsection
         \addcontentsline{toc}{section}{#1}}
@@ -51,7 +68,7 @@
   ]{geometry}
 
 %color
-\RequirePackage[table]{xcolor}
+\RequirePackage[table,svgnames]{xcolor}
 \definecolor{bgcolor-0}{HTML}{CCFFCC}
 
 
@@ -105,28 +122,39 @@ text-micro = μ
 \renewcommand\contentsname{目~录}
 \renewcommand\listfigurename{插图目录}
 \renewcommand\listtablename{表格目录}
+\renewcommand\bibname{参~考~文~献}
 \renewcommand\indexname{索~引}
 \renewcommand\figurename{图}
 \renewcommand\tablename{表}
 \renewcommand\partname{部分}
 \renewcommand\appendixname{附录}
-\renewcommand\abstractname{摘要}
 \renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
 
 
 %=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
 \pagestyle{fancy}
-\renewcommand{\sectionmark}[1]{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+\renewcommand{\sectionmark}[1]
+{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+
 \fancypagestyle{plain}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}
+%    \renewcommand{\chaptermark}[1]
+%{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
+%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
+    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
     \fancyhf[FR]{\thepage}}
 \pagestyle{plain}
 
+
 %=========章節標題設計=========%
 \RequirePackage{titlesec}
+%修改part
+\titleformat{\part}{\huge\sffamily}{}{0em}{}
+%修改chapter
+\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{}
 %修改section
 \titleformat{\section}{\Large\sffamily}{}{0em}{}
 %修改subsection
@@ -172,6 +200,8 @@ text-micro = μ
 \RequirePackage{wrapfig}
 \RequirePackage{graphicx}
 \graphicspath{{figures/}}
+%change the caption style a little like 1-1
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 
 \newenvironment{fig}[2][1]
         {\begin{figure}[H]
@@ -186,12 +216,13 @@ text-micro = μ
 
 %==============插入表格========%
 \RequirePackage{booktabs}
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
 \RequirePackage{caption}
 %\renewcommand{\arraystretch}{1.3}
 %如果用setspace宏包而不是linespread调整行间距，那么才需要额外的表格行距拉大。
 
 %插入代码
-\RequirePackage{fancyvrb}%
+\RequirePackage{xverbatim}%
 \fvset{frame=lines,tabsize=4 ,baselinestretch=1.8, fontsize=\footnotesize}
 
 %minted
@@ -207,6 +238,7 @@ text-micro = μ
 
 \newtcblisting{tcbbash}[1][]{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white}
 
+\newtcbinputlisting{tcbinput}[3][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=blue!5!white,boxrule=0.4pt,boxsep=0pt,listing file={#3}}
 
 
 %=============插入尾注=========%

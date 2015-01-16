@@ -6,7 +6,7 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{book}
+\ProvidesPackage{myconfig}
 
 %盒子填不满容忍？
 %\hbadness=10000
@@ -16,19 +16,8 @@
 %\let\myDate\date
 %\newcommand\GoodBye[1][\bfseries]{{#1Good Bye}}
 
-
 \newlength{\textpt}
-\setlength{\textpt}{11pt}
-
-%额外的一些命令
-\newcommand\utriangle{\bgroup\markoverwith
-    {\raisebox{-0.4em}{\makebox[1em][c]{\tikz[blue]{\draw(0,0) -- (0.1,0) -- (0.05,0.05) --cycle;}}}}
-    \ULon}
-
-\newcommand\ucircle{\bgroup\markoverwith
-    {\raisebox{-0.6em}{\makebox[1em][c]{\tikz[red]{\draw(0,0) circle  (0.05) ;}}}}
-    \ULon}%
-
+\setlength{\textpt}{12pt} 
 %========基本必备的宏包========%
 \RequirePackage{calc,float,multicol,moresize}
 %\RequirePackage[onehalfspacing]{setspace}
@@ -49,8 +38,10 @@
         \addcontentsline{toc}{section}{#1}}
 
 %===========全文基本格式==========%
-\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-\setlength{\parindent}{\textpt * \real{2}}
+\newenvironment{common-format}{ %
+        \setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
+        \setlength{\parindent}{\textpt * \real{2}}}
+    {}
 
 %=========页面设置=========%
 \RequirePackage[a4paper, %a4paper size 297:210 mm

@@ -1,7 +1,23 @@
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k+kn}{import} \PY{o}{*}
-\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{c}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{n}{symbols}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{a b c x}\PY{l+s}{\PYZsq{}}\PY{p}{)}
-\PY{n}{ep1}\PY{o}{=}\PY{n}{diff}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{x}\PY{o}{+}\PY{n}{c}\PY{p}{,}\PY{n}{x}\PY{p}{)}
-\PY{n}{ep2}\PY{o}{=}\PY{n}{integrate}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{x}\PY{o}{+}\PY{n}{c}\PY{p}{,}\PY{n}{x}\PY{p}{)}
-\PY{k}{print}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZdl{}\PYZdl{}}\PY{l+s}{\PYZsq{}} \PY{o}{+} \PY{n}{latex}\PY{p}{(}\PY{n}{ep1}\PY{p}{)} \PY{o}{+} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZdl{}\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZdl{}\PYZdl{}}\PY{l+s}{\PYZsq{}} \PY{o}{+} \PY{n}{latex}\PY{p}{(}\PY{n}{ep2}\PY{p}{)} \PY{o}{+} \PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZdl{}\PYZdl{}}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+\PY{k}{\PYZbs{}documentclass}\PY{n+na}{[landscape]}\PY{n+nb}{\PYZob{}}article\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}geometry\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}fontspec\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setmainfont}\PY{n+nb}{\PYZob{}}DejaVu Sans\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}multicol\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}columnseprule}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0.4pt\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}usepackage}\PY{n+nb}{\PYZob{}}multido\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}setlength}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}parindent}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}0pt\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}document\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}LARGE\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}begin}\PY{n+nb}{\PYZob{}}multicols\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}5\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}multido}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}=0+1\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PYZdq{}196607\PYZdq{}\PY{n+nb}{\PYZcb{}}\PY{n+nb}{\PYZob{}}\PY{c}{\PYZpc{} from U+0000 to U+2FFFF}
+\PY{c}{\PYZpc{}后面的还会继续扩展，目前一般还没使用。}
+  \PY{k}{\PYZbs{}iffontchar}\PY{k}{\PYZbs{}font}\PY{k}{\PYZbs{}i}
+    \PY{k}{\PYZbs{}makebox}\PY{n+na}{[4em]}\PY{n+na}{[l]}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}\PY{n+nb}{\PYZcb{}}\PY{c}{\PYZpc{}}
+    \PY{k}{\PYZbs{}symbol}\PY{n+nb}{\PYZob{}}\PY{k}{\PYZbs{}i}\PY{n+nb}{\PYZcb{}}\PY{k}{\PYZbs{}endgraf}
+  \PY{k}{\PYZbs{}fi}
+\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}multicols\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}LARGE\PY{n+nb}{\PYZcb{}}
+\PY{k}{\PYZbs{}end}\PY{n+nb}{\PYZob{}}document\PY{n+nb}{\PYZcb{}}
 \end{Verbatim}

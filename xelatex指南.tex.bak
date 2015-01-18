@@ -2912,11 +2912,6 @@ fcolorbox和colorbox的区别就是外面加了一个边框，然后第一个参
 
 
 \part{org模式详解}
-\chapter{org文档编写入门}
-关于emacs相关操作信息请参看附录的emacs入门部分\ref{sec:emacs}。
-
-
-
 \chapter{org转tex初步配置}
 \begin{tcbcode}[]{scheme}
 ;latex设置
@@ -2975,9 +2970,103 @@ fcolorbox和colorbox的区别就是外面加了一个边框，然后第一个参
 
 
 \chapter{org模式对应latex命令详解}
-先暂停一下，把emacs入门部分写好，然后org文档编写入门写好，然后再继续。
+如果你使用的是emacs编辑器，那么打开org后缀的文件即直接进入emacs的org模式，并不需要额外的配置。如果你需要更多的信息请参阅\href{http://orgmode.org/}{org模式官网}
 
 
+接着前面的来，如果你在org文档前面定义latex的class是article，那么一个星号对应的就是section，两个星号就是subsection，三个星对应的是subsubsection。如果latex的class是book，那么一个星号对应的latex命令是part，接下来依次是chapter和section。
+
+四个星的情况默认转成了列表形式，这不是我们想要的。我们可以在org文件上加入这样的设置
+\begin{Verbatim}
+#+OPTIONS: H:4
+\end{Verbatim}
+这样article就支持subsubsection，book就支持subsection，也就是四级结构命令了。
+
+为了以后方便，我们还是把\textbf{org-export-headline-levels}设置为一个很大的数字吧，一般5级结构，也就是五颗星够用了，article到subparagraph，book到subsubsection。
+
+\begin{Verbatim}
+(setq org-export-headline-levels 5)
+\end{Verbatim}
+
+\section{.emacs文件及时生效}
+好吧，开始对修改.emacs或者其他插件之后，需要重新启动emacs来使其生效有点厌倦了。
+
+\section{org文件的基本操作}
+org文件的基本操作其实很简单，就是一些视图控制，比如你的光标落在一个标题上，然后按下Tab键试试，然后还有一个按键\textbf{Shift+Tab}，其不需要光标一定落在标题上，全局性质的展开或折叠。还有其他一些按键操作和emacs的按键操作等等先暂时不予考虑，就用鼠标操作吧。
+
+
+\section{org对应latex基础}
+现在我们可以开始编写最简单的带有文档结构的org文件了，写上一段文字，我们会发现，由于各个标记语言之间内部的相似性，org上的一段文字就对应tex文档上的一段文字，就对应html文档上<p></p>包围的一部分也就是一个段落，虽然我们在org文档上多加入的空格和空行都会保留到目标tex文档和html文档上，但我们如同往常一样认为，多余的空行视作一个空行，多余的空格视作一个空格也是可行的（html文档也是多个空格只视作一个空格）。恩，对于此，我们很是满意。
+
+然后关于页面布局的控制，我们利用之前自定义的article.sty或者book.sty里面加载的geometry宏包然后进行设置，一切都工作得很好，而且和html文档的生成毫不干扰，这很好。
+
+然后如果我们想要使用xelatex引擎，生成的tex文档对应的sty配置文件里面，如之前所说的设置好字体配置，然后用xelatex处理之，中文显示问题即解决，一切都很好。\uwave{总之，在你的目标tex文档中，如果没有使用额外的命令或环境，而只是利用宏包然后在sty文件上进行配置，那么不会有任何问题，一切都工作得很好。}
+
+那么接下来要考虑的一个就是这个很紧要的问题：tex文档的特殊符号的处理。
+
+\section{特殊的符号（org模式中）}
+考虑到我们要利用org文档生成目标tex文档和html文档，而这三个文档内部各有自己的原生语义癖好，所以特殊符号如何处理和显示可真是个大问题啊。
+
+第一个问题是\#{}符号，之前我们接触了类似\verb|#+TITLE|等这样的配置写法，似乎这个符号在org文档中是注释一般的存在，可是并不尽然。如果一行开头是\#{}符号，后面的内容不加额外的空格，那么\#{}符号和后面的内容都会顺利的显示出来（包括html文档中），唯一要注意的是如果一行开头是\#{}符号，然后后面跟着空格，那么这一整行都会被视作org文档内的注释内容，这一整行都不会在生成的目标tex文档或者html文档中。
+
+然后接下来的tex文档中的一些特殊符号在org文档中都可以直接写上，其输出时都会如下所示进行转换：
+\begin{Verbatim}
+$    \$
+&    \&
+%    \%
+^    \^{}
+{    \{
+}    \}
+~    \textasciitilde{}
+\    $\backslash$
+\end{Verbatim}
+%$
+虽然上面的转换有些空格可能处理得不是很理想，然后\textbackslash{}符号最好使用\verb+\textbackslash{}+命令（字体问题），但考虑到我们这条线路跟来就是更多的关注于内容，所以这些小细节且先略过吧。
+
+值得一提的是这些符号的显示同样对于生成目标html也会有相应的处理方案，显示得很好。
+
+\subsection{连字号}
+我们知道在tex文档中一个两个连字号在生成pdf时会处理为特殊的字符，现在这点不需要我们担心了，经过测试，org文档将一个或者两个或者三个连字号原样保留在了tex文档中，然后html文档中已经变成了对应的unicode符号了，和前面谈论的pdf显示效果是一致的。
+
+
+\subsection{更多的符号和中文化问题}
+在sty配置文件中设置好即可，然后直接用输入法输入，没什么好担心的。中文化问题在sty配置文件中配置好，就不用操心了。
+
+\subsection{\textbackslash{}符号}
+\textbackslash{}符号还需要讨论一下，如果只是希望输入单独这个符号那么就直接输入即可，但是如果\textbackslash{}符号后面紧跟着其他字符或符号，即类似tex文档中命令这样的形式：
+\begin{Verbatim}
+\test
+\test{}
+\test[]{}
+\end{Verbatim}
+那么这些代码将会原样送入tex文档中，即\textbackslash{}符号没有发生转变（如果\textbackslash{}符号后面跟着中文字符不在上面讨论的情况中，即还是普通的\textbackslash{}符号。）。
+
+这似乎很方便，可以实现org文档无缝对接tex文档，但在html上就会多了很多奇怪的\verb+\test+之类的命令，而且如果我们这样使用org文档，那还不如直接用tex文档作为第一编辑代码源呢。所以如上这些tex文档的命令和环境在org文档中都不推荐使用（后面还会继续详细讨论这个自定义命令的对接问题），但有一个情况是个例外，请看到下面的数学环境。
+
+\section{数学环境}
+接下来要讲的严格意义上和org模式关系不大了，我们在org文档中添加的原生数学环境\uwave{大多}原样存放在了目标tex文档和目标html文档上了，tex文档不用说了，而目标html文档之所以能够正确显示这些数学环境的tex代码是因为org生成的html目标文档配置了\href{http://www.mathjax.org/}{mathjax}这个工具。
+
+但是mathjax所支持的数学环境tex代码和原latex的tex代码还是有细微差异的，下列命令或环境能够正常支持：
+\begin{Verbatim}
+$ $  行内数学环境
+$$ $$ 单行数学环境
+\[  \]  单行数学环境，没有编号
+\end{Verbatim}
+虽然上面的\verb+\[ \]+环境支持，但displaymath不支持，这个有点古怪，估计是org具体生成配置还没优化好和mathjax工具无关。
+
+然后来自amsmath宏包的equation和equation*环境也能正常支持，不过equation没有显示编号，估计和mathjax具体的配置有关系。
+
+
+
+至于这些数学环境里面
+
+
+
+
+
+
+
+
+\chapter{org转html和tex的协调问题}
 
 
 
@@ -4007,9 +4096,7 @@ emacs lisp还有很多很多内容，学习到后面当然是参看手册了。
 \end{Verbatim}
 然后我们再进入emacs，我们发现smex里面多了一个open命令，之前没有的，然后原有的find-file命令也还在。
 
-初步的试验已经有那么一点意思了，当然接下来所谓的DIY之门，就是编写自己的插件，这其中很大一部分就是编写自己的函数。
-
-接下来给出一个例子作为本章节的结束：
+初步的试验已经有那么一点意思了，当然接下来所谓的DIY之门，就是编写自己的插件，这其中很大一部分就是编写自己的函数。elisp语言还有很多内容，不过本章节就此结束了。
 
 
 \chapter{其他问题的讨论}

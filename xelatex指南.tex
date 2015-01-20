@@ -1526,6 +1526,7 @@ emph命令是\LaTeX 自带的最基本的用于文字强调的方法。
 
 
 \section{重新定义emph}
+\label{sec:emph}
 本文档中的emph命令被重新定义了：\\
 \verb+\renewcommand\emshape{\color{red}}+\\
 比如：\emph{我觉得字体设为红色更加起到强调作用}
@@ -3062,12 +3063,407 @@ $$ $$ 单行数学环境
 至于这些数学环境里面那些命令可用那些命令不可用那就不好一一讨论了，应该常用的tex原生数学命令和amsmath宏包里面的数学命令（数学环境）都是支持的。
 
 
+\section{换行命令}
+\verb+\\+命令在html会被转换成为\verb+<br />+命令，因此你可以在org文档中自如地加上换行\verb+\\+命令。但是\verb+\\[10pt]+这样的命令就不要用了，在html上也没有这个概念。换行命令算是一个tex命令可以进入org中的特例。
+
+
+\section{插入列表}
+插入列表org模式解决得比较完美了，无序列表项以'-'、'+'或者'*'开头，其对应的是latex的itemize环境；而有序列表则以'1.'或'1)'开头，其对应的是latex的enumerate环境， 然后description环境org对于生成的html文档的css还有额外的处理，在org上你只要简单如下输入即可：
+\begin{Verbatim}
+- the bold font :: some test
+\end{Verbatim}
+
+进一步的深度定义推荐都在sty文件里面定制。
+
+\section{插入引用}
+org模式上插入引用也是很方便的，label对应的命令格式如下：
+\begin{Verbatim}
+<<targetname>>
+\end{Verbatim}
+其将转变成为：
+\begin{Verbatim}
+\label{targetname}
+\end{Verbatim}
+
+然后要引用这个目标地点就使用如下语法：
+\begin{Verbatim}
+[[targetname]]
+[[targetname][shownname]]
+\end{Verbatim}
+
+这里的targetname对应的就是你上面定义的地点名字，然后shownname就是实际页面显示链接的文本，如果如第一种形式不设置shownname，那么生成的tex代码是使用的ref命令，如下形式：
+\begin{Verbatim}
+\ref{targetname}
+\end{Verbatim}
+如果加上shownname那么使用的是hyperref宏包提供的hyperref命令，如下：
+\begin{Verbatim}
+\hyperref[shownname]{targetname}
+\end{Verbatim}
+
+需要提醒读者的是：\uwave{targetname不能使用中文}，shownname可以使用中文。
+
+外部链接使用类似上面的语法：
+\begin{Verbatim}
+[[http://www.google.com][谷歌]]
+\end{Verbatim}
+其对应的tex代码如下：
+\begin{Verbatim}
+\href{http://www.google.com}{谷歌}
+\end{Verbatim}
+其他形式还有：
+\begin{Verbatim}
+file:papers/last.pdf  
+mailto:adent@galaxy.net
+\end{Verbatim}
+
+还有其他一些格式，这里的讨论就略过了。关于这些链接的颜色啊等等hyperref宏包的配置，请在sty文件上完成。
+
+相应的生成的html文档代码也很好，无需多言。
+
+\section{插入脚注}
+由于pdf和html显示风格的不同，实际上脚注并不是那么好协调，在html上脚注更确切不应该叫做脚注而要叫做尾注。所以org模式提供了两种插入脚注语法：
+\begin{Verbatim}
+  this is a test line[fn::this is a footnote]
+
+  this is a test line[fn:name]
+
+[fn:name] this is a footnote
+\end{Verbatim}
+
+这两种写法在html上显示稍微有点区别，但无关紧要。总的来说更推荐第一种写法，其直接将脚注内容写进去不用考虑命名和编号细节，而第二种写法还要花心思去考虑脚注具体叫什么名字，浪费脑力，而且我们选择org模式不就是为了重视内容快速写作吗，第二种脚注写法有点分散写作者注意力的嫌疑。
+
+
+\section{特殊的文字环境}
+\subsection{粗体}
+\begin{Verbatim}
+*bold*
+\end{Verbatim}
+两个星号包围的字体将被加粗，对应生成的tex代码即：
+\begin{Verbatim}
+\textbf{bold}
+\end{Verbatim}
+
+其对应生成的html代码如下：
+\begin{Verbatim}
+<b>bold</b>
+\end{Verbatim}
+
+\subsection{斜体和emph命令}
+在org模式下，如下两个/符号包围的字符信息
+\begin{Verbatim}
+/环境/
+\end{Verbatim}
+输出在html文档上将是：
+\begin{Verbatim}
+<i>环境</i>
+\end{Verbatim}
+我们似乎可以把两个/符号包围的环境称作斜体环境，如果其对应的tex代码则是：
+\begin{Verbatim}
+\emph{环境}
+\end{Verbatim}
+
+tex的原始代码确实emph内的字体将用italic字形处理，不过这个命令经常被换成其他形式，比如ulem会将其换成下划线等，而我喜欢将其换成红色，觉得更有强调的效果\ref{sec:emph} 。而html的i环境我们其实也可以稍作调整即可以达到同样的效果，比如：
+\begin{Verbatim}
+i{
+    font-style:normal;
+    color:red;}
+\end{Verbatim}
+
+这样我们可以简单理解两个/符号包围的字符是文字强调功能。
+
+\subsection{下划线}
+我使用了一段时间ulem宏包了，除开花里胡哨的命令，uline和uwave命令是用的最多的。uwave命令以后考虑怎么处理加入去，现在uline命令org模式已经很好的支持了。
+
+org文档中的
+\begin{Verbatim}
+_下划线环境_
+\end{Verbatim}
+将会变成tex文档中的代码：
+\begin{Verbatim}
+\uline{下划线环境}
+\end{Verbatim}
+
+而其对应的html代码如下所示：
+\begin{Verbatim}
+<span class="underline">下划线环境</span>
+\end{Verbatim}
+这个underline class，org生成的html已经定义好了，具体就是文字下面加上了下划线效果。
+
+\subsection{短代码环境}
+org文档的
+\begin{Verbatim}
+=verbatim环境=
+~另外的verbatim环境～
+\end{Verbatim}
+输出html文档都会被code标签包围，即短代码环境。而在tex文档下有点差异。
+
+第一种情况对应的是ttfamily字族情况：
+\begin{Verbatim}
+\texttt{verbatim环境}
+\end{Verbatim}
+
+第二种情况对应的是verb命令：
+\begin{Verbatim}
+\verb~另外的verbatim环境~
+\end{Verbatim}
+
+不得不承认这个\~{}符号已经选得很好了，但代码内还是可能出现干扰。更多的细节参见下面的插入代码一小节的讨论。
+
+
+\subsection{verse诗歌环境}
+诗歌环境org模式处理的很好，会自动在每一行后面加上\verb+\\+换行。所以你只需要如下输入：
+\begin{Verbatim}
+#+BEGIN_VERSE
+这里放着
+诗歌
+#+END_VERSE
+\end{Verbatim}
+
+其生成的tex代码如下：
+\begin{Verbatim}
+\begin{verse}
+这里放着 \\
+诗歌 \\
+\end{verse}
+\end{Verbatim}
+
+跟进一步的定制在sty文件里面配置verse环境即可。
+
+其对应的HTML代码是：
+\begin{Verbatim}
+<p class="verse">
+这里放着<br  />
+诗歌<br  />
+</p>
+\end{Verbatim}
+其对应的p.verse class在自动生成的html文档前面已经很粗糙的定义好了——就是简单的缩进了下，可能并不能让你满意。
+
+
+
+\subsection{quote引用环境}
+类似的quote加入语录环境有：
+\begin{Verbatim}
+#+BEGIN_QUOTE
+这里放着quote
+引用环境
+#+END_QUOTE
+\end{Verbatim}
+
+对应的tex代码就是变成quote环境，没有其他改动了。html代码是对应了一个特定的代码：
+\begin{Verbatim}
+<blockquote>
+<p>
+这里放着quote
+引用环境
+</p>
+</blockquote>
+\end{Verbatim}
+
+这个blockquote标签我还是第一次简单，html文档没有做任何配置，这个标签环境默认就有了缩进举动，有那么一点引用环境的意思了。
+
+
+\subsection{居中环境}
+和上面讨论的情况类似，不赘述了。
+\begin{Verbatim}
+#+BEGIN_CENTER
+文本居中环境
+#+END_CENTER
+\end{Verbatim}
+
+
+
+\section{插入一横线}
+\begin{Verbatim}
+-----
+\end{Verbatim}
+如上所示，在org文档中这样的连接号大于等于5个，其将输出一横线，对应的tex代码是：
+\begin{Verbatim}
+\rule{\linewidth}{0.5pt}
+\end{Verbatim}
+
+对应的html代码就是大家熟悉的hr标签了。
+
+
+
+\section{插入图片}
+插入图片用的和前面谈及的插入引用一样的语法，最简单的形式如下所示：
+\begin{Verbatim}
+[[file:images/test.jpg]]
+\end{Verbatim}
+
+其生成的tex代码是：
+\begin{Verbatim}
+\includegraphics[width=.9\linewidth]{images/test.jpg}
+\end{Verbatim}
+注意到其并没有加入figure环境，然后对应的html代码是：
+\begin{Verbatim}
+<div class="figure">
+<p><img src="images/test.jpg" alt="test.jpg" />
+</p>
+</div>
+\end{Verbatim}
+其已经引入figure class了。
+
+\emph{注意：}插入图片就不要使用这样的形式了：
+\begin{Verbatim}
+[[file:images/test.jpg][test]]
+\end{Verbatim}
+其将变成前面讨论的插入引用的形式，tex文档用href命令处理，然后html用a标签处理。
+
+
+\subsection{加上标题}
+图片加上标题如下所示：
+\begin{Verbatim}
+#+CAPTION: 女金刚狼
+[[file:images/test.jpg]]
+\end{Verbatim}
+
+其生成的tex代码将变成这样的形式，即引入figure环境了：
+\begin{Verbatim}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{images/test.jpg}
+\caption{女金刚狼}
+\end{figure}
+\end{Verbatim}
+
+\subsection{加上标签}
+\begin{Verbatim}
+#+CAPTION: 女金刚狼
+#+NAME: fig:test
+[[file:images/test.jpg]]
+\end{Verbatim}
+
+其生成的tex代码如下所示：
+\begin{Verbatim}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{images/test.jpg}
+\caption{\label{fig:test}女金刚狼}
+\end{figure}
+\end{Verbatim}
+
+非常遗憾，同在插入引用一小节所提及的，label的中文名标签不支持，所以上面只好随便取一个名字了。
+
+值得一提的是：\verb~#+NAME:~必须在CAPTION的下面，而且不能单独存在——即没有CAPTION命令。
+
+关于生成的html代码这里略过讨论了。
+      
+      
+\section{上标和下标}
+上标和下标在org文档中就可以这样直接使用：
+\begin{Verbatim}
+这是^{上标}，这是_{下标}，十分方便。
+\end{Verbatim}
+
+之所以敢这样使用是因为html文档中使用sup和sub标签即能很好地解决上标和下标问题，而生成的tex代码如下：
+\begin{Verbatim}
+这是$^{\text{上表}}$，这是$_{\text{下表}}$，十分方便。
+\end{Verbatim}
+我们看到这里自动加上数学环境进行处理了。这算是org模式一个额外的加分点吧。
 
 
 
 \chapter{org转html和tex的协调问题}
+其实org的转html和tex文档的协调问题很好解决，加入
+\begin{Verbatim}
+#+LATEX: \appendix
+\end{Verbatim}
+那么这一行的内容，就只原样输入进tex文档中，不进入html文档中。类似的有命令：
+\begin{Verbatim}
+#+HTML: 
+\end{Verbatim}
+
+类似的还有
+\begin{Verbatim}
+#+BEGIN_LATEX
+这里将原封不动的放入tex文档
+#+END_LATEX
+\end{Verbatim}
+
+但是既然我们选择了org模式，那么就不应该过多的添加tex原始代码。html和tex这种代码越多你的org文档就越复杂（最糟糕的情况可能是等于你编写了两边文档），所以如果一定要用的，那么还是推荐使用
+\begin{Verbatim}
+#+LATEX: \appendix
+\end{Verbatim}
+这种一行的修正。
+
+以下这些命令是基于tex文档结构的，可以考虑加进去，加进去了反而可以更好地提醒写作者此处我在写些什么。
+\begin{Verbatim}
+\mainmatter
+\appendix
+\backmatter
+\end{Verbatim}
+其中mainmatter命令放在文档内容开始的前面，然后appendix放在你的附录标题前面，backmatter放在你的参考文献标题前面。其他内容照旧，html没有页码自然不用考虑那些问题。注意\uwave{这些命令都是针对book类的}。
+
+其中参考文献为了考虑协调性如果没有太多的话就使用简单的列表表达即可。
+
+\section{原有环境命令属性的修正}
+其只适用于表格，图片，列表，源代码和其他特殊的区块。
+
+\begin{Verbatim}
+#+ATTR_LATEX:
+\end{Verbatim}
 
 
+
+
+
+
+\section{文档内非要使用自定义的命令}
+基于简单原则，sty配置文件最好不要引入额外的自定义命令和环境，如果实在不得不使用自定义的命令或环境，同时内容最好是html和pdf都共享的（这正是org模式本身要求的），那么接下来工作就会变得很多了，下面主要讨论这个问题。
+
+在前面讨论的各种情况中，如果org模式针对tex代码和html代码有特定的环境命令或class，那么推荐进一步定制该环境命令或class即可。下面讨论的情况是除开这些特定的环境命令或class，要使用其他的环境命令或者class，那么在org文档中，任何
+\begin{Verbatim}
+#+BEGIN_WHAT
+
+#+END_WHAT
+\end{Verbatim}
+
+都将输出为tex文档的如下格式：
+\begin{Verbatim}
+\begin{what}
+
+\end{what}
+\end{Verbatim}
+
+对应的html文档代码是：
+\begin{Verbatim}
+<div class="what">
+<p>
+what
+</p>
+\end{Verbatim}
+
+然后读者把tex文档的该what环境（在sty文件中）配置好和把html的该what class（在css文件中）配置好即可。
+
+
+
+\chapter{插入表格}
+接下来的插入表格和插入代码，就最简单的应用并没有多少内容，不过这里将它们单独提出来作为一章，是因为在org模式和在emacs编辑器下，如何处理表格，生成表格，进行运算，如何处理代码，运算代码，加载其他文件进行运算生成表格，加载其他文件的代码等等有着丰富的内容。这部分内容算是比较高级的东西了，就拖到这后面单独成为一章了。
+
+
+reference ch03
+
+
+\chapter{插入代码}
+ch14
+
+(setq org-latex-listings 'minted)
+
+(setq org-latex-custom-lang-environments
+      '((emacs-lisp "common-lispcode")))
+
+
+
+
+\chapter{org模式其他额外的特性}
+todo list  ch 05
+
+标签 ch 06
+
+属性 日期和时间 ch07  ch08
+
+捕获转发 ch09  议程 ch10
 
 
 

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "codeexport/code:F-1/code:F-1.py", line 2, in <module>
+    from sympy import *
+ImportError: No module named 'sympy'

@@ -2003,133 +2003,6 @@ numbersep=2pt                        & 数字和框框间距 \\   \bottomrule
 \end{table}
 
 
-\section{xverbatim宏包说明}
-我新建了一个xverbatim宏包，提供了一个xverbatim环境，能够对代码进行染色显示输出，并对某些编程语言具有执行和显示输出结果的功能。这个环境还提供集中可选模式让实际操作更加灵活。由于这个宏包包括很多行pygments（python的一个宏包）的输出配置信息，这里就不将宏包全部列出来了。完整的宏包内容在本github的texmf目录之下。使用pygments的灵感来自\href{http://scott.sherrillmix.com/blog/programmer/displaying-code-in-latex/}{这个网站}。
-
-虽然整个宏包有两百多行，但主干结构也就一百行左右。具体实现结构和前面谈及的endnotes宏包有点类似，在编写的时候也参考了James Brotchie的python宏包。
-
-正常运行这个宏包你需要安装python的pygments宏包，在ubuntu下运行：\\
-\verb+sudo apt-get install python-pygments+\\
-或者python3的版本：\\
-\verb+sudo apt-get install python3-pygments+
-
-首先我们看到程序的入口，定义xverbatim环境的这一段程序，xverbatim宏包的其他部分都是围绕着这个环境命令展开的。
-\begin{Verbatim}
-\newenvironment{xverbatim}[2][1]
-{
-\immediate\stepcounter{@xverbatimCounter}
-\def\@modestatus{#1}
-\def\@codefilename{#2}
-\StrBefore{\@codefilename}{.}[\@codefile]
-\StrBehind{\@codefilename}{.}[\@codemode]
-
-\immediate\write18{
-if [  !  -d  codeexport/\arabic{@xverbatimCounter}   ];
-then mkdir -p codeexport/\arabic{@xverbatimCounter}  ; fi}
-
-\newcommand{\@outname}
-{codeexport/\arabic{@xverbatimCounter}/\@codefile }
-
-\immediate\openout\@codeout=\@outname.\@codemode
-\newlinechar='15
-\begingroup \catcode`\^^M=12 %
-\let\do\@makeother\dospecials\obeyspaces%
-\@xverbatim}
-{\endgroup
-\immediate\closeout\@codeout
-\ifnum \@modestatus = 0
-\else   \ifnum \@modestatus = 1    
-\@showcode
-\else   \ifnum \@modestatus = 12   
-\@showcode \@executecode \@writefeedback
-\else   \ifnum \@modestatus = 129   
-\@showcode \@executecode \@showresult \@writefeedback
-\else   \ifnum \@modestatus = 19  
-\@showcode  \@showresult
-\else    
-\errmessage{you typed wrong optional parameter,
-the choice is  0 1   12 129 19  .}
-\fi\fi\fi \fi \fi
-
-}
-\end{Verbatim}
-首先新建xverbatim环境，然后接下来那么大一段都是xverbatim环境的定义。xverbatim接受两个参数，一个可选参数\#{}1，只能接受0，1，12，129，19这几个数字，其他将会报错。然后还要接受一个必填参数\#{}2，（这里出于简单的美学考虑），这个参数接受等下要创建的文件的完整文件名。比如test.py。这个文件将会放在codeexport目录的第几个例子计数文件夹里面。
-
-这里先将@xverbatimCounter这个计数器加一，为的是它的第一次出现是1。然后每次遇到一个xverbatim环境都会加一。
-
-接下来定义了@modestatus命令接受参数\#{}1，为了将这个参数传递到环境的结尾部分。然后定义了codefilename接受第二个参数。
-
-接下来的两行需要详细说明一下，这里使用的StrBefore和StrBehind命令来自xstring宏包，用处是从某个字符串中提取出某个字符前面的字符串或者后面的字符串。这里是处理@codefilename命令也就是接受的文件名，字符分隔符为‘.’，在‘.’的前面（默认是第一次出现，所以为了防止出错文件名只能出现一次‘.’）的字符串将会赋值给\textbackslash @codefile，下面的StrBehind命令类似，不同的时候将后面出现的字符串赋值给\textbackslash @codemode，这个后面方便pygments处理代码用的。
-
-接下来的write18命令是直接向终端输送某个命令：这个命令首先是if开头表示进入条件语句，然后方括号表示某个条件判断语句，-d表示判断某个文件夹是不是存在，!表示逻辑否。分号;表示换行，bash命令是有一定的格式的，如果你需要一行表示某一整个命令，可以用分号表示换行。then表示条件语句进入如果判断真那么执行下面的语句，然后mkdir -p表示创建某个文件夹包括父目录。然后分号然后fi表示条件语句结束。整个命令就是确保codeexport中的@xverbatimCounter命令的那个目录存在。
-
-接下来新建一个@outname命令，这个命令等下要控制写入文件的所在目录和文件名的。
-
-然后打开那个文件，其中文件名已经包含了目录，文件名和文件后缀。
-
-接下来的几行可能有点多余，这是python宏包里面的，可能和写入文档有关，然后接下来的@xverbatim命令由前面那一系列符号转码规则确定，太难懂了，我也没弄明白，只知道它的作用就是将环境内的所有内容写入文件中，改动的话就是xverbatim这几个字对应环境。
-
-然后我们看到xverbatim环境结尾部分，那个\textbackslash endgroup命令让我不知所以，但是少了它程序就会出错。
-
-接下来就是关闭文件，这个没什么问题。然后接下来就是有点稍显花哨的东西，其实就是前面@modestatus接受的那个参数，在这里构建了一个类似switch语句的结构。
-
-首先如果@modestatus等于0，那么什么也不做，在这里的意思就是既不显示代码也不做其他的。如果@modestatus等于1，那么执行@showcode命令。我们再看到@showcode命令。
-
-这里有个ifdefstring命令是etoolbox宏包提供的，意思是如果\textbackslash @codemode等于tex的话，那么执行命令，否则执行下一个花括号里面的命令。这里主要是tex代码后缀和pygmentize命令生成的tex代码有点容易混淆，就单独开出来，区别只是文件名。
-
-pygmentize命令就是pygments提供的，它有很多选项，最常用的有：
-\begin{table}[H]
-\centering
-\label{tab:pygmentize常用选项}
-\caption{pygmentize常用选项}
-\medskip 
-\begin{tabular}{@{}lp{28em}@{}}
-\toprule
-选项 & 说明  \\ \midrule
--o  & 输出到某个文件  \\
--f  & 告知要输出的文件类型，比如tex，如果-o 后面跟着的文件名带着后缀，命令会自动推测的。 \\
--l & 告知要染色的方案，比如-l python，就是python的染色方案，如果处理的文件带着后缀，命令会自动推测。  \\
--O & 全部信息，这里主要tex下Verbatim环境中的颜色支持命令。 \\
--{}-help  & 帮助信息 \\ \bottomrule
-\end{tabular}
-\end{table}
-
-然后我们再往下看，如果选项是12，那么将会执行\\
-\verb+\@showcode \@executecode \@writefeedback+\\
-这三个命令。其中@writefeedback和程序如果发生错误并把错误信息写入文档有关，这里略过了。
-
-而@executecode命令就是根据不同的codemode来选择不同的终端命令，这部分tex和c我有点考虑删除掉，最多支持python3和common-lisp和scheme和bash这几个脚本高级语言吧。
-
-然后就剩下@showresult命令，值得一提的是我之前就是简单使用verbatiminput命令导入生成的结果文件，而在这里我则是使用的input命令，这是有深意的。因为我在探索sympy宏包的时候发现，这个python宏包使用latex命令可以直接生成tex文档下的数学模式下的代码，也就是我直接input将会显示很漂亮的数学公式。这里加了个group方便调整下input之后的一些格式，比如使用obeylines命令input的时候空格换行都将保留，然后取消了行缩进。
-
-简要的说明就到此为止吧。哦，对了，你看到这个宏包前面有很大一段定义命令，这个是pygmentize对于Verbatim环境的颜色支持，通过选项-O获得的，复制到这里以后就不用引入了。
-
-
-\section{xverbatim宏包的使用}
-xverbatim宏包的使用主要是围绕著xverbatim环境展开的。首先我们来看一个例子：
-\begin{Verbatim}
-\begin{xverbatim}[129]{py}
-from sympy import *
-a,b,c,x=symbols('a b c x') 
-ep1=diff(a*x**2+b*x+c,x)
-ep2=integrate(a*x**2+b*x+c,x)
-print('$$' + latex(ep1) + '$$', '$$' + latex(ep2) + '$$')
-\end{xverbatim}
-\end{Verbatim}
-
-
-\begin{xverbatim}[129]{py}
-from sympy import *
-a,b,c,x=symbols('a b c x') 
-ep1=diff(a*x**2+b*x+c,x)
-ep2=integrate(a*x**2+b*x+c,x)
-print('$$' + latex(ep1) + '$$', '$$' + latex(ep2) + '$$')
-\end{xverbatim}
-
-基本用法就是这样的，其中可选项1表示显示代码，2表示执行代码，9表示显示结果。除了129之外，还有的行为模式有：0，1，12和19。其中较常用的是1，就是染色的显示代码。12表示只显示代码和执行代码，19表示只显示代码和显示结果（这个在之前已经执行了有用。）总的来说常用的模式有0什么都不做，1显示代码和129模式。
-
-后面跟一个可选项表示目标程序语言的后缀，可执行代码的目前只有：py，lisp和scm。如果只是想显示代码的话，后面可以跟的代码后缀对应的染色方案就有很多了，比如：c，cpp，tex，html，php，java，pl等等，更多具体细节请参看文件夹[\textit{自建宏包的演示和说明}]里面的内容。
-
 
 \section{minted宏包}
 minted宏包也是利用pygments来自动进行语法染色，它还提供了一个listings环境，不过并不能正确分页，所以让我们忘了那个listings环境（或者现在问题解决了？），然后就其他部分，自动语法染色，fancyvrbDIY选项的继承，还新增了背景颜色的设置，这些都是极好极好的。。
@@ -3446,17 +3319,185 @@ reference ch03
 
 
 \chapter{插入代码}
-ch14
+小代码之前讲过了，两个等号或者两个波浪号包围的在tex文档中一个对应ttfamily字体，一个对应verb命令。
 
+\section{简单的代码}
+简单的代码如下所示，其对应的就是tex文档的verbatim环境。
+\begin{Verbatim}
+#+BEGIN_EXAMPLE
+        THIS IS A EXAMPLE ENVIRONMENT
+#+END_EXAMPLE
+\end{Verbatim}
+
+不需要华丽表现不需要染色的简单代码就推荐使用EXAMPLE环境，不过我对verbatim环境不太满意，主要是前后没有分割直线，没有将代码和文本和清晰的分开。一直使用的是fancyvrb的Verbatim环境，那么我们如何把org模式的EXAMPLE环境对应的输出为Verbatim环境呢？
+
+本来以为这个问题会很简单，不过目前要达到这种效果还有点麻烦，因为目前（2015-01-22）的org模式的EXAMPLE并没有把这个选项打开，在参考\href{http://lists.gnu.org/archive/html/emacs-orgmode/2013-04/msg01018.html}{这个网站}的情况下，大致的一个解决方案如下：
+
+\begin{enumerate}
+\item  首先如果你是手工编译的emacs，那么在[lisp]→[org]文件夹里找到ox-latex.el这个文件，在这个文件里看到\textbf{org-latex-example-block}这个函数，看到format那里，你就明白为什么默认的输出的verbatim环境。那么将最后两行删除，即进行如下改动：
+\begin{Verbatim}
+-     (format "\\begin{verbatim}\n%s\\end{verbatim}"
+-            (org-export-format-code-default example-block info)))))
++     (format "\\begin{%s}\n%s\\end{%s}"
++            org-latex-verbatim-env
++            (org-export-format-code-default example-block info)
++            org-latex-verbatim-env))))
+\end{Verbatim}
+这里简单知道\verb+%s+类似大多数编程语言的字符串处理方式即可，这样环境就改为由\textbf{org-latex-verbatim-env}来定义了。然后重新编译emacs。
+
+我之前是自己编译的emacs，但并没有采取上面的方式，采取的是下面提及的更新org宏包的方式。
+
+首先在.emacs文件里面加入如下代码：
+\begin{Verbatim}
+;more package
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+\end{Verbatim}
+这将为你的emacs宏包管理提供更多的可用宏包，这些宏包是由melpa提供的。然后打开emacs，打开options的宏包管理，你就可以看到更多的宏包选项了，其中有最新的org，安装即可。这些宏包都放在你的主文件夹的\textbf{.emacs.d}文件夹那里。
+
+\begin{framed}
+这里顺便提一下如何通过这个宏包管理插件删除安装的宏包，将光标移动到你想删除的宏包名字那里，按一下字母\textbf{d}键，你就可以看到前面有个标记D，然后移动光标到其他位置，按下\textbf{x}键你就会看到minibuffer有提示了\footnote{参考了\href{http://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-package}{这个网站}}。
+\end{framed}
+
+在.emacs.d文件夹的elpa文件夹里面，你会看到org宏包相关的文件夹，同样打开找到ox-latex.el文件，然后类似上面谈及的做出一些修改，然后注意更新一下elc文件。具体就用emacs打开这个文件，然后在emacs-lisp下面的byte-compile this file选项。
+
+\item 接下来就是修改.emacs文件，把我们修改好的接口\textbf{org-latex-verbatim-env}这个变量定义好：
+\begin{Verbatim}
+(setq org-latex-verbatim-env "Verbatim")
+\end{Verbatim}
+
+好了，你可以测试一下效果了。
+\end{enumerate}
+
+\section{更华丽的代码}
+org模式还提供了SRC环境，对应的是latex的更华丽的代码环境：
+\begin{Verbatim}
+#+BEGIN_SRC python 
+print('hello')
+#+END_SRC
+\end{Verbatim}
+
+其输出可以调成listings环境：
+\begin{Verbatim}
+(setq org-export-latex-listings t)
+\end{Verbatim}
+
+不过我不太喜欢listings环境，其对minted环境的输出支持也很好（后面将要谈到的选项支持）：
+\begin{Verbatim}
 (setq org-latex-listings 'minted)
+\end{Verbatim}
 
+minted环境有个问题，就是加上背景色之后分页会有问题，在之前的介绍xelatex基础语法中的插入代码一小节里谈到的自定义命令tcbpython和tcbbash如何引入进来呢，因为tcolorbox和minted结合在显示代码这一块很是完美和让人满意了。
+
+我们可以在.emacs文件里进行如下设置：
+\begin{Verbatim}
 (setq org-latex-custom-lang-environments
-      '((emacs-lisp "common-lispcode")))
+      '((python "tcbpython")
+	(bash "tcbbash")
+	))
+\end{Verbatim}
+
+这样，当你的SRC环境后面跟着bash，
+\begin{Verbatim}
+#+BEGIN_SRC bash
+sudo pip3 install pygments
+#+END_SRC
+\end{Verbatim}
+
+就会输入tex代码如下：
+\begin{Verbatim}
+\begin{tcbbash}
+sudo pip3 install pygments
+\end{tcbbash}
+\end{Verbatim}
+
+类似的上面我们还定义了python对应的是tcbpython，也会对应成tcbpython环境。而我们没有自定义的语言，如果你设置了minted为默认引擎，
+比如这样的情况：
+\begin{Verbatim}
+#+BEGIN_SRC emacs-lisp
+some code
+#+END_SRC
+\end{Verbatim}
+
+那么将生成这样的tex代码：
+\begin{Verbatim}
+\begin{minted}[]{common-lisp}
+some code
+\end{minted}
+\end{Verbatim}
+
+这已经很好了。至于html那边的情况，代码都能正常显示，但没有染色，你可以安装emacs的htmlize宏包来达到某种染色效果。。但真的好丑陋，我对那边的情况还不太熟悉，所以这里略过不做讨论了。
 
 
+\subsection{SRC环境的一些选项}
+SRC环境跟着程序语言种类之后后面还可以跟很多选项，其中有些选项很复杂，还有一些设置很底层。这个有兴趣的慢慢研究手册吧。
+
+暂时就介绍一个选项\textbf{-n}：
+
+\begin{Verbatim}
+#+BEGIN_SRC emacs-lisp -n
+def main(args):
+    return 0
+#+END_SRC
+\end{Verbatim}
+
+如果SRC环境选择是minted环境作为输出，那么其参数会对应的设置进去：
+\begin{Verbatim}
+\begin{minted}[linenos,firstnumber=1]{common-lisp}
+def main(args):
+    return 0
+\end{minted}
+\end{Verbatim}
+
+如果是listings环境也会支持的很好，但是如果是前面谈及的自定义的tcbpython环境或tcbbash环境，代码的每一行前面都将加上数字：
+\begin{Verbatim}
+ 1  def main(args):
+ 2      return 0
+\end{Verbatim}
+
+这不是很美观，更好的做法，如果你喜欢加上数字，那么在sty配置文件的tcbpython（或者你定义的什么名字）的定义里加上：
+\begin{Verbatim}
+minted options={linenos,numbersep=3mm}
+\end{Verbatim}
+即可。
+
+\section{插入代码文件}
+废话不多说，插入代码文件格式如下：
+\begin{Verbatim}
+#+INCLUDE: "~/.emacs" src emacs-lisp
+\end{Verbatim}
+
+当然是不可能采取这种形式的，就是INCLUDE命令放在SRC环境里面，这样将不会被执行而被视作代码。所以插入代码文件只能采取上面的形式，后面跟着src，似乎还有其他可能性，然后接下来是程序语言，当然前面提及的SRC环境的一些选项也是可以加上去的。
+
+
+
+\section{执行代码}
+这部分内容等下再讨论。
 
 
 \chapter{org模式其他额外的特性}
+\section{快速输入}
+emacs深度定制能够开发出很多快速输入技术，而org模式自带的就有一些快速输入的方法了，已经很好用了。比如你要快速输入EXAMPLE环境，先输入一个\emph{<}符号，然后再输入一个小写字母\emph{e}，然后按下Tab键，就能快速输入EXAMPLE环境，类似的有：
+
+\begin{description}
+\item[c] CENTER环境
+\item[e] EXAMPLE环境
+\item[h] HTML环境
+\item[H] HTML单行命令，即\verb~#+HTML:~
+\item[I] INCLUDE单行命令，即\verb~#+INCLUDE:~
+\item[l] LATEX环境
+\item[L] LATEX单行命令，即\verb|#+LATEX:|
+\item[q] QUOTE环境
+\item[s] SRC环境
+\item[v]  VERSE环境
+\end{description}
+
+此外你还可以定制自己的快速输入命令和环境，用以上类似的操作；此外在emacs环境下你可以定制很多快速输入的按键和命令等等，这里先略过了。
+
+
+
+
 todo list  ch 05
 
 标签 ch 06
@@ -4718,6 +4759,135 @@ ifphone就是一个条件判断命令，这里涉及到的命令我也不大懂�
 还有一个adjustwidth*环境，意思表示margin改变随着页面奇偶数变化而定，这个宏包的页面奇偶数设定及相关讨论后面都略过了，因为本文只关注于oneside模式，毕竟电子书籍设置成为oneside更好一些。
 
 changepage宏包还有changetext和changepage命令，有兴趣的可以看下，感觉并不太好用。
+
+
+\section{xverbatim宏包说明}
+我新建了一个xverbatim宏包，提供了一个xverbatim环境，能够对代码进行染色显示输出，并对某些编程语言具有执行和显示输出结果的功能。这个环境还提供集中可选模式让实际操作更加灵活。由于这个宏包包括很多行pygments（python的一个宏包）的输出配置信息，这里就不将宏包全部列出来了。完整的宏包内容在本github的texmf目录之下。使用pygments的灵感来自\href{http://scott.sherrillmix.com/blog/programmer/displaying-code-in-latex/}{这个网站}。
+
+虽然整个宏包有两百多行，但主干结构也就一百行左右。具体实现结构和前面谈及的endnotes宏包有点类似，在编写的时候也参考了James Brotchie的python宏包。
+
+正常运行这个宏包你需要安装python的pygments宏包，在ubuntu下运行：\\
+\verb+sudo apt-get install python-pygments+\\
+或者python3的版本：\\
+\verb+sudo apt-get install python3-pygments+
+
+首先我们看到程序的入口，定义xverbatim环境的这一段程序，xverbatim宏包的其他部分都是围绕着这个环境命令展开的。
+\begin{Verbatim}
+\newenvironment{xverbatim}[2][1]
+{
+\immediate\stepcounter{@xverbatimCounter}
+\def\@modestatus{#1}
+\def\@codefilename{#2}
+\StrBefore{\@codefilename}{.}[\@codefile]
+\StrBehind{\@codefilename}{.}[\@codemode]
+
+\immediate\write18{
+if [  !  -d  codeexport/\arabic{@xverbatimCounter}   ];
+then mkdir -p codeexport/\arabic{@xverbatimCounter}  ; fi}
+
+\newcommand{\@outname}
+{codeexport/\arabic{@xverbatimCounter}/\@codefile }
+
+\immediate\openout\@codeout=\@outname.\@codemode
+\newlinechar='15
+\begingroup \catcode`\^^M=12 %
+\let\do\@makeother\dospecials\obeyspaces%
+\@xverbatim}
+{\endgroup
+\immediate\closeout\@codeout
+\ifnum \@modestatus = 0
+\else   \ifnum \@modestatus = 1    
+\@showcode
+\else   \ifnum \@modestatus = 12   
+\@showcode \@executecode \@writefeedback
+\else   \ifnum \@modestatus = 129   
+\@showcode \@executecode \@showresult \@writefeedback
+\else   \ifnum \@modestatus = 19  
+\@showcode  \@showresult
+\else    
+\errmessage{you typed wrong optional parameter,
+the choice is  0 1   12 129 19  .}
+\fi\fi\fi \fi \fi
+
+}
+\end{Verbatim}
+首先新建xverbatim环境，然后接下来那么大一段都是xverbatim环境的定义。xverbatim接受两个参数，一个可选参数\#{}1，只能接受0，1，12，129，19这几个数字，其他将会报错。然后还要接受一个必填参数\#{}2，（这里出于简单的美学考虑），这个参数接受等下要创建的文件的完整文件名。比如test.py。这个文件将会放在codeexport目录的第几个例子计数文件夹里面。
+
+这里先将@xverbatimCounter这个计数器加一，为的是它的第一次出现是1。然后每次遇到一个xverbatim环境都会加一。
+
+接下来定义了@modestatus命令接受参数\#{}1，为了将这个参数传递到环境的结尾部分。然后定义了codefilename接受第二个参数。
+
+接下来的两行需要详细说明一下，这里使用的StrBefore和StrBehind命令来自xstring宏包，用处是从某个字符串中提取出某个字符前面的字符串或者后面的字符串。这里是处理@codefilename命令也就是接受的文件名，字符分隔符为‘.’，在‘.’的前面（默认是第一次出现，所以为了防止出错文件名只能出现一次‘.’）的字符串将会赋值给\textbackslash @codefile，下面的StrBehind命令类似，不同的时候将后面出现的字符串赋值给\textbackslash @codemode，这个后面方便pygments处理代码用的。
+
+接下来的write18命令是直接向终端输送某个命令：这个命令首先是if开头表示进入条件语句，然后方括号表示某个条件判断语句，-d表示判断某个文件夹是不是存在，!表示逻辑否。分号;表示换行，bash命令是有一定的格式的，如果你需要一行表示某一整个命令，可以用分号表示换行。then表示条件语句进入如果判断真那么执行下面的语句，然后mkdir -p表示创建某个文件夹包括父目录。然后分号然后fi表示条件语句结束。整个命令就是确保codeexport中的@xverbatimCounter命令的那个目录存在。
+
+接下来新建一个@outname命令，这个命令等下要控制写入文件的所在目录和文件名的。
+
+然后打开那个文件，其中文件名已经包含了目录，文件名和文件后缀。
+
+接下来的几行可能有点多余，这是python宏包里面的，可能和写入文档有关，然后接下来的@xverbatim命令由前面那一系列符号转码规则确定，太难懂了，我也没弄明白，只知道它的作用就是将环境内的所有内容写入文件中，改动的话就是xverbatim这几个字对应环境。
+
+然后我们看到xverbatim环境结尾部分，那个\textbackslash endgroup命令让我不知所以，但是少了它程序就会出错。
+
+接下来就是关闭文件，这个没什么问题。然后接下来就是有点稍显花哨的东西，其实就是前面@modestatus接受的那个参数，在这里构建了一个类似switch语句的结构。
+
+首先如果@modestatus等于0，那么什么也不做，在这里的意思就是既不显示代码也不做其他的。如果@modestatus等于1，那么执行@showcode命令。我们再看到@showcode命令。
+
+这里有个ifdefstring命令是etoolbox宏包提供的，意思是如果\textbackslash @codemode等于tex的话，那么执行命令，否则执行下一个花括号里面的命令。这里主要是tex代码后缀和pygmentize命令生成的tex代码有点容易混淆，就单独开出来，区别只是文件名。
+
+pygmentize命令就是pygments提供的，它有很多选项，最常用的有：
+\begin{table}[H]
+\centering
+\label{tab:pygmentize常用选项}
+\caption{pygmentize常用选项}
+\medskip 
+\begin{tabular}{@{}lp{28em}@{}}
+\toprule
+选项 & 说明  \\ \midrule
+-o  & 输出到某个文件  \\
+-f  & 告知要输出的文件类型，比如tex，如果-o 后面跟着的文件名带着后缀，命令会自动推测的。 \\
+-l & 告知要染色的方案，比如-l python，就是python的染色方案，如果处理的文件带着后缀，命令会自动推测。  \\
+-O & 全部信息，这里主要tex下Verbatim环境中的颜色支持命令。 \\
+-{}-help  & 帮助信息 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+然后我们再往下看，如果选项是12，那么将会执行\\
+\verb+\@showcode \@executecode \@writefeedback+\\
+这三个命令。其中@writefeedback和程序如果发生错误并把错误信息写入文档有关，这里略过了。
+
+而@executecode命令就是根据不同的codemode来选择不同的终端命令，这部分tex和c我有点考虑删除掉，最多支持python3和common-lisp和scheme和bash这几个脚本高级语言吧。
+
+然后就剩下@showresult命令，值得一提的是我之前就是简单使用verbatiminput命令导入生成的结果文件，而在这里我则是使用的input命令，这是有深意的。因为我在探索sympy宏包的时候发现，这个python宏包使用latex命令可以直接生成tex文档下的数学模式下的代码，也就是我直接input将会显示很漂亮的数学公式。这里加了个group方便调整下input之后的一些格式，比如使用obeylines命令input的时候空格换行都将保留，然后取消了行缩进。
+
+简要的说明就到此为止吧。哦，对了，你看到这个宏包前面有很大一段定义命令，这个是pygmentize对于Verbatim环境的颜色支持，通过选项-O获得的，复制到这里以后就不用引入了。
+
+
+\section{xverbatim宏包的使用}
+xverbatim宏包的使用主要是围绕著xverbatim环境展开的。首先我们来看一个例子：
+\begin{Verbatim}
+\begin{xverbatim}[129]{py}
+from sympy import *
+a,b,c,x=symbols('a b c x') 
+ep1=diff(a*x**2+b*x+c,x)
+ep2=integrate(a*x**2+b*x+c,x)
+print('$$' + latex(ep1) + '$$', '$$' + latex(ep2) + '$$')
+\end{xverbatim}
+\end{Verbatim}
+
+
+\begin{xverbatim}[129]{py}
+from sympy import *
+a,b,c,x=symbols('a b c x') 
+ep1=diff(a*x**2+b*x+c,x)
+ep2=integrate(a*x**2+b*x+c,x)
+print('$$' + latex(ep1) + '$$', '$$' + latex(ep2) + '$$')
+\end{xverbatim}
+
+基本用法就是这样的，其中可选项1表示显示代码，2表示执行代码，9表示显示结果。除了129之外，还有的行为模式有：0，1，12和19。其中较常用的是1，就是染色的显示代码。12表示只显示代码和执行代码，19表示只显示代码和显示结果（这个在之前已经执行了有用。）总的来说常用的模式有0什么都不做，1显示代码和129模式。
+
+后面跟一个可选项表示目标程序语言的后缀，可执行代码的目前只有：py，lisp和scm。如果只是想显示代码的话，后面可以跟的代码后缀对应的染色方案就有很多了，比如：c，cpp，tex，html，php，java，pl等等，更多具体细节请参看文件夹[\textit{自建宏包的演示和说明}]里面的内容。
+
 
 
 \section{注释}

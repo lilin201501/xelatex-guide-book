@@ -1,0 +1,14 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}
+
+\addplot table {sine.dat};
+
+\end{axis}
+\end{tikzpicture}
+\end{document}

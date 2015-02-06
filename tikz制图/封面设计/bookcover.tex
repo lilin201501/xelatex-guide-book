@@ -1,0 +1,159 @@
+% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
+\documentclass[12pt]{book}
+\newlength{\textpt}
+\setlength{\textpt}{12pt}
+
+%========基本必备的宏包========%
+\usepackage{calc,float,moresize}
+
+%=========页面设置=========%
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=10mm,%裝訂線
+  top=35mm,  %上邊距 包括頁眉
+  bottom=30mm,%下邊距 包括頁腳
+  inner=10mm+12pt,  %左邊距or inner
+  outer=10mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  headsep=15mm,%
+  footskip=15mm,%
+  marginparsep=10pt, %旁註與正文間距
+  marginparwidth=63pt,includemp=true% 旁註寬度計入width%旁註寬度
+  ]{geometry}
+
+%color
+\usepackage[table,svgnames]{xcolor}
+%================字體================%
+%设置数学字体
+\RequirePackage{amssymb,amsmath}
+\RequirePackage{fontspec}
+%si unit
+\RequirePackage{siunitx}
+\sisetup{
+math-micro = \text{μ},
+text-micro = μ
+}
+
+ %設置英文字體
+\setmainfont[Mapping=tex-text]{DejaVu Serif}
+\setsansfont[Mapping=tex-text]{DejaVu Sans}
+\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+%中文環境
+\RequirePackage[CJKnumber=true]{xeCJK}
+\xeCJKsetup{PunctStyle=plain}
+\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
+    {Adobe 宋体 Std}%影響rmfamily字體
+\setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
+\setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
+
+\RequirePackage{xltxtra} 
+
+
+
+%=============新的字符===========%
+\newfontfamily{\libertine}[Scale=1.3]{Linux Libertine O}
+\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
+\usepackage{newunicodechar}
+\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
+\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
+\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}}
+\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
+\newunicodechar{①}{{\libertine{①}}}
+\newunicodechar{②}{{\libertine{②}}}
+\newunicodechar{③}{{\libertine{③}}}
+\newunicodechar{④}{{\libertine{④}}}
+\newunicodechar{⑤}{{\libertine{⑤}}}
+\newunicodechar{}{{\ubuntu{}}}
+
+%%===============中文化=========%
+\renewcommand\contentsname{目~录}
+\renewcommand\listfigurename{插图目录}
+\renewcommand\listtablename{表格目录}
+\renewcommand\indexname{索~引}
+\renewcommand\figurename{图}
+\renewcommand\tablename{表}
+\renewcommand\partname{部分}
+\renewcommand\appendixname{附录}
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
+
+
+%==============超鏈接===============%
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
+
+%=================文字強調=========%
+\usepackage{ulem} %下劃線,加點
+\normalem%normal em , not instead of the uline
+
+\DeclareRobustCommand*{\uwave}%波浪线稍微下移点。
+{\bgroup \markoverwith{\lower5\p@\hbox{\sixly \char58}}\ULon}
+
+
+\newcommand\reduline{\bgroup\markoverwith
+    {\textcolor{red}{\rule[-0.5ex]{1em}{0.4pt}}}\ULon}
+
+
+\renewcommand\emshape{\color{red}}
+
+
+%========脚注=========%
+\newcommand*\circled[1]{%
+  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.4pt,minimum size=4pt] (char) {#1};}
+\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
+
+\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
+
+
+
+%====tikz设置
+\usepackage{tikz}
+\usetikzlibrary{intersections,calc,positioning,shapes}
+
+\usepgflibrary{shapes.symbols}
+
+\usepackage{pgfplots}
+
+
+\begin{document}
+
+%some title command for convenience
+\def\title{封面设计}
+\def\subtitle{用LaTeX和Tikz}
+\def\backimg{封面.pdf}
+
+%清空页眉页脚
+\thispagestyle{empty}
+% draw image
+\begin{tikzpicture}[remember picture,overlay]
+\node[inner sep=0] at (current page.center)
+{\includegraphics[width=\paperwidth,height=\paperheight]{\backimg}};
+\end{tikzpicture}
+
+
+%some text
+\begin{tikzpicture}[remember picture,overlay]
+\node[draw,minimum width=0.5\paperwidth,minimum height=2*2.2em,scale=2,align=flush left,text width=0.4\paperwidth, fill=green!50!black,text=white] 
+ (title)
+ [above =0.18\paperheight of current page.center]
+ {\Huge\sffamily \title };
+
+\node[draw,minimum width=0.5\paperwidth,minimum height=2*2.2em,scale=1.6,align=flush left,text width=0.4\paperwidth , tape,fill=blue!50!black,text=white,xshift=4em] 
+(subtitle)
+[below =0.05\paperheight of title]
+{\Huge\sffamily \subtitle};
+
+\end{tikzpicture}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

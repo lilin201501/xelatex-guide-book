@@ -1,8 +1,5 @@
-;smex插件设置
-;加入新的搜索路径
-(add-to-list 'load-path "~/工作空间/emacs/smex")
-(require 'smex);加载某个模块
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+\chemname{\chemfig{H_2O}}{\footnotesize 水}
+\chemrel[电解][点燃]{<>}
+\chemname{\chemfig{H_2}}{\footnotesize 氢气}
+\chemsign{+}
+\chemname{\chemfig{O_2}}{\footnotesize 氧气}

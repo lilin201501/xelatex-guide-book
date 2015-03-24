@@ -293,7 +293,7 @@ $t$（分） & $s$（英尺）  \\ \midrule
 
 
 \chapter{字体}
-我们知道xelatex的机制可以调用系统内的任意字体，当然系统没有的字体就要自己安装了，请看\ref{sec:安装字体}。
+我们知道xelatex的机制可以调用系统内的任意字体，当然系统没有的字体就要自己安装了（请参看附录ubuntu入门的安装系统字体部分）。
 
 \section{字体的五种属性}
 \LaTeX 的字体有五种属性，这五种属性是：字型编码，字族，字型系列，字形，字号,即：encoding,family,series,shape and size。
@@ -3014,9 +3014,9 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 
 \chapter{emacs入门}
 \label{sec:emacs}
-请参看\href{}{这个网页} ，这个网页的内容会时不时的更新的。
+请参看\href{http://www.cdwanze.org/emacs/emacs%E5%85%A5%E9%97%A8/emacs%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
 
-如果这个网页失效了，该网页的github源码在\href{}{这里}，这应该能够保证大部分时间都在。
+如果这个网页失效了，该网页的github源码在\href{https://github.com/a358003542/a358003542.github.io/tree/master/emacs/emacs%E5%85%A5%E9%97%A8}{这里}，这应该能够保证大部分时间都在。
 
 
 

@@ -10,7 +10,7 @@
 
 
 \usepackage{myconfig}
-\usepackage{mytitle}
+\usepackage{title}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 
@@ -709,7 +709,8 @@ path路径是最基本的命令，draw命令等价于\verb+\path[draw]+，fill�
 或者直接通过可选项line width来定义。
 
 \begin{tikzpicture}
-\draw [line width=12] (0,0) -- (2,0);
+\draw [line width=0.4pt] (0,0) -- (2,0);
+\draw[red]  (0,1) -- (2,1);
 \draw [line width=0.2cm] (4,.75) -- (5,.25);
 \end{tikzpicture}
 

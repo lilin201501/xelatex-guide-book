@@ -53,9 +53,9 @@
 \mainmatter
 
 \chapter{准备工作}
-tikz宏包的加载是必须的，因为我这里myconfig.sty里面的已经加载了chemfig宏包，而chemfig宏包又加载了tikz宏包，所以不需要修改什么了。
+tikz宏包的加载是必须的，记得加载上。
 
-
+有两种使用方法，一种命令式的，一种环境式的。命令式用tikz命令包围起来，命令式是inline模式的。环境式用tikzpicture环境命令包围起来。如下所示：
 \begin{Verbatim}
 \tikz{\draw (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;}
 
@@ -70,135 +70,20 @@ tikz宏包的加载是必须的，因为我这里myconfig.sty里面的已经加�
 \draw (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;
 \end{tikzpicture}
 
-有两种使用方法，一种命令式的，一种环境式的。命令式用tikz命令包围起来，命令式是inline模式的。环境式用tikzpicture命令包围起来。
-
-早期熟悉tikz推荐Ktikz软件，在ubuntu软件中心里面就有，用这个软件可以边写tikz代码边看画的图形，还可以导出图形。值得一提的是这个软件不支持中文，会生成乱码，所以当对tikz代码一定熟悉之后推荐使用gummi软件来一边画一边预览。
-
-\section{Ktikz软件配置}
-\begin{linefig}{Ktikz模板位置}
-\end{linefig}
-Ktikz模板如上图所示，需要有管理权限，把你希望加载的宏包写上去就可以了。我的模板配置如下：
-
-需要提醒的是：目前Ktikz中文保存还是\emph{乱码！}，所以有中文的只能临时处理生成图像了，具体保存还是另外找个文档复制保存进去。
-
-\begin{Verbatim}
-\documentclass[12pt]{article}
-\usepackage{mathptmx}
-\usepackage{tikz}
-%\usepackage{color}
-\usepackage[active,xelatex,tightpage]{preview}
-\PreviewEnvironment[]{tikzpicture}
-\PreviewEnvironment[]{pgfpicture}
-\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
-\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
-\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
-%
-%
-\usepackage{amssymb,amsmath}
-\usepackage{fontspec}
- %設置英文字體
-\setmainfont[Mapping=tex-text]{DejaVu Serif}
-\setsansfont[Mapping=tex-text]{DejaVu Sans}
-\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
-%中文環境
-\usepackage[CJKnumber=true]{xeCJK}
-\xeCJKsetup{PunctStyle=plain}
-\setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
-    {Adobe 宋体 Std}%影響rmfamily字體
-\setCJKsansfont{Adobe 黑体 Std}%影響sffamily字體
-\setCJKmonofont{Adobe 楷体 Std}%影響ttfamily字體
-
-\usepackage{xltxtra} %
-\usepackage{pgfplots}
-\begin{document}
-<>
-\end{document}
-\end{Verbatim}
-
-\subsection{第二套方案}
-此外还有第二套方案，上面的是解决某些中文问题，然后Ktikz换成xelatex引擎。而某一些宏包似乎xelatex兼容性不太好，为了制图可以换成pdflatex模式，然后对应的配置方案如下：
-
-\begin{Verbatim}
-\documentclass[12pt]{article}
-\usepackage{mathptmx}
-\usepackage{tikz}
-%\usepackage{color}
-\usepackage[active,pdflatex,tightpage]{preview}
-\PreviewEnvironment[]{tikzpicture}
-\PreviewEnvironment[]{pgfpicture}
-\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
-\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
-\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
-
-\usepackage{pgfplots}
-\begin{document}
-<>
-\end{document}
-\end{Verbatim}
+inline模式对于注重内容的用户来说会用的较少，有时可能自己建的某些宏包底层会使用到tikz命令。但不管是注重华丽表现效果的用户还是注重内容的用户，总是会有需求需要某一整张图片来表达某些内容，而tikz以及其他基于tikz的宏包在命令行绘图这个领域可以说是很优秀的，这绝不是那些只能绘制基本的线条或者其他的形状的图形包所能比的。下面将主要使用tikzpicture环境命令模式。
 
 
-\section{gummi软件的配置}
-\subsection{利用模板文件}
-\begin{Verbatim}
-% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
-\documentclass[tikz,border=2pt]{standalone}
-\usepackage{pgfplots}
-\pgfplotsset{compat=newest}
-\begin{document}
-\begin{tikzpicture}
-\draw (0,0) circle (1);
+\section{quicktikz软件简介}
+我自己利用PyQt写了一个小软件，名字叫quicktikz，能够一边画图一边预览，目前还很粗糙，不过只要继续不断优化下去，就会变得很实用了的。
 
-\end{tikzpicture}
-\end{document}
-\end{Verbatim}
+有兴趣的读者可以了解一下，
 
-这是我新建的tikz-simple模板文件，gummi支持从模板新建文件，在文件→从模板新建那里。其中添加就是把你当前文档的样子保存为模板，然后取一个名字，enter确认。如果要从模板新建则点击一个模板然后打开即可。
-
-
-这是我的中文模板配置方案，你们可以借鉴一下。
-\begin{Verbatim}
-% !Mode:: "TeX:UTF-8"%確保文檔utf-8編碼
-\documentclass[tikz,border=2pt]{standalone}
-
-\usepackage{pgfplots}
-\usepackage{fontspec}
-\usepackage{xeCJK}
-\setCJKmainfont[BoldFont=Adobe 黑体 Std,
-ItalicFont=Adobe 楷体 Std]{Adobe 宋体 Std}
-\setCJKsansfont{Adobe 黑体 Std}
-\setCJKmonofont{Adobe 楷体 Std}
-
-\usetikzlibrary{intersections,calc,positioning}
-
-\begin{document}
-
-\begin{tikzpicture}
-
-\draw (0,0) circle (1);
-
-
-\end{tikzpicture}
-
-
-\end{document}
-\end{Verbatim}
-
-\subsection{gummi配置}
-关于gummi的其他配置都在编辑→首选项那里，我就不多说了。用户自己熟悉一下即可。
-
+github 地址 ...........
 
 
 \chapter{tikz基础}
-
-\section{tikz系统简介}
-一般使用frontend layer（前端）就够了，有时可能需要用到basic layer（基本层）的命令。基本层是架构在系统层上的，里面是画图的最底层的驱动，绝大多数用户完全不需要了解这些。
-
-tikz的画图命令要某在\verb+\tikz{}+里面，要某在tikzpicture环境里面。
-
 \section{单位}
-默认的长度单位是cm。
-
-
+tikz默认的长度单位是cm。
 
 \section{第一个例子}
 \subsection{画网格}
@@ -945,6 +830,170 @@ shade命令和fill命令的区别就是填充的颜色是渐变的，其他类�
 \textbf{rand}产生一个随机数，范围在-1～1之间。
 
 
+
+
+
+\chapter{tikz进阶}
+tikz除了前面的基本必要知识外，还有很多零零散散的内容，有的如果你需要的话就会很重要，如果不需要的话则不重要。接下来的部分将通过一个一个例子来学习，读者不需要全部都看，如果你想画图，然后看到感兴趣的例子了，你就可以看看这个代码。因为时间紧张，代码不会一一详细讲解了，读者如果遇到疑问，可以查阅手册。
+
+
+\section{画正多边形}
+\begin{Verbatim}
+
+\begin{tikzpicture}
+\draw (0,0) circle (4) ;
+\coordinate (O) at (0,0);
+\shade[ball color=red](O) circle (0.1) node[below] {O};
+\def\n{5}
+\pgfmathsetmacro\i{\n-1}
+\foreach \x in {0,...,\i}
+{
+\def\pointname{\x}
+\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
+\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
+}
+
+\draw (0)
+\foreach \x in {0,...,\i}
+{ -- (\x) } -- cycle;
+
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\draw (0,0) circle (4) ;
+\coordinate (O) at (0,0);
+\shade[ball color=red](O) circle (0.1) node[below] {O};
+\def\n{5}
+\pgfmathsetmacro\i{\n-1}
+\foreach \x in {0,...,\i}
+{
+\def\pointname{\x}
+\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
+\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
+}
+
+\draw (0)
+\foreach \x in {0,...,\i}
+{ -- (\x) } -- cycle;
+
+\end{tikzpicture}
+
+这个例子核心内容是批量定义点和点的运算，把这个弄懂了，后面tikz的核心大门就为你打开了，然后很多图形都可以用简洁的命令生成出来了。
+
+
+\section{多个node连接}
+\begin{Verbatim}
+\usetikzlibrary{positioning}
+\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,
+thick,inner sep=0pt,minimum size=6mm}}
+\tikzset{transition/.style={rectangle,draw=black!50,
+fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
+\tikzset{every label/.style=red}
+\begin{tikzpicture}[bend angle=45]
+\node[place] (waiting)  {};
+\node[place] (critical) [below=of waiting] {};
+\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
+\node[transition](leave critical) [right=of critical]{};
+\node[transition] (enter critical)[left=of critical]{};
+\draw [->] (enter critical) to (critical);
+\draw [->] (waiting) to [bend right] (enter critical);
+\draw [->] (enter critical) to [bend right] (semaphore);
+\draw [->] (semaphore) to [bend right] (leave critical);
+\draw [->] (critical) to (leave critical);
+\draw [->] (leave critical) to [bend right] (waiting);
+\end{tikzpicture}
+\end{Verbatim}
+
+\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=6mm}}
+\tikzset{transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
+\tikzset{every label/.style=red}
+\begin{tikzpicture}[bend angle=45]
+\node[place] (waiting)  {};
+\node[place] (critical) [below=of waiting] {};
+\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
+\node[transition](leave critical) [right=of critical]{};
+\node[transition] (enter critical)[left=of critical]{};
+\draw [->] (enter critical) to (critical);
+\draw [->] (waiting) to [bend right] (enter critical);
+\draw [->] (enter critical) to [bend right] (semaphore);
+\draw [->] (semaphore) to [bend right] (leave critical);
+\draw [->] (critical) to (leave critical);
+\draw [->] (leave critical) to [bend right] (waiting);
+\end{tikzpicture}
+
+这个例子需要加载positioning包，这个例子很好地展示了多个node和用箭头连接来表示他们关系的图形如何绘制。
+
+
+\section{几何第一个例子}
+为了减少文档大小，我编写的tikz的例子都放入文件夹[\textit{tikz制图}]里面了。
+
+\begin{Verbatim}
+
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) 
+at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B) 
+at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw [name path=A--B] (A) -- (B);
+
+\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
+\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+\path [name intersections={of=D and E, 
+by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+
+\draw [red] (A) -- (C);
+\draw [red] (B) -- (C);
+
+\draw [name path=C--C',red] (C) -- (C');
+\path [name intersections={of=A--B and C--C',by=F}];
+
+\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
+
+\foreach \point in {A,B,C,C'}
+\fill [black,opacity=.5] (\point) circle (2pt);
+
+\begin{pgfonlayer}{background}
+\fill[orange!80] (A) -- (C) -- (B) -- cycle;
+\end{pgfonlayer}
+
+\end{tikzpicture}
+\end{Verbatim}
+
+\begin{tikzpicture}
+\coordinate[label=left:\textcolor{blue}{$A$}] (A) at ($(0,0) +0.1*(rand,rand)$) ;
+\coordinate[label=right:\textcolor{blue}{$B$}] (B) at ($(1.25,0.25) +0.1*(rand,rand)$) ;
+
+\draw [name path=A--B] (A) -- (B);
+
+\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
+\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
+
+\path [name intersections={of=D and E, by={[label=above:$C$]C, [label=below:$C'$]C'}}];
+
+\draw [red] (A) -- (C);
+\draw [red] (B) -- (C);
+
+\draw [name path=C--C',red] (C) -- (C');
+\path [name intersections={of=A--B and C--C',by=F}];
+
+\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
+
+\foreach \point in {A,B,C,C'}
+\fill [black,opacity=.5] (\point) circle (2pt);
+
+\begin{pgfonlayer}{background}
+\fill[orange!80] (A) -- (C) -- (B) -- cycle;
+\end{pgfonlayer}
+
+\end{tikzpicture}
+
+
+
+
+
 \chapter{tikz高级知识}
 
 
@@ -1273,163 +1322,9 @@ current direction  & to路径上加上电流方向\footnote{如果是[\textbf{cu
 更多的例子相关技巧请参看文件夹[\textit{tikz制图}]→[\textit{电路图}]文件夹里面的内容。
 
 
-\chapter{其他}
 
 
 
-\chapter{tikz的一些例子}
-\section{画正多边形}
-\begin{Verbatim}
-
-\begin{tikzpicture}
-\draw (0,0) circle (4) ;
-\coordinate (O) at (0,0);
-\shade[ball color=red](O) circle (0.1) node[below] {O};
-\def\n{5}
-\pgfmathsetmacro\i{\n-1}
-\foreach \x in {0,...,\i}
-{
-\def\pointname{\x}
-\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
-\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
-}
-
-\draw (0)
-\foreach \x in {0,...,\i}
-{ -- (\x) } -- cycle;
-
-\end{tikzpicture}
-\end{Verbatim}
-
-\begin{tikzpicture}
-\draw (0,0) circle (4) ;
-\coordinate (O) at (0,0);
-\shade[ball color=red](O) circle (0.1) node[below] {O};
-\def\n{5}
-\pgfmathsetmacro\i{\n-1}
-\foreach \x in {0,...,\i}
-{
-\def\pointname{\x}
-\coordinate (\pointname) at ($(0,0) +(\x*360/\n:4cm)$)  ;
-\shade[ball color=red](\pointname) circle (0.05) node[below] {\small \x};
-}
-
-\draw (0)
-\foreach \x in {0,...,\i}
-{ -- (\x) } -- cycle;
-
-\end{tikzpicture}
-
-这个例子核心内容是批量定义点和点的运算，把这个弄懂了，后面tikz的核心大门就为你打开了，然后很多图形都可以用简洁的命令生成出来了。
-
-
-\section{多个node连接}
-\begin{Verbatim}
-\usetikzlibrary{positioning}
-\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,
-thick,inner sep=0pt,minimum size=6mm}}
-\tikzset{transition/.style={rectangle,draw=black!50,
-fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
-\tikzset{every label/.style=red}
-\begin{tikzpicture}[bend angle=45]
-\node[place] (waiting)  {};
-\node[place] (critical) [below=of waiting] {};
-\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
-\node[transition](leave critical) [right=of critical]{};
-\node[transition] (enter critical)[left=of critical]{};
-\draw [->] (enter critical) to (critical);
-\draw [->] (waiting) to [bend right] (enter critical);
-\draw [->] (enter critical) to [bend right] (semaphore);
-\draw [->] (semaphore) to [bend right] (leave critical);
-\draw [->] (critical) to (leave critical);
-\draw [->] (leave critical) to [bend right] (waiting);
-\end{tikzpicture}
-\end{Verbatim}
-
-\tikzset{place/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=6mm}}
-\tikzset{transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm}}
-\tikzset{every label/.style=red}
-\begin{tikzpicture}[bend angle=45]
-\node[place] (waiting)  {};
-\node[place] (critical) [below=of waiting] {};
-\node[place](semaphore) [below=of critical,label=above:$s\le3$] {};
-\node[transition](leave critical) [right=of critical]{};
-\node[transition] (enter critical)[left=of critical]{};
-\draw [->] (enter critical) to (critical);
-\draw [->] (waiting) to [bend right] (enter critical);
-\draw [->] (enter critical) to [bend right] (semaphore);
-\draw [->] (semaphore) to [bend right] (leave critical);
-\draw [->] (critical) to (leave critical);
-\draw [->] (leave critical) to [bend right] (waiting);
-\end{tikzpicture}
-
-这个例子需要加载positioning包，这个例子很好地展示了多个node和用箭头连接来表示他们关系的图形如何绘制。
-
-
-\section{几何第一个例子}
-为了减少文档大小，我编写的tikz的例子都放入文件夹[\textit{tikz制图}]里面了。
-
-\begin{Verbatim}
-
-\begin{tikzpicture}
-\coordinate[label=left:\textcolor{blue}{$A$}] (A) 
-at ($(0,0) +0.1*(rand,rand)$) ;
-\coordinate[label=right:\textcolor{blue}{$B$}] (B) 
-at ($(1.25,0.25) +0.1*(rand,rand)$) ;
-
-\draw [name path=A--B] (A) -- (B);
-
-\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
-\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
-
-\path [name intersections={of=D and E, 
-by={[label=above:$C$]C, [label=below:$C'$]C'}}];
-
-\draw [red] (A) -- (C);
-\draw [red] (B) -- (C);
-
-\draw [name path=C--C',red] (C) -- (C');
-\path [name intersections={of=A--B and C--C',by=F}];
-
-\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
-
-\foreach \point in {A,B,C,C'}
-\fill [black,opacity=.5] (\point) circle (2pt);
-
-\begin{pgfonlayer}{background}
-\fill[orange!80] (A) -- (C) -- (B) -- cycle;
-\end{pgfonlayer}
-
-\end{tikzpicture}
-\end{Verbatim}
-
-\begin{tikzpicture}
-\coordinate[label=left:\textcolor{blue}{$A$}] (A) at ($(0,0) +0.1*(rand,rand)$) ;
-\coordinate[label=right:\textcolor{blue}{$B$}] (B) at ($(1.25,0.25) +0.1*(rand,rand)$) ;
-
-\draw [name path=A--B] (A) -- (B);
-
-\node [name path=D,draw,circle through=(B),label=left:$D$] at (A) {};
-\node [name path=E,draw,circle through=(A),label=right:$E$] at (B) {};
-
-\path [name intersections={of=D and E, by={[label=above:$C$]C, [label=below:$C'$]C'}}];
-
-\draw [red] (A) -- (C);
-\draw [red] (B) -- (C);
-
-\draw [name path=C--C',red] (C) -- (C');
-\path [name intersections={of=A--B and C--C',by=F}];
-
-\node [fill=red,inner sep=1,label=-45:$F$] at (F) {};
-
-\foreach \point in {A,B,C,C'}
-\fill [black,opacity=.5] (\point) circle (2pt);
-
-\begin{pgfonlayer}{background}
-\fill[orange!80] (A) -- (C) -- (B) -- cycle;
-\end{pgfonlayer}
-
-\end{tikzpicture}
 
 
 

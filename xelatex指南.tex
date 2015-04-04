@@ -3001,11 +3001,55 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 
 
 
+
+
 \chapter{ubuntu入门}
 请参看\href{http://www.cdwanze.org/linux/ubuntu%E5%85%A5%E9%97%A8/ubuntu%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
 
 
 
+
+
+
+\section{配置\LaTeX 编写环境}
+\label{sec-8}
+\begin{enumerate}
+\item sudo apt-get install texlive   (下载安装有名的texlive）
+\item sudo apt-get install texlive-full   （下载安装texlive的各个包）
+\item 在ubuntu软件中心中下载安装texmaker软件。
+\item ibus似乎在这里面有点小问题，有点不稳定。在终端中运行 \verb~sudo apt-get install ibus-qt4~ 则问题解决。
+\item 在texmaker的选项和配置texmaker里面 （现在texmaker已经加入\XeLaTeX 编译命令。），设置快速构建，点上用户自定义那一栏，然后输入如下命令：
+\end{enumerate}
+\begin{Verbatim}
+xelatex -interaction=nonstopmode \%.tex|
+\end{Verbatim}
+
+这是使用xelatex来对目标tex文件进行编译，而不是传统的latex或者pdflatex方式，之所以这样是因为多方对比之后，觉得其在字体处理方面是未来的趋势。
+
+
+
+\section{新宏包的安装}
+\label{sec-9}
+安装texlive-full之后，如果还遇到没有的宏包，可以先到CTAN官网上下载到这个宏包之后，然后将这个宏包解压到系统目录： \verb~/usr/share/texmf/tex/latex~ 里面即可。
+
+当然你也可以在另外一个文件夹里面，这里必须是你的主文件夹下，新建一个文件夹texmf，然后里面新建一个tex，然后再新建一个目录latex，然后在这个latex里面放着你下载下来的宏包。具体比如说有一个宏包名字叫做config，那么latex下面就是config文件夹，然后里面就是config.sty文件。你自己写的宏包扔进去一样有效。
+唯一要额外做的操作就是在texmf目录之下运行命令：
+\begin{tcbbash}
+sudo texhash
+\end{tcbbash}
+
+让texlive把这个目录也加入搜索范围。
+
+
+\subsection{阅读宏包代码}
+\label{sec-9-1}
+你所接触到的latex宏包源码大多在目录：
+\begin{Verbatim}
+/usr/share/texlive/texmf-dist/tex/latex
+\end{Verbatim}
+
+
+如果有需要的可以阅读这些代码来学习你正在的sty或者cls文件都是怎么编写的。其中base文件夹里面有book，article，report之类文档类型的定义，也许里面有些命令的原始代码是你需要的。
 
 
 

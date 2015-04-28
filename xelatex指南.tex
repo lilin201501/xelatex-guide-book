@@ -24,19 +24,16 @@
 
 如果你在乎的是更流畅的书写内容，那么本书的org模式详解部分可能是你很感兴趣的。采用这种模式就不可避免的在生成资料的外表上有点损失，不管是html的css深度定制还是tex相关sty深度定制都是如此。当然这种模式并不是说不可以进行生成资料的深度定制，只是因为html和tex源代码已经是二级生成文档了，所以进一步的修改或者对org文本的进一步定制都不能太多。对于这部分读者推荐使用emacs编辑器，将org模式作为你的作业环境。
 
-如果你在乎的是更华丽的表现形式或者说出版级别的版面设计，那么本书的org模式详解部分你可以不阅读，同时本书讨论的一些高级课题都可能会对你有帮助，同时由于tex排版系统真要深入进去有极深的内容，这些我也无能为力了。那么对于你的高要求目的（出版级别的版面设计）可能本书都稍显肤浅和入门性质了。对于这部分读者推荐就直接使用tex文件作为工作环境，编辑器推荐较为高级的编辑器，比如texmaker等等。
+如果你在乎的是更华丽的表现形式或者说出版级别的版面设计，那么本书的org模式详解部分【在附录部分】你可以不阅读，同时本书讨论的一些高级课题都可能会对你有帮助，同时由于tex排版系统真要深入进去有极深的内容，这些我也无能为力了。那么对于你的高要求目的（出版级别的版面设计）可能本书都稍显肤浅和入门性质了。对于这部分读者推荐就直接使用tex文件作为工作环境，编辑器推荐较为高级的编辑器，比如texmaker等等。
 
 
-全书主要分为五大块：
+全书主要分为四大块：
 \begin{description}
 \item[1. xelatex基础] \hfill \\
 这部分内容会就xelatex或者latex的基础知识内容做全面的整理归类排版，争取做到言简意赅并面面俱到和实用性很强的手册性质。
 
 \item[2. xelatex进阶] \hfill \\
 更深入地讨论xelatex的排版问题。
-
-\item[3. org模式详解] \hfill \\
-这部分是对着重内容的作业模式的集大成，在前面的讨论的基础上，继续深入到org模式，去讨论更加快捷的内容输入方案。
 
 \item[4. xelatex高级篇] \hfill \\
 这部分讨论了xelatex在不同领域（比如化学，tikz制图，幻灯片，试卷等等）的应用，这部分作业模式只可能是基于tex文档的作业模式了，那么也就是在完全追求华丽的表现效果的目的之上了，同时这些领域可能会有其他工具提供更好的用户体验或者更华丽的表现效果，这是值得我们注意的。
@@ -2385,23 +2382,26 @@ text-micro = μ
 \end{itemize}
 
 
-\subsection{空心粗体实数集合}
+\section{空心粗体实数集合}
 $\mathbb{R}$  \verb+\mathbb{R}+
 
-\subsection{上标和下标}
+\section{上标和下标}
 \verb+^   _+，这两个符号跟着上标和下标。多个符号的用\verb+{}+括起来。
 
-\subsection{平方根符号}
+\section{平方根符号}
 \verb+\sqrt+，如果是\verb+\sqrt[n]+表示n次平方根。
 
 $\sqrt[n]{x^2+y^2}$
 
-\subsection{表达式上划线或者下划线}
-就是\textbf{overline}命令和\textbf{underline}命令。
+\section{表达式上划线或者下划线}
+就是\textbf{overline}命令和\textbf{underline}命令。此外还有一个bar命令，但bar命令只适合一个小写字母情况的上划线情况，如这样 $\bar{a}$ \verb+$\bar{a}$+ ，其他情况即使是大写字母也不行。
 
 $\overline{x+y}$  $\underline{\frac{2}{3}}$
 
-\subsection{表达式上或下有个大括号}
+对于统计学上的样本均值就是使用的这里的overline命令：$\overline{X}$  \verb+$\overline{X}$+ 。
+
+
+\section{表达式上或下有个大括号}
 使用\textbf{overbrace}和\textbf{underbrace}命令。
 
 $\underbrace{ a+b+\cdots+z }_{26}$
@@ -2414,9 +2414,11 @@ vec命令只适用一个字母的小箭头。
 $\vec {A} \quad \overrightarrow{BC}$
 
 \section{空白距离}
-数学环境里面的所有空白距离和换行都被忽略了。需要用命令手动生成。
+数学环境里面的所有空白距离和换行都被忽略了。需要用命令手动生成。如下所示，这几个命令生成的间隔逐渐加大。
 
-\textbf{quad}  \textbf{qquad}
+\begin{Verbatim}
+\,  \:  \;  \quad  \qquad
+\end{Verbatim}
 
 
 \section{特殊的函数}
@@ -2786,7 +2788,7 @@ fcolorbox和colorbox的区别就是外面加了一个边框，然后第一个参
 
 \part{xelatex高级篇}
 \chapter{tikz制图}
-这个内容较多，需要慢慢整理出一个tikz制图参考手册。具体请参看本项目的[tikz制图]文件夹。
+这个内容较多，具体请参看 \href{http://www.cdwanze.org/}{这个网站} 的 \textbf{tikz制图} 部分。
 
 
 \chapter{化学相关}

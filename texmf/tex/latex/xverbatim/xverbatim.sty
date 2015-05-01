@@ -130,14 +130,14 @@
 \ifdefstring{\@xverbatimmode}{tex}
 {
  \immediate\write18{pygmentize   -o \@outname.output.tex \@outname.\@xverbatimmode}%
- \noindent code:\thechapter-\arabic{@xverbatimCounter}
+ \noindent code\thechapter-\arabic{@xverbatimCounter}
  \vspace{-5ex}
  \immediate\input{\@outname.output.tex}
 }
 {
 \immediate\write18{pygmentize   -o \@outname.tex \@outname.\@xverbatimmode}
 %a little diy
-\noindent code:\thechapter-\arabic{@xverbatimCounter}
+\noindent code\thechapter-\arabic{@xverbatimCounter}
 \vspace{-5ex}
 \immediate\input{\@outname.tex}
 }
@@ -194,13 +194,13 @@
 {
 \immediate\stepcounter{@xverbatimCounter}
 \def\@codemode{#1}
-\def\@codefilename{code:\thechapter-\arabic{@xverbatimCounter}}
+\def\@codefilename{code\thechapter-\arabic{@xverbatimCounter}}
 \def\@xverbatimmode{#2}
 
 %if the filefolder doesnot exist  then creat it
-\immediate\write18{if [  !  -d  codeexport/code:\thechapter-\arabic{@xverbatimCounter}  ];  then mkdir -p codeexport/code:\thechapter-\arabic{@xverbatimCounter}  ; fi}
+\immediate\write18{if [  !  -d  codeexport/code\thechapter-\arabic{@xverbatimCounter}  ];  then mkdir -p codeexport/code\thechapter-\arabic{@xverbatimCounter}  ; fi}
 %modified the code file name
-\newcommand{\@outname}{codeexport/code:\thechapter-\arabic{@xverbatimCounter}/\@codefilename }
+\newcommand{\@outname}{codeexport/code\thechapter-\arabic{@xverbatimCounter}/\@codefilename }
 \immediate\openout\@codeout=\@outname.\@xverbatimmode
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlinechar=`\^^M%和写入文件新行符号有关

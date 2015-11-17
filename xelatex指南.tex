@@ -1755,6 +1755,20 @@ itemize环境里面当然没有计数器，不过它类似的也有：\\ labelit
 这样插入图片代码就很简洁了。记住可选参数在参数中是排前面的，这里是缩放比的意思，方便调整图片大小。
 
 
+\subsection{图片宽度最大宽度设置}
+
+在我学习html的时候发现html里面放置图片很方便设置max-width这个属性，大部分图片的宽度就不用操心了，心想latex可以实现这样的功能吗。就是图片宽度不超过你给定的max-width则图片是原宽度，如果超过了，则将其缩放到最大宽度，这样图片就不超过pdf的有效页面了。后来找到了 \href{http://tex.stackexchange.com/questions/86350/includegraphics-maximum-width}{这个网页} 给出的解决方案，很是不错 。
+
+具体代码如下所示:
+\begin{Verbatim}
+\includegraphics[keepaspectratio,max width=0.95\linewidth]{images/lena.jpg}
+\end{Verbatim}
+
+你需要加载 \textbf{adjustbox} 宏包:
+\begin{Verbatim}
+\RequirePackage[export]{adjustbox}% 'export' is needed
+\end{Verbatim}
+
 
 
 
@@ -2459,6 +2473,8 @@ $\vec {A} \quad \overrightarrow{BC}$
 
 $\frac{1}{2} \qquad 1/2$
 
+
+
 \section{二项系数}
 
 
@@ -2793,7 +2809,7 @@ fcolorbox和colorbox的区别就是外面加了一个边框，然后第一个参
 
 \part{xelatex高级篇}
 \chapter{tikz制图}
-这个内容较多，具体请参看 \href{http://www.cdwanze.org/}{这个网站} 的 \textbf{tikz制图} 部分。
+这个内容较多，具体请参看 \href{http://blog.cdwanze.org/}{这个网站} 的 \textbf{tikz制图} 部分。
 
 
 \chapter{化学相关}
@@ -3002,16 +3018,15 @@ mytitle宏包前面那部分是定义新的输入命令，第二行是用于处�
 
 
 \chapter{org模式详解}
-请参看\href{http://www.cdwanze.org/emacs/org%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/org%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.html}{这个网页} ，这个网页的内容会时不时的更新的。
+请参看\href{http://blog.cdwanze.org/emacs/org%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/org%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.html}{这个网页} ，这个网页的内容会时不时的更新的。
 
-如果这个网页失效了，该网页的github源码在\href{https://github.com/a358003542/a358003542.github.io/tree/master/emacs/org%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3}{这里}，这应该能够保证大部分时间都在。
 
 
 
 
 
 \chapter{ubuntu入门}
-请参看\href{http://www.cdwanze.org/linux/ubuntu%E5%85%A5%E9%97%A8/ubuntu%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
+请参看\href{http://blog.cdwanze.org/linux/ubuntu%E5%85%A5%E9%97%A8/ubuntu%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
 
 
 
@@ -3062,15 +3077,16 @@ sudo texhash
 
 \chapter{emacs入门}
 \label{sec:emacs}
-请参看\href{http://www.cdwanze.org/emacs/emacs%E5%85%A5%E9%97%A8/emacs%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
-
-如果这个网页失效了，该网页的github源码在\href{https://github.com/a358003542/a358003542.github.io/tree/master/emacs/emacs%E5%85%A5%E9%97%A8}{这里}，这应该能够保证大部分时间都在。
+请参看\href{http://blog.cdwanze.org/emacs/emacs%E5%85%A5%E9%97%A8/emacs%E5%85%A5%E9%97%A8.html}{这个网页} ，这个网页的内容会时不时的更新的。
 
 
 
 
 \chapter{其他问题的讨论}
+
 \section{TeX一些常用命令简介}
+如果读者真的要学习TeX原生命令，推荐查阅这个网站 \href{http://www.tug.org/utilities/plain/cseq.html}{http://www.tug.org/utilities/plain/cseq.html} ，和阅读高德纳写的 The TexBook。
+
 \subsection{relax命令}
 类似python的pass命令，什么也不做的意思。
 

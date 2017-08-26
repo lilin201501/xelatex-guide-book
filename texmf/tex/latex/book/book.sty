@@ -138,18 +138,10 @@ text-micro = μ
 
 
 %=========章節標題設計=========%
-\RequirePackage{titlesec}
-\setcounter{secnumdepth}{3}
-%修改part
-\titleformat{\part}{\huge\sffamily}{\thepart}{0.5em}{}
-%修改chapter
-\titleformat{\chapter}{\LARGE\sffamily}{\thechapter}{0.5em}{}
-%修改section
-\titleformat{\section}{\Large\sffamily}{\thesection}{0.5em}{}
-%修改subsection
-\titleformat{\subsection}{\large\sffamily}{\thesubsection}{0.5em}{}
-%修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily}{\thesubsubsection}{0.5em}{}
+%\RequirePackage{titlesec}
+%\setcounter{secnumdepth}{3}
+%=========章節標題設計=========%
+\RequirePackage{fncychap}
 
 
 %================目录===============%
@@ -214,26 +206,6 @@ text-micro = μ
 \RequirePackage{fancyvrb}%
 \fvset{frame=lines,tabsize=4 ,baselinestretch=1.8, fontsize=\footnotesize}
 
-%minted
-\RequirePackage{minted}%
-\RequirePackage[minted]{tcolorbox}%
-\tcbuselibrary{breakable}
-\definecolor{codeback}{RGB}{240,240,240}
-\definecolor{bashback}{RGB}{48,10,36}
-
-\newtcblisting{tcbcode}[2][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
-
-\newtcblisting{tcbpython}[1][]{listing engine=minted,minted language=python,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
-
-\newtcblisting{tcbbash}[1][]{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white}
-
-\newtcbinputlisting{tcbinput}[3][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=blue!5!white,boxrule=0.4pt,boxsep=0pt,listing file={#3}}
-
-
-%==========其他宏包===========%
-\RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
-\usetikzlibrary{calc}
-\RequirePackage[version=3]{mhchem}
 
 %========脚注=========%
 \newcommand*\circled[1]{%

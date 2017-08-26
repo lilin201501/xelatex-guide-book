@@ -93,7 +93,7 @@ text-micro = μ
 \setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
 
 %中文環境
-\RequirePackage[CJKnumber=true]{xeCJK}
+\RequirePackage[]{xeCJK}
 \xeCJKsetup{PunctStyle=plain}
 \setCJKmainfont[BoldFont=Adobe 黑体 Std,ItalicFont=Adobe 楷体 Std]
     {Adobe 宋体 Std}%影響rmfamily字體
@@ -102,20 +102,6 @@ text-micro = μ
 
 \RequirePackage{xltxtra} %put here to avoid some package option error. maybe this package is useless ?
 
-%=============新的字符===========%
-\newfontfamily{\libertine}[Scale=1.3]{Linux Libertine O}
-\newfontfamily{\ubuntu}[Scale=3]{Ubuntu}
-\RequirePackage{newunicodechar}
-\newunicodechar{Ⓐ}{{\libertine{Ⓐ}}}
-\newunicodechar{Ⓑ}{{\libertine{Ⓑ}}}
-\newunicodechar{Ⓒ}{{\libertine{Ⓒ}}}
-\newunicodechar{Ⓓ}{{\libertine{Ⓓ}}}
-\newunicodechar{①}{{\libertine{①}}}
-\newunicodechar{②}{{\libertine{②}}}
-\newunicodechar{③}{{\libertine{③}}}
-\newunicodechar{④}{{\libertine{④}}}
-\newunicodechar{⑤}{{\libertine{⑤}}}
-\newunicodechar{}{{\ubuntu{}}}
 
 %%===============中文化=========%
 \renewcommand\contentsname{目~录}
@@ -132,17 +118,15 @@ text-micro = μ
 
 %=======页眉页脚格式=========%
 \RequirePackage{fancyhdr}   %頁眉頁腳
+\RequirePackage{zhnumber}  %计数器中文化
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]
-{\markright{第\CJKnumber{\arabic{section}}节~~#1}{}}
+{\markright{第\zhnumber{\arabic{section}}节~~#1}{}}
 
 \fancypagestyle{plain}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}
-%    \renewcommand{\chaptermark}[1]
-%{\markboth{第\CJKnumber{\arabic{chapter}}章~~#1}{}}
-%    \fancyhf[HL]{\ttfamily \footnotesize \leftmark }
     \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
     \fancyhf[FR]{\thepage}}
 \pagestyle{plain}
@@ -221,8 +205,9 @@ text-micro = μ
 %如果用setspace宏包而不是linespread调整行间距，那么才需要额外的表格行距拉大。
 
 %插入代码
-\RequirePackage{xverbatim}%
+\RequirePackage{fancyvrb} 
 \fvset{frame=lines,tabsize=4 ,baselinestretch=1.8, fontsize=\footnotesize}
+
 
 %minted
 \RequirePackage{minted}%
@@ -244,7 +229,7 @@ text-micro = μ
 \RequirePackage{endnotes}
 
 %==========其他宏包===========%
-\RequirePackage{chemfig} %化学 同时tikz制图宏包也加载了
+\RequirePackage{tikz} 
 \usetikzlibrary{calc}
 
 %========脚注=========%

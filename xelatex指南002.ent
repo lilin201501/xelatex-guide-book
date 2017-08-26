@@ -1,2 +1,0 @@
- {\footnotesize\noindent \hspace{-\enoteindent}\makebox[\enoteindent-3pt][l] {\flabel{enote:16b}{\textsuperscript {(1)}} \ref{enote:16}} \leftskip=\enoteindent 主要参照了\href {http://tex.stackexchange.com/questions/23863/generating-a-table-of-glyphs-with-xetex}{这个网站}\par } 
- {\footnotesize\noindent \hspace{-\enoteindent}\makebox[\enoteindent-3pt][l] {\flabel{enote:17b}{\textsuperscript {(2)}} \ref{enote:17}} \leftskip=\enoteindent 主要参考了\href {http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。\par } 

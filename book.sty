@@ -29,6 +29,9 @@
     {\raisebox{-0.6em}{\makebox[1em][c]{\tikz[red]{\draw(0,0) circle  (0.05) ;}}}}
     \ULon}%
 
+    
+\newcommand{\flypage}[1]{\begin{titlepage}\begin{center}\vspace*{\stretch{1}}#1\vspace*{\stretch{1}}\end{center}\end{titlepage}}
+    
 %========基本必备的宏包========%
 \RequirePackage{calc,float,multicol,moresize}
 %\RequirePackage[onehalfspacing]{setspace}
@@ -216,13 +219,12 @@ text-micro = μ
 \definecolor{codeback}{RGB}{240,240,240}
 \definecolor{bashback}{RGB}{48,10,36}
 
-\newtcblisting{tcbcode}[2][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
+\newtcblisting{tcbcode}[1][text]{listing engine=minted,minted language=#1,minted options={fontsize=\footnotesize,frame=none},listing only,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
 
-\newtcblisting{tcbpython}[1][]{listing engine=minted,minted language=python,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
+\newtcblisting{tcbpython}{listing engine=minted,minted language=python,minted options={fontsize=\footnotesize,frame=none},listing only,breakable=true,colback=codeback,boxrule=0.4pt,boxsep=0pt}
 
-\newtcblisting{tcbbash}[1][]{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white}
+\newtcblisting{tcbbash}{listing engine=minted,minted style=native,minted language=bash,minted options={fontsize=\footnotesize,frame=none},listing only,breakable=true,boxrule=0.4pt,colback=bashback,coltext=white}
 
-\newtcbinputlisting{tcbinput}[3][]{listing engine=minted,minted language=#2,minted options={fontsize=\footnotesize,frame=none},listing only,#1,breakable=true,colback=blue!5!white,boxrule=0.4pt,boxsep=0pt,listing file={#3}}
 
 
 %=============插入尾注=========%

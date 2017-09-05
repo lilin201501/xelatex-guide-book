@@ -5,13 +5,24 @@
 \usepackage{book}
 \usepackage{indentfirst} 
  
+
+
+ 
+ 
 \begin{document}
 \frontmatter 
+
 
 \title{\XeLaTeX 指南}
 \author{万泽}
 \date{第三次修订版}
 \maketitle
+
+
+\flypage{感谢上帝}
+
+
+
 
 \addchtoc{前言}
 \chapter*{前言}
@@ -1495,7 +1506,7 @@ emph命令是\LaTeX 自带的最基本的用于文字强调的方法。
 
 \subsection{ulem宏包源码}
 ulem宏包在ubuntu系统中源码的位置是：
-\begin{tcbcode}[]{tex}
+\begin{tcbcode}[tex]
 /usr/share/texlive/texmf-dist/tex/generic/ulem
 \end{tcbcode}
 
@@ -2596,7 +2607,25 @@ em  & （相对长度）大约相当于当时字体的M宽度 & \\ \bottomrule
 \section{新的命令}
 新建命令一般就用newcommand命令\\
 \verb+\newcommand{name}[num]{definition}+\\
-用法都差不多，第一个必填选项是新建命令的名字，一般前面都加一个\textbackslash 符号。第二个可选选项是新建的这个命令接受的参数，比如你填一个2，那么表示这个命令接受两个参数，在后面definition中引用的时候\#{}1表示第一个参数，\#{}2表示第二个参数。后面还可以跟一个可选项表示这个命令的某个参数为可选参数并且可以给出默认值，这个可选参数默认对应后面的\#{}1。
+用法都差不多，第一个必填选项是新建命令的名字，一般前面都加一个\textbackslash 符号。第二个可选选项是新建的这个命令接受的参数，比如你填一个2，那么表示这个命令接受两个参数，在后面definition中引用的时候\#{}1表示第一个参数，\#{}2表示第二个参数。
+
+然后还有这种形式：\\
+\verb+\newcommand{name}[num][default]{definition}+\\
+多的那个default参数是可选参数的默认值，在definition那边对应的就是 \#{}1。这个可选参数如果不填那么默认值为 \verb+def+ ，然后后面利用这个新的命令可以如下填上那个可选参数。
+
+\begin{tcbcode}[tex]
+\newcommand\GoodBye[1][\bfseries]{{#1 Good Bye}}
+
+\GoodBye
+\GoodBye[\color{red}]
+\end{tcbcode}
+
+下面是具体运行效果：
+\newcommand\GoodBye[1][\bfseries]{{#1 Good Bye}}
+
+\GoodBye
+
+\GoodBye[\color{red}]
 
 \LaTeX 的newcommand命令是由原\TeX 的def命令(还有edef gdef xdef 这里先不管。)而来的。作用原理有点类似于替换展开的功能。比如：\\
 \verb+\newcommand{\test}{this is a test line}+\\
@@ -3112,10 +3141,8 @@ changepage宏包还有changetext和changepage命令，有兴趣的可以看下�
 
 \bibitem[latex-companion]{latex-companion}  The Latex Companion 
 
-\bibitem[org-guide]{org-guide} \href{http://www.cnblogs.com/Open_Source/archive/2011/07/17/2108747.html}{中文翻译网站}，\href{http://orgmode.org/#docs}{org模式官方文档链接}。
 
-\bibitem[redguardtoo]{redguardtoo} \href{https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org}{mastering-emacs-in-one-year-guide}
- 
+
 
 \end{thebibliography}
 

@@ -2849,6 +2849,11 @@ xelatex -synctex=1 -interaction=nonstopmode --enable-write18 %.tex
 \item 其他的都还好吧。
 \end{itemize}
 
+
+\section{windows下安装字体}
+双击打开字体文件，右边就有个安装字体按钮。
+
+
 \chapter{ubuntu下作业}
 \section{配置\LaTeX 编写环境}
 \label{sec-8}
@@ -2863,6 +2868,41 @@ xelatex -interaction=nonstopmode \%.tex|
 \end{Verbatim}
 
 这是使用xelatex来对目标tex文件进行编译，而不是传统的latex或者pdflatex方式，之所以这样是因为多方对比之后，觉得其在字体处理方面是未来的趋势。
+
+
+\section{ubuntu安装字体}
+\subsection{找字体文件}
+如果你装了windows系统，那么你可以到windows下copy这些字体文件。比如windows常用的宋体，times new roman等，在C盘的windows的fonts文件夹里面。本文用的就是adobe中文系列：adobe 宋体 std， adobe 黑体 std ， adobe 楷体 std 。
+
+或者去网络上下载。
+
+\subsection{放置字体文件}
+
+推荐都放在ubuntu的主目录的 \verb+.fonts+ 文件夹里面（这是一个隐藏目录），如果没有请新建一个。这是通常默认用户新加字体放置的目录。
+
+\subsection{安装字体}
+
+运行命令：
+\begin{tcbbash}
+fc-cache -f  -v
+\end{tcbbash}
+
+
+字体就安装好了，如果你要看现在你的系统上有那些可用的中文字体，在终端运行命令：
+\begin{tcbbash}
+fc-list :lang=zh | sort >ziti.txt
+\end{tcbbash}
+   
+\verb+|+ 表示linux命令中的通道，第一个命令的输出信息流会流向sort命令，排序之后重定向到ziti.txt文件里面。然后终端的数据就保存在这个文件里面了。
+
+打开ziti.txt，里面就是你的可用中文字体的信息，比如：
+\begin{Verbatim}
+/home/wanze/.fonts/simsun.ttc:  宋体,SimSun:style=Regular
+\end{Verbatim}
+    
+其中第一个是字体文件所在的目录，第二个信息是可以调用的名字，有宋体和SimSun。
+
+
 
 
 

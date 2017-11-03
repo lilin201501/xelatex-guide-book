@@ -2,7 +2,13 @@
 
 \documentclass[11pt,oneside]{book}
 
-\usepackage{book}
+
+% for phone
+\usepackage{book-phone}
+
+%\usepackage{book}
+%
+
 \usepackage{indentfirst} 
  
 
@@ -2932,6 +2938,70 @@ sudo texhash
 
 
 
+\chapter{方便手机上观看的pdf}
+
+
+\section{geometry修改}
+手机上看旁注，左右上下边距都要缩小，然后paperwidth和paperheight也要相应缩小。本小节 \endnote{主要参考了\href{http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。}
+
+\begin{Verbatim}
+\ifphone
+%for phone
+\RequirePackage[
+  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
+  paperheight=190mm,%太長了縮短點，
+  bindingoffset=0mm,%裝訂線
+  top=15mm,  %上邊距 包括頁眉
+  bottom=15mm,%下邊距 包括頁腳
+  left=5mm,  %左邊距or inner
+  right=5mm,  %右邊距or  outer
+  headheight=10mm,%頁眉
+  footskip=10mm,%頁腳
+  includemp=true,% 旁註寬度計入width
+  marginparsep=0mm, %沒有旁註
+  marginparwidth=0mm,  %沒有旁註
+  ]{geometry}
+\else
+
+\RequirePackage[a4paper, %a4paper size 297:210 mm
+  bindingoffset=0mm,%裝訂線
+  top=45mm,  %上邊距 包括頁眉
+  bottom=40mm,%下邊距 包括頁腳
+  left=35mm,  %左邊距or inner
+  right=40mm,  %右邊距or  outer
+  headheight=25mm,%頁眉
+  footskip=25mm,%頁腳
+ includemp=true,% 旁註寬度計入width
+ marginparsep=0mm, %旁註與正文間距
+marginparwidth=0mm,  %旁註寬度
+  ]{geometry}
+\fi
+\end{Verbatim}
+这里使用了一个条件命令。在加载myconfig.sty宏包的时候已经新建了一个条件变量：\\
+\verb+\newif\ifphone+\\
+\verb+\phonefalse+
+ifphone就是一个条件判断命令，这里涉及到的命令我也不大懂，总之，如果我改成：\\
+\verb+\phonetrue+\\
+就会自动生成适合在手机上观看的pdf。
+
+
+
+\section{章节上下距离修改}
+使用 \verb+titlespacing*+ 来修改章节的上下距离，经观察主要是chapter和secion上下间距较大。 \verb+titlespacing*+ 命令第一个参数是指定作用对象，第二个指定左边距离，第三个是指定上间距，第四个是指定下间距。 参考了 \href{https://tex.stackexchange.com/questions/63390/how-to-decrease-spacing-before-chapter-title}{这个网页}。
+
+\begin{Verbatim}
+\titlespacing*{\chapter}{0pt}{-45pt}{10pt}
+
+\titlespacing*{\section}{0pt}{-5pt}{8pt}
+\end{Verbatim}
+
+
+
+\section{管理策略}
+手机版和电脑版sty文件分开编写和引入是个不错的主意，至于具体生成的pdf文件名字后面再重命名就是了。
+
+
+
 \chapter{其他问题的讨论}
 
 \section{TeX一些常用命令简介}
@@ -3095,50 +3165,6 @@ i want  some test to show there is a text and not to column break.\\
 \end{LARGE}
 \end{document}
 \end{Verbatim}
-
-
-\section{方便手机上观看的pdf}
-原文档内容都不需要修改，只需要修改geometry的设置就可以满足要求，然后在手机上看的时候选择adobe pdf软件的连续观看功能会有更好的体验。具体配置如下：
-\endnote{主要参考了\href{http://tex.stackexchange.com/questions/78920/generating-smartphone-readable-pdf}{这个网站}。}
-\begin{Verbatim}
-\ifphone
-%for phone
-\RequirePackage[
-  paperwidth=105mm, %除去旁註其他沒變,115,再稍微小點
-  paperheight=190mm,%太長了縮短點，
-  bindingoffset=0mm,%裝訂線
-  top=15mm,  %上邊距 包括頁眉
-  bottom=15mm,%下邊距 包括頁腳
-  left=5mm,  %左邊距or inner
-  right=5mm,  %右邊距or  outer
-  headheight=10mm,%頁眉
-  footskip=10mm,%頁腳
-  includemp=true,% 旁註寬度計入width
-  marginparsep=0mm, %沒有旁註
-  marginparwidth=0mm,  %沒有旁註
-  ]{geometry}
-\else
-
-\RequirePackage[a4paper, %a4paper size 297:210 mm
-  bindingoffset=0mm,%裝訂線
-  top=45mm,  %上邊距 包括頁眉
-  bottom=40mm,%下邊距 包括頁腳
-  left=35mm,  %左邊距or inner
-  right=40mm,  %右邊距or  outer
-  headheight=25mm,%頁眉
-  footskip=25mm,%頁腳
- includemp=true,% 旁註寬度計入width
- marginparsep=0mm, %旁註與正文間距
-marginparwidth=0mm,  %旁註寬度
-  ]{geometry}
-\fi
-\end{Verbatim}
-这里使用了一个条件命令。在加载myconfig.sty宏包的时候已经新建了一个条件变量：\\
-\verb+\newif\ifphone+\\
-\verb+\phonefalse+
-ifphone就是一个条件判断命令，这里涉及到的命令我也不大懂，总之，如果我改成：\\
-\verb+\phonetrue+\\
-就会自动生成适合在手机上观看的pdf。
 
 
 \section{临时改变页面布局}

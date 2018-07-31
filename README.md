@@ -1,6 +1,8 @@
 xelatex-guide-book
 ==================
 
+因为项目较大了，已经同步到码云那边去了，后面只码云那边有更新了。 [https://gitee.com/cdwanze/xelatex-guide-book](https://gitee.com/cdwanze/xelatex-guide-book) 。码云那边有时间会仓库重做，再整理吧，这次整理的话主要是数学部分，会详细完善讨论之。latex排版数学公式已经通过mathjax在web2.0时代获得新生了。
+
 ## 补充信息
 
 临时有些补充信息就先方便放在readme这里了。
